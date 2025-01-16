@@ -1,0 +1,35 @@
+.inputfields{
+    display: flex;
+    flex: 1;
+}
+
+.left_side{
+    display: flex;
+    flex-direction: column;
+    margin-right: 16px;
+}
+
+.the_divider{
+    width:1px;
+    background-color: #dbdbdb;
+}
+
+.right_side{
+    margin-left: 16px;
+    display: flex;
+    flex-direction: column;
+}
+
+.lable{
+    display: flex;
+}
+
+.text_and_buttons{
+    margin-top: 60px;
+    display: flex;
+    justify-content: space-between;
+}
+
+.is_required{
+    display: flex;
+}

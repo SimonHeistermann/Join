@@ -5,10 +5,15 @@
 }
 
 body {
+    display: flex;
+    flex-direction: column;
+    min-height: 100vh;
     background-color: #F6F7F8;
     font-optical-sizing: auto;
-    font-weight: normal;
-    font-size: 20px;
+    font-weight: 400;
+    font-size: 16px;
+    width: min(100%, 1920px);
+    margin-inline: auto;
 }
 
 h1 {
@@ -16,10 +21,38 @@ h1 {
     font-weight: 700;
 }
 
+h2 {
+    font-size: 27px;
+    font-weight: 400;
+    color: #2A3647;
+}
+
+h3 {
+    font-size: 20px;
+    font-weight: 400;
+    text-align: center;
+}
+
 header {
     background: #ffff;
     display: flex;
+    align-items: center;
     height: 96px;
     box-shadow: -2px 0px 6px 0px rgba(0,0,0, 0.2);
+}
+
+main {
+    display: flex;
+    flex-direction: column;
+    margin-top: 64px;
+    margin-bottom: 120px;
+    width: min(100%, calc(1920px - clamp(172px, 17vw, 232px)));
+    margin-inline: auto;
+    padding-inline: clamp(16px, 5vw, 96px);
+}
+
+button {
+    border: unset;
+    cursor: pointer;
 }
 

@@ -1,0 +1,168 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" type="image/x-icon" href="./assets/icons/join_logo_favicon_dark.svg" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/x-icon" href="./assets/icons/join_logo_favicon_white.svg" media="(prefers-color-scheme: dark)">
+
+    <title>Join</title>
+
+    <link rel="stylesheet" href="./assets/fonts/fonts.css"/>
+    <link rel="stylesheet" href="./style.css"/>
+    <link rel="stylesheet" href="./styles/sidebar.css"/>
+    <link rel="stylesheet" href="./styles/summary.css"/>
+    <link rel="stylesheet" href="./styles/standard.css"/>
+    <link rel="stylesheet" href="./styles/assets.css"/>
+
+    <script src="./script.js"></script>
+    <script src="./scripts/templates.js"></script>
+    <script src="./scripts/summary.js"></script>
+    <script src="./scripts/assets.js"></script>
+</head>
+<body id="body" onload="">
+    <div class="overall">
+        <div class="sidebar">
+            <div class="sidebar__container">
+                <div class="sidebar__logocontainer">
+                    <img src="./assets/icons/logo_sidebar.png" alt="Join Logo">
+                </div>
+                <div class="sidebar__navbarcontainer">
+                    <div class="sidebar__navbar">
+                        <div class="behind__sidebarbuttons sidebarbutton__open">
+                            <button class="sidebar__button sidebarbutton__open">
+                                <img src="./assets/icons/summary_icon_white.png" alt="Summary">
+                                Summary
+                            </button>
+                        </div>
+                        <div class="behind__sidebarbuttons">
+                            <button class="sidebar__button">
+                                <img src="./assets/icons/add_task_icon_white.png" alt="Add Task">
+                                Add Task
+                            </button>
+                        </div>
+                        <div class="behind__sidebarbuttons">
+                            <button class="sidebar__button">
+                                <img src="./assets/icons/board_icon_white.png" alt="Board">
+                                Board
+                            </button>
+                        </div>
+                        <div class="behind__sidebarbuttons">
+                            <button class="sidebar__button">
+                                <img src="./assets/icons/contacts_icon_white.png" alt="Contacts">
+                                Contacts
+                            </button>
+                        </div>
+                    </div>
+                    <div class="sidebar__noticescontainer">
+                        <div class="behind__noticesbuttons">
+                            <button class="notices__button">Privacy Policy</button>
+                        </div>
+                        <div class="behind__noticesbuttons">
+                            <button class="notices__button">Legal notice</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="content__right">
+            <header>
+                <div class="header__container">
+                    <h3>Kanban Project Management Tool</h3>
+                    <div class="headerbox__right">
+                        <button class="help__button">
+                            <img src="./assets/icons/help_icon.png" alt="Help">
+                        </button>
+                        <button class="profile__button">
+                            SM
+                        </button>
+                    </div>
+                </div>
+            </header>
+            <main>
+                <div class="summary__headlinebox">
+                    <h1>Join 360</h1>
+                    <div class="headline__seperator"></div>
+                    <h2>Key Metrics at a Glance</h2>
+                </div>
+                <div class="summary__content">
+                    <div class="keymetrics__container">
+                        <div class="firstrow__keymetrics">
+                            <div class="firstrow__behindbox">
+                                <div class="keymetrics__box keymetrics__todo">
+                                    <div class="todo__icon">
+                                        <img class="white__todoicon" src="./assets/icons/edit_icon_todo_white.png" alt="Edit">
+                                        <img class="blue__todoicon" src="./assets/icons/edit_icon_todo_blue.png" alt="Edit">
+                                    </div>
+                                    <div class="todo__textbox">
+                                        <span class="keymetrics__number">1</span>
+                                        <h3 class="keymetrics__text">To-do</h3>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="firstrow__behindbox">
+                                <div class="keymetrics__box keymetrics__done">
+                                    <div class="done__icon">
+                                        <img class="white__doneicon" src="./assets/icons/hook_icon_done_white.png" alt="Hook">
+                                        <img class="blue__doneicon" src="./assets/icons/hook_icon_done_blue.png" alt="Hook">
+                                    </div>
+                                    <div class="done__textbox">
+                                        <span class="keymetrics__number">1</span>
+                                        <h3 class="keymetrics__text">Done</h3>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="secondrow__keymetrics">
+                            <div class="secondrow__behindbox">
+                                <div class="keymetrics__box keymetrics__urgent">
+                                    <div class="urgent__leftbox">
+                                        <div class="urgent__icon">
+                                            <img src="./assets/icons/arrows_up_urgent_icon_white.png" alt="Arrows Up">
+                                        </div>
+                                        <div class="urgent__textbox">
+                                            <span class="keymetrics__number">1</span>
+                                            <h3 class="keymetrics__text">Urgent</h3>
+                                        </div>
+                                    </div>
+                                    <div class="urgent__seperator"></div>
+                                    <div class="urgent__textboxright">
+                                        <span class="urgent__date"> October 16, 2022</span>
+                                        <span class="keymetrics__text">Upcoming Deadline</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="thirdrow__keymetrics">
+                            <div class="thirdrow__behindbox">
+                                <div class="keymetrics__box keymetrics__lastrow">
+                                    <span class="keymetrics__number">2</span>
+                                    <h3 class="keymetrics__textthirdrow">Tasks in Board</h3>
+                                </div>
+                            </div>
+                            <div class="thirdrow__behindbox">
+                                <div class="keymetrics__box keymetrics__lastrow">
+                                    <span class="keymetrics__number">2</span>
+                                    <h3 class="keymetrics__textthirdrow">Tasks in Progress</h3>
+                                </div>
+                            </div>
+                            <div class="thirdrow__behindbox">
+                                <div class="keymetrics__box keymetrics__lastrow">
+                                    <span class="keymetrics__number">2</span>
+                                    <h3 class="keymetrics__textthirdrow">Awaiting Feedback</h3>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="greet__box">
+                        <span class="greeting">Good Morning,</span>
+                        <span class="greeting__name">Sofia Müller</span>
+                    </div>
+                </div>
+            </main>
+        </div>
+    </div>
+
+</body>
+</html>
