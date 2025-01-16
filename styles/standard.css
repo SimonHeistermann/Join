@@ -1,0 +1,23 @@
+* {
+    box-sizing: border-box;
+    margin: 0;
+    font-family: "Inter", sans-serif;
+}
+
+body {
+    background-color: #F6F7F8;
+    font-optical-sizing: auto;
+    font-weight: normal;
+}
+
+h1 {
+    font-size: 61px;
+    font-weight: 700;
+}
+
+header {
+    background: #ffff;
+    display: flex;
+    height: 96px;
+    box-shadow: -2px 0px 6px 0px rgba(0,0,0, 0.2);
+}
