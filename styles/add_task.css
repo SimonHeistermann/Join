@@ -8,7 +8,6 @@
     flex-direction: column;
     margin-right: 16px;
 }
-
 .the_divider{
     width:1px;
     background-color: #dbdbdb;
@@ -33,3 +32,4 @@
 .is_required{
     display: flex;
 }
+
