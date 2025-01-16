@@ -8,6 +8,7 @@ body {
     background-color: #F6F7F8;
     font-optical-sizing: auto;
     font-weight: normal;
+
 }
 
 h1 {
@@ -21,3 +22,4 @@ header {
     height: 96px;
     box-shadow: -2px 0px 6px 0px rgba(0,0,0, 0.2);
 }
+
