@@ -84,21 +84,32 @@
                 <h2>Add Task</h2>
             <div class="inputfields">
                 <div class="left_side">
-                    <lable class="lable" for="title">Title<div class="star">*</div></lable>
+                    <lable class="label" for="title">Title<div class="star">*</div></lable>
                     <input type="text" class="text_input" id="text__input" name="title" placeholder="Enter a title" required>
-                    <label class="lable" for="description">Description</label>
-                    <textarea name="description" id="description" placeholder="Enter a Description"></textarea>
-                    <label class="lable" for="assigned_to">Assigned to</label>
+                    <label class="label" for="description">Description</label>
+                    <textarea class="description" name="description" id="description" placeholder="Enter a Description"></textarea>
+                    <label class="label" for="assigned_to">Assigned to</label>
                     <select name="assigned_to" id="assigned__to"></select>
                 </div>
                 <div class="the_divider"></div>
                 <div class="right_side">
-                    <label class="lable" for="date">Due date<div class="star">*</div></label>
+                    <label class="label" for="date">Due date<div class="star">*</div></label>
                         <input type="date" class="date" id="date__input" name="date" placeholder="dd/mm/yyyy">
-                    <label class="lable" for="prio">Prio</label>
-                        <input class="radio radio_urgend" type="radio" name="prio" id="urgend">
-                        <input class="radio radio_medium"type="radio" name="prio" id="medium">
-                        <input class="radio radio_low"type="radio" name="prio" id="low">
+                    <label class="label" for="prio">Prio</label>
+                    <div class="radio_overall">
+                        <label class="radio radio_urgend">
+                            <input type="radio" name="prio" value="1">
+                            Urgent
+                        </label>
+                        <label class="radio radio_medium">
+                            <input type="radio" name="prio" value="2" checked>
+                            Medium
+                        </label>
+                        <label class="radio radio_low">
+                            <input type="radio" name="prio" value="3">
+                            Low
+                        </label>
+                    </div>
                     <label class="label" for="category">Category <div class="star">*</div></label>
                     <select type="select" name="category" class="category">
                         <option value="">Select task category</option>

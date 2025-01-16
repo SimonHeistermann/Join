@@ -1,3 +1,13 @@
+h2{
+    width: 278px;
+    height: 73px;
+    font-size: 48px;
+    font-weight: bold;
+}
+
+.star{
+    color: red;
+}
 .inputfields{
     display: flex;
     flex: 1;
@@ -8,9 +18,19 @@
     flex-direction: column;
     margin-right: 16px;
 }
+
+.text_input{
+    width: 440px;
+    height: 36px;
+    border-radius: 8px;
+    border: 1 px solid #d1d1d1;
+    margin-top: 12px;
+    margin-bottom: 16px;
+}
+
 .the_divider{
-    width:1px;
-    background-color: #dbdbdb;
+    width: 2px;
+    background-color: #dadadb;
 }
 
 .right_side{
@@ -19,7 +39,7 @@
     flex-direction: column;
 }
 
-.lable{
+.label{
     display: flex;
 }
 
@@ -33,3 +53,52 @@
     display: flex;
 }
 
+.radio_overall {
+    display: flex;
+    gap: 16px;
+}
+
+.radio {
+    appearance: none; 
+    width: 136px;
+    height: 56px;
+    border-radius: 10px; 
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 16px;
+    font-weight: bold;
+    cursor: pointer;
+    position: relative;
+}
+
+/* Der Input muss wohl versteckt werden, aber interaktiv bleiben! Also damit der Text im Button steht, muss der Button selber unsichtbar sein, weil eigentlich kein Text im 
+Radiobutton stehen kann. Dh! wir müssen also mit dem Label des Button stylen und den Button dann unsichtbar über das Label legen, aber so dass er sichbar ist. Darum haben
+beide Label und button die klasse radio und radioinput spricht aber gerade nur die inputfelder, hier buttons, an*/
+.radio input {
+    opacity: 0; /* unsichtbar*/
+    position: absolute; /* raus aus dem normalen fluss und absolut ausgerichtet an dem paren, hier also Label*/
+    width: 100%; /* ausfüllen des gesamten Labels */
+    height: 100%;
+    cursor: pointer;
+}
+
+
+.radio_urgend input:checked + label,
+.radio_urgend:has(input:checked) {
+    background-color: #FF3D00;
+    color: white;
+}
+
+.radio_medium input:checked + label,
+.radio_medium:has(input:checked) { /* has habe ich im Internet gefunden, ist wohl relativ neu und spricht das Parent an */
+    background-color: #FFA800;
+    color: white;
+}
+
+.radio_low input:checked + label,
+.radio_low:has(input:checked) {
+    background-color: #7AE229;
+    color: white;
+}
