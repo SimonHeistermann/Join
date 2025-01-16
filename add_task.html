@@ -1,0 +1,79 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" type="image/x-icon" href="./assets/icons/join_logo_favicon_dark.svg" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/x-icon" href="./assets/icons/join_logo_favicon_white.svg" media="(prefers-color-scheme: dark)">
+
+    <title>Join</title>
+
+    <link rel="stylesheet" href="./assets/fonts/fonts.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./styles/sidebar.css" />
+    <link rel="stylesheet" href="./styles/register.css" />
+    <link rel="stylesheet" href="./styles/add_task.css" />
+    <link rel="stylesheet" href="./styles/legal_notice.css" />
+    <link rel="stylesheet" href="./styles/privacy_policy.css" />
+    <link rel="stylesheet" href="./styles/standard.css" />
+    <link rel="stylesheet" href="./styles/assets.css" />
+
+    <script src="./script.js"></script>
+    <script src="./scripts/templates.js"></script>
+    <script src="./scripts/search.js"></script>
+    <script src="./scripts/register.js"></script>
+    <script src="./scripts/add_task.js"></script>
+    <script src="./scripts/board.js"></script>
+    <script src="./scripts/login.js"></script>
+    <script src="./scripts/contacts.js"></script>
+    <script src="./scripts/summary.js"></script>
+    <script src="./scripts/assets.js"></script>
+</head>
+<body id="body" onload="">
+    <div class="overall">
+        <div class="sidebar" id="sidebar"><div class="sideTop"><img><nav><button>Summary</button><button>Add Task</button><button>Board</button><button>Contacts</button></nav></div><div class="sideBottom"><button>Privacy Policy</button><button>Legal notice</button></div></div>
+        <header>
+       
+        </header>
+        <main>
+            <h2>Add Task</h2>
+            <div class="inputfields">
+                <div class="left_side">
+                    <lable class="lable" for="title">Title<div class="star">*</div></lable>
+                    <input type="text" class="text_input" id="text__input" name="title" placeholder="Enter a title" required>
+                    <label class="lable" for="description">Description</label>
+                    <textarea name="description" id="description" placeholder="Enter a Description"></textarea>
+                    <label class="lable" for="assigned_to">Assigned to</label>
+                    <select name="assigned_to" id="assigned__to"></select>
+                </div>
+                <div class="the_divider"></div>
+                <div class="right_side">
+                    <label class="lable" for="date">Due date<div class="star">*</div></label>
+                        <input type="date" class="date" id="date__input" name="date" placeholder="dd/mm/yyyy">
+                    <label class="lable" for="prio">Prio</label>
+                        <input class="radio radio_urgend" type="radio" name="prio" id="urgend">
+                        <input class="radio radio_medium"type="radio" name="prio" id="medium">
+                        <input class="radio radio_low"type="radio" name="prio" id="low">
+                    <label class="label" for="category">Category <div class="star">*</div></label>
+                    <select type="select" name="category" class="category">
+                        <option value="">Select task category</option>
+                        <option value="tt">Technikal Task</option>
+                        <option value="us">User Story</option>
+                    </select>
+                    <label for="subtask">Subtask</label>
+                    <input type="text" name="subtask" id="subtask" placeholder="Add new subtask">
+                    <div class="table_subtask" id="subtask_table"></div>
+                </div>
+            </div>
+            <div class="text_and_buttons">
+                    <div class="is_required"><div class="star">*</div>This field is required</div>
+                    <div class="task_butons">
+                        <button class="secondary_button">Clear<img></button>
+                        <button class="button1">Create Task<img></button>
+                    </div>
+            </div>
+        </main>
+    </div>
+</body>
+</html>
