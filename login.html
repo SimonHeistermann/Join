@@ -1,0 +1,71 @@
+<!DOCTYPE html>
+<html lang="de">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+
+    <link rel="icon" type="image/x-icon" href="./assets/icons/join_logo_favicon_dark.svg" media="(prefers-color-scheme: light)">
+    <link rel="icon" type="image/x-icon" href="./assets/icons/join_logo_favicon_white.svg" media="(prefers-color-scheme: dark)">
+
+    <title>Login</title>
+
+    <link rel="stylesheet" href="./assets/fonts/fonts.css"/>
+    <link rel="stylesheet" href="./style.css"/>
+    <link rel="stylesheet" href="./styles/standard.css"/>
+    <link rel="stylesheet" href="./styles/assets.css"/>
+    <link rel="stylesheet" href="./styles/login.css"/>
+
+    <script src="./script.js"></script>
+    <script src="./scripts/templates.js"></script>
+    <script src="./scripts/login.js"></script>
+    <script src="./scripts/assets.js"></script>
+</head>
+<body id="body" onload="">
+    <header>
+        <div class="header__container">
+            <div class="login__logocontainer">
+                <img src="./assets/icons/join_logo_login.png" alt="Join Logo">
+            </div>
+            <div class="header__buttonbox">
+                <button class="notajoinuser__button"><h3>Not a Join user?</h3></button>
+                <button class="signup__button">Sign up</button>
+            </div>
+        </div>
+    </header>
+    <main>
+        <form class="login__container">
+            <div class="login__headlinebox">
+                <h1>Log in</h1>
+                <div class="login__seperator"></div>
+            </div>
+            <div class="login__inputbox">
+                <div class="email__container">
+                    <input class="email__input" id="email_input" required type="email" placeholder="Email" autocomplete="email">
+                    <label for="email_input">
+                        <img class="email__logo" src="./assets/icons/mail_icon_gray.png" alt="Email Icon">
+                    </label>
+                </div>
+                <div class="password__container">
+                    <input class="password__input" required id="password_input" type="password" placeholder="Password" autocomplete="current-password" oninput="maskPassword(this)">
+                    <label for="password_input">
+                        <img class="lock__logo" src="./assets/icons/lock_icon_gray.png" alt="Lock Icon">
+                        <img class="novisibility__logo" src="./assets/icons/visibility_off_icon_gray.png" alt="No Visibility Icon">
+                    </label>
+                </div>
+                <div class="errormessage__box">
+                </div>
+            </div>
+            <div class="login__buttonbox">
+                <button class="login__button">Log in</button>
+                <button class="guestlogin__button">Guest Log in</button>
+            </div>
+        </form>
+    </main>
+    <footer>
+        <div class="footer__container">
+            <button class="notices__button leftfooter__button">Privacy Policy</button>
+            <button class="notices__button rightfooter__button">Legal notice</button>
+        </div>
+    </footer>
+</body>
+</html>
