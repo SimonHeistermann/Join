@@ -20,11 +20,15 @@
     <script src="./scripts/login.js"></script>
     <script src="./scripts/assets.js"></script>
 </head>
-<body id="body" onload="">
+<body id="body" onload="initLogin()">
+    <div class="overlay" id="overlay"></div>
+    <div class="biglogo__div" id="biglogo_div">
+        <img class="big__logo" id="big_logo" src="./assets/icons/big_logo_icon.png" alt="Join Logo">
+    </div>
     <header>
         <div class="header__container">
-            <div class="login__logocontainer">
-                <img src="./assets/icons/join_logo_login.png" alt="Join Logo">
+            <div class="login__logocontainer" id="small_logo_container">
+                <img id="small_logo" src="./assets/icons/join_logo_login.png" alt="Join Logo">
             </div>
             <div class="header__buttonbox">
                 <button class="notajoinuser__button"><h3>Not a Join user?</h3></button>
@@ -45,14 +49,18 @@
                         <img class="email__logo" src="./assets/icons/mail_icon_gray.png" alt="Email Icon">
                     </label>
                 </div>
-                <div class="password__container">
-                    <input class="password__input" required id="password_input" type="password" placeholder="Password" autocomplete="current-password" oninput="maskPassword(this)">
-                    <label for="password_input">
-                        <img class="lock__logo" src="./assets/icons/lock_icon_gray.png" alt="Lock Icon">
-                        <img class="novisibility__logo" src="./assets/icons/visibility_off_icon_gray.png" alt="No Visibility Icon">
-                    </label>
-                </div>
-                <div class="errormessage__box">
+                <div class="password__box">
+                    <div class="password__container">
+                        <input class="password__input" required id="password_input" type="password" placeholder="Password" autocomplete="current-password" oninput="maskPassword(this)">
+                        <label for="password_input">
+                            <img class="lock__icon" src="./assets/icons/lock_icon_gray.png" alt="Lock Icon">
+                            <img class="novisibility__icon" src="./assets/icons/visibility_off_icon_gray.png" alt="No Visibility Icon">
+                            <img class="visibility__icon" src="./assets/icons/eye_icon_gray.png" alt="Visibility Icon">
+                        </label>
+                    </div>
+                    <div class="errormessage__box">
+                       This field is required.
+                    </div>
                 </div>
             </div>
             <div class="login__buttonbox">

@@ -1,3 +1,56 @@
+#overlay {
+    background-color: #F6F7F8;
+    min-height: 100vh;
+    width: 100%;
+    z-index: 1000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: opacity 0.5s ease-out;
+    opacity: 1;
+}
+
+.biglogo__div {
+    background: transparent;
+    min-height: 100vh;
+    width: 100%;
+    z-index: 2000;
+    position: fixed;
+    top: 0;
+    left: 0;
+    overflow: hidden;
+    pointer-events: none;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: transform 1s cubic-bezier(0.4, 0, 0.2, 1), opacity 1s ease-out;
+}
+
+.big__logo {
+    width: 274px;
+    height: auto;
+    transition: width 1s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.hidden {
+    opacity: 0 !important;
+    pointer-events: none;
+}
+
+.move__to__corner {
+    transform-origin: center;
+    top: 64px;
+    left: clamp(32px, 6vw, 64px);
+    position: fixed;
+    pointer-events: none;
+    transform: translate(calc(-50% + 50px), calc(-50% + 60px)) scale(0.364);
+}
+
 header {
     background: #F6F7F8;
     display: flex;
@@ -65,6 +118,7 @@ main {
 }
 
 .login__container {
+    box-shadow: 0px 0px 14px 3px #0000000A;
     display: flex;
     flex-direction: column;
     align-items: center;
@@ -143,6 +197,12 @@ main {
     width: 24px;
 }
 
+.password__box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
 .password__container {
     display: flex;
     align-items: center;
@@ -174,7 +234,6 @@ main {
     color: black;
     caret-color: transparent;
     letter-spacing: 3px;
-    font-family: Arial, sans-serif;
 }
 
 .password__input:focus {
@@ -188,13 +247,20 @@ main {
     letter-spacing: normal;
 }
 
-.lock__logo {
+.lock__icon {
     cursor: pointer;
     height: 24px;
     width: 24px;
 }
 
-.novisibility__logo {
+.novisibility__icon {
+    display: none;
+    cursor: pointer;
+    height: 24px;
+    width: 24px;
+}
+
+.visibility__icon {
     display: none;
     cursor: pointer;
     height: 24px;
@@ -203,6 +269,12 @@ main {
 
 .erorr__inputs {
     border: 1px solid #FF001F;
+}
+
+.errormessage__box {
+    font-size: 13px;
+    font-weight: 400;
+    color: #FF8190;
 }
 
 .login__buttonbox {
