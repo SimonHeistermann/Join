@@ -1,0 +1,69 @@
+.board__navigator {
+  width: 70%;
+  height: 232px;
+}
+
+.board__navigator .search__and__addTasks {
+  display: flex;
+  justify-content: flex-start;
+  align-items: center;
+}
+.search__and__addTasks {
+  display: flex;
+  justify-content: space-between;
+  align-self: center;
+}
+.search__and__addTasks p {
+  font-family: "Inter";
+  font-size: 61px;
+  font-weight: 700;
+  color: #000000;
+}
+.inputicon__addButton {
+  display: flex;
+  gap: 13px;
+}
+
+.add__button {
+  width: 94px;
+  height: 34px;
+  background: #2a3647;
+  color: #ffff;
+  font-size: 24px;
+  font-family: "Inter";
+}
+
+.search__area {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 5px;
+  border: none;
+  background: #ffff;
+  width: 300px;
+  height: 40px;
+  padding: 8px;
+  cursor: pointer;
+}
+.search__area input {
+  border: none;
+  padding: 8px;
+  cursor: pointer;
+}
+
+.search__area span {
+  border: none;
+  background: #ffff;
+  width: 100px;
+  height: 40px;
+  font-size: 26px;
+  padding: 8px;
+  font-weight: 400;
+}
+
+.search__icon,
+img {
+  width: 32px;
+  height: 32px;
+  color: #d9d9d9;
+}
