@@ -56,3 +56,7 @@ button {
     cursor: pointer;
 }
 
+a {
+    text-decoration: none;
+    color: #b8bcc2;
+}

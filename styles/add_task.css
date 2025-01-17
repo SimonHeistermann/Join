@@ -24,19 +24,35 @@ h1{
 
 .text_input{
     width: 440px;
-    height: 36px;
+    height: 48px;
+    padding-left: 16px;;
     border-radius: 8px;
     border: 1px solid #d1d1d1;
-    margin-top: 12px;
+    margin-top: 8px;
     margin-bottom: 36px;
+    font-size: 20px;
 }
 
 .description{
-    margin-top: 12px;
+    font-size: 20px;
+    margin-top: 8px;
+    padding-left: 16px;
+    padding-top: 16px;
     border-radius: 10px;
     border: 1px solid #d1d1d1;
     height: 112px;
     margin-bottom: 24px;
+}
+
+.assigned_to{
+    width: 440px;
+    height: 48px;
+    padding-left: 16px;;
+    border-radius: 8px;
+    border: 1px solid #d1d1d1;
+    margin-top: 8px;
+    margin-bottom: 36px;
+    font-size: 20px;
 }
 
 .the_divider{
@@ -52,6 +68,17 @@ h1{
     height: 416px;
     width: 440px;
     padding-top: 16px;
+}
+
+.date{
+    width: 440px;
+    height: 36px;
+    padding-left: 16px;;
+    border-radius: 8px;
+    border: 1px solid #d1d1d1;
+    margin-top: 8px;
+    margin-bottom: 44px;
+    font-size: 20px;
 }
 
 .label{
@@ -72,6 +99,8 @@ h1{
 .radio_overall {
     display: flex;
     gap: 16px;
+    margin-bottom: 24px;
+    margin-top: 8px;
 }
 
 .radio {
@@ -117,6 +146,28 @@ beide Label und button die klasse radio und radioinput spricht aber gerade nur d
 .radio_low:has(input:checked) {
     background-color: #7AE229;
     color: white;
+}
+
+.category{
+    width: 440px;
+    height: 48px;
+    padding-left: 16px;;
+    border-radius: 8px;
+    border: 1px solid #d1d1d1;
+    margin-top: 8px;
+    margin-bottom: 36px;
+    font-size: 20px;
+}
+
+.subtask{
+    width: 440px;
+    height: 48px;
+    padding-left: 16px;;
+    border-radius: 8px;
+    border: 1px solid #d1d1d1;
+    margin-top: 8px;
+    margin-bottom: 36px;
+    font-size: 20px;
 }
 
 .create_task{
