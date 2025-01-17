@@ -1,0 +1,33 @@
+.overmain{
+display: flex;
+justify-content: center;
+align-items: center;
+}
+
+.main_register{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.card{
+ width: 598px;
+ height: 630px;
+ margin: auto;
+ display: flex;
+ flex-direction: column;
+ justify-content: center;
+ align-items: center;
+}
+
+.hedline{
+    display: flex;
+    flex-direction: column;
+}
+
+.form_overall{
+    display: flex;
+    flex-direction: column;
+    height: 442px;
+    width: 326px;
+}
