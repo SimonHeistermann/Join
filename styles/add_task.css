@@ -7,6 +7,12 @@ h1{
 .star{
     color: red;
 }
+
+.add_task_main{
+    max-width: 1200px;
+    margin-left: 0;
+}
+
 .inputfields{
     display: flex;
     flex: 1;
