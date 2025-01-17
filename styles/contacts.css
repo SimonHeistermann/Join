@@ -1,0 +1,32 @@
+.contact_main{
+    display:flex;
+    flex-direction: row;
+}
+
+.contact_table{
+
+    width: 456px;
+}
+
+.add_contact{
+    width: 352px;
+    height: 56px;
+    font-size: 24px;
+    font-weight: bold;
+}
+
+.contact_overview{
+    display: flex;
+    margin-top: 112px;
+    justify-content: center;
+    align-items: center;
+}
+
+.the_contact_devider{
+    margin-left: 16px;
+    margin-right: 16px;
+    height: 100%;
+    width: 2px;
+    background-color: #29ABE2;
+    
+}
