@@ -1,8 +1,6 @@
 h2{
     width: 278px;
     height: 73px;
-    font-size: 48px;
-    font-weight: bold;
 }
 
 .star{
@@ -17,6 +15,9 @@ h2{
     display: flex;
     flex-direction: column;
     margin-right: 16px;
+    height: 376px;
+    width: clamp(200px, 450px, 440px);
+    margin-top: 56px;
 }
 
 .text_input{
@@ -24,7 +25,7 @@ h2{
     height: 36px;
     border-radius: 8px;
     border: 1 px solid #d1d1d1;
-    margin-top: 12px;
+    margin-top: 16px;
     margin-bottom: 16px;
 }
 
@@ -37,6 +38,8 @@ h2{
     margin-left: 16px;
     display: flex;
     flex-direction: column;
+    height: 416px;
+    width: 440px;
 }
 
 .label{
@@ -101,4 +104,14 @@ beide Label und button die klasse radio und radioinput spricht aber gerade nur d
 .radio_low:has(input:checked) {
     background-color: #7AE229;
     color: white;
+}
+
+.create_task{
+    width: 183px;
+    height: 56px;
+}
+
+.clear{
+    width: 110px;
+    height: 56px;
 }
