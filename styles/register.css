@@ -31,3 +31,11 @@ align-items: center;
     height: 442px;
     width: 326px;
 }
+
+.underline{
+    min-width: 422px;
+    min-height: 1px;
+    display: flex;
+    flex-direction: column;
+    gap: 20px;
+}
