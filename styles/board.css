@@ -50,35 +50,67 @@
   gap: 5px;
   background: #ffff;
   width: 312px;
-  height: 48px;
+  height: 58px;
   padding: 8px 16px 8px 16px;
   border-radius: 10px;
   border: 1px solid #a8a8a8;
   cursor: pointer;
 }
 .search__area input {
+  height: 58px;
+  border: none;
   font-family: "Inter";
-  font-size: 20px;
-  font-weight: 400;
-
-  padding: 8px;
   cursor: pointer;
+  border: none;
+  padding: 8px 6px;
+  font-size: 16px;
+  outline: none;
+  background: transparent;
+  flex: 1;
 }
 
 .search__area span {
   border: none;
-  background: #ffff;
-  width: 100px;
-  height: 40px;
+  height: 31px;
   font-size: 26px;
-  padding: 8px;
-  font-weight: 400;
+  color: #d1d1d1;
 }
 
 .search__icon,
 img {
-  width: 48px;
-  height: 32px;
+  width: 17px;
+  height: 17px;
   color: #d9d9d9;
   border-radius: 5px;
+}
+
+.taska__content {
+  width: 100%;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding-left: 64px;
+  padding-right: 64px;
+}
+.plus__icon {
+  width: 24px;
+  height: 24px;
+  border: 1px solid;
+  border-radius: 6px;
+  cursor: pointer;
+}
+.column__desktop {
+  width: 220px;
+  height: 24px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.column__Fonts {
+  font-family: "Inter";
+  font-size: 20px;
+  font-weight: 700;
+  line-height: 24px;
+  text-align: left;
 }
