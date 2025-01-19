@@ -48,7 +48,6 @@
   justify-content: center;
   align-items: center;
   gap: 5px;
-  border: none;
   background: #ffff;
   width: 312px;
   height: 48px;
@@ -56,13 +55,12 @@
   border-radius: 10px;
   border: 1px solid #a8a8a8;
   cursor: pointer;
-
-  width: Fixed (312px) px;
-
-  gap: 10px;
 }
 .search__area input {
-  border: none;
+  font-family: "Inter";
+  font-size: 20px;
+  font-weight: 400;
+
   padding: 8px;
   cursor: pointer;
 }
