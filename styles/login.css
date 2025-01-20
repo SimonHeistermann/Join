@@ -75,6 +75,14 @@ header {
     cursor: pointer;
 }
 
+#small_logo {
+    opacity: 0;
+}
+
+#small_logo.visible {
+    opacity: 1;
+}
+
 .header__buttonbox {
     display: flex;
     align-items: center;

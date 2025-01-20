@@ -21,27 +21,77 @@
     <script src="./scripts/assets.js"></script>
 </head>
 <body id="body" onload="">
-  <div class="overmain">
+  <header>
+        <div class="header__container">
+            <div class="register__logocontainer" id="small_logo_container">
+                <img id="small_logo" src="./assets/icons/join_logo_login.png" alt="Join Logo">
+            </div>
+        </div>
+    </header>
     <main>
-      <button class="blue_arrow"><img></button>
-      <div class="card">
-          <div class="hedline">
-            <h1>Sign up</h1>
-            <div class="underline"></div>
-          </div>
-        <form class="form_overall" action="#">
-          <input class="tex_input" type="text" id="reg__name" name="reg_name" placeholder="Name">
-          <input class="tex_input" type="email" name="reg_email" id="reg__email" placeholder="Email">
-          <input class="tex_input" type="password" name="reg_password" id="reg__password" placeholder="Password">
-          <input class="tex_input" type="text" name="reg_pw_confirm" id="reg__pw__cofirm" placeholder="Confirm Password">
-          <div class="checkbox">
-            <input type="checkbox" name="agree_Pp" id="agree_Pp">
-            <label for="agree_Pp">I accept the <a href="privacy_policy.html">Privacy policy</a> </label>
-          </div>
+        <form class="register__container">
+            <div class="register__headlinebox">
+                <div class="register__headlinecontainer">
+                    <button class="back__button">
+                        <img class="thin__back__button" src="./assets/icons/arrow_left_icon_light_blue_thin.png" alt="Arrow Left">
+                        <img class="thick__back__button" src="./assets/icons/arrow_left_icon_light_blue_thick.png" alt="Arrow Left">
+                    </button>
+                    <h1>Sign up</h1>
+                </div>
+                <div class="register__seperator"></div>
+            </div>
+            <div class="register__inputbox">
+                <div class="person__container">
+                    <input class="person__input" id="person_input_register" required type="text" placeholder="Name">
+                    <label for="person_input_register">
+                        <img class="person__logo" src="./assets/icons/person_icon_gray.png" alt="Person Icon">
+                    </label>
+                </div>
+                <div class="email__container">
+                    <input class="email__input" id="email_input_register" required type="email" placeholder="Email" autocomplete="email">
+                    <label for="email_input_register">
+                        <img class="email__logo" src="./assets/icons/mail_icon_gray.png" alt="Email Icon">
+                    </label>
+                </div>
+                <div class="password__container">
+                    <input class="password__input" required id="password_input_register" type="password" placeholder="Password" autocomplete="current-password" oninput="maskPassword(this)">
+                    <label for="password_input_register">
+                        <img class="lock__icon" src="./assets/icons/lock_icon_gray.png" alt="Lock Icon">
+                        <img class="novisibility__icon" src="./assets/icons/visibility_off_icon_gray.png" alt="No Visibility Icon">
+                        <img class="visibility__icon" src="./assets/icons/eye_icon_gray.png" alt="Visibility Icon">
+                    </label>
+                </div>
+                <div class="password__box">
+                    <div class="password__container">
+                        <input class="password__input" required id="confirm_password_input_register" type="password" placeholder="Confirm Password" autocomplete="current-password" oninput="maskPassword(this)">
+                        <label for="confirm_password_input_register">
+                            <img class="lock__icon" src="./assets/icons/lock_icon_gray.png" alt="Lock Icon">
+                            <img class="novisibility__icon" src="./assets/icons/visibility_off_icon_gray.png" alt="No Visibility Icon">
+                            <img class="visibility__icon" src="./assets/icons/eye_icon_gray.png" alt="Visibility Icon">
+                        </label>
+                    </div>
+                    <div class="errormessage__box">
+                       This field is required.
+                    </div>
+                </div>
+                <div class="checkbox__wrapper">
+                    <label for="agree_privacy_policy" class="register__checkbox__container">
+                        <input class="register__checkbox" type="checkbox" id="agree_privacy_policy" name="agree_privacy_policy" required>
+                        <span class="custom__checkbox"></span>
+                    </label>
+                    <span class="register__checkbox__text">I accept the <a class="privacy__policy__registertext" href="privacy_policy.html">Privacy policy</a></span>
+                  </div>
+            </div>
+            <div class="register__buttonbox">
+                <button class="signup__button">Sign up</button>
+            </div>
         </form>
-      </div>
     </main>
-  </div>
-    <footer></footer>
+    <footer>
+        <div class="footer__container">
+            <button class="notices__button leftfooter__button">Privacy Policy</button>
+            <button class="notices__button rightfooter__button">Legal notice</button>
+        </div>
+    </footer>
 </body>
 </html>

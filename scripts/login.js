@@ -30,9 +30,11 @@ function startLogoAnimation(overlay, bigLogoDiv) {
 }
 
 function endLogoAnimation(overlay, bigLogoDiv) {
+    const smallLogo = document.getElementById('small_logo');
     setTimeout(() => {
-        overlay.classList.add("d__none");  
-        bigLogoDiv.classList.add("d__none");  
+        overlay.classList.add("d__none");
+        bigLogoDiv.classList.add("d__none");
+        smallLogo.classList.add("visible");
     }, 1000);
 }
 
