@@ -100,6 +100,14 @@ img {
   cursor: pointer;
 }
 .column__desktop {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-direction: column;
+  gap: 24px;
+  cursor: pointer;
+}
+.head__column {
   width: 220px;
   height: 24px;
   display: flex;
@@ -114,4 +122,24 @@ img {
   line-height: 24px;
   text-align: left;
   color: #42526e;
+}
+
+.task__area {
+  display: flex;
+  justify-content: space-between;
+  text-align: center;
+  gap: 24px;
+  margin-top: 12px;
+  padding: 15px 8px 15px;
+}
+.task-container {
+  width: 200px;
+  min-height: 50px;
+  background-color: #e7e7e7;
+  text-align: center;
+  padding-top: 18px;
+  padding-bottom: 18px;
+  border-radius: 16px;
+  border-style: dashed;
+  border-color: #a8a8a8;
 }
