@@ -1,0 +1,77 @@
+.h3_help{
+    font-weight: bold;
+}
+.join{
+    color: #42b4e4;
+    display: inline;
+}
+
+.main_help{
+    max-width: 1200px;
+}
+.headline_help{
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    width: 100%;
+    margin-bottom: 32px;
+}
+
+.back_button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    width: 32px;
+    height: 32px;
+    position: relative;
+}
+
+.back_button:hover .thin_back_button {
+   display: none;
+}
+
+.back_button:hover .thick_back_button {
+    display: block;
+ }
+
+.thick_back_button {
+    display: none;
+}
+
+.container_1{
+    margin-bottom: 24px;
+}
+
+.what_is_join{
+    margin-bottom: 24px;
+}
+
+ol {
+    counter-reset: list-counter; /* Initialisiert den Zähler */
+    padding-left: 0;
+}
+
+/* Stile für die Listenelemente */
+ol li {
+    counter-increment: list-counter; /* Erhöht den Zähler */
+    margin-bottom: 20px; /* Abstand zwischen den Elementen */
+    list-style: none; /* Entfernt die Standardnummerierung */
+    display: flex; /* Nutzt Flexbox für Nummer und Text */
+    align-items: flex-start; /* Ausrichtung der Nummer und des Textes */
+}
+
+
+
+/* Pseudo-Element für die Nummerierung */
+ol li::before {
+    content: counter(list-counter) "."; /* Fügt die Nummer ein */
+    display: inline-block;
+    font-size: 2em; /* Vergrößert die Nummer wie ein h2 */
+    font-weight: bold; /* Fettgedruckt wie h2 */
+    color: #333; /* Farbe der Nummer */
+    margin-right: 15px; /* Abstand zwischen Nummer und Text */
+    min-width: 30px; /* Sorgt für Konsistenz bei der Breite der Nummer */
+}
+
+
