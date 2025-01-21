@@ -48,7 +48,7 @@
     left: clamp(32px, 6vw, 64px);
     position: fixed;
     pointer-events: none;
-    transform: translate(calc(-50% + 50px), calc(-50% + 60px)) scale(0.364);
+    transform: translate(calc(-50% + 50px), calc(-50% + 30px)) scale(0.364);
 }
 
 header {
@@ -63,7 +63,7 @@ header {
     justify-content: space-between;
     align-items: flex-start;
     width: min(100%, 1920px);
-    margin-top: 64px;
+    margin-top: 32px;
     margin-inline: auto;
     padding-inline: clamp(32px, 6vw, 64px);
 }
@@ -100,6 +100,7 @@ header {
     background-color: #2A3647;
     border-radius: 8px;
     padding: 14px 24px;
+    transition: background-color 125ms ease-in, box-shadow 125ms;
 }
 
 .signup__button:hover {
@@ -298,6 +299,7 @@ main {
     background-color: #2A3647;
     border-radius: 8px;
     padding: 14px 24px;
+    transition: background-color 125ms ease-in, box-shadow 125ms;
 }
 
 .login__button:hover {
@@ -318,6 +320,7 @@ main {
     padding: 14px 24px;
     border-radius: 8px;
     border: solid 1px #2A3647;
+    transition: background-color 125ms ease-in, box-shadow 125ms, border 125ms ease-in;
 }
 
 .guestlogin__button:hover {
@@ -354,6 +357,7 @@ footer {
     align-items: center;
     justify-content: center;
     color: #A8A8A8;
+    transition: color 125ms, font-weight 75ms ease-in;
 }
 
 .notices__button:hover {

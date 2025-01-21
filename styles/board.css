@@ -1,3 +1,10 @@
+body {
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f4f4f4;
+}
+/*  Tusaale */
 .board__navigator {
   width: 100%;
   height: 232px;
@@ -9,13 +16,15 @@
   justify-content: space-between;
   align-items: center;
 }
-
-.search__and__addTasks p {
+.search__and__addTasks .board__title {
   font-family: "Inter";
   font-size: 61px;
   font-weight: 700;
-  color: #00007;
+  line-height: 73.2px;
+  text-align: left;
+  color: #000000 !important;
 }
+
 .inputicon__addButton {
   display: flex;
   gap: 32px;
@@ -84,62 +93,214 @@ img {
   border-radius: 5px;
 }
 
-.taska__content {
+.kanban__board {
+  padding: 20px;
+  display: flex;
+  flex-direction: column;
+
   width: 100%;
+  height: 688px;
+
+  padding: 0px 64px 0px 64px;
+  gap: 24px;
+  opacity: 0px;
+}
+
+.columns {
+  width: 90%;
+  display: flex;
+  gap: 34px;
+}
+
+.column {
+  background-color: transparent;
+  width: 250px;
+}
+
+h2 {
+  font-size: 20px !important;
+  font-weight: 700 !important;
+  color: #42526e !important;
+  font-family: "Inter" !important;
+}
+
+h2 {
   display: flex;
   justify-content: space-between;
-  align-items: center;
-  padding-left: 64px;
-  padding-right: 64px;
 }
-.plus__icon {
-  width: 24px;
-  height: 24px;
-  border: 1px solid;
-  border-radius: 6px;
+
+.add__task {
+  cursor: pointer;
+  color: #666;
+  width: 17px;
+  height: 17px;
+}
+
+.empty__message {
+  width: 100%;
+  height: 48px;
+  background-color: #e7e7e7;
+  color: #d1d1d1;
+  text-align: center;
+  font-size: 16px;
+  border-radius: 8px;
+  padding: 10px;
+  margin-top: 8px;
+
+  border: 1px dashed #a8a8a8;
+  box-shadow: 0px 0px 4px 0px #00000029;
+}
+
+.task {
+  width: 225px;
+  background: #fafafa;
+  padding: 16px;
+  border-radius: 24px;
+  margin-bottom: 32px;
+  box-shadow: 0 1px 3px rgba(0, 0, 0, 0.05);
   cursor: pointer;
 }
-.column__desktop {
+
+.task__type {
+  font-size: 16px;
+  padding: 4px 10px;
+  border-radius: 20px;
+  color: #fff;
+}
+
+.user__story {
+  background-color: #1e90ff;
+}
+
+.technical__task {
+  background-color: #20b2aa;
+}
+
+h3 {
+  font-size: 18;
+  margin: 10px 0;
+}
+
+p {
+  color: #666;
+  font-size: 14px;
+}
+
+.progress {
+  background: #e0e0e0;
+  border-radius: 4px;
+  height: 6px;
+  width: 100%;
+  margin: 8px 0;
+}
+
+.progress__bar {
+  background: #3b82f6;
+  height: 100%;
+  border-radius: 4px;
+}
+
+.subtasks {
+  font-size: 12px;
+  color: #666;
+  margin-bottom: 10px;
+}
+
+.avatars {
+  display: flex;
+  gap: 5px;
+}
+
+.avatar {
+  width: 30px;
+  height: 30px;
+  background: #ff7a00;
+  border-radius: 50%;
   display: flex;
   justify-content: center;
   align-items: center;
-  flex-direction: column;
-  gap: 24px;
-  cursor: pointer;
-}
-.head__column {
-  width: 220px;
-  height: 24px;
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
+  font-size: 12px;
+  font-weight: bold;
+  color: #ffff;
 }
 
-.column__Fonts {
-  font-family: "Inter";
-  font-size: 20px;
-  font-weight: 700;
-  line-height: 24px;
-  text-align: left;
-  color: #42526e;
-}
-
-.task__area {
+.avatars__menuIcon {
+  width: 100%;
   display: flex;
   justify-content: space-between;
-  text-align: center;
-  gap: 24px;
-  margin-top: 12px;
-  padding: 15px 8px 15px;
+  align-items: flex-end;
 }
-.task-container {
-  width: 200px;
-  min-height: 50px;
-  background-color: #e7e7e7;
-  text-align: center;
-  padding-top: 18px;
-  padding-bottom: 18px;
-  border-radius: 16px;
-  border-style: dashed;
-  border-color: #a8a8a8;
+.avatars__group {
+  display: flex;
+  gap: -3px;
+}
+/* Mobile Responsive Styles */
+
+@media (max-width: 768px) {
+  .columns {
+    flex-direction: column;
+  }
+
+  .column {
+    max-width: 100%;
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-size: 16px;
+  }
+
+  h2 {
+    font-size: 12px;
+  }
+
+  .task {
+    padding: 10px;
+  }
+
+  .progress-bar {
+    height: 5px;
+  }
+
+  .avatar {
+    width: 25px;
+    height: 25px;
+    font-size: 10px;
+  }
+}
+
+@media (max-width: 480px) {
+  .kanban__board {
+    padding: 10px;
+  }
+
+  .columns {
+    gap: 10px;
+  }
+
+  h1 {
+    font-size: 16px;
+  }
+
+  h2 {
+    font-size: 14px;
+  }
+
+  .add__task {
+    font-size: 12px;
+  }
+
+  .task {
+    margin-bottom: 10px;
+  }
+
+  .avatar {
+    width: 20px;
+    height: 20px;
+    font-size: 8px;
+  }
+
+  .subtasks {
+    font-size: 8px;
+  }
 }

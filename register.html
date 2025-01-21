@@ -29,17 +29,19 @@
         </div>
     </header>
     <main>
+    </main>
+    <div class="main__content">
         <form class="register__container">
-            <div class="register__headlinebox">
                 <div class="register__headlinecontainer">
                     <button class="back__button">
                         <img class="thin__back__button" src="./assets/icons/arrow_left_icon_light_blue_thin.png" alt="Arrow Left">
                         <img class="thick__back__button" src="./assets/icons/arrow_left_icon_light_blue_thick.png" alt="Arrow Left">
                     </button>
-                    <h1>Sign up</h1>
+                    <div class="register__headlinebox">
+                        <h1>Sign up</h1>
+                        <div class="register__seperator"></div>
+                    </div>
                 </div>
-                <div class="register__seperator"></div>
-            </div>
             <div class="register__inputbox">
                 <div class="person__container">
                     <input class="person__input" id="person_input_register" required type="text" placeholder="Name">
@@ -76,7 +78,7 @@
                 </div>
                 <div class="checkbox__wrapper">
                     <label for="agree_privacy_policy" class="register__checkbox__container">
-                        <input class="register__checkbox" type="checkbox" id="agree_privacy_policy" name="agree_privacy_policy" required>
+                        <input class="register__checkbox" type="checkbox" id="agree_privacy_policy" required>
                         <span class="custom__checkbox"></span>
                     </label>
                     <span class="register__checkbox__text">I accept the <a class="privacy__policy__registertext" href="privacy_policy.html">Privacy policy</a></span>
@@ -86,7 +88,7 @@
                 <button class="signup__button">Sign up</button>
             </div>
         </form>
-    </main>
+    </div>
     <footer>
         <div class="footer__container">
             <button class="notices__button leftfooter__button">Privacy Policy</button>

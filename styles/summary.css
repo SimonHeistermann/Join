@@ -304,6 +304,7 @@
     color: #2A3647;
     height: 48px;
     margin-inline: 8px;
+    text-align: center;
 }
 
 .greet__box {
