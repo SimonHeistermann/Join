@@ -1,6 +1,7 @@
 .h3_help{
     font-weight: bold;
 }
+
 .join{
     color: #42b4e4;
     display: inline;
@@ -9,6 +10,7 @@
 .main_help{
     max-width: 1200px;
 }
+
 .headline_help{
     display: flex;
     justify-content: space-between;
