@@ -182,11 +182,12 @@
      <main>
       <div class="board__navigator">
         <div class="search__and__addTasks">
-          <h1>Board</h1>
+     
+          <p class="board__title">Board</p> 
 
           <div class="inputicon__addButton">
             <div class="search__area">
-              <input type="text" placeholder="Add Task" /><span>|</span>
+              <input type="text" placeholder="find Task" id="find_task"/><span>|</span>
               <img
                 class="search__icon"
                 src="assets/icons/search@2x.png"
@@ -198,11 +199,13 @@
               <img class="add__icon" src="assets/icons/add.png" alt="" />
             </button>
           </div>
+        
+
         </div>
       </div>
    
       
-     <div class="kanban-board">
+     <div class="kanban__board">
      
       <div class="columns">
         <div class="column">
@@ -212,82 +215,108 @@
             src="assets/icons/plus button.png"
             alt=""
           /></span></h2>
-          <div class="empty-message">No tasks To do</div>
+          <div class="empty__message">No tasks To do</div>
         </div>
         <div class="column">
-          <h2>In progress <span class="add-task"> <img
+          <h2>In progress <span class="add__task"> <img
             onclick="showAddTaskDetails()"
             class="plus__icon"
             src="assets/icons/plus button.png"
             alt=""
           /></span></h2>
           <div class="task">
-            <div class="task-type user-story">User Story</div>
+            <div class="task__type user__story">User Story</div>
             <h3>Kochwelt Page & Recipe Recommender</h3>
             <p>Build start page with recipe recommendation...</p>
             <div class="progress">
-              <div class="progress-bar" style="width: 50%"></div>
+              <div class="progress__bar" style="width: 50%"></div>
             </div>
             <div class="subtasks">1/2 Subtasks</div>
             <div class="avatars">
+              <div class="avatars__menuIcon">
+
+              <div class="avatars__group">
               <div class="avatar" style="background-color: #B2A745">AM</div>
-              <div class="avatar1" style="background-color: #ff7a00">EM</div>
-              <div class="avatar2" style="background-color: #ff4646">MB</div>
+              <div class="avatar" style="background-color: #ff7a00">EM</div>
+              <div class="avatar" style="background-color: #ff4646">MB</div>
+            </div>
+            <div> <img src="assets/icons/Priority symbols (1).png" alt="" width="32"></div>
+          </div>
             </div>
           </div>
           <div class="task">
-            <div class="task-type user-story">User Story</div>
+            <div class="task__type user__story">User Story</div>
             <h3>Contact Form & Imprint</h3>
             <p>Create a contact form and imprint page...</p>
             <div class="progress">
-              <div class="progress-bar" style="width: 50%"></div>
+              <div class="progress__bar" style="width: 50%"></div>
             </div>
             <div class="subtasks">1/2 Subtasks</div>
             <div class="avatars">
+              <div class="avatars__menuIcon">
+
+              <div class="avatars__group">
               <div class="avatar"  style="background-color:  #FC71FF">AS</div>
               <div class="avatar"  style="background-color: #6F52FF">DE</div>
               <div class="avatar"  style="background-color: #9327FF">EF</div>
             </div>
+            <div> <img src="assets/icons/Priority symbols.png" alt="" width="32"></div>
+
+
+          </div>
+
+            </div>
           </div>
         </div>
         <div class="column">
-          <h2>Await feedback <span class="add-task"> <img
+          <h2>Await feedback <span class="add__task"> <img
             onclick="showAddTaskDetails()"
             class="plus__icon"
             src="assets/icons/plus button.png"
             alt=""
           /></span></h2>
           <div class="task">
-            <div class="task-type technical-task">Technical Task</div>
+            <div class="task__type technical__task">Technical Task</div>
             <h3>HTML Base Template Creation</h3>
             <p>Create reusable HTML base templates...</p>
             <div class="subtasks">1/2 Subtasks</div>
             <div class="avatars">
+              <div class="avatars__menuIcon">
+                <div class="avatars__group">
               <div class="avatar" style="background-color:  #FC71FF">DE</div>
               <div class="avatar" style="background-color:  #6E52FF">BZ</div>
               <div class="avatar" style="background-color:  #9327FF">AS</div>
             </div>
+           
+         <div> <img src="assets/icons/Priority symbols.png" alt="" width="32"></div>
+
+          </div>
+         
+            </div>
           </div>
           <div class="task">
-            <div class="task-type user-story">User Story</div>
+            <div class="task__type user__story">User Story</div>
             <h3>Daily Kochwelt Recipe</h3>
             <p>Implement daily recipe and portion calculator...</p>
             <div class="subtasks">0/1 Subtasks</div>
             <div class="avatars">
+              <div class="avatars__menuIcon">
+                <div class="avatars__group">
               <div class="avatar" style="background-color:  #FFBB2B">ER</div>
               <div class="avatar" style="background-color:  #9327FF">AS</div>
               <div class="avatar" style="background-color:  #ff4646">TW</div>
             </div>
+            <div> <img src="assets/icons/Priority symbols (1).png" alt="" width="32"></div>
+           
+            </div>
+          
+            </div>
           </div>
         </div>
         <div class="column">
-          <h2>Done <span class="add-task"> <img
-            onclick="showAddTaskDetails()"
-            class="plus__icon"
-            src="assets/icons/plus button.png"
-            alt=""
-          /></span></h2>
-          <div class="empty-message">No tasks Done</div>
+          <h2>Done <span class="add__task"> 
+        </span></h2>
+          <div class="empty__message">No tasks Done</div>
         </div>
       </div>
     </div>
