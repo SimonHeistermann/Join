@@ -48,7 +48,7 @@
     left: clamp(32px, 6vw, 64px);
     position: fixed;
     pointer-events: none;
-    transform: translate(calc(-50% + 50px), calc(-50% + 60px)) scale(0.364);
+    transform: translate(calc(-50% + 50px), calc(-50% + 30px)) scale(0.364);
 }
 
 header {
@@ -63,7 +63,7 @@ header {
     justify-content: space-between;
     align-items: flex-start;
     width: min(100%, 1920px);
-    margin-top: 64px;
+    margin-top: 32px;
     margin-inline: auto;
     padding-inline: clamp(32px, 6vw, 64px);
 }

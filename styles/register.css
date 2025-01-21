@@ -10,7 +10,7 @@ header {
     justify-content: space-between;
     align-items: flex-start;
     width: min(100%, 1920px);
-    margin-top: 64px;
+    margin-top: 32px;
     margin-inline: auto;
     padding-inline: clamp(32px, 6vw, 64px);
 }
@@ -30,7 +30,8 @@ header {
     width: 32px;
     height: 32px;
     position: relative;
-    right: 160px;
+    top: 16px;
+    right: 120px;
 }
 
 .back__button:hover .thin__back__button {
@@ -69,9 +70,20 @@ main {
     width: min(100%, 1920px);
     margin-inline: auto;
     padding-inline: clamp(16px, 6vw, 64px);
-    margin-top: 32px;
-    margin-bottom: 160px;
+    margin-top: 0;
+    margin-bottom: 0;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.main__content {
+    width: min(100%, 1920px);
+    height: 100vh;
+    margin-inline: auto;
+    padding-inline: clamp(16px, 6vw, 64px);
+    position: absolute;
     display: flex;
     justify-content: center;
     align-items: center;
@@ -86,12 +98,12 @@ main {
     gap: 32px;
     background-color: white;
     border-radius: 30px;
-    padding: 48px 115px;
+    padding: 48px 88px;
 }
 
 .register__headlinecontainer {
     display: flex;
-    align-items: center;
+    align-items: flex-start;
 }
 
 .register__headlinebox {
@@ -104,7 +116,7 @@ main {
 
 .register__seperator {
     background-color: #29ABE2;
-    width: 150px;
+    width: 68%;
     height: 3px;
 }
 
@@ -307,22 +319,22 @@ main {
 }
 
 .custom__checkbox {
-    width: 20px;
-    height: 20px;
-    border: 2px solid #2A3647;
-    border-radius: 4px;
+    width: 24px;
+    height: 24px;
+    background-image: url('../assets/icons/pp_checkbox_default_icon.png');
     position: relative;
 }
 
-.register__checkbox:checked + .custom__checkbox::before {
-    content: '';
-    position: absolute;
-    top: 4px;
-    left: 4px;
-    width: 10px;
-    height: 10px;
-    background-color: #2A3647;
-    border-radius: 2px;
+.custom__checkbox:hover {
+    background-image: url('../assets/icons/pp_checkbox_hover_disable_icon.png');
+}
+
+.register__checkbox:checked + .custom__checkbox {
+    background-image: url('../assets/icons/pp_checkbox_checked_icon.png');
+}
+
+.register__checkbox:checked + .custom__checkbox:hover {
+    background-image: url('../assets/icons/pp_checkbox_hover_checked_icon.png');
 }
 
 .register__checkbox__text {
@@ -335,6 +347,12 @@ main {
     font-size: 16px;
     font-weight: 400;
     color: #29ABE2;
+}
+
+.privacy__policy__registertext:hover {
+    text-decoration: underline solid #29ABE2;
+    font-weight: 500;
+    cursor: pointer;
 }
 
 footer {

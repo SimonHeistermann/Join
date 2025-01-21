@@ -12,9 +12,9 @@
     <link rel="stylesheet" href="./assets/fonts/fonts.css"/>
     <link rel="stylesheet" href="./style.css"/>
     <link rel="stylesheet" href="./styles/sidebar.css"/>
-    <link rel="stylesheet" href="./styles/contacts.css"/>
     <link rel="stylesheet" href="./styles/standard.css"/>
     <link rel="stylesheet" href="./styles/assets.css"/>
+    <link rel="stylesheet" href="./styles/contacts.css"/>
 
     <script src="./script.js"></script>
     <script src="./scripts/templates.js"></script>
@@ -30,26 +30,26 @@
                 </div>
                 <div class="sidebar__navbarcontainer">
                     <div class="sidebar__navbar">
-                        <div class="behind__sidebarbuttons">
-                            <a href="summary.html" class="sidebar__button">
-                                <img src="./assets/icons/summary_icon_white.png" alt="Summary">
-                                Summary
-                            </a>
-                        </div>
-                        <div class="behind__sidebarbuttons">
-                            <a href="add_task.html" class="sidebar__button">
-                                <img src="./assets/icons/add_task_icon_white.png" alt="Add Task">
-                                Add Task
-                            </a>
-                        </div>
-                        <div class="behind__sidebarbuttons">
-                            <a href="board.html" class="sidebar__button">
-                                <img src="./assets/icons/board_icon_white.png" alt="Board">
-                                Board
-                            </a>
-                        </div>
                         <div class="behind__sidebarbuttons sidebarbutton__open">
                             <button class="sidebar__button sidebarbutton__open">
+                                <img src="./assets/icons/summary_icon_white.png" alt="Summary">
+                                Summary
+                            </button>
+                        </div>
+                        <div class="behind__sidebarbuttons">
+                            <button class="sidebar__button">
+                                <img src="./assets/icons/add_task_icon_white.png" alt="Add Task">
+                                Add Task
+                            </button>
+                        </div>
+                        <div class="behind__sidebarbuttons">
+                            <button class="sidebar__button">
+                                <img src="./assets/icons/board_icon_white.png" alt="Board">
+                                Board
+                            </button>
+                        </div>
+                        <div class="behind__sidebarbuttons">
+                            <button class="sidebar__button">
                                 <img src="./assets/icons/contacts_icon_white.png" alt="Contacts">
                                 Contacts
                             </button>
@@ -57,10 +57,10 @@
                     </div>
                     <div class="sidebar__noticescontainer">
                         <div class="behind__noticesbuttons">
-                            <a href="privacy_policy.html" class="notices__button">Privacy Policy</a>
+                            <button class="notices__button">Privacy Policy</button>
                         </div>
-                        <div class="behind__noticesbuttons">
-                            <a href="legal_notice.html" class="notices__button">Legal notice</a>
+                        <div class="behind__noticesbuttons notices__buttonopen">
+                            <button class="notices__button notices__buttonopen">Legal notice</button>
                         </div>
                     </div>
                 </div>
@@ -80,19 +80,60 @@
                     </div>
                 </div>
             </header>
-            <main class="contact_main">
-                <div class="contact_table">
-                    <button class="add_contact button1">Add new Contact</button>
-                    <table class="contats" id="contacts">
-
-                    </table>
+            <main>
+                <div class="contacts__table">
+                    <button class="add__contact__button">
+                        Add new contact
+                        <img src="./assets/icons/person_add_icon_white.png" alt="Add Contact Icon">
+                    </button>
+                    <div class="contacts__container">
+                        <div class="contacts__sections">
+                            <h3 class="contacts__lettertext">A</h3>
+                            <div class="contacts__seperator"></div>
+                            <div class="contact__boxes">
+                                <div class="contact">
+                                    <div class="contacts__profilebadge">AM</div>
+                                    <div class="contact__informationbox">
+                                        <h3>Anton Mayer</h3>
+                                        <span class="contact__mailtext">antom@gmail.com</span>
+                                    </div>
+                                </div>
+                                <div class="contact">
+                                    <div class="contacts__profilebadge">AM</div>
+                                    <div class="contact__informationbox">
+                                        <h3>Anton Mayer</h3>
+                                        <span class="contact__mailtext">antom@gmail.com</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="contacts__sections">
+                            <h3 class="contacts__lettertext">B</h3>
+                            <div class="contacts__seperator"></div>
+                            <div class="contact__boxes">
+                                <div class="contact">
+                                    <div class="contacts__profilebadge">AM</div>
+                                    <div class="contact__informationbox">
+                                        <h3>Anton Mayer</h3>
+                                        <span class="contact__mailtext">antom@gmail.com</span>
+                                    </div>
+                                </div>
+                                <div class="contact">
+                                    <div class="contacts__profilebadge">AM</div>
+                                    <div class="contact__informationbox">
+                                        <h3>Anton Mayer</h3>
+                                        <span class="contact__mailtext">antom@gmail.com</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
                 </div>
                 <div class="contact_overview" id="contact__overview">
                     <h1>Contacts</h1>
                     <div class="the_contact_devider"></div>
                     <span class="contact_span">Better with a team</span>
                 </div>
-
             </main>
         </div>
     </div>
