@@ -4,21 +4,36 @@ main {
     gap: 64px;
     margin: 0;
     padding: 0;
-    width: 100%;
+    width: min(100%, calc(1920px - clamp(172px, 17vw, 232px)));
     height: 100%;
+    max-height: calc(100vh - 96px);
 }
 
 .contacts__table {
     background-color: #FFFFFF;
     height: 100%;
     box-shadow: 2px 0 6px #00000014;
-    padding: 32px 24px;
+    padding: 0px 24px 32px 24px;
     display: flex;
     flex-direction: column;
-    gap: 8px;
+    overflow-y: scroll;
+}
+
+.add__contact__button__container {
+    width: 100%;
+    background-color: white;
+    position: sticky;
+    top: 0;
+    z-index: 1000;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 42px 10px 10px 10px;
+    max-height: 101px;
 }
 
 .add__contact__button {
+    position: relative;
     border-radius: 10px;
     display: flex;
     align-items: center;
@@ -28,20 +43,25 @@ main {
     font-weight: 700;
     color: white;
     padding: 12px 64px;
+    border: 1px solid #2A3647;
+    transition: background-color 125ms, box-shadow 125ms, border 125ms;
 }
 
 .add__contact__button:hover {
+    border: 1px solid #29ABE2;
     background-color: #29ABE2;
     box-shadow: 0px 4px 4px 0 #00000040;
 }
 
 .add__contact__button:active {
+    border: 1px solid #091931;
     background-color: #091931;
 }
 
 .contacts__container {
     display: flex;
     flex-direction: column;
+    overflow-y: scroll;
 }
 
 .contacts__sections {
@@ -83,7 +103,6 @@ main {
     width: 42px;
     height: 42px;
     border-radius: 50%;
-    background-color: #FF7A00;
     border: solid 2px #FFFFFF;
 }
 
@@ -98,3 +117,25 @@ main {
     font-size: 16px;
     font-weight: 400;
 }
+
+.contact__overview {
+    display: flex;
+    flex-direction: column;
+}
+
+.contact__overview__header {
+    margin-top: 96px;
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 32px;
+}
+
+.contact__overview__header__seperator {
+    height: 59px;
+    width: 2px;
+    border: 1px solid #29ABE2;
+    background-color: #29ABE2;
+    border-radius: 3px;
+}
+

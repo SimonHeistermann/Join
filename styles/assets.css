@@ -10,6 +10,7 @@
 .help__button img {
     height: 24px;
     width: 24px;
+    transition: height 125ms ease-in-out, width 125ms ease-in-out;
 }
 
 .help__button:hover img {
@@ -29,6 +30,7 @@
     font-size: 20px;
     font-weight: 700;
     color: #29ABE2;
+    transition: background-color 125ms ease-in;
 }
 
 .profile__button:hover {

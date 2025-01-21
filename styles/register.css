@@ -53,6 +53,7 @@ header {
     background-color: #2A3647;
     border-radius: 8px;
     padding: 14px 24px;
+    transition: background-color 125ms ease-in, box-shadow 125ms;
 }
 
 .signup__button:hover {
@@ -347,6 +348,7 @@ main {
     font-size: 16px;
     font-weight: 400;
     color: #29ABE2;
+    transition: color 125ms, font-weight 75ms ease-in;
 }
 
 .privacy__policy__registertext:hover {
@@ -356,6 +358,7 @@ main {
 }
 
 footer {
+    z-index: 1000;
     display: flex;
     align-items: flex-start;
     justify-content: center;
@@ -377,6 +380,7 @@ footer {
     align-items: center;
     justify-content: center;
     color: #A8A8A8;
+    transition: color 125ms, font-weight 75ms ease-in;
 }
 
 .notices__button:hover {

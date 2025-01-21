@@ -22,3 +22,22 @@
     align-items: center;
     gap: 8px;
 }
+
+::-webkit-scrollbar {
+    width: 8px; 
+    background: #F6F7F8; 
+}
+
+::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    background: #A0A0A0; 
+    border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #8C8C8C;
+}
+
+::-webkit-scrollbar-track {
+    background: #FFFFFF; 
+}
