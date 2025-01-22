@@ -87,15 +87,15 @@
                 <div class="left_side">
                     <lable class="label" for="title">Title<div class="star">*</div></lable>
                     <input type="text" class="text_input" id="text__input" name="title" placeholder="Enter a title" required>
-                    <label class="label" for="description">Description</label>
-                    <textarea class="description" name="description" id="description" placeholder="Enter a Description"></textarea>
+                    <label class="label" for="short_description">Description</label>
+                    <textarea class="description" name="short_description" id="description" placeholder="Enter a Description"></textarea>
                     <label class="label" for="assigned_to">Assigned to</label>
                     <select class="assigned_to" name="assigned_to" id="assigned__to"></select>
                 </div>
                 <div class="the_divider"></div>
                 <div class="right_side">
-                    <label class="label" for="date">Due date<div class="star">*</div></label>
-                        <input type="date" class="date" id="date__input" name="date" placeholder="dd/mm/yyyy" required>
+                    <label class="label" for="due_date">Due date<div class="star">*</div></label>
+                        <input type="date" class="date" id="date__input" name="due_date" placeholder="dd/mm/yyyy" required>
                     <label class="label" for="prio">Prio</label>
                     <div class="radio_overall">
                         <label class="radio radio_urgend">
@@ -118,7 +118,7 @@
                         <option value="us">User Story</option>
                     </select>
                     <label for="subtask">Subtask</label>
-                    <input type="text" name="subtask" id="subtask" class="subtask" placeholder="Add new subtask">
+                    <input type="text" name="subtask" id="subtask" name="subtasks" class="subtask" placeholder="Add new subtask">
                     <div class="table_subtask" id="subtask_table"></div>
                 </div>
             </form>
