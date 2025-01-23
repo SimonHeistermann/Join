@@ -3,6 +3,7 @@ main {
     align-items: flex-start;
     gap: 64px;
     margin: 0;
+    margin-top: 96px;
     padding: 0;
     width: min(100%, calc(1920px - clamp(172px, 17vw, 232px)));
     height: 100%;
@@ -17,6 +18,7 @@ main {
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
+    z-index: 1000;
 }
 
 .add__contact__button__container {
@@ -295,4 +297,21 @@ main {
     color: black;
 }
 
+::-webkit-scrollbar {
+    width: 8px; 
+    background: #F6F7F8; 
+}
 
+::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    background: #A0A0A0; 
+    border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #8C8C8C;
+}
+
+::-webkit-scrollbar-track {
+    background: #FFFFFF; 
+}

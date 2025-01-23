@@ -34,6 +34,10 @@ h3 {
 }
 
 header {
+    position: fixed;
+    z-index: 1000;
+    margin-inline: auto;
+    width: min(100%, calc(1920px - clamp(172px, 17vw, 232px)));
     background: #ffff;
     display: flex;
     align-items: center;
@@ -44,7 +48,7 @@ header {
 main {
     display: flex;
     flex-direction: column;
-    margin-top: 64px;
+    margin-top: 160px;
     margin-bottom: 120px;
     width: min(100%, calc(1920px - clamp(172px, 17vw, 232px)));
     margin-inline: auto;
