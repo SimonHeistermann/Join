@@ -51,21 +51,30 @@ function checkPassword(){
 function registerUser(){
  let userID = users.length + 1;
  let form = document.getElementById('sign_up_form');
- let formData = new FormData(form); //hab ich aus dem Buch von Rheinwerk: FormData stellt im endeffekt bereits ein Objekt her, dass dann abgefrühstückt werden kann
-                                    //es kann dann über die for ...of schleife mit [key(name="") und value(input)] für jedes Element des Formulars ein Objekt erstellen weil es die 
+ let formData = new FormData(form); //hab ich aus dem Buch von Rheinwerk: FormData stellt im endeffekt bereits ein Objekt her, dass dann abgefrühstückt werden kann                    
+ let userObject ={};                //es kann dann über die for ...of schleife mit [key(name="") und value(input)] für jedes Element des Formulars ein Objekt erstellen weil es die
                                     //sachen durchgeht
- let userObject ={};
-
  for (let[key, value] of formData){
     userObject[key] = value;
  }
-
  let userWithId = {
     [userID]:userObject
  };
-
  users.push(userWithId);
-
+ resetForm();
  console.log(users);
- 
 }
+
+/**
+ * Setzt das Anmeldeformular und zugehörige Elemente zurück.
+ * Diese Funktion leert alle Eingabefelder innerhalb des Formulars,
+ * setzt insbesondere das Passwortbestätigungsfeld zurück und
+ * deaktiviert das Kontrollkästchen für die Zustimmung zur Datenschutzerklärung.
+ *
+ */
+function resetForm(){
+    document.getElementById('sign_up_form').reset();
+    document.getElementById('confirm_password_input_register').value = '';
+    document.getElementById('agree_privacy_policy').checked = false;
+}
+
