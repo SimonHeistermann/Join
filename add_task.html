@@ -4,133 +4,208 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link rel="icon" type="image/x-icon" href="./assets/icons/join_logo_favicon_dark.svg" media="(prefers-color-scheme: light)">
-    <link rel="icon" type="image/x-icon" href="./assets/icons/join_logo_favicon_white.svg" media="(prefers-color-scheme: dark)">
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="./assets/icons/join_logo_favicon_dark.svg"
+      media="(prefers-color-scheme: light)"
+    />
+    <link
+      rel="icon"
+      type="image/x-icon"
+      href="./assets/icons/join_logo_favicon_white.svg"
+      media="(prefers-color-scheme: dark)"
+    />
 
     <title>Add Task</title>
 
-    <link rel="stylesheet" href="./assets/fonts/fonts.css"/>
-    <link rel="stylesheet" href="./style.css"/>
-    <link rel="stylesheet" href="./styles/sidebar.css"/>
-    <link rel="stylesheet" href="./styles/add_task.css"/>
-    <link rel="stylesheet" href="./styles/standard.css"/>
-    <link rel="stylesheet" href="./styles/assets.css"/>
-    <link rel="stylesheet" href="./styles/bgcolors.css"/>
+    <link rel="stylesheet" href="./assets/fonts/fonts.css" />
+    <link rel="stylesheet" href="./style.css" />
+    <link rel="stylesheet" href="./styles/sidebar.css" />
+    <link rel="stylesheet" href="./styles/add_task.css" />
+    <link rel="stylesheet" href="./styles/standard.css" />
+    <link rel="stylesheet" href="./styles/assets.css" />
+    <link rel="stylesheet" href="./styles/bgcolors.css" />
 
     <script src="./script.js"></script>
     <script src="./scripts/templates.js"></script>
     <script src="./scripts/add_task.js"></script>
     <script src="./scripts/assets.js"></script>
-</head>
-<body id="body" onload="">
+  </head>
+  <body id="body" onload="">
     <div class="overall">
-        <div class="sidebar">
-            <div class="sidebar__container">
-                <div class="sidebar__logocontainer">
-                    <img src="./assets/icons/logo_sidebar.png" alt="Join Logo">
-                </div>
-                <div class="sidebar__navbarcontainer">
-                    <div class="sidebar__navbar">
-                        <div class="behind__sidebarbuttons">
-                            <a href="summary.html" class="sidebar__button">
-                                <img src="./assets/icons/summary_icon_white.png" alt="Summary">
-                                Summary
-                            </a>
-                        </div>
-                        <div class="behind__sidebarbuttons sidebarbutton__open">
-                            <button class="sidebar__button sidebarbutton__open">
-                                <img src="./assets/icons/add_task_icon_white.png" alt="Add Task">
-                                Add Task
-                            </button>
-                        </div>
-                        <div class="behind__sidebarbuttons">
-                            <a href="board.html" class="sidebar__button">
-                                <img src="./assets/icons/board_icon_white.png" alt="Board">
-                                Board
-                            </a>
-                        </div>
-                        <div class="behind__sidebarbuttons">
-                            <a href="contacts.html" class="sidebar__button">
-                                <img src="./assets/icons/contacts_icon_white.png" alt="Contacts">
-                                Contacts
-                            </a>
-                        </div>
-                    </div>
-                    <div class="sidebar__noticescontainer">
-                        <div class="behind__noticesbuttons">
-                            <a href="privacy_policy.html" class="notices__button">Privacy Policy</a>
-                        </div>
-                        <div class="behind__noticesbuttons">
-                            <a href="legal_notice.html" class="notices__button">Legal notice</a>
-                        </div>
-                    </div>
-                </div>
+      <div class="sidebar">
+        <div class="sidebar__container">
+          <div class="sidebar__logocontainer">
+            <img src="./assets/icons/logo_sidebar.png" alt="Join Logo" />
+          </div>
+          <div class="sidebar__navbarcontainer">
+            <div class="sidebar__navbar">
+              <div class="behind__sidebarbuttons">
+                <a href="summary.html" class="sidebar__button">
+                  <img
+                    src="./assets/icons/summary_icon_white.png"
+                    alt="Summary"
+                  />
+                  Summary
+                </a>
+              </div>
+              <div class="behind__sidebarbuttons sidebarbutton__open">
+                <button class="sidebar__button sidebarbutton__open">
+                  <img
+                    src="./assets/icons/add_task_icon_white.png"
+                    alt="Add Task"
+                  />
+                  Add Task
+                </button>
+              </div>
+              <div class="behind__sidebarbuttons">
+                <a href="board.html" class="sidebar__button">
+                  <img src="./assets/icons/board_icon_white.png" alt="Board" />
+                  Board
+                </a>
+              </div>
+              <div class="behind__sidebarbuttons">
+                <a href="contacts.html" class="sidebar__button">
+                  <img
+                    src="./assets/icons/contacts_icon_white.png"
+                    alt="Contacts"
+                  />
+                  Contacts
+                </a>
+              </div>
             </div>
-        </div>
-        <div class="content__right">
-            <header>
-                <div class="header__container">
-                    <h3>Kanban Project Management Tool</h3>
-                    <div class="headerbox__right">
-                        <button class="help__button">
-                            <img src="./assets/icons/help_icon.png" alt="Help">
-                        </button>
-                        <button class="profile__button">
-                            SM
-                        </button>
-                    </div>
-                </div>
-            </header>
-            <main class="add_task_main">
-                <h1>Add Task</h1>
-            <form class="inputfields">
-                <div class="left_side">
-                    <lable class="label" for="title">Title<div class="star">*</div></lable>
-                    <input type="text" class="text_input" id="text__input" name="title" placeholder="Enter a title" required>
-                    <label class="label" for="description">Description</label>
-                    <textarea class="description" name="description" id="description" placeholder="Enter a Description"></textarea>
-                    <label class="label" for="assigned_to">Assigned to</label>
-                    <select class="assigned_to" name="assigned_to" id="assigned__to"></select>
-                </div>
-                <div class="the_divider"></div>
-                <div class="right_side">
-                    <label class="label" for="date">Due date<div class="star">*</div></label>
-                        <input type="date" class="date" id="date__input" name="date" placeholder="dd/mm/yyyy" required>
-                    <label class="label" for="prio">Prio</label>
-                    <div class="radio_overall">
-                        <label class="radio radio_urgend">
-                            <input type="radio" name="prio" value="1" onclick="">
-                            Urgent <img src="assets/icons/Property 1=Urgent.png" alt="↑">
-                        </label>
-                        <label class="radio radio_medium">
-                            <input type="radio" name="prio" value="2" checked onclick="">
-                            Medium <img src="assets/icons/Property 1=Medium.png" alt="=">
-                        </label>
-                        <label class="radio radio_low">
-                            <input type="radio" name="prio" value="3" onclick="">
-                            Low <img src="assets/icons/Property 1=Low.png" alt="↓">
-                        </label>
-                    </div>
-                    <label class="label" for="category">Category <div class="star">*</div></label>
-                    <select type="select" name="category" class="category" required>
-                        <option value="">Select task category</option>
-                        <option value="tt">Technikal Task</option>
-                        <option value="us">User Story</option>
-                    </select>
-                    <label for="subtask">Subtask</label>
-                    <input type="text" name="subtask" id="subtask" class="subtask" placeholder="Add new subtask">
-                    <div class="table_subtask" id="subtask_table"></div>
-                </div>
-            </form>
-            <div class="text_and_buttons">
-                    <div class="is_required"><div class="star">*</div>This field is required</div>
-                    <div class="task_butons">
-                        <button class="secondary_button clear" onclick="">Clear<img></button>
-                        <button class="button1 create_task" disabled onclick="">Create Task<img></button>
-                    </div>
+            <div class="sidebar__noticescontainer">
+              <div class="behind__noticesbuttons">
+                <a href="privacy_policy.html" class="notices__button"
+                  >Privacy Policy</a
+                >
+              </div>
+              <div class="behind__noticesbuttons">
+                <a href="legal_notice.html" class="notices__button"
+                  >Legal notice</a
+                >
+              </div>
             </div>
-            </main>
+          </div>
         </div>
+      </div>
+      <div class="content__right">
+        <header>
+          <div class="header__container">
+            <h3>Kanban Project Management Tool</h3>
+            <div class="headerbox__right">
+              <button class="help__button">
+                <img src="./assets/icons/help_icon.png" alt="Help" />
+              </button>
+              <button class="profile__button">SM</button>
+            </div>
+          </div>
+        </header>
+
+        <main class="add__task__main">
+          <h1>Add Task</h1>
+          <form class="inputfields">
+            <div class="left_side">
+              <lable class="label" for="title"
+                >Title
+                <div class="star">*</div></lable
+              >
+              <input
+                type="text"
+                class="text_input"
+                id="text__input"
+                name="title"
+                placeholder="Enter a title"
+                required
+              />
+              <label class="label" for="description">Description</label>
+              <textarea
+                class="description"
+                name="description"
+                id="description"
+                placeholder="Enter a Description"
+              ></textarea>
+              <label class="label" for="assigned_to">Assigned to</label>
+              <select
+                class="assigned_to"
+                name="assigned_to"
+                id="assigned__to"
+              ></select>
+            </div>
+            <div class="the_divider"></div>
+            <div class="right_side">
+              <label class="label" for="date"
+                >Due date
+                <div class="star">*</div></label
+              >
+              <input
+                type="date"
+                class="date"
+                id="date__input"
+                name="date"
+                placeholder="dd/mm/yyyy"
+                required
+              />
+              <label class="label" for="prio">Prio</label>
+              <div class="radio_overall">
+                <label class="radio radio_urgend">
+                  <input type="radio" name="prio" value="1" onclick="" />
+                  Urgent
+                  <img src="assets/icons/Property 1=Urgent.png" alt="↑" />
+                </label>
+                <label class="radio radio_medium">
+                  <input
+                    type="radio"
+                    name="prio"
+                    value="2"
+                    checked
+                    onclick=""
+                  />
+                  Medium
+                  <img src="assets/icons/Property 1=Medium.png" alt="=" />
+                </label>
+                <label class="radio radio_low">
+                  <input type="radio" name="prio" value="3" onclick="" />
+                  Low <img src="assets/icons/Property 1=Low.png" alt="↓" />
+                </label>
+              </div>
+              <label class="label" for="category"
+                >Category
+                <div class="star">*</div></label
+              >
+              <select type="select" name="category" class="category" required>
+                <option value="">Select task category</option>
+                <option value="tt">Technikal Task</option>
+                <option value="us">User Story</option>
+              </select>
+              <label for="subtask">Subtask</label>
+              <input
+                type="text"
+                name="subtask"
+                id="subtask"
+                class="subtask"
+                placeholder="Add new subtask"
+              />
+              <div class="table_subtask" id="subtask_table"></div>
+            </div>
+          </form>
+          <div class="text_and_buttons">
+            <div class="is_required">
+              <div class="star">*</div>
+              This field is required
+            </div>
+            <div class="task_butons">
+              <button class="secondary_button clear" onclick="">
+                Clear<img />
+              </button>
+              <button class="button1 create_task" disabled onclick="">
+                Create Task<img />
+              </button>
+            </div>
+          </div>
+        </main>
+      </div>
     </div>
-</body>
+  </body>
 </html>
