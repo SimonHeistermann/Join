@@ -3,10 +3,12 @@ main {
     align-items: flex-start;
     gap: 64px;
     margin: 0;
+    margin-top: 96px;
     padding: 0;
     width: min(100%, calc(1920px - clamp(172px, 17vw, 232px)));
     height: 100%;
     max-height: calc(100vh - 96px);
+    overflow-x: hidden;
 }
 
 .contacts__table {
@@ -17,6 +19,7 @@ main {
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
+    z-index: 1000;
 }
 
 .add__contact__button__container {
@@ -91,6 +94,23 @@ main {
     align-items: center;
     gap: 36px;
     padding: 16px 36px;
+    border-radius: 10px;
+    transition: background 125ms, box-shadow 75ms ;
+}
+
+.contact:hover {
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+    background: linear-gradient(90deg, #F9F9F9 0%, #F0F0F0 100%);
+}
+
+.contacts__active {
+    background: #2A3647;
+}
+
+.contacts__active:hover {
+    background: #2A3647;
+    box-shadow: 0;
 }
 
 .contacts__profilebadge {
@@ -121,6 +141,7 @@ main {
 .contact__overview {
     display: flex;
     flex-direction: column;
+    gap: 32px;
 }
 
 .contact__overview__header {
@@ -139,3 +160,179 @@ main {
     border-radius: 3px;
 }
 
+.contact__overwiev__content {
+    display: flex;
+    flex-direction: column;
+    gap: 48px;
+}
+
+.contact__name__box {
+    display: flex;
+    align-items: center;
+    gap: 64px;
+}
+
+.contacts__profilebadge__big {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 47px;
+    color: white;
+    font-weight: 500;
+    width: 120px;
+    height: 120px;
+    border-radius: 50%;
+    border: solid 3px #FFFFFF;
+    box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.contacts__name__box__right {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.contact__name__bigtext {
+    font-size: 47px;
+    font-weight: 500;
+}
+
+.contact__buttons__container {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+}
+
+.edit__contact__button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    font-size: 16px;
+    font-weight: 400;
+    color: #2A3647;
+    transition: color 125ms, font-weight 75ms ease-in;
+    width: 73px;
+}
+
+.edit__contact__button:hover {
+    color: #29ABE2;
+    font-weight: 700;
+}
+
+.edit__contact__button:hover .edit__icon__default {
+    display: none;
+}
+
+.edit__contact__button:hover .edit__icon__hover {
+    display: block;
+}
+
+.edit__icon__default {
+    width: 24px;
+    height: 24px;
+}
+
+.edit__icon__hover {
+    width: 24px;
+    height: 24px;
+    display: none;
+}
+
+.delete__contact__button {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    background: transparent;
+    font-size: 16px;
+    font-weight: 400;
+    color: #2A3647;
+    transition: color 125ms, font-weight 75ms ease-in;
+    width: 73px;
+}
+
+.delete__contact__button:hover {
+    color: #29ABE2;
+    font-weight: 700;
+}
+
+.delete__contact__button:hover .delete__icon__default {
+    display: none;
+}
+
+.delete__contact__button:hover .delete__icon__hover {
+    display: block;
+}
+
+.delete__icon__default {
+    width: 24px;
+    height: 24px;
+}
+
+.delete__icon__hover {
+    display: none;
+}
+
+.contact__information__boxes {
+    display: flex;
+    flex-direction: column;
+    gap: 24px;
+}
+
+.contact__information__containers {
+    display: flex;
+    flex-direction: column;
+    gap: 16px;
+}
+
+.contact__information__headlines {
+    font-size: 16px;
+    font-weight: 700;
+    color: black;
+}
+
+.contact__phonenumber {
+    cursor: pointer;
+    font-size: 16px;
+    font-weight: 400;
+    color: black;
+}
+
+::-webkit-scrollbar {
+    width: 8px; 
+    background: #F6F7F8; 
+}
+
+::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    background: #A0A0A0; 
+    border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #8C8C8C;
+}
+
+::-webkit-scrollbar-track {
+    background: #FFFFFF; 
+}
+
+.contact__created__notification {
+    position: relative;
+    margin-top: 64px;
+    right: -1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 326px;
+    height: 76px;
+    border-radius: 20px;
+    background-color: #2A3647;
+    color: white;
+    box-shadow: 0px 0px 4px 0px #00000026;
+    transition: transform 125ms ease-in-out;
+}
+
+.contact__created__notification__active {
+    transform: translateX(-1000px);
+}

@@ -31,7 +31,7 @@
     <main>
     </main>
     <div class="main__content">
-        <form class="register__container">
+        <div class="register__container">
                 <div class="register__headlinecontainer">
                     <button class="back__button">
                         <img class="thin__back__button" src="./assets/icons/arrow_left_icon_light_blue_thin.png" alt="Arrow Left">
@@ -43,26 +43,28 @@
                     </div>
                 </div>
             <div class="register__inputbox">
-                <div class="person__container">
-                    <input class="person__input" id="person_input_register" required type="text" placeholder="Name">
-                    <label for="person_input_register">
-                        <img class="person__logo" src="./assets/icons/person_icon_gray.png" alt="Person Icon">
-                    </label>
-                </div>
-                <div class="email__container">
-                    <input class="email__input" id="email_input_register" required type="email" placeholder="Email" autocomplete="email">
-                    <label for="email_input_register">
-                        <img class="email__logo" src="./assets/icons/mail_icon_gray.png" alt="Email Icon">
-                    </label>
-                </div>
-                <div class="password__container">
-                    <input class="password__input" required id="password_input_register" type="password" placeholder="Password" autocomplete="current-password" oninput="maskPassword(this)">
-                    <label for="password_input_register">
-                        <img class="lock__icon" src="./assets/icons/lock_icon_gray.png" alt="Lock Icon">
-                        <img class="novisibility__icon" src="./assets/icons/visibility_off_icon_gray.png" alt="No Visibility Icon">
-                        <img class="visibility__icon" src="./assets/icons/eye_icon_gray.png" alt="Visibility Icon">
-                    </label>
-                </div>
+                <form id="sign_up_form" class="register__inputbox">
+                    <div class="person__container">
+                        <input class="person__input" id="person_input_register" required type="text" name="name" placeholder="Name">
+                        <label for="person_input_register">
+                            <img class="person__logo" src="./assets/icons/person_icon_gray.png" alt="Person Icon">
+                        </label>
+                    </div>
+                    <div class="email__container">
+                        <input class="email__input" id="email_input_register" required type="email" name ="email" placeholder="Email" autocomplete="email">
+                        <label for="email_input_register">
+                            <img class="email__logo" src="./assets/icons/mail_icon_gray.png" alt="Email Icon">
+                        </label>
+                    </div>
+                    <div class="password__container">
+                        <input class="password__input" required id="password_input_register" type="password" name="pw" placeholder="Password" autocomplete="current-password" oninput="maskPassword(this)">
+                        <label for="password_input_register">
+                            <img class="lock__icon" src="./assets/icons/lock_icon_gray.png" alt="Lock Icon">
+                            <img class="novisibility__icon" src="./assets/icons/visibility_off_icon_gray.png" alt="No Visibility Icon">
+                            <img class="visibility__icon" src="./assets/icons/eye_icon_gray.png" alt="Visibility Icon">
+                        </label>
+                    </div>
+                </form>
                 <div class="password__box">
                     <div class="password__container">
                         <input class="password__input" required id="confirm_password_input_register" type="password" placeholder="Confirm Password" autocomplete="current-password" oninput="maskPassword(this)">
@@ -85,9 +87,14 @@
                   </div>
             </div>
             <div class="register__buttonbox">
-                <button class="signup__button">Sign up</button>
+                <button class="signup__button" onclick="submitUser()">Sign up</button>
             </div>
-        </form>
+        </div>
+        <!--Signed up notification overlay-->
+        <div class="signed__up__notification" id="signed_up_notification">
+            <h3>You Signed Up successfully</h3> 
+
+        </div>
     </div>
     <footer>
         <div class="footer__container">

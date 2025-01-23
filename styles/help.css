@@ -7,11 +7,11 @@
     display: inline;
 }
 
-.main_help{
+.main__help{
     max-width: 1200px;
 }
 
-.headline_help{
+.headline__help{
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -19,7 +19,7 @@
     margin-bottom: 32px;
 }
 
-.back_button {
+.back__button {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -29,51 +29,52 @@
     position: relative;
 }
 
-.back_button:hover .thin_back_button {
+.back__button:hover .thin__back__button {
    display: none;
 }
 
-.back_button:hover .thick_back_button {
+.back__button:hover .thick__back__button {
     display: block;
  }
 
-.thick_back_button {
+.thick__back__button {
     display: none;
 }
 
-.container_1{
+.container__1{
     margin-bottom: 24px;
 }
 
-.what_is_join{
+.what__is__join{
     margin-bottom: 24px;
 }
 
 ol {
-    counter-reset: list-counter; /* Initialisiert den Zähler */
+    counter-reset: list-counter;
     padding-left: 0;
 }
 
-/* Stile für die Listenelemente */
 ol li {
-    counter-increment: list-counter; /* Erhöht den Zähler */
-    margin-bottom: 20px; /* Abstand zwischen den Elementen */
-    list-style: none; /* Entfernt die Standardnummerierung */
-    display: flex; /* Nutzt Flexbox für Nummer und Text */
-    align-items: flex-start; /* Ausrichtung der Nummer und des Textes */
+    counter-increment: list-counter;
+    margin-bottom: 20px;
+    list-style: none;
+    display: flex; 
+    align-items: flex-start; 
 }
 
-
-
-/* Pseudo-Element für die Nummerierung */
 ol li::before {
-    content: counter(list-counter) "."; /* Fügt die Nummer ein */
+    content: counter(list-counter) "."; 
     display: inline-block;
-    font-size: 2em; /* Vergrößert die Nummer wie ein h2 */
-    font-weight: bold; /* Fettgedruckt wie h2 */
-    color: #333; /* Farbe der Nummer */
-    margin-right: 15px; /* Abstand zwischen Nummer und Text */
-    min-width: 30px; /* Sorgt für Konsistenz bei der Breite der Nummer */
+    font-size: 2em; 
+    font-weight: bold; 
+    color: #333; 
+    margin-right: 15px; 
+    min-width: 30px; 
+}
+
+::-webkit-scrollbar {
+    width: 0; 
+    background: #F6F7F8; 
 }
 
 
