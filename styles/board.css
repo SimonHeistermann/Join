@@ -92,7 +92,7 @@ img {
   flex-direction: column;
 
   width: 100%;
-  height: 688px;
+  height: 100vh;
 
   padding: 0px 64px 0px 64px;
   gap: 24px;
@@ -325,6 +325,7 @@ p {
   border-radius: 23px;
   height: 100%;
   padding: 8px 25px;
+  display: none;
 }
 
 .close__btn {
@@ -345,9 +346,8 @@ p {
   height: auto;
   padding: 25px 35px;
   transition: 05s ease-in;
-  width: 80%;
-  height: 100%;
-  z-index: 999;
+  width: 100%;
+  min-height: 100vh;
 }
 .text_and_buttons {
   display: flex;
