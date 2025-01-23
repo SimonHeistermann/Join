@@ -314,7 +314,7 @@
     font-weight: 500;
     color: #2A3647;
     width: 126px;
-    height: 56px;
+    height: 55px;
     border-radius: 10px;
     border: solid 1px #2A3647;
     transition: background-color 125ms ease-in, box-shadow 125ms, border 125ms ease-in;
@@ -368,6 +368,69 @@
     background-color: #091931;
     box-shadow: 0 4px 4px  #00000040;
 }
+
+.delete__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: transparent;
+    font-size: 21px;
+    font-weight: 500;
+    color: #2A3647;
+    width: 113px;
+    height: 55px;
+    border-radius: 10px;
+    border: solid 1px #2A3647;
+    transition: background-color 125ms ease-in, box-shadow 125ms, border 125ms ease-in;
+}
+
+.delete__button:hover {
+    border: solid 1px #29ABE2;
+    color: #29ABE2;
+    box-shadow: 0 4px 4px  #00000040;
+}
+
+.delete__button:active {
+    border: solid 1px #091931;
+    color: #091931;
+    box-shadow: 0 4px 4px  #00000040;
+}
+
+.save__button {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 111px;
+    height: 55px;
+    gap: 4px;
+    font-size: 21px;
+    font-weight: 700;
+    color: white;
+    background-color: #2A3647;
+    border-radius: 10px;
+    transition: background-color 125ms ease-in, box-shadow 125ms;
+}
+
+.save__button:hover {
+    background-color: #29ABE2;
+    box-shadow: 0 4px 4px  #00000040;
+}
+
+.save__button:active {
+    background-color: #091931;
+    box-shadow: 0 4px 4px  #00000040;
+}
+
+.edit__contact__buttonbox {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    position: relative;
+    left: 8px;
+}
+
+
+
 
 
 

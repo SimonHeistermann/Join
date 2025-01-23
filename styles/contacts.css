@@ -8,6 +8,7 @@ main {
     width: min(100%, calc(1920px - clamp(172px, 17vw, 232px)));
     height: 100%;
     max-height: calc(100vh - 96px);
+    overflow-x: hidden;
 }
 
 .contacts__table {
@@ -314,4 +315,24 @@ main {
 
 ::-webkit-scrollbar-track {
     background: #FFFFFF; 
+}
+
+.contact__created__notification {
+    position: relative;
+    margin-top: 64px;
+    right: -1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 326px;
+    height: 76px;
+    border-radius: 20px;
+    background-color: #2A3647;
+    color: white;
+    box-shadow: 0px 0px 4px 0px #00000026;
+    transition: transform 125ms ease-in-out;
+}
+
+.contact__created__notification__active {
+    transform: translateX(-1000px);
 }
