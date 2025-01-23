@@ -336,7 +336,7 @@ p {
 
 .popup__overlay {
   position: fixed;
-  top: 0px;
+  top: 100px;
   left: 250px;
   display: none;
 
