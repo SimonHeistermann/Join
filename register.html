@@ -20,7 +20,7 @@
     <script src="./scripts/register.js"></script>
     <script src="./scripts/assets.js"></script>
 </head>
-<body id="body" onload="">
+<body id="body" class="body__register" onload="">
   <header>
         <div class="header__container">
             <div class="register__logocontainer" id="small_logo_container">
@@ -89,13 +89,14 @@
                     <button class="signup__button" onclick="submitUser()">Sign up</button>
                 </div>
             </div>
-            <!--Signed up notification overlay-->
-            <div class="overlay__signed__up d__none " id="overlay_signed_up"></div>
-            <div class="signed__up__notification" id="signed_up_notification">
-                    <h3>You Signed Up successfully</h3> 
-
-            </div>
+            
         </div>
+            <!--Signed up notification overlay-->
+    <div class="overlay__signed__up d__none " id="overlay_signed_up"></div>
+    <div class="signed__up__notification" id="signed_up_notification">
+            <h3>You Signed Up successfully</h3> 
+
+    </div>
     </main>
     <footer>
         <div class="footer__container">
@@ -103,5 +104,6 @@
             <button class="notices__button rightfooter__button">Legal notice</button>
         </div>
     </footer>
+
 </body>
 </html>
