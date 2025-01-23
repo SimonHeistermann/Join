@@ -15,6 +15,7 @@
     <link rel="stylesheet" href="./styles/standard.css"/>
     <link rel="stylesheet" href="./styles/assets.css"/>
     <link rel="stylesheet" href="./styles/contacts.css"/>
+    <link rel="stylesheet" href="./styles/add_and_edit_contact.css"/>
     <link rel="stylesheet" href="./styles/bgcolors.css"/>
 
     <script src="./script.js"></script>
@@ -207,8 +208,139 @@
                             </div>
                         </div>
                     </div>
+                    <!--Contact succ.. created overlay-->
+                    <div class="contact__created__notification" id="contact_created_notification">
+                        <h3>Contact succesfully created</h3> 
+                    </div>
                 </div>
             </main>
+        </div>
+    </div>
+    <!--Add Contact Overlay-->
+    <div class="overlay d__none">
+        <div class="overlay__content">
+            <div class="add__contact__overlay">
+                <div class="add__contact__overlay__left">
+                    <div class="add__contact__overlay__left__content">
+                        <img src="./assets/icons/logo_add_contact_overlay.png" alt="Join Logo">
+                        <h1>Add contact</h1>
+                        <h2>Tasks are better with a team!</h2>
+                        <div class="add__contact__overlay__seperator"></div>
+                    </div>
+                </div>
+                <div class="add__contact__overlay__right">
+                    <div class="close__button__box">  
+                        <button class="close__button">
+                            <img class="close__button__img" src="./assets/icons/close_icon_blue.png" alt="Close Icon">
+                            <img class="close__button__hover__img" src="./assets/icons/close_icon_blue_hover.png" alt="Close Icon Hover">
+                        </button>
+                    </div>
+                    <form onsubmit="" class="add__contact__form">
+                        <div class="add__contact__container">
+                            <div class="default__profilebadge">
+                                <img src="./assets/icons/person_icon_white.png" alt="Person">
+                            </div>
+                            <div class="add__contact__inputbox">
+                                <div class="person__container">
+                                    <input class="person__input" id="person_input_add_contact" required type="text" name="name" placeholder="Name">
+                                    <label for="person_input_add_contact">
+                                        <img class="person__logo" src="./assets/icons/person_icon_gray.png" alt="Person Icon">
+                                    </label>
+                                </div>
+                                <div class="email__container">
+                                    <input class="email__input" id="email_input_add_contact" required type="email" name ="email" placeholder="Email" autocomplete="email">
+                                    <label for="email_input_add_contact">
+                                        <img class="email__logo" src="./assets/icons/mail_icon_gray.png" alt="Email Icon">
+                                    </label>
+                                </div>
+                                <div class="phone__box">
+                                    <div class="phone__container">
+                                        <input class="phone__input" id="phone_input_add_contact" required type="tel" name ="phone" placeholder="Phone" autocomplete="tel">
+                                        <label for="phone_input_add_contact">
+                                            <img class="phone__logo" src="./assets/icons/phone_icon_gray.png" alt="Phone Icon">
+                                        </label>
+                                    </div>
+                                    <div class="errormessage__box">
+                                        This field is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="add__contact__buttonbox">
+                            <button class="cancel__button">
+                                Cancel
+                                <img class="cancel__button__img" src="./assets/icons/cancel_icon_blue.png" alt="Cancel Icon">
+                                <img class="cancel__button__img__hover" src="./assets/icons/cancel_icon_lightblue.png" alt="Cancel Icon">
+                            </button>
+                            <button class="create__contact__button">
+                                Create contact
+                                <img src="./assets/icons/hook_icon_white.png" alt="Hook Icon">
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+    <!--Edit Contact Overlay-->
+    <div class="overlay d__none">
+        <div class="overlay__content">
+            <div class="add__contact__overlay">
+                <div class="add__contact__overlay__left">
+                    <div class="add__contact__overlay__left__content">
+                        <img src="./assets/icons/logo_add_contact_overlay.png" alt="Join Logo">
+                        <h1>Edit contact</h1>
+                        <div class="add__contact__overlay__seperator"></div>
+                    </div>
+                </div>
+                <div class="add__contact__overlay__right">
+                    <div class="close__button__box">  
+                        <button class="close__button">
+                            <img class="close__button__img" src="./assets/icons/close_icon_blue.png" alt="Close Icon">
+                            <img class="close__button__hover__img" src="./assets/icons/close_icon_blue_hover.png" alt="Close Icon Hover">
+                        </button>
+                    </div>
+                    <form onsubmit="" class="add__contact__form">
+                        <div class="add__contact__container">
+                            <div class="contacts__profilebadge__big bgcolor__1">
+                                AM
+                            </div>
+                            <div class="add__contact__inputbox">
+                                <div class="person__container">
+                                    <input class="person__input" id="person_input_add_contact" required type="text" name="name" placeholder="Name">
+                                    <label for="person_input_add_contact">
+                                        <img class="person__logo" src="./assets/icons/person_icon_gray.png" alt="Person Icon">
+                                    </label>
+                                </div>
+                                <div class="email__container">
+                                    <input class="email__input" id="email_input_add_contact" required type="email" name ="email" placeholder="Email" autocomplete="email">
+                                    <label for="email_input_add_contact">
+                                        <img class="email__logo" src="./assets/icons/mail_icon_gray.png" alt="Email Icon">
+                                    </label>
+                                </div>
+                                <div class="phone__box">
+                                    <div class="phone__container">
+                                        <input class="phone__input" id="phone_input_add_contact" required type="tel" name ="phone" placeholder="Phone" autocomplete="tel">
+                                        <label for="phone_input_add_contact">
+                                            <img class="phone__logo" src="./assets/icons/phone_icon_gray.png" alt="Phone Icon">
+                                        </label>
+                                    </div>
+                                    <div class="errormessage__box">
+                                        This field is required.
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                        <div class="edit__contact__buttonbox">
+                            <button class="delete__button">Delete</button>
+                            <button class="save__button">
+                                Save
+                                <img src="./assets/icons/hook_icon_white.png" alt="Hook Icon">
+                            </button>
+                        </div>
+                    </form>
+                </div>
+            </div>
         </div>
     </div>
 </body>

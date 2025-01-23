@@ -3,10 +3,12 @@ main {
     align-items: flex-start;
     gap: 64px;
     margin: 0;
+    margin-top: 96px;
     padding: 0;
     width: min(100%, calc(1920px - clamp(172px, 17vw, 232px)));
     height: 100%;
     max-height: calc(100vh - 96px);
+    overflow-x: hidden;
 }
 
 .contacts__table {
@@ -17,6 +19,7 @@ main {
     display: flex;
     flex-direction: column;
     overflow-y: scroll;
+    z-index: 1000;
 }
 
 .add__contact__button__container {
@@ -295,4 +298,41 @@ main {
     color: black;
 }
 
+::-webkit-scrollbar {
+    width: 8px; 
+    background: #F6F7F8; 
+}
 
+::-webkit-scrollbar-thumb {
+    cursor: pointer;
+    background: #A0A0A0; 
+    border-radius: 10px; 
+}
+
+::-webkit-scrollbar-thumb:hover {
+    background: #8C8C8C;
+}
+
+::-webkit-scrollbar-track {
+    background: #FFFFFF; 
+}
+
+.contact__created__notification {
+    position: relative;
+    margin-top: 64px;
+    right: -1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 326px;
+    height: 76px;
+    border-radius: 20px;
+    background-color: #2A3647;
+    color: white;
+    box-shadow: 0px 0px 4px 0px #00000026;
+    transition: transform 125ms ease-in-out;
+}
+
+.contact__created__notification__active {
+    transform: translateX(-1000px);
+}

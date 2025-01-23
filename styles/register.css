@@ -395,3 +395,22 @@ footer {
 .rightfooter__button {
     width: 107px;
 }
+
+.signed__up__notification {
+    position: fixed;
+    bottom: -1000px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 312px;
+    height: 74px;
+    border-radius: 20px;
+    background-color: #2A3647;
+    color: white;
+    box-shadow: 0px 0px 4px 0px #00000026;
+    transition: transform 125ms ease-in-out;
+}
+
+.signed__up__notification__active {
+    transform: translateY(-1450px);
+}
