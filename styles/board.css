@@ -96,7 +96,6 @@ img {
 
   padding: 0px 64px 0px 64px;
   gap: 24px;
-  opacity: 0px;
 }
 
 .columns {
@@ -146,6 +145,7 @@ h2 {
 
 .task {
   width: 252px;
+  height: auto;
   background: #fafafa;
   padding: 16px;
   border-radius: 24px;
@@ -185,6 +185,13 @@ p {
 
 .progress {
   background: #e0e0e0;
+  border-radius: 4px;
+  height: 6px;
+  width: 100%;
+  margin: 8px 0;
+}
+.progress__empty {
+  background: #f4f4f4;
   border-radius: 4px;
   height: 6px;
   width: 100%;
@@ -300,4 +307,68 @@ p {
   .subtasks {
     font-size: 8px;
   }
+}
+@media (max-width: 1200px) {
+  .inputfields {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    width: 100%;
+  }
+}
+
+.add__task__main {
+  width: fit-content;
+  padding: 0 10px 0 25px;
+  background: #ffffff;
+  border-radius: 23px;
+  height: 100%;
+  padding: 8px 25px;
+}
+
+.close__btn {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  cursor: pointer;
+}
+
+.popup__overlay {
+  position: fixed;
+  top: 100px;
+  left: 250px;
+  display: none;
+
+  background: white;
+  border-radius: 16px;
+  height: auto;
+  padding: 25px 35px;
+  transition: 05s ease-in;
+  width: 80%;
+  height: 100%;
+  z-index: 999;
+}
+.text_and_buttons {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.task_butons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+.secondary_button {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
+}
+.button1 {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 8px;
 }
