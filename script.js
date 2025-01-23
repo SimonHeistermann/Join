@@ -1,6 +1,9 @@
 let users = [];
 let tasks = [];
 let contacts = [];
+let contactUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/contacts"
+let tasksUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/tasks"
+let usersUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/users"
 
 
 // --> Nur falls du damit arbeiten möchtest, hier einmal das aus dem Chat :)
