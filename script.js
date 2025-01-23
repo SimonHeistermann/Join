@@ -1,3 +1,8 @@
+let users = [];
+let tasks = [];
+let contacts = [];
+
+
 // --> Nur falls du damit arbeiten möchtest, hier einmal das aus dem Chat :)
 
 const BASE_URL = "";
@@ -53,4 +58,3 @@ async function putData(path = "", data = {}) {
     }
 }
 
-let users = [];
