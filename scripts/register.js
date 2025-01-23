@@ -77,5 +77,6 @@ function resetForm(){
     document.getElementById('confirm_password_input_register').value = '';
     document.getElementById('agree_privacy_policy').checked = false;
     document.getElementById('signed_up_notification').classList.add('signed__up__notification__active');
+    document.getElementById('overlay_signed_up').classList.remove('d__none');
 }
 
