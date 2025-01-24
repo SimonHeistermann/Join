@@ -23,7 +23,7 @@ function closepopup() {
 function addTask() {
   let createPopup = document.getElementById("overay_Template");
 
-  createPopup.innerHTML = `<div class="all__testt"> 
+  createPopup.innerHTML = `<div class=""> 
   
   <section>
             <!-- section add task popup-->
