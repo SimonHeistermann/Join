@@ -1,3 +1,8 @@
+function init() {
+  addTask();
+  popupTodo();
+}
+
 function openNav() {
   document.getElementById("popup").style.display = "block";
   console.log("Hello World");
@@ -5,6 +10,14 @@ function openNav() {
 
 function closeNav() {
   document.getElementById("popup").style.display = "none";
+}
+function openpopup() {
+  document.getElementById("create_popup").style.display = "block";
+  console.log("Hello World");
+}
+
+function closepopup() {
+  document.getElementById("create_popup").style.display = "none";
 }
 
 function addTask() {
@@ -134,4 +147,63 @@ function addTask() {
           </section>
   
   </div>`;
+}
+
+function popupTodo() {
+  let popupConten = document.getElementById("create_popup");
+  popupConten.innerHTML = `  <div id="popup_card" class="popup__container">
+      <div class="popup__header">
+        <span class="popup__tag">User Story</span>
+        <button class="popup__close" onclick="closepopup()">&times;</button>
+      </div>
+      <div class="popup__content">
+        <h2 class="popup__title">Kochwelt Page & Recipe Recommender</h2>
+        <p class="popup__description">
+          Build start page with recipe recommendation.
+        </p>
+        <div class="popup__info">
+          <p><strong>Due date:</strong> 10/05/2023</p>
+          <p>
+            <strong>Priority:</strong>
+            <span class="popup__priority popup__priority--medium">Medium</span>
+          </p>
+        </div>
+        <div class="popup__assigned">
+          <p><strong>Assigned To:</strong></p>
+          <ul class="popup__team">
+            <li class="popup__team-member">
+              <span class="popup__avatar" style="background-color: #28a745"
+                >EM</span
+              >
+              Emmanuel Mauer
+            </li>
+            <li class="popup__team-member">
+              <span class="popup__avatar" style="background-color: #6f42c1"
+                >MB</span
+              >
+              Marcel Bauer
+            </li>
+            <li class="popup__team-member">
+              <span class="popup__avatar" style="background-color: #007bff"
+                >AM</span
+              >
+              Anton Mayer
+            </li>
+          </ul>
+        </div>
+        <div class="popup__subtasks">
+          <p><strong>Subtasks:</strong></p>
+          <ul>
+            <li>
+              <input type="checkbox" checked /> Implement Recipe Recommendation
+            </li>
+            <li><input type="checkbox" /> Start Page Layout</li>
+          </ul>
+        </div>
+      </div>
+      <div class="popup__footer">
+        <button class="popup__button popup__button--delete" onclick="closepopup()">Delete</button>
+        <button class="popup__button popup__button--edit">Edit</button>
+      </div>
+    </div>`;
 }

@@ -372,3 +372,129 @@ p {
   align-items: center;
   gap: 8px;
 }
+
+/* General Styling */
+.popup__container {
+  display: block;
+  width: 350px;
+  border: 2px solid #ffffff;
+  border-radius: 10px;
+  background-color: white;
+  padding: 20px;
+  font-family: Arial, sans-serif;
+  position: relative;
+  box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.popup__header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 20px;
+}
+
+.popup__tag {
+  background-color: #003eff;
+  color: white;
+  padding: 5px 10px;
+  border-radius: 5px;
+  font-size: 12px;
+}
+
+.popup__close {
+  background: none;
+  border: none;
+  font-size: 24px;
+  cursor: pointer;
+}
+
+.popup__title {
+  font-size: 20px;
+  margin: 10px 0;
+  text-align: center;
+}
+
+.popup__description {
+  font-size: 14px;
+  margin: 10px 0 20px;
+  color: #555;
+  text-align: center;
+}
+
+.popup__info {
+  font-size: 14px;
+  margin-bottom: 20px;
+}
+
+.popup__priority {
+  padding: 2px 5px;
+  border-radius: 3px;
+  font-weight: bold;
+}
+
+.popup__priority--medium {
+  color: #ffc107;
+}
+
+.popup__assigned {
+  margin-bottom: 20px;
+}
+
+.popup__team {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.popup__team-member {
+  display: flex;
+  align-items: center;
+  margin-bottom: 10px;
+}
+
+.popup__avatar {
+  color: white;
+  font-weight: bold;
+  border-radius: 50%;
+  width: 30px;
+  height: 30px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  margin-right: 10px;
+}
+
+.popup__subtasks ul {
+  list-style: none;
+  padding: 0;
+  margin: 10px 0;
+}
+
+.popup__subtasks li {
+  margin-bottom: 10px;
+  display: flex;
+  align-items: center;
+}
+
+.popup__footer {
+  display: flex;
+  justify-content: space-between;
+  margin-top: 20px;
+}
+
+.popup__button {
+  padding: 10px 20px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.popup__button--delete {
+  background-color: red;
+  color: white;
+}
+
+.popup__button--edit {
+  background-color: #005eff;
+  color: white;
+}

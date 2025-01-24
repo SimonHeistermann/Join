@@ -35,7 +35,7 @@
     <script src="./scripts/board.js"></script>
     <script src="./scripts/assets.js"></script>
   </head>
-  <body id="body" onload="addTask()">
+  <body id="body" onload="init()">
     <div class="overall">
       <div class="sidebar">
         <div class="sidebar__container">
@@ -133,14 +133,15 @@
           <div class="kanban__board">
             <div class="columns">
               <div class="column">
+                <div id="create_popup"></div>
                 <h2>
                   To do
-                  <span class="add-task">
+                  <span class="add-task" onclick="closepopup()">
                     <img
-                      onclick="showAddTaskDetails()"
                       class="plus__icon"
                       src="assets/icons/plus button.png"
                       alt=""
+                      onclick="openNav()"
                   /></span>
                 </h2>
                 <div class="empty__message">No tasks To do</div>
@@ -150,13 +151,13 @@
                   In progress
                   <span class="add__task">
                     <img
-                      onclick="showAddTaskDetails()"
                       class="plus__icon"
                       src="assets/icons/plus button.png"
                       alt=""
+                      onclick="openNav()"
                   /></span>
                 </h2>
-                <div class="task">
+                <div class="task" onclick="openpopup()">
                   <div class="task__type user__story">User Story</div>
                   <h3>Kochwelt Page & Recipe Recommender</h3>
                   <p>Build start page with recipe recommendation...</p>
@@ -182,12 +183,13 @@
                           src="assets/icons/Priority symbols (1).png"
                           alt=""
                           width="32"
+                          onclick="openpopup()"
                         />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="task">
+                <div class="task" onclick="openpopup()">
                   <div class="task__type user__story">User Story</div>
                   <h3>Contact Form & Imprint</h3>
                   <p>Create a contact form and imprint page...</p>
@@ -213,6 +215,7 @@
                           src="assets/icons/Priority symbols.png"
                           alt=""
                           width="32"
+                          onclick="openpopup()"
                         />
                       </div>
                     </div>
@@ -224,13 +227,13 @@
                   Await feedback
                   <span class="add__task">
                     <img
-                      onclick="showAddTaskDetails()"
                       class="plus__icon"
                       src="assets/icons/plus button.png"
                       alt=""
+                      onclick="openNav()"
                   /></span>
                 </h2>
-                <div class="task">
+                <div class="task" onclick="openpopup()">
                   <div class="task__type technical__task">Technical Task</div>
                   <h3>HTML Base Template Creation</h3>
                   <p>Create reusable HTML base templates...</p>
@@ -255,12 +258,13 @@
                           src="assets/icons/Priority symbols.png"
                           alt=""
                           width="32"
+                          onclick="openpopup()"
                         />
                       </div>
                     </div>
                   </div>
                 </div>
-                <div class="task">
+                <div class="task" onclick="openpopup()">
                   <div class="task__type user__story">User Story</div>
                   <h3>Daily Kochwelt Recipe</h3>
                   <p>Implement daily recipe and portion calculator...</p>
