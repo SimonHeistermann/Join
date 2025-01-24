@@ -1,9 +1,9 @@
 let users = [];
 let tasks = [];
 let contacts = [];
-let contactUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/contacts"
-let tasksUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/tasks"
-let usersUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/users"
+let contactUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/contacts.json"
+let tasksUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/tasks.json"
+let usersUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/users.json"
 
 
 // --> Nur falls du damit arbeiten möchtest, hier einmal das aus dem Chat :)
@@ -61,3 +61,21 @@ async function putData(path = "", data = {}) {
     }
 }
 
+//fetch der Daten on onload
+
+async function fetchUsers(){
+    try {
+        let response = await fetch(usersUrl);
+        let allUser = await response.json();
+
+        users.push(allUser);
+        console.log(users);
+        toLocalStorage();
+    } catch (error) {
+        
+    }
+}
+
+function toLocalStorage(){
+    localStorage.setItem("users", JSON.stringify(users));
+}

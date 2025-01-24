@@ -1,3 +1,11 @@
+function handleUsers(){
+    let storedUserArray = localStorage.getItem("users");
+    users = JSON.parse(storedUserArray)
+    console.log(users);
+    
+}
+
+
 /**
  * Überprüft, ob das angegebene Kontrollkästchen (checkbox) für die Zustimmung zur Datenschutzrichtlinie aktiviert wurde.
  * Wenn das Kontrollkästchen aktiviert ist, wird die Funktion `checkPassword()` aufgerufen.
@@ -49,7 +57,7 @@ function checkPassword(){
  * @param {Object} userWithId - Ein Objekt, das die Benutzer-ID als Schlüssel und das `userObject` als Wert enthält.
  */
 function registerUser(){
- let userID = users.length + 1;
+ let userID = users.length;
  let form = document.getElementById('sign_up_form');
  let formData = new FormData(form); //hab ich aus dem Buch von Rheinwerk: FormData stellt im endeffekt bereits ein Objekt her, dass dann abgefrühstückt werden kann                    
  let userObject ={};                //es kann dann über die for ...of schleife mit [key(name="") und value(input)] für jedes Element des Formulars ein Objekt erstellen weil es die
@@ -60,9 +68,7 @@ function registerUser(){
  let userWithId = {
     [userID]:userObject
  };
- users.push(userWithId);
- resetForm();
- console.log(users);
+ pushPushItRealHard(userWithId);
 }
 
 /**
@@ -80,3 +86,25 @@ function resetForm(){
     document.getElementById('overlay_signed_up').classList.remove('d__none');
 }
 
+async function pushPushItRealHard(userWithId){
+    users.push(userWithId);
+    await registerUserInFirebase()
+    resetForm();
+    console.log(users);
+    localStorage.setItem("users", JSON.stringify(users));
+}
+
+async function registerUserInFirebase() {
+    try {
+        let response =await fetch(usersUrl, {
+        method:"PUT",
+        headers:{"Content-Type": "application/json"},
+        body: JSON.stringify(users)     
+        })
+    }
+
+     catch (error) {
+        
+    }
+    
+}
