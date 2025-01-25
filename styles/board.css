@@ -498,3 +498,12 @@ p {
   background-color: #005eff;
   color: white;
 }
+
+/* New */
+
+.overlaypopup {
+  position: absolute;
+  top: 200px;
+  left: 105px;
+  z-index: 1500;
+}
