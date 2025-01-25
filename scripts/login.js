@@ -2,6 +2,7 @@ let skipAnimation;
 
 function initLogin() {
     logoAnimation(false);
+    fetchUsers();
 }
 
 function logoAnimation(skipAnimation) {

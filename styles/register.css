@@ -7,6 +7,7 @@ header {
     display: flex;
     box-shadow: unset;
     height: auto;
+    z-index: 0;
 }
 
 .header__container {
