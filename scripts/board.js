@@ -1,6 +1,5 @@
 function init() {
-  addTask();
-  popupTodo();
+  console.log("test");
 }
 
 function openNav() {
@@ -11,6 +10,7 @@ function openNav() {
 function closeNav() {
   document.getElementById("popup").style.display = "none";
 }
+
 function openpopup() {
   document.getElementById("create_popup").style.display = "block";
   console.log("Hello World");

@@ -301,10 +301,9 @@
         </main>
       </div>
     </div>
-    <div class="overlaypopup">
+    <!--  Overlay und Popup -- Hiden -->
+    <div class="overlay__popup">
       <section>
-        <!-- section add task popup-->
-
         <div class="add__task__main" id="popup">
           <div class="close__btn">
             <h1>Add Task</h1>
@@ -417,6 +416,50 @@
           </div>
         </div>
       </section>
+    </div>
+
+    <!-- Hidden Popup taska -->
+
+    <div class="popup__card" id="popup_card">
+      <div class="popup__card-header">
+        <span class="popup__card-label">Technical Task</span>
+        <button id="popup_close_button">&times;</button>
+      </div>
+      <div class="popup__card-section">
+        <h1 class="popup__card-title">CSS Architecture Planning</h1>
+        <p class="popup__card-subtitle">
+          Define CSS naming conventions and structure.
+        </p>
+      </div>
+      <div class="popup__card-section">
+        <p><strong>Due date:</strong> 02/09/2023</p>
+        <p>
+          <strong>Priority:</strong>
+          <span class="popup__card-priority">Urgent</span>
+        </p>
+      </div>
+      <div class="popup__card-section">
+        <p><strong>Assigned To:</strong></p>
+        <p>Sofia Müller (You)</p>
+        <p>Benedikt Ziegler</p>
+      </div>
+      <div class="popup__card-section">
+        <p><strong>Subtasks:</strong></p>
+        <ul class="popup__card-subtasks">
+          <li>
+            <input type="checkbox" id="subtask_1" checked />
+            <label for="subtask_1">Establish CSS Methodology</label>
+          </li>
+          <li>
+            <input type="checkbox" id="subtask_2" checked />
+            <label for="subtask_2">Setup Base Styles</label>
+          </li>
+        </ul>
+      </div>
+      <div class="popup__card-actions">
+        <button id="popup_delete_button">Delete</button>
+        <button id="popup_edit_button">Edit</button>
+      </div>
     </div>
   </body>
 </html>
