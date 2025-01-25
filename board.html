@@ -302,163 +302,169 @@
       </div>
     </div>
     <!--  Overlay und Popup -- Hiden -->
-    <div class="overlay__popup">
-      <section>
-        <div class="add__task__main" id="popup">
-          <div class="close__btn">
-            <h1>Add Task</h1>
-            <img
-              onclick="closeNav()"
-              src="assets/icons/cancel_icon_blue.png"
-              alt=""
-              width="18"
-            />
-          </div>
+    <div class="cover__all_addTask" id="cover__all_addTask">
+      <div class="overlay__popup" id="overlay_popup">
+        <section>
+          <div class="add__task__main" id="popup">
+            <div class="close__btn">
+              <h1>Add Task</h1>
+              <img
+                onclick="closeNav()"
+                src="assets/icons/cancel_icon_blue.png"
+                alt=""
+                width="18"
+              />
+            </div>
 
-          <form class="inputfields">
-            <div class="left_side">
-              <lable class="label" for="title"
-                >Title
-                <div class="star">*</div></lable
-              >
-              <input
-                type="text"
-                class="text_input"
-                id="text__input"
-                name="title"
-                placeholder="Enter a title"
-                required
-              />
-              <label class="label" for="description">Description</label>
-              <textarea
-                class="description"
-                name="description"
-                id="description"
-                placeholder="Enter a Description"
-              ></textarea>
-              <label class="label" for="assigned_to">Assigned to</label>
-              <select
-                class="assigned_to"
-                name="assigned_to"
-                id="assigned__to"
-              ></select>
-            </div>
-            <div class="the_divider"></div>
-            <div class="right_side">
-              <label class="label" for="date"
-                >Due date
-                <div class="star">*</div></label
-              >
-              <input
-                type="date"
-                class="date"
-                id="date__input"
-                name="date"
-                placeholder="dd/mm/yyyy"
-                required
-              />
-              <label class="label" for="prio">Prio</label>
-              <div class="radio_overall">
-                <label class="radio radio_urgend">
-                  <input type="radio" name="prio" value="1" onclick="" />
-                  Urgent
-                  <img src="assets/icons/Property 1=Urgent.png" alt="↑" />
-                </label>
-                <label class="radio radio_medium">
-                  <input
-                    type="radio"
-                    name="prio"
-                    value="2"
-                    checked
-                    onclick=""
-                  />
-                  Medium
-                  <img src="assets/icons/Property 1=Medium.png" alt="=" />
-                </label>
-                <label class="radio radio_low">
-                  <input type="radio" name="prio" value="3" onclick="" />
-                  Low <img src="assets/icons/Property 1=Low.png" alt="↓" />
-                </label>
+            <form class="inputfields">
+              <div class="left_side">
+                <lable class="label" for="title"
+                  >Title
+                  <div class="star">*</div></lable
+                >
+                <input
+                  type="text"
+                  class="text_input"
+                  id="text__input"
+                  name="title"
+                  placeholder="Enter a title"
+                  required
+                />
+                <label class="label" for="description">Description</label>
+                <textarea
+                  class="description"
+                  name="description"
+                  id="description"
+                  placeholder="Enter a Description"
+                ></textarea>
+                <label class="label" for="assigned_to">Assigned to</label>
+                <select
+                  class="assigned_to"
+                  name="assigned_to"
+                  id="assigned__to"
+                ></select>
               </div>
-              <label class="label" for="category"
-                >Category
-                <div class="star">*</div></label
-              >
-              <select type="select" name="category" class="category" required>
-                <option value="">Select task category</option>
-                <option value="tt">Technikal Task</option>
-                <option value="us">User Story</option>
-              </select>
-              <label for="subtask">Subtask</label>
-              <input
-                type="text"
-                name="subtask"
-                id="subtask"
-                class="subtask"
-                placeholder="Add new subtask"
-              />
-              <div class="table_subtask" id="subtask_table"></div>
-            </div>
-          </form>
-          <div class="text_and_buttons">
-            <div class="is_required">
-              <div class="star">*</div>
-              This field is required
-            </div>
-            <div class="task_butons">
-              <button class="secondary_button clear" onclick="">
-                Clear <img src="assets/icons/cancel_icon_blue.png" alt="" />
-              </button>
-              <button class="button1 create_task" disabled onclick="">
-                Create Task <img src="assets/icons/check.png" alt="" />
-              </button>
+              <div class="the_divider"></div>
+              <div class="right_side">
+                <label class="label" for="date"
+                  >Due date
+                  <div class="star">*</div></label
+                >
+                <input
+                  type="date"
+                  class="date"
+                  id="date__input"
+                  name="date"
+                  placeholder="dd/mm/yyyy"
+                  required
+                />
+                <label class="label" for="prio">Prio</label>
+                <div class="radio_overall">
+                  <label class="radio radio_urgend">
+                    <input type="radio" name="prio" value="1" onclick="" />
+                    Urgent
+                    <img src="assets/icons/Property 1=Urgent.png" alt="↑" />
+                  </label>
+                  <label class="radio radio_medium">
+                    <input
+                      type="radio"
+                      name="prio"
+                      value="2"
+                      checked
+                      onclick=""
+                    />
+                    Medium
+                    <img src="assets/icons/Property 1=Medium.png" alt="=" />
+                  </label>
+                  <label class="radio radio_low">
+                    <input type="radio" name="prio" value="3" onclick="" />
+                    Low <img src="assets/icons/Property 1=Low.png" alt="↓" />
+                  </label>
+                </div>
+                <label class="label" for="category"
+                  >Category
+                  <div class="star">*</div></label
+                >
+                <select type="select" name="category" class="category" required>
+                  <option value="">Select task category</option>
+                  <option value="tt">Technikal Task</option>
+                  <option value="us">User Story</option>
+                </select>
+                <label for="subtask">Subtask</label>
+                <input
+                  type="text"
+                  name="subtask"
+                  id="subtask"
+                  class="subtask"
+                  placeholder="Add new subtask"
+                />
+                <div class="table_subtask" id="subtask_table"></div>
+              </div>
+            </form>
+            <div class="text_and_buttons">
+              <div class="is_required">
+                <div class="star">*</div>
+                This field is required
+              </div>
+              <div class="task_butons">
+                <button class="secondary_button clear" onclick="">
+                  Clear <img src="assets/icons/cancel_icon_blue.png" alt="" />
+                </button>
+                <button class="button1 create_task" disabled onclick="">
+                  Create Task <img src="assets/icons/check.png" alt="" />
+                </button>
+              </div>
             </div>
           </div>
-        </div>
-      </section>
+        </section>
+      </div>
     </div>
 
     <!-- Hidden Popup taska -->
 
-    <div class="popup__card" id="popup_card">
-      <div class="popup__card-header">
-        <span class="popup__card-label">Technical Task</span>
-        <button id="popup_close_button">&times;</button>
-      </div>
-      <div class="popup__card-section">
-        <h1 class="popup__card-title">CSS Architecture Planning</h1>
-        <p class="popup__card-subtitle">
-          Define CSS naming conventions and structure.
-        </p>
-      </div>
-      <div class="popup__card-section">
-        <p><strong>Due date:</strong> 02/09/2023</p>
-        <p>
-          <strong>Priority:</strong>
-          <span class="popup__card-priority">Urgent</span>
-        </p>
-      </div>
-      <div class="popup__card-section">
-        <p><strong>Assigned To:</strong></p>
-        <p>Sofia Müller (You)</p>
-        <p>Benedikt Ziegler</p>
-      </div>
-      <div class="popup__card-section">
-        <p><strong>Subtasks:</strong></p>
-        <ul class="popup__card-subtasks">
-          <li>
-            <input type="checkbox" id="subtask_1" checked />
-            <label for="subtask_1">Establish CSS Methodology</label>
-          </li>
-          <li>
-            <input type="checkbox" id="subtask_2" checked />
-            <label for="subtask_2">Setup Base Styles</label>
-          </li>
-        </ul>
-      </div>
-      <div class="popup__card-actions">
-        <button id="popup_delete_button">Delete</button>
-        <button id="popup_edit_button">Edit</button>
+    <div class="cover__all" id="cover_all">
+      <div class="popup__card" id="popup_card">
+        <div class="popup__card-header">
+          <span class="popup__card-label">Technical Task</span>
+          <button id="popup_close_button" onclick="closepopup()">
+            &times;
+          </button>
+        </div>
+        <div class="popup__card-section">
+          <h1 class="popup__card-title">CSS Architecture Planning</h1>
+          <p class="popup__card-subtitle">
+            Define CSS naming conventions and structure.
+          </p>
+        </div>
+        <div class="popup__card-section">
+          <p><strong>Due date:</strong> 02/09/2023</p>
+          <p>
+            <strong>Priority:</strong>
+            <span class="popup__card-priority">Urgent</span>
+          </p>
+        </div>
+        <div class="popup__card-section">
+          <p><strong>Assigned To:</strong></p>
+          <p>Sofia Müller (You)</p>
+          <p>Benedikt Ziegler</p>
+        </div>
+        <div class="popup__card-section">
+          <p><strong>Subtasks:</strong></p>
+          <ul class="popup__card-subtasks">
+            <li>
+              <input type="checkbox" id="subtask_1" checked />
+              <label for="subtask_1">Establish CSS Methodology</label>
+            </li>
+            <li>
+              <input type="checkbox" id="subtask_2" checked />
+              <label for="subtask_2">Setup Base Styles</label>
+            </li>
+          </ul>
+        </div>
+        <div class="popup__card-actions">
+          <button id="popup_delete_button">Delete</button>
+          <button id="popup_edit_button">Edit</button>
+        </div>
       </div>
     </div>
   </body>

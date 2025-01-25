@@ -327,15 +327,10 @@ p {
   border-radius: 23px;
   height: 100%;
   padding: 8px 25px;
-  position: fixed;
-  top: 0px;
-  left: 200px;
+  position: relative;
   display: none;
   animation: fadeInRight 0.5s ease-out;
   transform: translateX(-50%, -50%);
-  /* overflow-y: auto;
-  overflow-x: hidden; */
-  /*  transition: 2.2s cubic-bezier(0.36, -0.01, 0, 0.77); */
 }
 
 .text_and_buttons {
@@ -373,16 +368,28 @@ p {
 }
 
 .overlay__popup {
-  position: relative;
+  position: absolute;
   top: 100px;
   left: 200px;
-
   z-index: 1500;
-
-  /*   transform: translate(-50%, -50%); */
+  height: 100vh;
+  background: transparent;
+  width: 100%;
+  display: none;
 }
 
 /* ..... */
+.cover__all {
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  min-height: 100vh;
+  min-width: 100%;
+  z-index: 1500px;
+  background: transparent;
+  display: none;
+}
 .popup__card {
   position: absolute;
   top: 100px;
