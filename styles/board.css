@@ -333,8 +333,12 @@ p {
   animation: fadeInRight 0.5s ease-out;
   transform: translateX(-50%, -50%);
 }
+.inputfields {
+  margin-top: 0;
+}
 
 .text_and_buttons {
+  margin-top: 0;
   padding-bottom: 30px;
 }
 .close__btn {
@@ -393,7 +397,7 @@ p {
 }
 .popup__card {
   position: absolute;
-  top: 100px;
+  top: 150px;
   left: 250px;
   z-index: 1600;
   padding: 32px;
@@ -404,8 +408,8 @@ p {
   box-shadow: 0 8px 24px rgba(0, 0, 0, 0.2);
   font-family: "Inter", sans-serif;
   background-color: white;
-  animation: fadeInRight 0.25s ease-out;
-  transform: translate(50%, -20%);
+  animation: fadeInRight 0.8s ease-in-out;
+  /* transform: translate(50%, -60%); */
   display: none;
 }
 

@@ -410,7 +410,7 @@
         <section>
           <div class="add__task__main" id="popup">
             <div class="close__btn">
-              <h1>Add Task</h1>
+              <h2 class="">Add Task</h2>
               <img
                 onclick="closeNav()"
                 src="assets/icons/cancel_icon_blue.png"
@@ -565,7 +565,9 @@
           </ul>
         </div>
         <div class="popup__card-actions">
-          <button id="popup_delete_button">Delete</button>
+          <button id="popup_delete_button" onclick="closepopup()">
+            Delete
+          </button>
           <button id="popup_edit_button">Edit</button>
         </div>
       </div>
