@@ -108,7 +108,7 @@
               <p class="board__title">Board</p>
 
               <div class="inputicon__addButton">
-                <div class="search__area">
+                <div class="search__area" id="search_area">
                   <input
                     type="text"
                     placeholder="find Task"
@@ -130,7 +130,11 @@
 
           <div class="kanban__board">
             <div class="columns">
-              <div class="column">
+              <div
+                class="column"
+                ondrop="drop(event)"
+                ondragover="allowDrop(event)"
+              >
                 <div id="create_popup"></div>
                 <h2>
                   To do
@@ -142,20 +146,21 @@
                       onclick="openNav()"
                   /></span>
                 </h2>
-                <div class="empty__message">No tasks To do</div>
-              </div>
-              <div class="column">
-                <h2>
-                  In progress
-                  <span class="add__task">
-                    <img
-                      class="plus__icon"
-                      src="assets/icons/plus button.png"
-                      alt=""
-                      onclick="openNav()"
-                  /></span>
-                </h2>
-                <div class="task" onclick="openpopup()">
+                <div
+                  id="empty-1"
+                  class="empty__message"
+                  draggable="true"
+                  ondragstart="drag(event)"
+                >
+                  No tasks To do
+                </div>
+                <div
+                  class="task"
+                  id="task-4"
+                  onclick="openpopup()"
+                  draggable="true"
+                  ondragstart="drag(event)"
+                >
                   <div class="task__type user__story">User Story</div>
                   <h3>Kochwelt Page & Recipe Recommender</h3>
                   <p>Build start page with recipe recommendation...</p>
@@ -187,7 +192,75 @@
                     </div>
                   </div>
                 </div>
-                <div class="task" onclick="openpopup()">
+              </div>
+              <div
+                class="column"
+                ondrop="drop(event)"
+                ondragover="allowDrop(event)"
+              >
+                <h2>
+                  In progress
+                  <span class="add__task">
+                    <img
+                      class="plus__icon"
+                      src="assets/icons/plus button.png"
+                      alt=""
+                      onclick="openNav()"
+                  /></span>
+                </h2>
+                <div
+                  id="empty-1"
+                  class="empty__message"
+                  draggable="true"
+                  ondragstart="drag(event)"
+                >
+                  No tasks To do
+                </div>
+                <div
+                  class="task"
+                  id="task-1"
+                  onclick="openpopup()"
+                  draggable="true"
+                  ondragstart="drag(event)"
+                >
+                  <div class="task__type user__story">User Story</div>
+                  <h3>Kochwelt Page & Recipe Recommender</h3>
+                  <p>Build start page with recipe recommendation...</p>
+                  <div class="progress">
+                    <div class="progress__bar" style="width: 50%"></div>
+                  </div>
+                  <div class="subtasks">1/2 Subtasks</div>
+                  <div class="avatars">
+                    <div class="avatars__menuIcon">
+                      <div class="avatars__group">
+                        <div class="avatar" style="background-color: #b2a745">
+                          AM
+                        </div>
+                        <div class="avatar" style="background-color: #ff7a00">
+                          EM
+                        </div>
+                        <div class="avatar" style="background-color: #ff4646">
+                          MB
+                        </div>
+                      </div>
+                      <div>
+                        <img
+                          src="assets/icons/Priority symbols (1).png"
+                          alt=""
+                          width="32"
+                          onclick="openpopup()"
+                        />
+                      </div>
+                    </div>
+                  </div>
+                </div>
+                <div
+                  class="task"
+                  id="task-2"
+                  onclick="openpopup()"
+                  draggable="true"
+                  ondragstart="drag(event)"
+                >
                   <div class="task__type user__story">User Story</div>
                   <h3>Contact Form & Imprint</h3>
                   <p>Create a contact form and imprint page...</p>
@@ -220,7 +293,11 @@
                   </div>
                 </div>
               </div>
-              <div class="column">
+              <div
+                class="column"
+                ondrop="drop(event)"
+                ondragover="allowDrop(event)"
+              >
                 <h2>
                   Await feedback
                   <span class="add__task">
@@ -231,7 +308,21 @@
                       onclick="openNav()"
                   /></span>
                 </h2>
-                <div class="task" onclick="openpopup()">
+                <div
+                  id="empty-3"
+                  class="empty__message"
+                  draggable="true"
+                  ondragstart="drag(event)"
+                >
+                  No tasks To do
+                </div>
+                <div
+                  class="task"
+                  id="task-3"
+                  onclick="openpopup()"
+                  draggable="true"
+                  ondragstart="drag(event)"
+                >
                   <div class="task__type technical__task">Technical Task</div>
                   <h3>HTML Base Template Creation</h3>
                   <p>Create reusable HTML base templates...</p>
@@ -262,7 +353,13 @@
                     </div>
                   </div>
                 </div>
-                <div class="task" onclick="openpopup()">
+                <div
+                  class="task"
+                  id="task-4"
+                  onclick="openpopup()"
+                  draggable="true"
+                  ondragstart="drag(event)"
+                >
                   <div class="task__type user__story">User Story</div>
                   <h3>Daily Kochwelt Recipe</h3>
                   <p>Implement daily recipe and portion calculator...</p>
@@ -292,9 +389,15 @@
                   </div>
                 </div>
               </div>
-              <div class="column">
+              <div
+                class="column"
+                ondrop="drop(event)"
+                ondragover="allowDrop(event)"
+              >
                 <h2>Done</h2>
-                <div class="empty__message">No tasks Done</div>
+                <div id="empty-2" class="empty__message" draggable="true">
+                  No tasks Done
+                </div>
               </div>
             </div>
           </div>
