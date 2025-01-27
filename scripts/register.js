@@ -86,6 +86,20 @@ function resetForm(){
     document.getElementById('overlay_signed_up').classList.remove('d__none');
 }
 
+/**
+ * Fügt einen neuen Benutzer zum `users`-Array hinzu, registriert den Benutzer in Firebase, 
+ * setzt das Formular zurück und aktualisiert den lokalen Speicher.
+ *
+ * @param {Object} userWithId - Ein Objekt, das die Daten des Benutzers mit einer eindeutigen ID enthält. 
+ *                              Das Objekt sollte mindestens folgende Eigenschaften enthalten:
+ *                              - `id` (string|number): Die eindeutige Benutzer-ID.
+ *                              - Weitere benutzerdefinierte Eigenschaften (z. B. `username`, `email`).
+ * 
+ * @returns {Promise<void>} Eine Promise, die aufgelöst wird, nachdem der Benutzer erfolgreich in Firebase registriert wurde
+ *                          und das `users`-Array aktualisiert wurde.
+ * 
+ */
+
 async function pushPushItRealHard(userWithId){
     users.push(userWithId);
     await registerUserInFirebase()
@@ -94,6 +108,16 @@ async function pushPushItRealHard(userWithId){
     localStorage.setItem("users", JSON.stringify(users));
 }
 
+/**
+ * Sendet das `users`-Array als JSON-Daten an die angegebene `usersUrl`, um die Benutzer in Firebase zu registrieren.
+ *
+ * @param {string} usersUrl - Die URL, an die die Benutzerinformationen gesendet werden sollen.
+ *                            Diese URL repräsentiert den Endpunkt der Firebase-Datenbank.
+ * @param {Array} users - Ein Array von Benutzerobjekten, die registriert werden sollen.
+ *                        Jedes Objekt enthält Benutzerdetails wie `id`, `username`, `email` usw.
+ *
+ * @returns {Promise<void>} Eine Promise, die aufgelöst wird, wenn der PUT-Request erfolgreich abgeschlossen wurde.
+ */
 async function registerUserInFirebase() {
     try {
         let response =await fetch(usersUrl, {
