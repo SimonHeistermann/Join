@@ -1,9 +1,9 @@
 let users = [];
 let tasks = [];
 let contacts = [];
-let contactUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/contacts.json"
-let tasksUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/tasks.json"
-let usersUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/users.json"
+const contactUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/contacts.json"
+const tasksUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/tasks.json"
+const usersUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/users.json"
 
 
 // --> Nur falls du damit arbeiten möchtest, hier einmal das aus dem Chat :)
@@ -67,12 +67,21 @@ async function fetchUsers(){
     try {
         let response = await fetch(usersUrl);
         let allUser = await response.json();
-
         users.push(allUser);
         console.log(users);
         toLocalStorage();
     } catch (error) {
-        
+        console.error("Error getting users:", error);
+    }
+}
+
+async function fetchTasks() {
+    try {
+        let response = await fetch(tasksUrl);
+        let fetchedTasks = await response.json();
+        tasks.push(fetchedTasks);
+    } catch (error) {
+        console.error("Error getting tasks:", error);
     }
 }
 
