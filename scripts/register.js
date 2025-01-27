@@ -1,10 +1,42 @@
+/**
+ * Lädt das Array der gespeicherten Benutzer aus dem `localStorage` und gibt es in der Konsole aus.
+ * 
+ * Diese Funktion holt sich die Benutzerdaten aus dem `localStorage`, die unter dem Schlüssel `users` gespeichert sind. 
+ * Die Daten werden als JSON-String abgerufen und dann mit `JSON.parse` in ein JavaScript-Array umgewandelt. 
+ * Falls keine Benutzerdaten im `localStorage` gefunden werden, wird `storedUserArray` den Wert `null` haben. 
+ * Das geparste Array der Benutzer wird anschließend in der Konsole ausgegeben.
+ * 
+ * @param {string} storedUserArray - Der JSON-String, der die Benutzerinformationen aus dem `localStorage` enthält.
+ * @param {Array|null} users - Das JavaScript-Array, das die geparsten Benutzerdaten enthält. Falls keine Daten vorhanden sind, ist es `null`.
+ */
 function handleUsers(){
     let storedUserArray = localStorage.getItem("users");
     users = JSON.parse(storedUserArray)
-    console.log(users);
-    
+    console.log(users); 
 }
 
+/**
+ * Überprüft, ob die eingegebenen Passwörter übereinstimmen.
+ * 
+ * Diese Funktion vergleicht die Werte der Passworteingabefelder. Wenn die Passwörter übereinstimmen,
+ * wird die Funktion `submitUser()` aufgerufen, um den Benutzer zu registrieren. Falls die Passwörter
+ * nicht übereinstimmen, werden beide Felder geleert, und eine Fehlermeldung wird dem Benutzer angezeigt.
+ * 
+ * @param {HTMLInputElement} password - Das Eingabefeld für das Passwort des Benutzers.
+ * @param {HTMLInputElement} confirmation - Das Eingabefeld für die Passwortbestätigung des Benutzers.
+ */
+function doTheyMatch(){
+    let password = document.getElementById('password_input_register');
+    let confirmation = document.getElementById('confirm_password_input_register');
+    if(password.value == confirmation.value){
+        submitUser();
+    }
+    else{
+        password.value = '';
+        confirmation.value = '';
+        alert('Die Passwörter stimmen nicht überein. Bitte versuchen Sie es noch einmal. Danke!');
+    }
+}
 
 /**
  * Überprüft, ob das angegebene Kontrollkästchen (checkbox) für die Zustimmung zur Datenschutzrichtlinie aktiviert wurde.
@@ -54,7 +86,6 @@ function checkPassword(){
  * @param {FormData} formData - Ein FormData-Objekt, das die Formulardaten als Schlüssel-Wert-Paare speichert.
  * @param {Object} userObject - Ein Objekt, das die Formulardaten des neuen Benutzers enthält (z. B. `username`, `email`, etc.).
  * @param {number} userID - Die eindeutige ID für den neuen Benutzer, basierend auf der aktuellen Anzahl der Benutzer im `users`-Array.
- * @param {Object} userWithId - Ein Objekt, das die Benutzer-ID als Schlüssel und das `userObject` als Wert enthält.
  */
 function registerUser(){
  let userID = users.length;
@@ -65,10 +96,8 @@ function registerUser(){
  for (let[key, value] of formData){
     userObject[key] = value;
  }
- let userWithId = {
-    [userID]:userObject
- };
- pushPushItRealHard(userWithId);
+ 
+ pushPushItRealHard(userObject);
 }
 
 /**
@@ -88,9 +117,9 @@ function resetForm(){
 
 /**
  * Fügt einen neuen Benutzer zum `users`-Array hinzu, registriert den Benutzer in Firebase, 
- * setzt das Formular zurück und aktualisiert den lokalen Speicher.
+ * setzt das Formular zurück und aktualisiert den lokalen Speicher. Leitet weiter zum Login.
  *
- * @param {Object} userWithId - Ein Objekt, das die Daten des Benutzers mit einer eindeutigen ID enthält. 
+ * @param {Object} userObject - Ein Objekt, das die Daten des Benutzers mit einer eindeutigen ID enthält. 
  *                              Das Objekt sollte mindestens folgende Eigenschaften enthalten:
  *                              - `id` (string|number): Die eindeutige Benutzer-ID.
  *                              - Weitere benutzerdefinierte Eigenschaften (z. B. `username`, `email`).
@@ -99,13 +128,13 @@ function resetForm(){
  *                          und das `users`-Array aktualisiert wurde.
  * 
  */
-
-async function pushPushItRealHard(userWithId){
-    users.push(userWithId);
+async function pushPushItRealHard(userObject){
+    users.push(userObject);
     await registerUserInFirebase()
     resetForm();
     console.log(users);
     localStorage.setItem("users", JSON.stringify(users));
+    window.location.href = 'login.html';
 }
 
 /**
@@ -128,7 +157,25 @@ async function registerUserInFirebase() {
     }
 
      catch (error) {
-        
+        showErrorAlert();
     }
     
+}
+
+/**
+ * Aktiviert den "Registrieren"-Button, wenn die Checkbox zur Zustimmung der Datenschutzrichtlinie angehakt ist.
+ * 
+ * Diese Funktion überprüft, ob die Checkbox mit der ID `agree_privacy_policy` angehakt ist. 
+ * Ist dies der Fall, wird der "Registrieren"-Button mit der ID `register_button` aktiviert, indem das `disabled`-Attribut auf `false` gesetzt wird.
+ * 
+ * @param {HTMLInputElement} checkbox - Die Checkbox, die anzeigt, ob die Datenschutzrichtlinie akzeptiert wurde. Sie wird über die ID `agree_privacy_policy` ausgewählt.
+ * @param {HTMLButtonElement} button - Der Button, der aktiviert wird, wenn die Checkbox angehakt ist. Er wird über die ID `register_button` ausgewählt.
+ * @param {boolean} isChecked - Ein Boolean-Wert, der den aktuellen Zustand der Checkbox (angekreuzt oder nicht) angibt.
+ */
+function enableRegisterButton(){
+    let isChecked = document.getElementById('agree_privacy_policy').checked;
+
+    if(isChecked == true){
+        document.getElementById('register_button').disabled = false;
+    }
 }

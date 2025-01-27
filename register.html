@@ -79,14 +79,14 @@
                     </div>
                     <div class="checkbox__wrapper">
                         <label for="agree_privacy_policy" class="register__checkbox__container">
-                            <input class="register__checkbox" type="checkbox" id="agree_privacy_policy" required>
+                            <input class="register__checkbox" type="checkbox" id="agree_privacy_policy" onclick="enableRegisterButton()" required>
                             <span class="custom__checkbox"></span>
                         </label>
                         <span class="register__checkbox__text">I accept the <a class="privacy__policy__registertext" href="privacy_policy.html">Privacy policy</a></span>
                     </div>
                 </div>
                 <div class="register__buttonbox">
-                    <button class="signup__button" onclick="submitUser()">Sign up</button>
+                    <button class="signup__button" id="register_button" onclick="doTheyMatch(); return false;" disabled>Sign up</button>
                 </div>
             </div>
             

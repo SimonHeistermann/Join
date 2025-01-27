@@ -88,3 +88,16 @@ async function fetchTasks() {
 function toLocalStorage(){
     localStorage.setItem("users", JSON.stringify(users));
 }
+
+/**
+ * Zeigt eine Fehlermeldung an, wenn das Laden der Daten schiefgegangen ist.
+ * 
+ * Diese Funktion zeigt eine `alert`-Nachricht an, die den Benutzer darauf hinweist,
+ * dass das Laden der Daten fehlgeschlagen ist, und bittet ihn, es später erneut zu versuchen.
+ * Der Benutzer wird auch um Entschuldigung für die Unannehmlichkeiten gebeten.
+ * 
+ * @param {string} message - Die Nachricht, die dem Benutzer im Fehlerfall angezeigt wird. In diesem Fall eine standardisierte Fehlermeldung.
+ */
+function showErrorAlert() {
+    alert("Das Laden der Daten ist schiefgegangen. Bitte versuchen Sie es zu einem späteren Zeitpunkt noch einmal. Danke. Entschuldigen Sie die Unannehmlichkeiten.");
+}
