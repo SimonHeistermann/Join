@@ -1,10 +1,11 @@
 function init() {
   console.log("Initialization successful.");
   addTaskIds();
+  showme();
 }
 
 // Popup-Funktionen
-function openNav() {
+/* function openNav() {
   document.getElementById("popup").style.display = "block";
   document.getElementById("overlay_popup").style.display = "block";
 }
@@ -23,7 +24,7 @@ function closepopup() {
   document.getElementById("popup_card").style.display = "none";
   document.getElementById("cover_all").style.display = "none";
 }
-
+ */
 function addTaskIds() {
   const tasksTask = document.getElementsByClassName("task");
   const tasksEmpty = document.getElementsByClassName("empty__message");

@@ -157,7 +157,6 @@
                 <div
                   class="task"
                   id="task-4"
-                  onclick="openpopup()"
                   draggable="true"
                   ondragstart="drag(event)"
                 >
@@ -406,13 +405,14 @@
     </div>
     <!--  Overlay und Popup -- Hiden -->
     <div class="cover__all_addTask" id="cover__all_addTask">
-      <div class="overlay__popup" id="overlay_popup">
+      <button id="openPopup">test</button>
+      <div class="overlay__popup hidden" id="overlay_popup">
         <section>
-          <div class="add__task__main" id="popup">
+          <div class="add__task__main">
             <div class="close__btn">
               <h2 class="">Add Task</h2>
               <img
-                onclick="closeNav()"
+                id="closePopup"
                 src="assets/icons/cancel_icon_blue.png"
                 alt=""
                 width="18"

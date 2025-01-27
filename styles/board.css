@@ -328,11 +328,32 @@ p {
   border-radius: 23px;
   height: 100%;
   padding: 8px 25px;
-  position: relative;
+
   display: none;
-  animation: fadeInRight 0.5s ease-out;
-  transform: translateX(-50%, -50%);
+  /* animation: fadeInRight 0.5s ease-out;
+  transform: translateX(-50%, -50%); */
 }
+.overlay__popup {
+  position: absolute;
+  top: 100px;
+  left: 200px;
+  right: -100%;
+  z-index: 1500;
+  height: 100vh;
+  background: transparent;
+  width: 100%;
+  display: none;
+  transition: all 0.5s ease-in-out;
+}
+.hidden {
+  right: -100%; /* Popup ausblenden */
+  left: 100%;
+}
+
+.show {
+  right: 0px; /* Popup anzeigen */
+}
+
 .inputfields {
   margin-top: 0;
 }
@@ -370,17 +391,6 @@ p {
   justify-content: center;
   align-items: center;
   gap: 8px;
-}
-
-.overlay__popup {
-  position: absolute;
-  top: 100px;
-  left: 200px;
-  z-index: 1500;
-  height: 100vh;
-  background: transparent;
-  width: 100%;
-  display: none;
 }
 
 /* ..... */
