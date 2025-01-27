@@ -120,7 +120,7 @@
                     alt=""
                   />
                 </div>
-                <button class="add__button">
+                <button class="add__button" onclick="openAddtask()">
                   Add
                   <img class="add__icon" src="assets/icons/add.png" alt="" />
                 </button>
@@ -403,16 +403,15 @@
         </main>
       </div>
     </div>
-    <!--  Overlay und Popup -- Hiden -->
+    <!--  Overlay Addtask -- Hiden -->
     <div class="cover__all_addTask" id="cover__all_addTask">
-      <button id="openPopup">test</button>
-      <div class="overlay__popup hidden" id="overlay_popup">
+      <div class="overlay__popup" id="overlay_popup">
         <section>
-          <div class="add__task__main">
+          <div class="add__task__main" id="popup_open">
             <div class="close__btn">
               <h2 class="">Add Task</h2>
               <img
-                id="closePopup"
+                onclick="closeAddtask()"
                 src="assets/icons/cancel_icon_blue.png"
                 alt=""
                 width="18"
