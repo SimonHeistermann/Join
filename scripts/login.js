@@ -1,44 +1,72 @@
 let skipAnimation;
 
+/**
+ * Initializes the login animation and user fetching process.
+ * Decides whether to skip the logo animation based on the `skipAnimation` variable.
+ */
 function initLogin() {
-    logoAnimation(false);
-    fetchUsers();
+    logoAnimation(false); // Start the logo animation (set to false to show animation).
+    fetchUsers(); // Fetch the user data (implementation not shown here).
 }
 
+/**
+ * Controls the logo animation flow based on whether it should be skipped or not.
+ * @param {boolean} skipAnimation - Indicates whether to skip the animation.
+ */
 function logoAnimation(skipAnimation) {
-    const overlay = document.getElementById('overlay');
-    const bigLogoDiv = document.getElementById('biglogo_div');
+    const overlay = document.getElementById('overlay'); // Overlay element that covers the page during animation.
+    const bigLogoDiv = document.getElementById('biglogo_div'); // Div containing the large logo.
+
     if (skipAnimation) {
-        skipLogoAnimation(overlay, bigLogoDiv);
+        skipLogoAnimation(overlay, bigLogoDiv); // Skip the animation and immediately hide elements.
     } else {
-        startLogoAnimation(overlay, bigLogoDiv);
+        startLogoAnimation(overlay, bigLogoDiv); // Start the animation sequence.
     }
 }
 
+/**
+ * Skips the logo animation by immediately hiding the overlay and the big logo.
+ * @param {HTMLElement} overlay - The overlay element.
+ * @param {HTMLElement} bigLogoDiv - The large logo container element.
+ */
 function skipLogoAnimation(overlay, bigLogoDiv) {
-    overlay.classList.add("d__none");  
-    bigLogoDiv.classList.add("d__none");  
+    overlay.classList.add("d__none"); // Hides the overlay immediately.
+    bigLogoDiv.classList.add("d__none"); // Hides the big logo immediately.
 }
 
+/**
+ * Starts the logo animation by transitioning the elements over time.
+ * @param {HTMLElement} overlay - The overlay element.
+ * @param {HTMLElement} bigLogoDiv - The large logo container element.
+ */
 function startLogoAnimation(overlay, bigLogoDiv) {
     setTimeout(() => {
-        overlay.classList.add("hidden");
+        overlay.classList.add("hidden"); // Fades out the overlay after 500ms.
     }, 500); 
+
     setTimeout(() => {
-        bigLogoDiv.classList.add("move__to__corner");
+        bigLogoDiv.classList.add("move__to__corner"); // Moves the big logo to the corner after 100ms.
     }, 100);
-    endLogoAnimation(overlay, bigLogoDiv);
+
+    endLogoAnimation(overlay, bigLogoDiv); // Completes the animation sequence.
 }
 
+/**
+ * Completes the logo animation by hiding the overlay and big logo, and showing the small logo.
+ * @param {HTMLElement} overlay - The overlay element.
+ * @param {HTMLElement} bigLogoDiv - The large logo container element.
+ */
 function endLogoAnimation(overlay, bigLogoDiv) {
-    const smallLogo = document.getElementById('small_logo');
+    const smallLogo = document.getElementById('small_logo'); // The small logo element that appears at the end.
+
     setTimeout(() => {
-        overlay.classList.add("d__none");
-        bigLogoDiv.classList.add("d__none");
-        smallLogo.classList.add("visible");
+        overlay.classList.add("d__none"); // Hides the overlay completely after 1000ms.
+        bigLogoDiv.classList.add("d__none"); // Hides the big logo completely after 1000ms.
+        smallLogo.classList.add("visible"); // Makes the small logo visible after 1000ms.
     }, 1000);
 }
 
+// --> noch ein Problem:
 function maskPassword(input) {
     const actualValue = input.value;  
     input.dataset.actualValue = actualValue;  
