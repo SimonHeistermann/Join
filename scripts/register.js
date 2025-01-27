@@ -15,6 +15,11 @@ function handleUsers(){
     console.log(users); 
 }
 
+/**
+ * Überprüft, ob alle erforderlichen Eingabefelder (Name, Email, Passwort) korrekt ausgefüllt sind.
+ * Wenn alle Felder gültig sind, wird die Funktion `doTheyMatch` aufgerufen. Andernfalls wird die Ausführung gestoppt.
+ * 
+ */
 function isEverythingFilledUp(){
     if (testname() == 0 && testemail() == 0 && testpassword() == 0){
         doTheyMatch();
@@ -24,6 +29,13 @@ function isEverythingFilledUp(){
     }
 }
 
+/**
+ * Überprüft, ob das Namens-Eingabefeld auf der Seite leer ist.
+ * Wenn das Feld leer ist, wird der Rahmen des Containers rot gefärbt und eine Fehlermeldung angezeigt.
+ * Gibt `1` zurück, wenn das Feld leer ist, und `0`, wenn es ausgefüllt ist.
+ * 
+ * @returns {number} 1, wenn das Namensfeld leer ist, ansonsten 0.
+ */
 function testname(){
     let nameInput = document.getElementById('person_input_register').value.trim();
     if(nameInput.length == 0){
@@ -37,6 +49,13 @@ function testname(){
     }
 }
 
+/**
+ * Überprüft, ob das Email-Eingabefeld auf der Seite leer ist.
+ * Wenn das Feld leer ist, wird der Rahmen des Containers rot gefärbt und eine Fehlermeldung angezeigt.
+ * Gibt `1` zurück, wenn das Feld leer ist, und `0`, wenn es ausgefüllt ist.
+ * 
+ * @returns {number} 1, wenn das Email-Feld leer ist, ansonsten 0.
+ */
 function testemail(){
     let nameInput = document.getElementById('email_input_register').value.trim();
     if(nameInput.length == 0){
@@ -50,6 +69,13 @@ function testemail(){
     }
 }
 
+/**
+ * Überprüft, ob das Passwort-Eingabefeld auf der Seite leer ist.
+ * Wenn das Feld leer ist, wird der Rahmen des Containers rot gefärbt und eine Fehlermeldung angezeigt.
+ * Gibt `1` zurück, wenn das Feld leer ist, und `0`, wenn es ausgefüllt ist.
+ * 
+ * @returns {number} 1, wenn das Passwort-Feld leer ist, ansonsten 0.
+ */
 function testpassword(){
     let nameInput = document.getElementById('password_input_register').value.trim();
     if(nameInput.length == 0){
@@ -82,7 +108,12 @@ function doTheyMatch(){
     else{
         password.value = '';
         confirmation.value = '';
-        alert('Die Passwörter stimmen nicht überein. Bitte versuchen Sie es noch einmal. Danke!');
+        let border = document.querySelector('.password__container');
+        border.style.borderColor = '#fb3c53';
+        let borderC = document.querySelector('.confirmation__container');
+        borderC.style.borderColor = '#fb3c53';
+        document.getElementById('noMatchmessage_box').classList.remove('d__none');
+        return 1;
     }
 }
 
