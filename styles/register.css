@@ -277,6 +277,23 @@ main {
     letter-spacing: normal;
 }
 
+.confirmation__container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+    background-color: #ffff;
+    padding: 4px 16px 4px 16px;
+}
+
+.confirmation__container:has(.password__input:focus) {
+    border: 1px solid #29ABE2;
+}
+
+
+
 .lock__icon {
     cursor: pointer;
     height: 24px;
