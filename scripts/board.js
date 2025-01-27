@@ -1,16 +1,17 @@
 function init() {
   console.log("Initialization successful.");
   addTaskIds();
+  openAddtask();
 }
 
 // Popup-Funktionen
-function openNav() {
-  document.getElementById("popup").style.display = "block";
+function openAddtask() {
+  document.getElementById("popup_open").style.display = "block";
   document.getElementById("overlay_popup").style.display = "block";
 }
 
-function closeNav() {
-  document.getElementById("popup").style.display = "none";
+function closeAddtask() {
+  document.getElementById("popup_open").style.display = "none";
   document.getElementById("overlay_popup").style.display = "none";
 }
 

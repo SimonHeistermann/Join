@@ -120,7 +120,7 @@
                     alt=""
                   />
                 </div>
-                <button class="add__button" onclick="openNav()">
+                <button class="add__button" onclick="openAddtask()">
                   Add
                   <img class="add__icon" src="assets/icons/add.png" alt="" />
                 </button>
@@ -157,7 +157,6 @@
                 <div
                   class="task"
                   id="task-4"
-                  onclick="openpopup()"
                   draggable="true"
                   ondragstart="drag(event)"
                 >
@@ -404,15 +403,15 @@
         </main>
       </div>
     </div>
-    <!--  Overlay und Popup -- Hiden -->
+    <!--  Overlay Addtask -- Hiden -->
     <div class="cover__all_addTask" id="cover__all_addTask">
       <div class="overlay__popup" id="overlay_popup">
         <section>
-          <div class="add__task__main" id="popup">
+          <div class="add__task__main" id="popup_open">
             <div class="close__btn">
-              <h1>Add Task</h1>
+              <h2 class="">Add Task</h2>
               <img
-                onclick="closeNav()"
+                onclick="closeAddtask()"
                 src="assets/icons/cancel_icon_blue.png"
                 alt=""
                 width="18"
@@ -565,7 +564,9 @@
           </ul>
         </div>
         <div class="popup__card-actions">
-          <button id="popup_delete_button">Delete</button>
+          <button id="popup_delete_button" onclick="closepopup()">
+            Delete
+          </button>
           <button id="popup_edit_button">Edit</button>
         </div>
       </div>
