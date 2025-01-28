@@ -1,18 +1,18 @@
 function init() {
   console.log("Initialization successful.");
   addTaskIds();
-  openAddtask();
+  /*   openAddtask(); */
 }
 
 // Popup-Funktionen
 function openAddtask() {
   document.getElementById("popup_open").style.display = "block";
-  document.getElementById("overlay_popup").style.display = "block";
+  document.getElementById("cover__all_addTask").style.display = "block";
 }
 
 function closeAddtask() {
   document.getElementById("popup_open").style.display = "none";
-  document.getElementById("overlay_popup").style.display = "none";
+  document.getElementById("cover__all_addTask").style.display = "none";
 }
 
 function openpopup() {
@@ -38,9 +38,6 @@ function addTaskIds() {
     }
   });
 }
-
-// IDs hinzufügen, sobald die Seite geladen ist
-document.addEventListener("DOMContentLoaded", addTaskIds);
 
 // Funktion, um das Ziehen zu erlauben
 function allowDrop(event) {
