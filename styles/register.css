@@ -86,7 +86,6 @@ main {
 
 .main__content {
     width: min(100%, 1920px);
-    height: 100vh;
     margin-inline: auto;
     padding-inline: clamp(16px, 6vw, 64px);
     position: relative;
