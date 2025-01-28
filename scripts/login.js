@@ -66,11 +66,41 @@ function endLogoAnimation(overlay, bigLogoDiv) {
     }, 1000);
 }
 
-// --> noch ein Problem:
+/* --> noch ein Problem:
 function maskPassword(input) {
     const actualValue = input.value;  
     input.dataset.actualValue = actualValue;  
     input.value = '*'.repeat(actualValue.length); 
+}*/
+
+
+function login(event){
+    event.preventDefault();
+    let email = document.getElementById('email_input_login').value;
+    let inputPw = document.getElementById('password_input_login').value;
+    console.log(email);
+    console.log(inputPw);
+    
+    let userIndex = users.findIndex(user => user.email == email);
+
+    if(userIndex !==-1){
+        testpPasswordLogin(inputPw, userIndex);
+        console.log(userIndex);
+        
+    }else{
+        document.getElementById('wrong_email_password').classList.remove('d__none');
+    }
 }
 
-
+function testpPasswordLogin(inputPw, userIndex){
+    let storedPW = users[userIndex].pw;
+    if(inputPw === storedPW){
+        console.log(inputPw);
+        console.log(storedPW);
+        
+        
+        window.location.href = 'summary.html';
+    }else{
+        document.getElementById('wrong_email_password').classList.remove('d__none');
+    }
+}

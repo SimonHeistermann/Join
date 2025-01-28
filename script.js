@@ -1,6 +1,7 @@
 let users = [];
 let tasks = [];
 let contacts = [];
+let user =[];
 let contactUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/contacts.json"
 let tasksUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/tasks.json"
 let usersUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/users.json"
@@ -67,8 +68,11 @@ async function fetchUsers(){
     try {
         let response = await fetch(usersUrl);
         let allUser = await response.json();
-        users.push(allUser);
+        console.log(allUser);
+        
+        users = allUser;
         console.log(users);
+        
         toLocalStorage();
     } catch (error) {
         console.error("Error getting users:", error);

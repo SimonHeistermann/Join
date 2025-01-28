@@ -32,7 +32,7 @@
             </div>
             <div class="header__buttonbox">
                 <button class="notajoinuser__button"><h3>Not a Join user?</h3></button>
-                <button class="signup__button">Sign up</button>
+                <button class="signup__button"><a href="register.html">Sign up</a></button>
             </div>
         </div>
     </header>
@@ -58,14 +58,17 @@
                             <img class="visibility__icon" src="./assets/icons/eye_icon_gray.png" alt="Visibility Icon">
                         </label>
                     </div>
-                    <div class="errormessage__box">
+                    <div class="errormessage__box d__none" id="errormessage_box_login">
                        This field is required.
                     </div>
+                    <div class="errormessage__box d__none" id="wrong_email_password">
+                        Check your email and password. Please try again.
+                     </div>
                 </div>
             </div>
             <div class="login__buttonbox">
-                <button class="login__button">Log in</button>
-                <button class="guestlogin__button">Guest Log in</button>
+                <button class="login__button" onclick="login(event); return false;">Log in</button>
+                <button class="guestlogin__button"><a href="http://"></a>Guest Log in</button>
             </div>
         </form>
     </main>
