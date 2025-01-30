@@ -32,7 +32,7 @@
             </div>
             <div class="header__buttonbox">
                 <button class="notajoinuser__button"><h3>Not a Join user?</h3></button>
-                <button class="signup__button">Sign up</button>
+                <button class="signup__button"><a class="sign__button_link" href="register.html">Sign up</a></button>
             </div>
         </div>
     </header>
@@ -43,14 +43,14 @@
                 <div class="login__seperator"></div>
             </div>
             <div class="login__inputbox">
-                <div class="email__container">
+                <div class="email__container" id="email_container">
                     <input class="email__input" id="email_input_login" required type="email" placeholder="Email" autocomplete="email">
                     <label for="email_input_login">
                         <img class="email__logo" src="./assets/icons/mail_icon_gray.png" alt="Email Icon">
                     </label>
                 </div>
                 <div class="password__box">
-                    <div class="password__container">
+                    <div class="password__container" id="password_container">
                         <input class="password__input" required id="password_input_login" type="password" placeholder="Password" autocomplete="current-password" oninput="maskPassword(this)">
                         <label for="password_input_login">
                             <img class="lock__icon" src="./assets/icons/lock_icon_gray.png" alt="Lock Icon">
@@ -58,14 +58,17 @@
                             <img class="visibility__icon" src="./assets/icons/eye_icon_gray.png" alt="Visibility Icon">
                         </label>
                     </div>
-                    <div class="errormessage__box">
+                    <div class="errormessage__box d__none" id="errormessage_box_login">
                        This field is required.
                     </div>
+                    <div class="errormessage__box d__none" id="wrong_email_password">
+                        Check your email and password. Please try again.
+                     </div>
                 </div>
             </div>
             <div class="login__buttonbox">
-                <button class="login__button">Log in</button>
-                <button class="guestlogin__button">Guest Log in</button>
+                <button class="login__button" onclick="login(event); return false;">Log in</button>
+                <button class="guestlogin__button" onclick="guestLogIN(event); return false;">Guest Log in</button>
             </div>
         </form>
     </main>
