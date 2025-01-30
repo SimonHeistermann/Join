@@ -2,6 +2,62 @@ function init() {
   console.log("Initialization successful.");
   addTaskIds();
   /*   openAddtask(); */
+  fetchData();
+}
+
+let baseUrl =
+  "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/";
+
+function init() {
+  fetchData();
+}
+
+async function fetchData() {
+  let response = await fetch(baseUrl + ".json");
+
+  let getTasks = await response.json();
+  console.log("Daten von Firebase:", getTasks.tasks);
+  if (getTasks && getTasks.tasks) {
+    showTasks(getTasks.tasks);
+  }
+}
+
+function showTasks(tasks) {
+  let container = document.getElementById("taskContainer");
+  container.innerHTML = "";
+
+  for (let i = 0; i < tasks.length; i++) {
+    const element = tasks[i];
+
+    // Überprüfe, ob das Element nicht null ist, bevor du darauf zugreifst
+    if (element !== null) {
+      container.innerHTML += `<div class="content__Todo${i}">
+      <div class="task" onclick="openpopup()" id="task-4" draggable="true" ondragstart="drag(event)">
+        <div class="task__type user__story">User Story</div>
+        <h3>Title: ${element.name}</h3> 
+        <p>${element.description}</p>
+        <div class="progress">
+          <div class="progress__bar" style="width: ${
+            element.progress ? element.progress : "Keine Fortschrittsangabe"
+          }%"></div>
+        </div>
+        <div class="subtasks">1/2 Subtasks</div>
+        <div class="avatars">
+          <div class="avatars__menuIcon">
+            <div class="avatars__group">
+              <div class="avatar" style="background-color: #b2a745">AM</div>
+              <div class="avatar" style="background-color: #ff7a00">EM</div>
+              <div class="avatar" style="background-color: #ff4646">MB</div>
+            </div>
+            <div>
+              <img src="assets/icons/Priority symbols (1).png" alt="" width="32" onclick="openpopup()" />
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>`;
+    }
+  }
 }
 
 // Popup-Funktionen

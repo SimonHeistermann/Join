@@ -1,198 +1,198 @@
-h1{
-    margin-top: 20px;
-    width: 278px;
-    height: 73px;
+h1 {
+  margin-top: 20px;
+  width: 278px;
+  height: 73px;
 }
 
-.star{
-    color: red;
+.star {
+  color: red;
 }
 
-.add_task_main{
-    max-width: 1200px;
-    margin-left: 0;
+.add_task_main {
+  max-width: 1200px;
+  margin-left: 0;
 }
 
-.inputfields{
-    display: flex;
-    flex: 1;
-    margin-top: 48px;
+.inputfields {
+  display: flex;
+  flex: 1;
+  margin-top: 48px;
 }
 
-.left_side{
-    display: flex;
-    flex-direction: column;
-    margin-right: 16px;
-    width: clamp(200px, 450px, 440px);
-    padding-top: 16px;
+.left_side {
+  display: flex;
+  flex-direction: column;
+  margin-right: 16px;
+  width: clamp(200px, 450px, 440px);
+  padding-top: 16px;
 }
 
-.text_input{
-    width: 440px;
-    height: 48px;
-    padding-left: 16px;;
-    border-radius: 8px;
-    border: 1px solid #d1d1d1;
-    margin-top: 8px;
-    font-size: 20px;
+.text_input {
+  width: 440px;
+  height: 48px;
+  padding-left: 16px;
+  border-radius: 8px;
+  border: 1px solid #d1d1d1;
+  margin-top: 8px;
+  font-size: 20px;
 }
 
-.text_input:focus{
-    border-color: #29ABE2;
+.text_input:focus {
+  border-color: #29abe2;
 }
 
-.required{
-    font-size: 12px;
-    color: red;
-    height: 12px;
-    margin-bottom: 36px;
+.required {
+  font-size: 12px;
+  color: red;
+  height: 12px;
+  margin-bottom: 36px;
 }
 
-.description{
-    font-size: 20px;
-    margin-top: 8px;
-    padding-left: 16px;
-    padding-top: 16px;
-    border-radius: 10px;
-    border: 1px solid #d1d1d1;
-    height: 112px;
-    margin-bottom: 24px;
+.description {
+  font-size: 20px;
+  margin-top: 8px;
+  padding-left: 16px;
+  padding-top: 16px;
+  border-radius: 10px;
+  border: 1px solid #d1d1d1;
+  height: 112px;
+  margin-bottom: 24px;
 }
 
-.assigned_to{
-    width: 440px;
-    height: 48px;
-    padding-left: 16px;;
-    border-radius: 8px;
-    border: 1px solid #d1d1d1;
-    margin-top: 8px;
-    margin-bottom: 36px;
-    font-size: 20px;
+.assigned_to {
+  width: 440px;
+  height: 48px;
+  padding-left: 16px;
+  border-radius: 8px;
+  border: 1px solid #d1d1d1;
+  margin-top: 8px;
+  margin-bottom: 36px;
+  font-size: 20px;
 }
 
-.the_divider{
-    width: 2px;
-    background-color: #dadadb;
-    padding-top: 16px;
+.the_divider {
+  width: 2px;
+  background-color: #dadadb;
+  padding-top: 16px;
 }
 
-.right_side{
-    margin-left: 16px;
-    display: flex;
-    flex-direction: column;
-    width: 440px;
-    padding-top: 16px;
+.right_side {
+  margin-left: 16px;
+  display: flex;
+  flex-direction: column;
+  width: 440px;
+  padding-top: 16px;
 }
 
-.date{
-    width: 440px;
-    height: 36px;
-    padding-left: 16px;;
-    border-radius: 8px;
-    border: 1px solid #d1d1d1;
-    margin-top: 8px;
-    font-size: 20px;
+.date {
+  width: 440px;
+  height: 36px;
+  padding-left: 16px;
+  border-radius: 8px;
+  border: 1px solid #d1d1d1;
+  margin-top: 8px;
+  font-size: 20px;
 }
 
-.label{
-    display: flex;
-    font-size: 20px;
+.label {
+  display: flex;
+  font-size: 20px;
 }
 
-.text_and_buttons{
-    margin-top: 60px;
-    display: flex;
-    justify-content: space-between;
+.text_and_buttons {
+  margin-top: 60px;
+  display: flex;
+  justify-content: space-between;
 }
 
-.is_required{
-    display: flex;
+.is_required {
+  display: flex;
 }
 
-.prio_label{
-    margin-top: 8px;
+.prio_label {
+  margin-top: 8px;
 }
 
 .radio_overall {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 24px;
-    margin-top: 8px;
+  display: flex;
+  gap: 16px;
+  margin-bottom: 24px;
+  margin-top: 8px;
 }
 
 .radio {
-    appearance: none; 
-    width: 136px;
-    height: 56px;
-    border-radius: 10px; 
-    background-color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    font-size: 16px;
-    font-weight: bold;
-    cursor: pointer;
-    position: relative;
+  appearance: none;
+  width: 136px;
+  height: 56px;
+  border-radius: 10px;
+  background-color: white;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  font-size: 16px;
+  font-weight: bold;
+  cursor: pointer;
+  position: relative;
 }
 
 /* Der Input muss wohl versteckt werden, aber interaktiv bleiben! Also damit der Text im Button steht, muss der Button selber unsichtbar sein, weil eigentlich kein Text im 
 Radiobutton stehen kann. Dh! wir müssen also mit dem Label des Button stylen und den Button dann unsichtbar über das Label legen, aber so dass er sichbar ist. Darum haben
 beide Label und button die klasse radio und radioinput spricht aber gerade nur die inputfelder, hier buttons, an*/
 .radio input {
-    opacity: 0; /* unsichtbar*/
-    position: absolute; /* raus aus dem normalen fluss und absolut ausgerichtet an dem paren, hier also Label*/
-    width: 100%; /* ausfüllen des gesamten Labels */
-    height: 100%;
-    cursor: pointer;
+  opacity: 0; /* unsichtbar*/
+  position: absolute; /* raus aus dem normalen fluss und absolut ausgerichtet an dem paren, hier also Label*/
+  width: 100%; /* ausfüllen des gesamten Labels */
+  height: 100%;
+  cursor: pointer;
 }
-
 
 .radio_urgend input:checked + label,
 .radio_urgend:has(input:checked) {
-    background-color: #FF3D00;
-    color: white;
+  background-color: #ff3d00;
+  color: white;
 }
 
 .radio_medium input:checked + label,
-.radio_medium:has(input:checked) { /* has habe ich im Internet gefunden, ist wohl relativ neu und spricht das Parent an */
-    background-color: #FFA800;
-    color: white;
+.radio_medium:has(input:checked) {
+  /* has habe ich im Internet gefunden, ist wohl relativ neu und spricht das Parent an */
+  background-color: #ffa800;
+  color: white;
 }
 
 .radio_low input:checked + label,
 .radio_low:has(input:checked) {
-    background-color: #7AE229;
-    color: white;
+  background-color: #7ae229;
+  color: white;
 }
 
-.category{
-    width: 440px;
-    height: 48px;
-    padding-left: 16px;;
-    border-radius: 8px;
-    border: 1px solid #d1d1d1;
-    margin-top: 8px;
-    margin-bottom: 36px;
-    font-size: 20px;
+.category {
+  width: 440px;
+  height: 48px;
+  padding-left: 16px;
+  border-radius: 8px;
+  border: 1px solid #d1d1d1;
+  margin-top: 8px;
+  margin-bottom: 36px;
+  font-size: 20px;
 }
 
-.subtask{
-    width: 440px;
-    height: 48px;
-    padding-left: 16px;;
-    border-radius: 8px;
-    border: 1px solid #d1d1d1;
-    margin-top: 8px;
-    margin-bottom: 36px;
-    font-size: 20px;
+.subtask {
+  width: 440px;
+  height: 48px;
+  padding-left: 16px;
+  border-radius: 8px;
+  border: 1px solid #d1d1d1;
+  margin-top: 8px;
+  margin-bottom: 36px;
+  font-size: 20px;
 }
 
-.create_task{
-    width: 183px;
-    height: 56px;
+.create_task {
+  width: 183px;
+  height: 56px;
 }
 
-.clear{
-    width: 110px;
-    height: 56px;
+.clear {
+  width: 110px;
+  height: 56px;
 }
