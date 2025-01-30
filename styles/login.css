@@ -113,6 +113,11 @@ header {
     box-shadow: 0 4px 4px  #00000040;
 }
 
+.sign__button_link{
+    text-decoration: none;
+    color: white;
+}
+
 main {
     flex: 1;
     width: min(100%, 1920px);
@@ -276,7 +281,7 @@ main {
     width: 24px;
 }
 
-.erorr__inputs {
+.error__inputs {
     border: 1px solid #FF001F;
 }
 

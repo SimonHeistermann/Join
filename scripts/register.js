@@ -21,7 +21,7 @@ function handleUsers(){
  * 
  */
 function isEverythingFilledUp(){
-    if (testname() == 0 && testemail() == 0 && testpassword() == 0){
+    if (testName() == 0 && testEmail() == 0 && testPassword() == 0){
         doTheyMatch();
     }
     else{
@@ -36,7 +36,7 @@ function isEverythingFilledUp(){
  * 
  * @returns {number} 1, wenn das Namensfeld leer ist, ansonsten 0.
  */
-function testname(){
+function testName(){
     let nameInput = document.getElementById('person_input_register').value.trim();
     if(nameInput.length == 0){
         let border = document.querySelector('.person__container');
@@ -56,7 +56,7 @@ function testname(){
  * 
  * @returns {number} 1, wenn das Email-Feld leer ist, ansonsten 0.
  */
-function testemail(){
+function testEmail(){
     let nameInput = document.getElementById('email_input_register').value.trim();
     if(nameInput.length == 0){
         let border = document.querySelector('.email__container');
@@ -76,7 +76,7 @@ function testemail(){
  * 
  * @returns {number} 1, wenn das Passwort-Feld leer ist, ansonsten 0.
  */
-function testpassword(){
+function testPassword(){
     let nameInput = document.getElementById('password_input_register').value.trim();
     if(nameInput.length == 0){
         let border = document.querySelector('.password__container');

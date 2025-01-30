@@ -73,11 +73,81 @@ function maskPassword(input) {
     input.value = '*'.repeat(actualValue.length); 
 }*/
 
-
+/**
+ * Handles the login process by preventing the default form submission,
+ * retrieving the email and password from the input fields, and checking
+ * if the provided credentials match any user in the `users` array.
+ * 
+ * If the email is found in the `users` array, the function checks the
+ * password using the `testpPasswordLogin` function. If the email is not
+ * found, an error message is displayed and error borders are applied to
+ * the input fields.
+ * 
+ * @param {Event} event - The event object from the form submission.
+ * @returns {void}
+ */
 function login(event){
     event.preventDefault();
     let email = document.getElementById('email_input_login').value;
     let inputPw = document.getElementById('password_input_login').value;
+    let userIndex = users.findIndex(user => user.email == email);
+
+    if(userIndex !==-1){
+        testpPasswordLogin(inputPw, userIndex);
+        console.log(userIndex);
+        
+    }else{
+        document.getElementById('wrong_email_password').classList.remove('d__none');
+        errorBorders();
+    }
+}
+
+/**
+ * Compares the provided password with the stored password for the user at the given index.
+ * If the passwords match, the user is redirected to the summary page.
+ * If the passwords do not match, an error message is displayed, error styling is applied,
+ * and the password input field is cleared.
+ * 
+ * @param {string} inputPw - The password input provided by the user.
+ * @param {number} userIndex - The index of the user in the `users` array.
+ */
+function testpPasswordLogin(inputPw, userIndex){
+    let storedPW = users[userIndex].pw;
+    if(inputPw === storedPW){
+        console.log(inputPw);
+        console.log(storedPW);
+        window.location.href = 'summary.html';
+    }else{
+        document.getElementById('wrong_email_password').classList.remove('d__none');
+        document.getElementById('password_container').classList.add('error__inputs');
+        document.getElementById('password_input_login').value = '';
+    }
+}
+
+/**
+ * Adds error styling to the email and password input containers
+ * by adding the 'error__inputs' class to their respective elements.
+ * 
+ */
+function errorBorders(){
+    document.getElementById('email_container').classList.add('error__inputs');
+    document.getElementById('password_container').classList.add('error__inputs')    
+}
+
+/**
+ * Handles the guest login process by preventing the default form submission,
+ * using predefined guest credentials (email: 'guest', password: 'guest123'),
+ * and checking if the guest user exists in the `users` array.
+ * 
+ * If the guest user is found, the function checks the password using the `testpPasswordLogin` function.
+ * If the guest user is not found, an alert with the message 'Database error' is displayed.
+ * 
+ * @param {Event} event - The event object from the form submission.
+ */
+function guestLogIN(event){
+    event.preventDefault();
+    let email = 'guest';
+    let inputPw = 'guest123';
     console.log(email);
     console.log(inputPw);
     
@@ -88,19 +158,6 @@ function login(event){
         console.log(userIndex);
         
     }else{
-        document.getElementById('wrong_email_password').classList.remove('d__none');
-    }
-}
-
-function testpPasswordLogin(inputPw, userIndex){
-    let storedPW = users[userIndex].pw;
-    if(inputPw === storedPW){
-        console.log(inputPw);
-        console.log(storedPW);
-        
-        
-        window.location.href = 'summary.html';
-    }else{
-        document.getElementById('wrong_email_password').classList.remove('d__none');
+        alert('Database error')
     }
 }
