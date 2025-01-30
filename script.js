@@ -67,12 +67,8 @@ async function putData(path = "", data = {}) {
 async function fetchUsers(){
     try {
         let response = await fetch(usersUrl);
-        let allUser = await response.json();
-        console.log(allUser);
-        
-        users = allUser;
-        console.log(users);
-        
+        let allUser = await response.json();        
+        users = allUser;        
         toLocalStorage();
     } catch (error) {
         console.error("Error getting users:", error);
