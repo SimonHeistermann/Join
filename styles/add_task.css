@@ -1,198 +1,393 @@
-h1{
-    margin-top: 20px;
-    width: 278px;
-    height: 73px;
+main {
+    gap: 48px;
 }
 
-.star{
-    color: red;
-}
-
-.add_task_main{
-    max-width: 1200px;
-    margin-left: 0;
-}
-
-.inputfields{
-    display: flex;
-    flex: 1;
-    margin-top: 48px;
-}
-
-.left_side{
+.add__task__form {
     display: flex;
     flex-direction: column;
-    margin-right: 16px;
-    width: clamp(200px, 450px, 440px);
-    padding-top: 16px;
+    gap: 96px;
+}
+  
+.input__boxes {
+    display: flex;
+    align-items: flex-start;
+    gap: 64px;
+    width: 100%;
 }
 
-.text_input{
-    width: 440px;
-    height: 48px;
-    padding-left: 16px;;
-    border-radius: 8px;
-    border: 1px solid #d1d1d1;
-    margin-top: 8px;
+.input__container {
+    width: 100%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    color: #2A3647;
+}
+
+.input__box {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+}
+
+.red__star {
+    color: #FF8190;
+}
+
+.input__container input {
+    padding: 12px 21px;
+    width: 100%;
+    background-color: white;
     font-size: 20px;
-}
-
-.text_input:focus{
-    border-color: #29ABE2;
-}
-
-.required{
-    font-size: 12px;
-    color: red;
-    height: 12px;
-    margin-bottom: 36px;
-}
-
-.description{
-    font-size: 20px;
-    margin-top: 8px;
-    padding-left: 16px;
-    padding-top: 16px;
+    font-weight: 400;
+    color: black;
     border-radius: 10px;
-    border: 1px solid #d1d1d1;
-    height: 112px;
-    margin-bottom: 24px;
+    border: 1px solid #D1D1D1;
 }
 
-.assigned_to{
-    width: 440px;
-    height: 48px;
-    padding-left: 16px;;
-    border-radius: 8px;
-    border: 1px solid #d1d1d1;
-    margin-top: 8px;
-    margin-bottom: 36px;
+.input__container input:focus {
+    outline: none;
+    border: 1px solid #29ABE2 !important;
+}
+
+.input__container input::placeholder {
+    color: #D1D1D1;
+    font-weight: 400;
     font-size: 20px;
 }
 
-.the_divider{
-    width: 2px;
-    background-color: #dadadb;
-    padding-top: 16px;
+.input__container textarea {
+    resize: none;
+    padding: 18px 16px;
+    width: 100%;
+    background-color: white;
+    font-size: 20px;
+    font-weight: 400;
+    color: black;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
 }
 
-.right_side{
-    margin-left: 16px;
+.input__container textarea:focus {
+    outline: none;
+    border: 1px solid #29ABE2 !important;
+}
+
+.input__container textarea::placeholder {
+    color: #D1D1D1;
+    font-weight: 400;
+    font-size: 20px;
+}
+  
+.add__task__left {
     display: flex;
     flex-direction: column;
-    width: 440px;
-    padding-top: 16px;
+    gap: 32px;
+    width: clamp(200px, 450px, 440px);
 }
-
-.date{
-    width: 440px;
-    height: 36px;
-    padding-left: 16px;;
-    border-radius: 8px;
-    border: 1px solid #d1d1d1;
-    margin-top: 8px;
-    font-size: 20px;
-}
-
-.label{
+  
+.dropdown__container {
+    width: 100%;
     display: flex;
-    font-size: 20px;
+    flex-direction: column;
+    gap: 8px;
 }
-
-.text_and_buttons{
-    margin-top: 60px;
+  
+.dropdown__container label {
+    display: block;
+    color: #2A3647;
+}
+  
+.dropdown__toggle {
+    width: 100%;
+    padding: 10px;
+    font-size: 14px;
+    text-align: left;
+    background-color: white;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    cursor: pointer;
     display: flex;
     justify-content: space-between;
+    align-items: center;
 }
-
-.is_required{
+  
+.dropdown__toggle:hover {
+    border-color: #999;
+}
+  
+.dropdown__arrow__icon {
     display: flex;
+    align-items: center;
+    justify-content: center;
 }
-
-.prio_label{
-    margin-top: 8px;
-}
-
-.radio_overall {
-    display: flex;
-    gap: 16px;
-    margin-bottom: 24px;
-    margin-top: 8px;
-}
-
-.radio {
-    appearance: none; 
-    width: 136px;
-    height: 56px;
-    border-radius: 10px; 
+  
+.dropdown__list__wrapper {
+    display: none;
+    border: 1px solid #ccc;
+    border-top: none;
+    border-radius: 0 0 6px 6px;
+    overflow: hidden;
     background-color: white;
+}
+  
+.dropdown__input {
+    width: 100%;
+    padding: 8px;
+    border: none;
+    outline: none;
+    border-bottom: 1px solid #ccc;
+}
+  
+.dropdown__list {
+    list-style: none;
+    margin: 0;
+    padding: 0;
+    max-height: 200px;
+    overflow-y: auto;
+}
+  
+.dropdown__item {
+    display: flex;
+    align-items: center;
+    padding: 8px;
+    cursor: pointer;
+}
+  
+  .dropdown__item:hover {
+    background-color: #f0f0f0;
+  }
+  
+.dropdown__avatar {
+    width: 32px;
+    height: 32px;
+    border-radius: 50%;
     display: flex;
     justify-content: center;
     align-items: center;
-    font-size: 16px;
+    color: white;
     font-weight: bold;
+    margin-right: 10px;
+    font-size: 14px;
+}
+  
+.dropdown__name {
+    flex-grow: 1;
+}
+  
+input[type="checkbox"] {
+    margin-left: auto;
+}
+
+.add__task__seperator {
+    border: solid 1px #D1D1D1;
+    height: 424px;
+    border-radius: 2px;
+}
+
+.add__task__right {
+    display: flex;
+    flex-direction: column;
+    gap: 32px;
+    width: clamp(200px, 450px, 440px);
+}
+
+.erorr__inputs {
+    border: 1px solid #FF001F;
+}
+
+.errormessage__box {
+    font-size: 13px;
+    font-weight: 400;
+    color: #FF8190;
+}
+
+.date__box {
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+}
+
+.date__container {
+    display: flex;
+    align-items: center;
+    gap: 8px;
+    width: 100%;
+    border-radius: 10px;
+    border: 1px solid #D1D1D1;
+    background-color: #ffff;
+    padding: 4px 16px 4px 16px;
     cursor: pointer;
     position: relative;
 }
 
-/* Der Input muss wohl versteckt werden, aber interaktiv bleiben! Also damit der Text im Button steht, muss der Button selber unsichtbar sein, weil eigentlich kein Text im 
-Radiobutton stehen kann. Dh! wir müssen also mit dem Label des Button stylen und den Button dann unsichtbar über das Label legen, aber so dass er sichbar ist. Darum haben
-beide Label und button die klasse radio und radioinput spricht aber gerade nur die inputfelder, hier buttons, an*/
-.radio input {
-    opacity: 0; /* unsichtbar*/
-    position: absolute; /* raus aus dem normalen fluss und absolut ausgerichtet an dem paren, hier also Label*/
-    width: 100%; /* ausfüllen des gesamten Labels */
-    height: 100%;
+.date__container:has(.date__input:focus) {
+    border: 1px solid #29ABE2;
+}
+
+.date__container label {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.date__input {
+    min-height: 40px;
+    width: 100%;
+    border-width: 0;
+    background-color: transparent;
+    font-size: 20px;
+    font-weight: 400;
+    color: black;
+    caret-color: transparent;
+}
+
+.date__input:focus {
+    outline: none;
+}
+
+.date__input::placeholder {
+    color: #D1D1D1;
+    font-weight: 400;
+    font-size: 20px;
+}
+
+.calender__icon {
+    cursor: pointer;
+    height: 24px;
+    width: 24px;
+}
+
+.due__date__text {
     cursor: pointer;
 }
 
-
-.radio_urgend input:checked + label,
-.radio_urgend:has(input:checked) {
-    background-color: #FF3D00;
-    color: white;
-}
-
-.radio_medium input:checked + label,
-.radio_medium:has(input:checked) { /* has habe ich im Internet gefunden, ist wohl relativ neu und spricht das Parent an */
-    background-color: #FFA800;
-    color: white;
-}
-
-.radio_low input:checked + label,
-.radio_low:has(input:checked) {
-    background-color: #7AE229;
-    color: white;
-}
-
-.category{
-    width: 440px;
-    height: 48px;
-    padding-left: 16px;;
+.flatpickr-calendar {
+    font-family: "Inter", sans-serif;
     border-radius: 8px;
-    border: 1px solid #d1d1d1;
-    margin-top: 8px;
-    margin-bottom: 36px;
-    font-size: 20px;
+    box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+    border: 1px solid #D1D1D1;
 }
 
-.subtask{
-    width: 440px;
-    height: 48px;
-    padding-left: 16px;;
-    border-radius: 8px;
-    border: 1px solid #d1d1d1;
-    margin-top: 8px;
-    margin-bottom: 36px;
-    font-size: 20px;
+.flatpickr-day.selected {
+    background-color: #29ABE2 !important;
+    color: white !important;
+    border-radius: 6px;
 }
 
-.create_task{
-    width: 183px;
+.flatpickr-day:hover {
+    background-color: #E8F4FA;
+    border-radius: 6px;
+}
+
+.flatpickr-day.today {
+    border: 1px solid #29ABE2;
+    background-color: white;
+    color: #29ABE2;
+    font-weight: bold;
+}
+
+.flatpickr-prev-month, .flatpickr-next-month {
+    color: #29ABE2 !important;
+    font-size: 18px;
+    transition: 0.2s;
+}
+
+.flatpickr-prev-month:hover, .flatpickr-next-month:hover {
+    color: #1B7F99 !important;
+}
+
+.radio__container {
+    width: 100%;
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    color: black;
+}
+  
+.radio {
+    appearance: none;
+    width: 136px;
     height: 56px;
+    border-radius: 10px;
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    gap: 8px;
+    align-items: center;
+    cursor: pointer;
+    position: relative;
+    box-shadow: 0px 0px 4px 0px #0000001A;
+    transition: box-shadow 125ms ease,
 }
 
-.clear{
-    width: 110px;
-    height: 56px;
+.radio:hover {
+    box-shadow: 0px 4px 4px 0px #00000040;
+}
+  
+.radio input {
+    opacity: 0;
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    cursor: pointer;
+}
+  
+.radio__urgent input:checked + label,
+.radio__urgent:has(input:checked) {
+    background-color: #ff3d00;
+    color: white;
+}
+  
+.radio__medium input:checked + label,
+.radio__medium:has(input:checked) {
+    background-color: #ffa800;
+    color: white;
+}
+  
+.radio__low input:checked + label,
+.radio__low:has(input:checked) {
+    background-color: #7ae229;
+    color: white;
+}
+
+.urgent__icon__white,
+.medium__icon__white,
+.low__icon__white {
+    display: none;
+}
+
+.urgent__icon__red,
+.medium__icon__orange,
+.low__icon__green {
+    display: block;
+}
+
+.radio__urgent:has(input:checked) .urgent__icon__white {
+    display: block;
+}
+
+.radio__urgent:has(input:checked) .urgent__icon__red {
+    display: none;
+}
+
+.radio__medium:has(input:checked) .medium__icon__white {
+    display: block;
+}
+
+.radio__medium:has(input:checked) .medium__icon__orange {
+    display: none;
+}
+
+.radio__low:has(input:checked) .low__icon__white {
+    display: block;
+}
+
+.radio__low:has(input:checked) .low__icon__green {
+    display: none;
+}
+
+.radio__urgent:has(input:checked):hover, 
+.radio__medium:has(input:checked):hover,
+.radio__low:has(input:checked):hover {
+    box-shadow: 0px 0px 4px 0px #0000001A;
 }

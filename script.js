@@ -1,15 +1,12 @@
-let users = [];
-let tasks = [];
 let contacts = [];
-let contactUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/contacts.json"
-let tasksUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/tasks.json"
-let usersUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/users.json"
+const BASE_URL = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/";
 
 
-// --> Nur falls du damit arbeiten möchtest, hier einmal das aus dem Chat :)
-
-const BASE_URL = "";
-
+/**
+ * Loads data from the specified endpoint.
+ * @param {string} [path=""] - The API endpoint path to load data from.
+ * @returns {Promise<Object|undefined>} A promise that resolves to the JSON response or undefined in case of an error.
+ */
 async function loadData(path = "") {
     try {
         let response = await fetch(BASE_URL + path + ".json");
@@ -20,6 +17,12 @@ async function loadData(path = "") {
     }
 }
 
+/**
+ * Sends data to the specified endpoint using a POST request.
+ * @param {string} [path=""] - The API endpoint path to post data to.
+ * @param {Object} [data={}] - The data object to send.
+ * @returns {Promise<Object|undefined>} A promise that resolves to the JSON response or undefined in case of an error.
+ */
 async function postData(path = "", data = {}) {
     try {
         let response = await fetch(BASE_URL + path + ".json", {
@@ -35,6 +38,11 @@ async function postData(path = "", data = {}) {
     }
 }
 
+/**
+ * Deletes data at the specified endpoint using a DELETE request.
+ * @param {string} [path=""] - The API endpoint path to delete data from.
+ * @returns {Promise<Object|undefined>} A promise that resolves to the JSON response or undefined in case of an error.
+ */
 async function deleteData(path = "") {
     try {
         let response = await fetch(BASE_URL + path + ".json", {
@@ -46,6 +54,12 @@ async function deleteData(path = "") {
     }
 }
 
+/**
+ * Updates data at the specified endpoint using a PUT request.
+ * @param {string} [path=""] - The API endpoint path to update data.
+ * @param {Object} [data={}] - The updated data object.
+ * @returns {Promise<Object|undefined>} A promise that resolves to the JSON response or undefined in case of an error.
+ */
 async function putData(path = "", data = {}) {
     try {
         let response = await fetch(BASE_URL + path + ".json", {
@@ -61,43 +75,14 @@ async function putData(path = "", data = {}) {
     }
 }
 
-//fetch der Daten on onload
-
-async function fetchUsers(){
+async function init() {
     try {
-        let response = await fetch(usersUrl);
-        let allUser = await response.json();
-        users.push(allUser);
-        console.log(users);
-        toLocalStorage();
+        await fetchUsers();
+        await fetchTasks();
+        await fetchContacts();
     } catch (error) {
-        console.error("Error getting users:", error);
+        console.error("Error initializing app:", error);
     }
 }
 
-async function fetchTasks() {
-    try {
-        let response = await fetch(tasksUrl);
-        let fetchedTasks = await response.json();
-        tasks.push(fetchedTasks);
-    } catch (error) {
-        console.error("Error getting tasks:", error);
-    }
-}
 
-function toLocalStorage(){
-    localStorage.setItem("users", JSON.stringify(users));
-}
-
-/**
- * Zeigt eine Fehlermeldung an, wenn das Laden der Daten schiefgegangen ist.
- * 
- * Diese Funktion zeigt eine `alert`-Nachricht an, die den Benutzer darauf hinweist,
- * dass das Laden der Daten fehlgeschlagen ist, und bittet ihn, es später erneut zu versuchen.
- * Der Benutzer wird auch um Entschuldigung für die Unannehmlichkeiten gebeten.
- * 
- * @param {string} message - Die Nachricht, die dem Benutzer im Fehlerfall angezeigt wird. In diesem Fall eine standardisierte Fehlermeldung.
- */
-function showErrorAlert() {
-    alert("Das Laden der Daten ist schiefgegangen. Bitte versuchen Sie es zu einem späteren Zeitpunkt noch einmal. Danke. Entschuldigen Sie die Unannehmlichkeiten.");
-}

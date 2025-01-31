@@ -21,7 +21,7 @@
     <script src="./scripts/summary.js"></script>
     <script src="./scripts/assets.js"></script>
 </head>
-<body id="body" onload="">
+<body id="body" onload="initSummary()">
     <div class="overall">
         <div class="sidebar">
             <div class="sidebar__container">
@@ -86,79 +86,8 @@
                     <div class="headline__seperator"></div>
                     <h2>Key Metrics at a Glance</h2>
                 </div>
-                <div class="summary__content">
-                    <div class="keymetrics__container">
-                        <div class="firstrow__keymetrics">
-                            <div class="firstrow__behindbox">
-                                <div class="keymetrics__box keymetrics__todo">
-                                    <div class="todo__icon">
-                                        <img class="white__todoicon" src="./assets/icons/edit_icon_todo_white.png" alt="Edit">
-                                        <img class="blue__todoicon" src="./assets/icons/edit_icon_todo_blue.png" alt="Edit">
-                                    </div>
-                                    <div class="todo__textbox">
-                                        <span class="keymetrics__number">1</span>
-                                        <h3 class="keymetrics__text">To-do</h3>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="firstrow__behindbox">
-                                <div class="keymetrics__box keymetrics__done">
-                                    <div class="done__icon">
-                                        <img class="white__doneicon" src="./assets/icons/hook_icon_done_white.png" alt="Hook">
-                                        <img class="blue__doneicon" src="./assets/icons/hook_icon_done_blue.png" alt="Hook">
-                                    </div>
-                                    <div class="done__textbox">
-                                        <span class="keymetrics__number">1</span>
-                                        <h3 class="keymetrics__text">Done</h3>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="secondrow__keymetrics">
-                            <div class="secondrow__behindbox">
-                                <div class="keymetrics__box keymetrics__urgent">
-                                    <div class="urgent__leftbox">
-                                        <div class="urgent__icon">
-                                            <img src="./assets/icons/arrows_up_urgent_icon_white.png" alt="Arrows Up">
-                                        </div>
-                                        <div class="urgent__textbox">
-                                            <span class="keymetrics__number">1</span>
-                                            <h3 class="keymetrics__text">Urgent</h3>
-                                        </div>
-                                    </div>
-                                    <div class="urgent__seperator"></div>
-                                    <div class="urgent__textboxright">
-                                        <span class="urgent__date"> October 16, 2022</span>
-                                        <span class="keymetrics__text">Upcoming Deadline</span>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="thirdrow__keymetrics">
-                            <div class="thirdrow__behindbox">
-                                <div class="keymetrics__box keymetrics__lastrow">
-                                    <span class="keymetrics__number">2</span>
-                                    <h3 class="keymetrics__textthirdrow">Tasks in Board</h3>
-                                </div>
-                            </div>
-                            <div class="thirdrow__behindbox">
-                                <div class="keymetrics__box keymetrics__lastrow">
-                                    <span class="keymetrics__number">2</span>
-                                    <h3 class="keymetrics__textthirdrow">Tasks in Progress</h3>
-                                </div>
-                            </div>
-                            <div class="thirdrow__behindbox">
-                                <div class="keymetrics__box keymetrics__lastrow">
-                                    <span class="keymetrics__number">2</span>
-                                    <h3 class="keymetrics__textthirdrow">Awaiting Feedback</h3>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="greet__box">
-                        <span class="greeting">Good Morning,</span>
-                        <span class="greeting__name">Sofia Müller</span>
-                    </div>
+                <div class="summary__content" id="summary_content">
+                    
                 </div>
             </main>
         </div>
