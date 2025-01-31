@@ -1,1 +1,8 @@
 /.vscode
+node_modules/.bin/jsdoc
+node_modules/.bin/jsdoc.cmd
+node_modules/.bin/markdown-it
+node_modules/.bin/jsdoc.ps1
+node_modules/.bin/markdown-it.cmd
+node_modules/.bin/markdown-it.ps1
+node_modules

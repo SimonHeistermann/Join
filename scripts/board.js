@@ -1,5 +1,11 @@
+/**
+ * Base URL for Firebase database.
+ */
 let baseUrl =
   "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/";
+/**
+ * Initializes the application.
+ */
 
 function init() {
   console.log("Initialization successful.");
@@ -8,6 +14,9 @@ function init() {
   initSearch();
 }
 
+/**
+ * Fetches tasks from Firebase and displays them in the UI.
+ */
 async function fetchData() {
   let response = await fetch(baseUrl + ".json");
   let getTasks = await response.json();
@@ -26,6 +35,10 @@ async function fetchData() {
     assignedToSelect.appendChild(option);
   });
 }
+/**
+ * Displays tasks in the UI.
+ * @param {Object} tasks - The tasks to be displayed.
+ */
 
 function showTasks(tasks) {
   let container = document.getElementById("taskContainer");
@@ -71,7 +84,9 @@ function showTasks(tasks) {
   });
 }
 
-/* AddTask Functions */
+/**
+ * Saves a new task to Firebase.
+ */
 async function saveTask() {
   const name = document.getElementById("text__input").value;
   const description = document.getElementById("description").value;
@@ -107,7 +122,7 @@ async function saveTask() {
 
     if (response.ok) {
       console.log("Task gespeichert!");
-      fetchData(); // Liste neu laden
+      fetchData();
     } else {
       console.error("Fehler beim Speichern!");
     }
@@ -115,6 +130,9 @@ async function saveTask() {
     console.error("Fehler:", error);
   }
 }
+/**
+ * Clears the task input form.
+ */
 
 function clearForm() {
   document.getElementById("text__input").value = "";
@@ -126,12 +144,17 @@ function clearForm() {
   document.getElementById("subtask").value = "";
 }
 
-// Popup-Funktionens || Block- none Display  Properties
+/** *
+ * Opens the add task popup.
+ */
 function openAddtask() {
   document.getElementById("popup_open").style.display = "block";
   document.getElementById("cover__all_addTask").style.display = "block";
 }
 
+/**
+ * Opens the add task popup.
+ */
 function showEmtyMassage() {
   document.getElementById("empty_done").style.display = "block";
   document.getElementById("empty_todo").style.display = "block";
@@ -154,6 +177,9 @@ function closepopup() {
   document.getElementById("cover_all").style.display = "none";
 }
 
+/**
+ * Adds IDs to all tasks and empty messages.
+ */
 function addTaskIds() {
   const tasksTask = document.getElementsByClassName("task");
   const tasksEmpty = document.getElementsByClassName("empty__message");
@@ -167,23 +193,25 @@ function addTaskIds() {
     }
   });
 }
-
-// Funktion zum Speichern des Zustands der Spalten im localStorage???
-
-// Den Zustand der Spalten speichern, wenn ein Drop-Ereignis auftritt
+/**
+ * Enables drag and drop functionality.
+ * @param {DragEvent} event - The drag event.
+ */
 function drop(event) {
   event.preventDefault();
   event.currentTarget.classList.remove("drag-over");
   const draggedElementId = event.dataTransfer.getData("text");
   const draggedElement = document.getElementById(draggedElementId);
 
-  // Falls das Element existiert, füge es in die neue Spalte ein
   if (draggedElement) {
     event.target.appendChild(draggedElement);
   }
 }
 
-// Funktion, um das Ziehen zu erlauben
+/**
+ * Allows an element to be dropped.
+ * @param {DragEvent} event - The drag event.
+ */
 function allowDrop(event) {
   event.preventDefault();
   event.currentTarget.classList.add("drag-over");
@@ -194,7 +222,10 @@ function drag(event) {
   event.dataTransfer.setData("text", event.target.id);
 }
 
-// Funktion, um das gezogene Element in die neue Spalte zu bewegen
+/**
+ * Handles dropping of an element into a new container.
+ * @param {DragEvent} event - The drag event.
+ */
 function drop(event) {
   event.preventDefault();
   event.currentTarget.classList.remove("drag-over");
@@ -206,6 +237,11 @@ function drop(event) {
     event.target.appendChild(draggedElement);
   }
 }
+
+/**
+ * Initializes search functionality.
+ */
+
 function initSearch() {
   const searchInput = document.getElementById("find_task");
 
@@ -245,45 +281,3 @@ function initSearch() {
     }
   };
 }
-
-/* function initSearch() {
-
-  const searchInput = document.getElementById("find_task");
-
-  searchInput.addEventListener("input", (event) => {
-    const searchText = event.target.value.toLowerCase();
-    const tasks = document.getElementsByClassName("task");
-    let found = false;
-
-    Array.from(tasks).forEach((task) => {
-      const title = task.querySelector("h3").textContent.toLowerCase();
-      const description = task.querySelector("p").textContent.toLowerCase();
-
-      if (title.includes(searchText) || description.includes(searchText)) {
-        task.style.removeProperty("display");
-        found = true;
-      } else {
-        task.style.display = "none";
-      }
-    });
-
-    const columns = document.getElementById("find_task");
-    const searchMessage = document.getElementById("search_message");
-
-    if (!found) {
-      if (!searchMessage) {
-        const message = document.createElement("p");
-        message.id = "search_message";
-        message.style.textAlign = "center";
-        message.style.fontSize = "18px";
-        message.style.color = "gray";
-        message.textContent = "no Task";
-        columns.appendChild(message);
-      }
-    } else {
-      const existingMessage = document.getElementById("search_message");
-      if (existingMessage) existingMessage.remove();
-    }
-  });
-}
- */
