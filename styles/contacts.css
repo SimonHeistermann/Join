@@ -56,7 +56,7 @@ main {
     box-shadow: 0px 4px 4px 0 #00000040;
 }
 
-.add__contact__button:active {
+.add__contact__button__active {
     border: 1px solid #091931;
     background-color: #091931;
 }
@@ -106,6 +106,7 @@ main {
 
 .contacts__active {
     background: #2A3647;
+    color: white;
 }
 
 .contacts__active:hover {
@@ -130,6 +131,8 @@ main {
     display: flex;
     flex-direction: column;
     gap: 4px;
+    max-width: 168px;
+    overflow: hidden;
 }
 
 .contact__mailtext {
@@ -164,6 +167,13 @@ main {
     display: flex;
     flex-direction: column;
     gap: 48px;
+    position: relative;
+    right: -2000px;
+    transition: transform 125ms ease-in-out;
+}
+
+.contact__overview__content__active {
+    transform: translateX(-2000px);
 }
 
 .contact__name__box {
@@ -320,7 +330,7 @@ main {
 .contact__created__notification {
     position: relative;
     margin-top: 64px;
-    right: -1000px;
+    right: -2000px;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -334,5 +344,5 @@ main {
 }
 
 .contact__created__notification__active {
-    transform: translateX(-1000px);
+    transform: translateX(-2000px);
 }
