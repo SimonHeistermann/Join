@@ -5,8 +5,6 @@ function init() {
   console.log("Initialization successful.");
   addTaskIds();
   fetchData();
-  loadBoardState();
-
   initSearch();
 }
 
@@ -40,29 +38,35 @@ function showTasks(tasks) {
     if (task !== null) {
       container.innerHTML += `
       <div class="content__Todo${i}">
+
       <div class="task" onclick="openpopup()" id="task-4" draggable="true" ondragstart="drag(event)">
-        <div class="task__type user__story">User Story</div>
-        <h3>${task.name}</h3> 
-        <p>${task.description}</p>
-        <div class="progress">
-           <div class="progress">
-            <div class="progress__bar" style="width: ${task.progress || 2}%">
-        </div>
-        <div class="subtasks">1/2 Subtasks</div>
-        <div class="avatars">
-          <div class="avatars__menuIcon">
-            <div class="avatars__group">
+  <div class="task__type user__story">User Story</div>
+  <h3>${task.name}</h3> 
+  <p>${task.description}</p>
+
+  <div class="progress">
+      <div class="progress__bar" style="width: ${task.progress || 2}%"></div>
+  </div>
+
+  <div class="subtasks">1/2 Subtasks</div>
+
+  <div class="avatars">
+      <div class="avatars__menuIcon">
+          <div class="avatars__group">
               <div class="avatar" style="background-color: #b2a745">AM</div>
               <div class="avatar" style="background-color: #ff7a00">EM</div>
               <div class="avatar" style="background-color: #ff4646">MB</div>
-            </div>
-            <div>
-              <img src="assets/icons/Priority symbols (1).png" alt="" width="32" onclick="openpopup()" />
-            </div>
           </div>
-        </div>
+          <div>
+              <img src="assets/icons/Priority symbols (1).png" alt="Priority Icon" width="32" onclick="openpopup()" />
+          </div>
       </div>
-    </div>`;
+  </div>
+</div>
+
+    
+    </div>
+    `;
     }
   });
 }
@@ -122,10 +126,17 @@ function clearForm() {
   document.getElementById("subtask").value = "";
 }
 
-// Popup-Funktionens
+// Popup-Funktionens || Block- none Display  Properties
 function openAddtask() {
   document.getElementById("popup_open").style.display = "block";
   document.getElementById("cover__all_addTask").style.display = "block";
+}
+
+function showEmtyMassage() {
+  document.getElementById("empty_done").style.display = "block";
+  document.getElementById("empty_todo").style.display = "block";
+  document.getElementById("empty_in_ progress").style.display = "block";
+  document.getElementById("empty_feedback").style.display = "block";
 }
 
 function closeAddtask() {
@@ -170,9 +181,6 @@ function drop(event) {
   if (draggedElement) {
     event.target.appendChild(draggedElement);
   }
-
-  // Nach jedem Drop den Zustand speichern
-  saveBoardState();
 }
 
 // Funktion, um das Ziehen zu erlauben
@@ -198,12 +206,50 @@ function drop(event) {
     event.target.appendChild(draggedElement);
   }
 }
-
-// Suchfunktion initialisieren
 function initSearch() {
   const searchInput = document.getElementById("find_task");
 
-  // Event-Listener für das Eingabefeld hinzufügen
+  searchInput.oninput = function () {
+    const searchText = searchInput.value.toLowerCase();
+    const tasks = document.getElementsByClassName("task");
+    let found = false;
+
+    for (let i = 0; i < tasks.length; i++) {
+      const task = tasks[i];
+      const title = task
+        .getElementsByTagName("h3")[0]
+        .textContent.toLowerCase();
+      const description = task
+        .getElementsByTagName("p")[0]
+        .textContent.toLowerCase();
+
+      if (title.includes(searchText) || description.includes(searchText)) {
+        task.style.display = "block";
+        found = true;
+      } else {
+        task.style.display = "none";
+      }
+    }
+
+    const searchArea = document.getElementById("search_area");
+    const searchMessage = document.getElementById("search_message");
+
+    if (!found) {
+      if (!searchMessage) {
+        searchArea.innerHTML +=
+          '<p id="search_message" style="text-align:center; font-size:12px; color:gray; ">No Task</p>';
+        showEmtyMassage();
+      }
+    } else {
+      if (searchMessage) searchMessage.remove();
+    }
+  };
+}
+
+/* function initSearch() {
+
+  const searchInput = document.getElementById("find_task");
+
   searchInput.addEventListener("input", (event) => {
     const searchText = event.target.value.toLowerCase();
     const tasks = document.getElementsByClassName("task");
@@ -214,19 +260,30 @@ function initSearch() {
       const description = task.querySelector("p").textContent.toLowerCase();
 
       if (title.includes(searchText) || description.includes(searchText)) {
-        task.style.display = "block";
+        task.style.removeProperty("display");
         found = true;
       } else {
         task.style.display = "none";
       }
     });
 
-    // Überprüfen, ob keine Aufgaben gefunden wurden
-    const columns = document.getElementById("search_area");
+    const columns = document.getElementById("find_task");
+    const searchMessage = document.getElementById("search_message");
+
     if (!found) {
-      columns.innerHTML = `<p style="text-align: center; font-size: 18px; color: gray;">Sorry, nix ist gefunden</p>`;
+      if (!searchMessage) {
+        const message = document.createElement("p");
+        message.id = "search_message";
+        message.style.textAlign = "center";
+        message.style.fontSize = "18px";
+        message.style.color = "gray";
+        message.textContent = "no Task";
+        columns.appendChild(message);
+      }
     } else {
-      addTaskIds();
+      const existingMessage = document.getElementById("search_message");
+      if (existingMessage) existingMessage.remove();
     }
   });
 }
+ */

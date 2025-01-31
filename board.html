@@ -108,13 +108,14 @@
               <p class="board__title">Board</p>
 
               <div class="inputicon__addButton">
-                <div class="search__area" id="search_area">
+                <div class="search__area">
                   <input
                     type="text"
-                    placeholder="find Task"
                     id="find_task"
+                    placeholder="find Task"
                   /><span>|</span>
                   <img
+                    id="search_area"
                     class="search__icon"
                     src="assets/icons/search@2x.png"
                     alt=""
@@ -151,14 +152,13 @@
                 <div id="taskContainer"></div>
 
                 <div
-                  id="empty-1"
+                  id="empty_todo"
                   class="empty__message"
                   draggable="true"
                   ondragstart="drag(event)"
                 >
                   No tasks To do
                 </div>
-                <div id="taskContainer"></div>
               </div>
               <div
                 class="column"
@@ -177,7 +177,7 @@
                 </h2>
 
                 <div
-                  id="empty-1"
+                  id="empty_in_ progress"
                   class="empty__message"
                   draggable="true"
                   ondragstart="drag(event)"
@@ -201,7 +201,7 @@
                   /></span>
                 </h2>
                 <div
-                  id="empty-3"
+                  id="empty_feedback"
                   class="empty__message"
                   draggable="true"
                   ondragstart="drag(event)"
@@ -215,8 +215,8 @@
                 ondragover="allowDrop(event)"
               >
                 <h2>Done</h2>
-                <div id="empty-2" class="empty__message" draggable="true">
-                  No tasks Done
+                <div id="empty_done" class="empty__message" draggable="true">
+                  no tasks
                 </div>
               </div>
             </div>
