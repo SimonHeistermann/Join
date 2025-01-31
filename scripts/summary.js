@@ -7,6 +7,8 @@ async function initSummary() {
         // await fetchUsers();
         // await fetchTasks();
         renderSummary();
+
+        
     } catch (error) {
         console.error("Error initializing app:", error);
     }
@@ -37,3 +39,4 @@ function renderSummary() {
     summaryContentref.innerHTML = "";
     summaryContentref.innerHTML += renderHTMLSummary();
 }
+
