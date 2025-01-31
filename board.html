@@ -132,6 +132,7 @@
             <div class="columns">
               <div
                 class="column"
+                data-column-id="to-do"
                 ondrop="drop(event)"
                 ondragover="allowDrop(event)"
               >
@@ -174,6 +175,7 @@
                       onclick="openNav()"
                   /></span>
                 </h2>
+
                 <div
                   id="empty-1"
                   class="empty__message"
@@ -181,82 +183,6 @@
                   ondragstart="drag(event)"
                 >
                   No tasks To do
-                </div>
-                <div
-                  class="task"
-                  id="task-1"
-                  onclick="openpopup()"
-                  draggable="true"
-                  ondragstart="drag(event)"
-                >
-                  <div class="task__type user__story">User Story</div>
-                  <h3>Kochwelt Page & Recipe Recommender</h3>
-                  <p>Build start page with recipe recommendation...</p>
-                  <div class="progress">
-                    <div class="progress__bar" style="width: 50%"></div>
-                  </div>
-                  <div class="subtasks">1/2 Subtasks</div>
-                  <div class="avatars">
-                    <div class="avatars__menuIcon">
-                      <div class="avatars__group">
-                        <div class="avatar" style="background-color: #b2a745">
-                          AM
-                        </div>
-                        <div class="avatar" style="background-color: #ff7a00">
-                          EM
-                        </div>
-                        <div class="avatar" style="background-color: #ff4646">
-                          MB
-                        </div>
-                      </div>
-                      <div>
-                        <img
-                          src="assets/icons/Priority symbols (1).png"
-                          alt=""
-                          width="32"
-                          onclick="openpopup()"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="task"
-                  id="task-2"
-                  onclick="openpopup()"
-                  draggable="true"
-                  ondragstart="drag(event)"
-                >
-                  <div class="task__type user__story">User Story</div>
-                  <h3>Contact Form & Imprint</h3>
-                  <p>Create a contact form and imprint page...</p>
-                  <div class="progress">
-                    <div class="progress__bar" style="width: 50%"></div>
-                  </div>
-                  <div class="subtasks">1/2 Subtasks</div>
-                  <div class="avatars">
-                    <div class="avatars__menuIcon">
-                      <div class="avatars__group">
-                        <div class="avatar" style="background-color: #fc71ff">
-                          AS
-                        </div>
-                        <div class="avatar" style="background-color: #6f52ff">
-                          DE
-                        </div>
-                        <div class="avatar" style="background-color: #9327ff">
-                          EF
-                        </div>
-                      </div>
-                      <div>
-                        <img
-                          src="assets/icons/Priority symbols.png"
-                          alt=""
-                          width="32"
-                          onclick="openpopup()"
-                        />
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
               <div
@@ -281,78 +207,6 @@
                   ondragstart="drag(event)"
                 >
                   No tasks To do
-                </div>
-                <div
-                  class="task"
-                  id="task-3"
-                  onclick="openpopup()"
-                  draggable="true"
-                  ondragstart="drag(event)"
-                >
-                  <div class="task__type technical__task">Technical Task</div>
-                  <h3>HTML Base Template Creation</h3>
-                  <p>Create reusable HTML base templates...</p>
-                  <div class="progress__empty" style="width: 50%"></div>
-                  <div class="subtasks">1/2 Subtasks</div>
-                  <div class="avatars">
-                    <div class="avatars__menuIcon">
-                      <div class="avatars__group">
-                        <div class="avatar" style="background-color: #fc71ff">
-                          DE
-                        </div>
-                        <div class="avatar" style="background-color: #6e52ff">
-                          BZ
-                        </div>
-                        <div class="avatar" style="background-color: #9327ff">
-                          AS
-                        </div>
-                      </div>
-
-                      <div>
-                        <img
-                          src="assets/icons/Priority symbols.png"
-                          alt=""
-                          width="32"
-                          onclick="openpopup()"
-                        />
-                      </div>
-                    </div>
-                  </div>
-                </div>
-                <div
-                  class="task"
-                  id="task-4"
-                  onclick="openpopup()"
-                  draggable="true"
-                  ondragstart="drag(event)"
-                >
-                  <div class="task__type user__story">User Story</div>
-                  <h3>Daily Kochwelt Recipe</h3>
-                  <p>Implement daily recipe and portion calculator...</p>
-                  <div class="progress__empty" style="width: 50%"></div>
-                  <div class="subtasks">0/1 Subtasks</div>
-                  <div class="avatars">
-                    <div class="avatars__menuIcon">
-                      <div class="avatars__group">
-                        <div class="avatar" style="background-color: #ffbb2b">
-                          ER
-                        </div>
-                        <div class="avatar" style="background-color: #9327ff">
-                          AS
-                        </div>
-                        <div class="avatar" style="background-color: #ff4646">
-                          TW
-                        </div>
-                      </div>
-                      <div>
-                        <img
-                          src="assets/icons/Priority symbols (1).png"
-                          alt=""
-                          width="32"
-                        />
-                      </div>
-                    </div>
-                  </div>
                 </div>
               </div>
               <div
@@ -476,10 +330,10 @@
                 This field is required
               </div>
               <div class="task_butons">
-                <button class="secondary_button clear" onclick="">
+                <button class="secondary_button clear" onclick="clearForm()">
                   Clear <img src="assets/icons/cancel_icon_blue.png" alt="" />
                 </button>
-                <button class="button1 create_task" disabled onclick="">
+                <button class="button1 create_task" onclick="saveTask()">
                   Create Task <img src="assets/icons/check.png" alt="" />
                 </button>
               </div>
