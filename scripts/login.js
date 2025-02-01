@@ -93,9 +93,7 @@ function login(event){
     let userIndex = users.findIndex(user => user.email == email);
 
     if(userIndex !==-1){
-        testpPasswordLogin(inputPw, userIndex);
-        console.log(userIndex);
-        
+        testpPasswordLogin(inputPw, userIndex);        
     }else{
         document.getElementById('wrong_email_password').classList.remove('d__none');
         errorBorders();
@@ -114,14 +112,18 @@ function login(event){
 function testpPasswordLogin(inputPw, userIndex){
     let storedPW = users[userIndex].pw;
     if(inputPw === storedPW){
-        console.log(inputPw);
-        console.log(storedPW);
+        currentUser = users[userIndex];
+        localStorage.setItem('currentUser', JSON.stringify(currentUser));
         window.location.href = 'summary.html';
     }else{
         document.getElementById('wrong_email_password').classList.remove('d__none');
         document.getElementById('password_container').classList.add('error__inputs');
         document.getElementById('password_input_login').value = '';
     }
+}
+
+function buildCurrentUser(){
+
 }
 
 /**
@@ -154,9 +156,7 @@ function guestLogIN(event){
     let userIndex = users.findIndex(user => user.email == email);
 
     if(userIndex !==-1){
-        testpPasswordLogin(inputPw, userIndex);
-        console.log(userIndex);
-        
+        testpPasswordLogin(inputPw, userIndex);        
     }else{
         alert('Database error')
     }
