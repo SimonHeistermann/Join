@@ -109,7 +109,7 @@
             <div class="left_side">
               <lable class="label" for="title"
                 >Title
-                <div class="star">*</div></lable
+                <div class="star" id="star_title">*</div></lable
               >
               <input
                 type="text"
@@ -126,6 +126,10 @@
                 id="description"
                 placeholder="Enter a Description"
               ></textarea>
+              <div class="is_required">
+                <div class="star" id="star_textArea">*</div>
+                This field is required
+              </div>
               <label class="label" for="assigned_to">Assigned to</label>
               <select
                 class="assigned_to"
@@ -137,7 +141,7 @@
             <div class="right_side">
               <label class="label" for="date"
                 >Due date
-                <div class="star">*</div></label
+                <div class="star" id="star_date">*</div></label
               >
               <input
                 type="date"
@@ -147,6 +151,7 @@
                 placeholder="dd/mm/yyyy"
                 required
               />
+
               <label class="label" for="prio">Prio</label>
               <div class="radio_overall">
                 <label class="radio radio_urgend">
@@ -172,7 +177,7 @@
               </div>
               <label class="label" for="category"
                 >Category
-                <div class="star">*</div></label
+                <div class="star" id="star_category">*</div></label
               >
               <select type="select" name="category" class="category" required>
                 <option value="">Select task category</option>
@@ -196,10 +201,10 @@
               This field is required
             </div>
             <div class="task_butons">
-              <button class="secondary_button clear" onclick="">
+              <button class="secondary_button clear" onclick="clearForm()">
                 Clear<img />
               </button>
-              <button class="button1 create_task" disabled onclick="">
+              <button class="button1 create_task" onclick="saveTask()">
                 Create Task<img />
               </button>
             </div>
