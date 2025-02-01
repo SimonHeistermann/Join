@@ -122,10 +122,6 @@ function testpPasswordLogin(inputPw, userIndex){
     }
 }
 
-function buildCurrentUser(){
-
-}
-
 /**
  * Adds error styling to the email and password input containers
  * by adding the 'error__inputs' class to their respective elements.
@@ -149,10 +145,7 @@ function errorBorders(){
 function guestLogIN(event){
     event.preventDefault();
     let email = 'guest';
-    let inputPw = 'guest123';
-    console.log(email);
-    console.log(inputPw);
-    
+    let inputPw = 'guest123'; 
     let userIndex = users.findIndex(user => user.email == email);
 
     if(userIndex !==-1){

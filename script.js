@@ -2,6 +2,7 @@ let users = [];
 let tasks = [];
 let contacts = [];
 let user =[];
+let currentUser = {};
 let contactUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/contacts.json"
 let tasksUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/tasks.json"
 let usersUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/users.json"
@@ -100,4 +101,16 @@ function toLocalStorage(){
  */
 function showErrorAlert() {
     alert("Das Laden der Daten ist schiefgegangen. Bitte versuchen Sie es zu einem späteren Zeitpunkt noch einmal. Danke. Entschuldigen Sie die Unannehmlichkeiten.");
+}
+
+/**
+ * Füllt das HTML-Element mit der ID 'header_tag' mit den Initialen des aktuell angemeldeten Benutzers.
+ *
+ * @param {Object} currentUser - Das aktuell angemeldete Benutzerobjekt, das Benutzerdaten enthält.
+ * @param {string} currentUser.initials - Die Initialen des aktuellen Benutzers, die im Header angezeigt werden sollen.
+ *
+ */
+function fillTheTag(){
+    let tagLetters = currentUser.initials;
+    document.getElementById('header_tag').innerHTML = tagLetters;
 }
