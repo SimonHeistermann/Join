@@ -174,7 +174,7 @@ async function saveTask() {
 
   try {
     let response = await fetch(baseUrl + "tasks.json", {
-      method: "POST", // Neues Task-Objekt in Firebase hinzufügen
+      method: "PATCH", // Neues Task-Objekt in Firebase hinzufügen
       headers: {
         "Content-Type": "application/json",
       },
