@@ -56,6 +56,9 @@
                             <img class="email__logo" src="./assets/icons/mail_icon_gray.png" alt="Email Icon">
                         </label>
                     </div>
+                    <div class="errormessage__box d__none" id="email_exists_box">
+                        Your email already exists! Please try again.
+                    </div>
                     <div class="password__container" id="password_container">
                         <input class="password__input" required id="password_input_register" type="password" name="pw" placeholder="Password" autocomplete="current-password" oninput="maskPassword(this)">
                         <label for="password_input_register">

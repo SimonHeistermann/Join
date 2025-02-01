@@ -22,7 +22,7 @@ function handleUsers(){
  */
 function isEverythingFilledUp(){
     if (testName() == 0 && testEmail() == 0 && testPassword() == 0){
-        doTheyMatch();
+        emailExists();
     }
     else{
         return;
@@ -90,6 +90,30 @@ function testPassword(){
 }
 
 /**
+ * Überprüft, ob die eingegebene E-Mail-Adresse bereits im System existiert
+ * und zeigt entsprechende Rückmeldungen im Formular an.
+ *
+ * @param {string} emailInput - Die vom Benutzer eingegebene E-Mail-Adresse.
+ * @param {Array<Object>} users - Eine Liste der Benutzer als Objekte mit einer `email`-Eigenschaft.
+ */
+function emailExists(){
+    let emailInput = document.getElementById('email_input_register').value.trim();
+    let doesExists = users.some(user => user.email == emailInput);
+    console.log(doesExists);  
+
+    if(doesExists == true){
+       document.getElementById('email_exists_box').classList.remove('d__none');
+       let borderC = document.querySelector('.email__container');
+        borderC.style.borderColor = '#fb3c53';
+        document.getElementById('sign_up_form').reset();
+        document.getElementById('confirm_password_input_register').value = '';
+        document.getElementById('agree_privacy_policy').checked = false;
+    }else{
+        doTheyMatch();
+    }
+}
+
+/**
  * Überprüft, ob die eingegebenen Passwörter übereinstimmen.
  * 
  * Diese Funktion vergleicht die Werte der Passworteingabefelder. Wenn die Passwörter übereinstimmen,
@@ -102,7 +126,7 @@ function testPassword(){
 function doTheyMatch(){
     let password = document.getElementById('password_input_register');
     let confirmation = document.getElementById('confirm_password_input_register');
-    if(password.value == confirmation.value){
+    if(password.value.trim() == confirmation.value.trim()){
         submitUser();
     }
     else{
