@@ -3,8 +3,6 @@
  */
 let baseUrl =
   "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/";
-/**
- 
 
 async function init() {
   console.log("Test Initializations");
@@ -100,19 +98,6 @@ ${task.ubtasks ? task.ubtasks.join(", ") : ""}</p> Subtasks</div>
   ` + taskContainer.innerHTML;
   }
 }
-/* // 🔥 Task aus Firebase löschen
-async function deleteTask(taskId) {
-  await fetch(`${dataUrl}/tasks/${taskId}.json`, {
-    method: "DELETE",
-  });
-
-  console.log(`Task ${taskId} gelöscht`);
-
-  // Nach dem Löschen die Liste aktualisieren
-  await loadTasks();
-} 
-   <button onclick="deleteTask('${taskId}')">❌ Löschen</button>
-*/
 
 // Task speichern, wenn der "Create Task"-Button geklickt wird
 async function saveTask() {
@@ -201,71 +186,6 @@ function closepopup() {
   document.getElementById("popup_card").style.display = "none";
   document.getElementById("cover_all").style.display = "none";
 }
-
-/**
- * Adds IDs to all tasks and empty messages.
- */
-function addTaskIds() {
-  const tasksTask = document.getElementsByClassName("task");
-  const tasksEmpty = document.getElementsByClassName("empty__message");
-
-  const tasks = [...tasksTask, ...tasksEmpty];
-
-  // IDs hinzufügen
-  tasks.forEach((task, index) => {
-    if (!task.id) {
-      task.id = `task-${index + 1}`;
-    }
-  });
-}
-/**
- * Enables drag and drop functionality.
- * @param {DragEvent} event - The drag event.
- */
-function drop(event) {
-  event.preventDefault();
-  event.currentTarget.classList.remove("drag-over");
-  const draggedElementId = event.dataTransfer.getData("text");
-  const draggedElement = document.getElementById(draggedElementId);
-
-  if (draggedElement) {
-    event.target.appendChild(draggedElement);
-  }
-}
-
-/**
- * Allows an element to be dropped.
- * @param {DragEvent} event - The drag event.
- */
-function allowDrop(event) {
-  event.preventDefault();
-  event.currentTarget.classList.add("drag-over");
-}
-
-// Funktion, um die ID des gezogenen Elements zu speichern
-function drag(event) {
-  event.dataTransfer.setData("text", event.target.id);
-}
-
-/**
- * Handles dropping of an element into a new container.
- * @param {DragEvent} event - The drag event.
- */
-function drop(event) {
-  event.preventDefault();
-  event.currentTarget.classList.remove("drag-over");
-  const draggedElementId = event.dataTransfer.getData("text");
-  const draggedElement = document.getElementById(draggedElementId);
-
-  // Falls das Element existiert, füge es in die neue Spalte ein
-  if (draggedElement) {
-    event.target.appendChild(draggedElement);
-  }
-}
-
-/**
- * Initializes search functionality.
- */
 
 function initSearch() {
   const searchInput = document.getElementById("find_task");
