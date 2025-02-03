@@ -266,6 +266,18 @@ main {
     letter-spacing: 3px;
 }
 
+.mask__input{
+    min-height: 40px;
+    width: 100%;
+    border-width: 0;
+    background-color: transparent;
+    font-size: 20px;
+    font-weight: 400;
+    color: black;
+    caret-color: transparent;
+    letter-spacing: 3px;
+}
+
 .password__input:focus {
     outline: none;
 }
