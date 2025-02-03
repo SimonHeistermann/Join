@@ -1,28 +1,11 @@
-let users = [];
-let tasks = [];
 
+ function initSummary() {
+     currentUser = JSON.parse(localStorage.getItem('currentUser'));
+     users = JSON.parse(localStorage.getItem('users'));
+     fillTheTag();
+     
+ }
 
-async function initSummary() {
-    try {
-        // await fetchUsers();
-        // await fetchTasks();
-        renderSummary();
-
-        
-    } catch (error) {
-        console.error("Error initializing app:", error);
-    }
-}
-
-async function fetchUsers() {
-    try {
-        let fetchedUsers = await loadData("users");
-        if (!fetchedUsers) fetchedUsers = [];
-        users = Object.values(fetchedUsers).filter(user => user !== null && user !== undefined);
-    } catch (error) {
-        console.error("Error getting users:", error);
-    }
-}
 
 async function fetchTasks() {
     try {

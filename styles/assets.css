@@ -91,3 +91,7 @@
 .blur{
     filter:blur(5px);
 }
+
+.zero__opacity{
+    opacity: 0;
+}

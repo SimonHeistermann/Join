@@ -16,12 +16,8 @@
     <link rel="stylesheet" href="./styles/standard.css"/>
     <link rel="stylesheet" href="./styles/assets.css"/>
 
-    <script src="./script.js"></script>
-    <script src="./scripts/templates.js"></script>
-    <script src="./scripts/summary.js"></script>
-    <script src="./scripts/assets.js"></script>
+
 </head>
-<body id="body" onload="initSummary()">
     <div class="overall">
         <div class="sidebar">
             <div class="sidebar__container">
@@ -74,7 +70,7 @@
                         <button class="help__button">
                             <img src="./assets/icons/help_icon.png" alt="Help">
                         </button>
-                        <button class="profile__button">
+                        <button class="profile__button" id="header_tag">
                             SM
                         </button>
                     </div>
@@ -92,6 +88,10 @@
             </main>
         </div>
     </div>
-
+        <script src="./script.js"></script>
+        <script src="./scripts/templates.js"></script>
+        <script src="./scripts/assets.js"></script>
+        <script src="./scripts/summary.js"></script>
+        <script>initSummary();</script>
 </body>
 </html>

@@ -64,3 +64,17 @@ a {
     text-decoration: none;
     color: #b8bcc2;
 }
+
+.mask__input{
+    position: absolute;
+    min-height: 40px;
+    width: 100%;
+    border-width: 0;
+    background-color: transparent;
+    font-size: 20px;
+    font-weight: 400;
+    color: black;
+    caret-color: transparent;
+    letter-spacing: 3px;
+    pointer-events: none;
+}

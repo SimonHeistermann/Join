@@ -45,3 +45,23 @@ function getInitials(name) {
     const lastNameInitial = nameParts[nameParts.length - 1].charAt(0).toUpperCase();
     return firstNameInitial + lastNameInitial;
 }
+
+/**
+ * Masks the password input by hiding the original input field and displaying masked asterisks.
+ *
+ * @param {string} id1 - The ID of the input element containing the password to be hidden.
+ * @param {string} id2 - The ID of the element where the masked password (asterisks) will be displayed.
+ */
+function maskPassword(id1, id2){
+    let hidePasswordInput = document.getElementById(id1);
+    let maskPassword = document.getElementById(id2);
+
+    hidePasswordInput.classList.add('zero__opacity');
+    maskPassword.classList.remove('zero__opacity');
+
+    maskPassword.innerHTML = '';
+
+    for(let i = 0; i < hidePasswordInput.value.length; i++){
+        maskPassword.innerHTML += '*';
+    }
+}

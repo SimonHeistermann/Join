@@ -56,8 +56,12 @@
                             <img class="email__logo" src="./assets/icons/mail_icon_gray.png" alt="Email Icon">
                         </label>
                     </div>
+                    <div class="errormessage__box d__none" id="email_exists_box">
+                        Your email already exists! Please try again.
+                    </div>
                     <div class="password__container" id="password_container">
-                        <input class="password__input" required id="password_input_register" type="password" name="pw" placeholder="Password" autocomplete="current-password" oninput="maskPassword(this)">
+                        <input class="password__input" required id="password_input_register" type="password" name="pw" placeholder="Password" autocomplete="current-password" oninput="maskPassword('password_input_register', 'mask_input_password')">
+                        <div id="mask_input_password" class="mask__input zero__opacity"></div>
                         <label for="password_input_register">
                             <img class="lock__icon" src="./assets/icons/lock_icon_gray.png" alt="Lock Icon">
                             <img class="novisibility__icon" src="./assets/icons/visibility_off_icon_gray.png" alt="No Visibility Icon">
@@ -67,7 +71,8 @@
                 </form>
                 <div class="password__box">
                     <div class="confirmation__container" id="confirmation_container">
-                        <input class="password__input" required id="confirm_password_input_register" type="password" placeholder="Confirm Password" autocomplete="current-password" oninput="maskPassword(this)">
+                        <input class="password__input" required id="confirm_password_input_register" type="password" placeholder="Confirm Password" autocomplete="current-password" oninput="maskPassword('confirm_password_input_register', 'mask_input_confirmation')">
+                        <div id="mask_input_confirmation" class="mask__input zero__opacity"></div>                       
                         <label for="confirm_password_input_register">
                             <img class="lock__icon" src="./assets/icons/lock_icon_gray.png" alt="Lock Icon">
                             <img class="novisibility__icon" src="./assets/icons/visibility_off_icon_gray.png" alt="No Visibility Icon">
