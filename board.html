@@ -131,12 +131,7 @@
 
           <div class="kanban__board">
             <div class="columns">
-              <div
-                class="column"
-                data-column-id="to-do"
-                ondrop="drop(event)"
-                ondragover="allowDrop(event)"
-              >
+              <div class="column" data-column-id="to-do">
                 <div id="create_popup"></div>
                 <h2>
                   To do
@@ -149,22 +144,11 @@
                   /></span>
                 </h2>
 
-                <div id="taskContainer"></div>
+                <div id="content"></div>
 
-                <div
-                  id="empty_todo"
-                  class="empty__message"
-                  draggable="true"
-                  ondragstart="drag(event)"
-                >
-                  No tasks To do
-                </div>
+                <div id="empty_todo" class="empty__message">No tasks To do</div>
               </div>
-              <div
-                class="column"
-                ondrop="drop(event)"
-                ondragover="allowDrop(event)"
-              >
+              <div class="column">
                 <h2>
                   In progress
                   <span class="add__task">
@@ -176,20 +160,11 @@
                   /></span>
                 </h2>
 
-                <div
-                  id="empty_in_ progress"
-                  class="empty__message"
-                  draggable="true"
-                  ondragstart="drag(event)"
-                >
-                  No tasks To do
-                </div>
+                <div id="empty_in_ progress" class="empty__message" No tasks To
+                do
               </div>
-              <div
-                class="column"
-                ondrop="drop(event)"
-                ondragover="allowDrop(event)"
-              >
+
+              <div class="column">
                 <h2>
                   Await feedback
                   <span class="add__task">
@@ -200,24 +175,13 @@
                       onclick="openNav()"
                   /></span>
                 </h2>
-                <div
-                  id="empty_feedback"
-                  class="empty__message"
-                  draggable="true"
-                  ondragstart="drag(event)"
-                >
+                <div id="empty_feedback" class="empty__message">
                   No tasks To do
                 </div>
               </div>
-              <div
-                class="column"
-                ondrop="drop(event)"
-                ondragover="allowDrop(event)"
-              >
+              <div class="column">
                 <h2>Done</h2>
-                <div id="empty_done" class="empty__message" draggable="true">
-                  no tasks
-                </div>
+                <div id="empty_done" class="empty__message">no tasks</div>
               </div>
             </div>
           </div>
@@ -248,7 +212,7 @@
                 <input
                   type="text"
                   class="text_input"
-                  id="text__input"
+                  id="text__title"
                   name="title"
                   placeholder="Enter a title"
                   required
@@ -293,7 +257,13 @@
                 <label class="label" for="prio">Prio</label>
                 <div class="radio_overall">
                   <label class="radio radio_urgend">
-                    <input type="radio" name="prio" value="1" onclick="" />
+                    <input
+                      type="radio"
+                      name="prio"
+                      value="1"
+                      id="prio_urgent"
+                      onclick=""
+                    />
                     Urgent
                     <img src="assets/icons/Property 1=Urgent.png" alt="↑" />
                   </label>
@@ -302,6 +272,7 @@
                       type="radio"
                       name="prio"
                       value="2"
+                      id="prio_medium"
                       checked
                       onclick=""
                     />
@@ -309,7 +280,13 @@
                     <img src="assets/icons/Property 1=Medium.png" alt="=" />
                   </label>
                   <label class="radio radio_low">
-                    <input type="radio" name="prio" value="3" onclick="" />
+                    <input
+                      type="radio"
+                      name="prio"
+                      value="3"
+                      id="prio_low"
+                      onclick=""
+                    />
                     Low <img src="assets/icons/Property 1=Low.png" alt="↓" />
                   </label>
                 </div>
@@ -317,7 +294,13 @@
                   >Category
                   <div class="star">*</div></label
                 >
-                <select type="select" name="category" class="category" required>
+                <select
+                  type="select"
+                  name="category"
+                  class="category"
+                  id="category"
+                  required
+                >
                   <option value="">Select task category</option>
                   <option value="tt">Technikal Task</option>
                   <option value="us">User Story</option>

@@ -4,200 +4,168 @@
 let baseUrl =
   "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/";
 /**
- * Initializes the application.
- */
+ 
 
-function init() {
-  console.log("Initialization successful.");
-  addTaskIds();
-  fetchData();
-  initSearch();
+async function init() {
+  console.log("Test Initializations");
+  await loadTasks();
 }
 
 /**
- * Fetches tasks from Firebase and displays them in the UI.
+ * Fetches all tasks from Firebase and displays them on the webpage.
+ * If no tasks exist, an empty object is assigned to prevent errors.
  */
-async function fetchData() {
-  let response = await fetch(baseUrl + ".json");
-  let getTasks = await response.json();
-  console.log("Daten von Firebase:", getTasks.tasks);
-  if (getTasks && getTasks.tasks) {
-    showTasks(getTasks.tasks);
+async function init() {
+  console.log("Test Initializations");
+  await loadTasks(); // Lädt bestehende Tasks
+}
+
+// Task in Firebase speichern
+async function addNewTasks(newTasks) {
+  let response = await fetch(`${baseUrl}/tasks.json`);
+  let existingTasks = await response.json();
+
+  if (!existingTasks) {
+    existingTasks = [];
   }
 
-  // Dynamisches Befüllen des "Assigned to" Dropdowns
-  const assignedToSelect = document.getElementById("assigned__to");
-  const users = ["Sofia Müller", "Benedikt Ziegler"]; // Beispielbenutzer, hier ggf. Firebase-Daten verwenden
-  users.forEach((user) => {
-    const option = document.createElement("option");
-    option.value = user;
-    option.textContent = user;
-    assignedToSelect.appendChild(option);
+  let updatedTasks = [...existingTasks, ...newTasks];
+
+  await fetch(`${baseUrl}/tasks.json`, {
+    method: "PUT", // `PUT` speichert die komplette Liste
+    headers: {
+      "Content-Type": "application/json",
+    },
+    body: JSON.stringify(updatedTasks),
   });
+
+  console.log("Neue Tasks hinzugefügt!");
 }
-/**
- * Displays tasks in the UI.
- * @param {Object} tasks - The tasks to be displayed.
- */
 
-function showTasks(tasks) {
-  let container = document.getElementById("taskContainer");
-  container.innerHTML = "";
+// Tasks aus Firebase laden
+async function loadTasks() {
+  let response = await fetch(`${baseUrl}/tasks.json`);
+  let tasks = await response.json();
+  console.log(tasks);
 
-  // Aufgaben aus einem Objekt in ein Array umwandeln
-  const tasksArray = Object.values(tasks);
+  if (!tasks) {
+    tasks = [];
+  }
 
-  tasksArray.forEach((task, i) => {
-    if (task !== null) {
-      container.innerHTML += `
-      <div class="content__Todo${i}">
+  renderTasks(tasks);
+}
 
-      <div class="task" onclick="openpopup()" id="task-4" draggable="true" ondragstart="drag(event)">
-  <div class="task__type user__story">User Story</div>
-  <h3>${task.name}</h3> 
-  <p>${task.description}</p>
+// 🔥 Tasks in HTML anzeigen (mit `for`-Schleife)
+function renderTasks(tasks) {
+  let taskContainer = document.getElementById("content");
+  taskContainer.innerHTML = ""; // Vorherige Inhalte löschen
 
-  <div class="progress">
-      <div class="progress__bar" style="width: ${task.progress || 2}%"></div>
-  </div>
+  let taskIds = Object.keys(tasks);
+  for (let i = 0; i < taskIds.length; i++) {
+    let taskId = taskIds[i];
+    let task = tasks[taskId];
+    if (!task) {
+      continue;
+    }
 
-  <div class="subtasks">1/2 Subtasks</div>
+    taskContainer.innerHTML =
+      `
+      
+ <div class="task" onclick="openpopup()" >
+<div class="task__type user__story">User Story</div>
+<h3>${task.name}</h3> 
+<p>${task.description}</p>
+<div class="progress">
+ <div class="progress__bar" style="width: ${task.progress || 2}%">
+ </div>
+</div>
+<div class="subtasks">1/2 
+<p>
+${task.ubtasks ? task.ubtasks.join(", ") : ""}</p> Subtasks</div>
 
-  <div class="avatars">
-      <div class="avatars__menuIcon">
-          <div class="avatars__group">
-              <div class="avatar" style="background-color: #b2a745">AM</div>
-              <div class="avatar" style="background-color: #ff7a00">EM</div>
-              <div class="avatar" style="background-color: #ff4646">MB</div>
-          </div>
-          <div>
-              <img src="assets/icons/Priority symbols (1).png" alt="Priority Icon" width="32" onclick="openpopup()" />
-          </div>
-      </div>
-  </div>
+<div class="avatars">
+    <div class="avatars__menuIcon">
+        <div class="avatars__group">
+            <div class="avatar" style="background-color: #b2a745">AM</div>
+            <div class="avatar" style="background-color: #ff7a00">EM</div>
+            <div class="avatar" style="background-color: #ff4646">MB</div>
+        </div>
+        <div>
+            <img src="assets/icons/Priority symbols (1).png" alt="Priority Icon" width="32" onclick="openpopup()" />
+        </div>
+    </div>
+</div>
 </div>
 
-    
-    </div>
-    `;
-    }
+  ` + taskContainer.innerHTML;
+  }
+}
+/* // 🔥 Task aus Firebase löschen
+async function deleteTask(taskId) {
+  await fetch(`${dataUrl}/tasks/${taskId}.json`, {
+    method: "DELETE",
   });
-}
 
-/**
- * Saves a new task to Firebase.
- */
-/* async function saveTask() {
-  const name = document.getElementById("text__input").value;
-  const description = document.getElementById("description").value;
-  const assignedTo = document.getElementById("assigned__to").value;
-  const dueDate = document.getElementById("date__input").value;
-  const prio = document.querySelector('input[name="prio"]:checked')?.value;
-  const category = document.querySelector('select[name="category"]').value;
-  const subtask = document.getElementById("subtask").value;
+  console.log(`Task ${taskId} gelöscht`);
 
-  if (!name || !description || !assignedTo || !dueDate || !prio || !category) {
-    alert("Bitte alle Felder ausfüllen!");
-    return;
-  }
+  // Nach dem Löschen die Liste aktualisieren
+  await loadTasks();
+} 
+   <button onclick="deleteTask('${taskId}')">❌ Löschen</button>
+*/
 
-  const taskData = {
-    name: name,
-    description: description,
-    assignedTo: assignedTo,
-    dueDate: dueDate,
-    prio: prio,
-    category: category,
-    subtask: subtask,
-  };
-
-  try {
-    let response = await fetch(baseUrl + "tasks.json", {
-      method: "POST", // Neues Task-Objekt in Firebase hinzufügen
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(taskData),
-    });
-
-    if (response.ok) {
-      console.log("Task gespeichert!");
-      fetchData();
-    } else {
-      console.error("Fehler beim Speichern!");
-    }
-  } catch (error) {
-    console.error("Fehler:", error);
-  }
-}
-/**
- * Clears the task input form.
- */
-
+// Task speichern, wenn der "Create Task"-Button geklickt wird
 async function saveTask() {
-  const name = document.getElementById("text__input").value;
+  const title = document.getElementById("text__title").value;
   const description = document.getElementById("description").value;
   const assignedTo = document.getElementById("assigned__to").value;
   const dueDate = document.getElementById("date__input").value;
-  const prio = document.querySelector('input[name="prio"]:checked')?.value;
-  const category = document.querySelector('select[name="category"]').value;
+  const category = document.getElementById("category").value;
   const subtask = document.getElementById("subtask").value;
 
-  if (!name || !description || !assignedTo || !dueDate || !prio || !category) {
-    alert("Bitte alle Felder ausfüllen!");
+  // Priorität aus Radio-Buttons ermitteln
+  let prio = 2; // Standard Medium
+  if (document.getElementById("prio_urgent").checked) {
+    prio = 1;
+  } else if (document.getElementById("prio_low").checked) {
+    prio = 3;
+  }
+
+  // Sicherstellen, dass die Pflichtfelder ausgefüllt sind
+  if (!title || !dueDate || !category) {
+    alert("Bitte fülle alle Pflichtfelder aus!");
     return;
   }
 
+  // Neues Task-Objekt erstellen
   const newTask = {
-    name: name,
+    name: title,
     description: description,
-    assignedTo: assignedTo,
-    dueDate: dueDate,
+    assigned_to: assignedTo ? [assignedTo] : [],
+    due_date: dueDate,
     prio: prio,
     category: category,
-    subtask: subtask,
+    subtask: subtask ? [subtask] : [],
   };
 
-  try {
-    // 🔹 1. Bestehende Tasks abrufen
-    let response = await fetch(baseUrl + "tasks.json");
-    let existingTasks = await response.json();
+  // 🔥 FEHLER GEFIXT: Task in Firebase speichern
+  await addNewTasks([newTask]); // `newTask` wird als Array übergeben
 
-    // 🔹 2. Falls keine Tasks existieren, erstelle ein leeres Objekt
-    if (!existingTasks) {
-      existingTasks = {};
-    }
+  // Nach dem Speichern das Formular leeren
+  clearForm();
 
-    // 🔹 3. Eindeutige ID für die neue Task erstellen
-    let newTaskId = "task_" + Date.now(); // Beispiel: task_1700000000000
-
-    // 🔹 4. PATCH: Neue Task in Firebase hinzufügen, ohne bestehende zu löschen
-    let updateResponse = await fetch(baseUrl + "tasks.json", {
-      method: "PATCH",
-      headers: { "Content-Type": "application/json" },
-      body: JSON.stringify({
-        [newTaskId]: newTask, // Fügt die neue Task als Key-Value-Paar hinzu
-      }),
-    });
-
-    if (updateResponse.ok) {
-      console.log("Task gespeichert!");
-      fetchData(); // Aktualisierte Daten neu laden
-    } else {
-      console.error("Fehler beim Speichern!");
-    }
-  } catch (error) {
-    console.error("Fehler:", error);
-  }
+  // Neu laden, um die Task-Liste zu aktualisieren
+  await loadTasks();
 }
 
+// Formular leeren
 function clearForm() {
-  document.getElementById("text__input").value = "";
+  document.getElementById("text__title").value = "";
   document.getElementById("description").value = "";
   document.getElementById("assigned__to").value = "";
   document.getElementById("date__input").value = "";
-  document.querySelector('input[name="prio"]:checked').checked = false;
-  document.querySelector('select[name="category"]').value = "";
+  document.getElementById("prio_medium").checked = true; // Standard auf Medium setzen
+  document.getElementById("category").value = "";
   document.getElementById("subtask").value = "";
 }
 
