@@ -134,16 +134,6 @@ function showTasks(tasks) {
  * Clears the task input form.
  */
 
-/* function clearForm() {
-  document.getElementById("text__input").value = "";
-  document.getElementById("description").value = "";
-  document.getElementById("assigned__to").value = "";
-  document.getElementById("date__input").value = "";
-  document.querySelector('input[name="prio"]:checked').checked = false;
-  document.querySelector('select[name="category"]').value = "";
-  document.getElementById("subtask").value = "";
-} */
-
 async function saveTask() {
   const name = document.getElementById("text__input").value;
   const description = document.getElementById("description").value;
@@ -154,15 +144,11 @@ async function saveTask() {
   const subtask = document.getElementById("subtask").value;
 
   if (!name || !description || !assignedTo || !dueDate || !prio || !category) {
-    document.getElementById("star").innerHTML = "Bitte alle Felder ausfüllen!";
-    document.getElementById("star_textArea").innerHTML =
-      "Bitte alle Felder ausfüllen!";
-    document.getElementById("star_title").innerHTML =
-      "Bitte alle Felder ausfüllen!";
+    alert("Bitte alle Felder ausfüllen!");
     return;
   }
 
-  const taskData = {
+  const newTask = {
     name: name,
     description: description,
     assignedTo: assignedTo,
@@ -173,18 +159,30 @@ async function saveTask() {
   };
 
   try {
-    let response = await fetch(baseUrl + "tasks.json", {
-      method: "PATCH", // Neues Task-Objekt in Firebase hinzufügen
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(taskData),
+    // 🔹 1. Bestehende Tasks abrufen
+    let response = await fetch(baseUrl + "tasks.json");
+    let existingTasks = await response.json();
+
+    // 🔹 2. Falls keine Tasks existieren, erstelle ein leeres Objekt
+    if (!existingTasks) {
+      existingTasks = {};
+    }
+
+    // 🔹 3. Eindeutige ID für die neue Task erstellen
+    let newTaskId = "task_" + Date.now(); // Beispiel: task_1700000000000
+
+    // 🔹 4. PATCH: Neue Task in Firebase hinzufügen, ohne bestehende zu löschen
+    let updateResponse = await fetch(baseUrl + "tasks.json", {
+      method: "PATCH",
+      headers: { "Content-Type": "application/json" },
+      body: JSON.stringify({
+        [newTaskId]: newTask, // Fügt die neue Task als Key-Value-Paar hinzu
+      }),
     });
 
-    if (response.ok) {
+    if (updateResponse.ok) {
       console.log("Task gespeichert!");
-      fetchData(); // Liste neu laden
-      clearForm();
+      fetchData(); // Aktualisierte Daten neu laden
     } else {
       console.error("Fehler beim Speichern!");
     }
