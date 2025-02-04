@@ -98,16 +98,13 @@ function testPassword(){
  */
 function emailExists(){
     let emailInput = document.getElementById('email_input_register').value.trim();
-    let doesExists = users.some(user => user.email == emailInput);
-    console.log(doesExists);  
+    let doesExists = users.some(user => user.email == emailInput);  
 
     if(doesExists == true){
        document.getElementById('email_exists_box').classList.remove('d__none');
        let borderC = document.querySelector('.email__container');
         borderC.style.borderColor = '#fb3c53';
-        document.getElementById('sign_up_form').reset();
-        document.getElementById('confirm_password_input_register').value = '';
-        document.getElementById('agree_privacy_policy').checked = false;
+        resetFormBecauseEmail();
     }else{
         doTheyMatch();
     }
@@ -173,12 +170,13 @@ function submitUser(){
  */
 function registerUser(){
  let form = document.getElementById('sign_up_form');
- let formData = new FormData(form); //hab ich aus dem Buch von Rheinwerk: FormData stellt im endeffekt bereits ein Objekt her, dass dann abgefrühstückt werden kann                    
- let userObject ={};                //es kann dann über die for ...of schleife mit [key(name="") und value(input)] für jedes Element des Formulars ein Objekt erstellen weil es die
-                                    //sachen durchgeht
+ let formData = new FormData(form);     //hab ich aus dem Buch von Rheinwerk: FormData stellt im endeffekt bereits ein Objekt her, dass dann abgefrühstückt werden kann                    
+ let userObject ={};                    //es kann dann über die for ...of schleife mit [key(name="") und value(input)] für jedes Element des Formulars ein Objekt erstellen weil es die
+  setInitialsToObject(formData, userObject);  //sachen durchgeht
  for (let[key, value] of formData){
     userObject[key] = value;
  }
+ console.log(userObject);
  
  pushPushItRealHard(userObject);
 }
@@ -261,4 +259,26 @@ function enableRegisterButton(){
     if(isChecked == true){
         document.getElementById('register_button').disabled = false;
     }
+}
+
+/**
+ * Setzt das Anmeldeformular zurück und stellt den Standardzustand der Eingabefelder wieder her.
+ */
+
+function resetFormBecauseEmail(){
+    document.getElementById('sign_up_form').reset();
+    document.getElementById('confirm_password_input_register').value = '';
+    document.getElementById('agree_privacy_policy').checked = false;
+    document.getElementById('mask_input_confirmation').innerHTML = '';
+    document.getElementById('mask_input_password').innerHTML = '';
+    document.getElementById('confirm_password_input_register').classList.remove('zero__opacity');
+    document.getElementById('password_input_register').classList.remove('zero__opacity');
+    document.getElementById('mask_input_password').classList.add('zero__opacity');
+    document.getElementById('mask_input_confirmation').classList.add('zero__opacity');
+}
+
+function setInitialsToObject(formData, userObject){
+    let fullName = formData.get('name');
+    let tag = getInitials(fullName);
+    userObject['initials'] = tag;
 }
