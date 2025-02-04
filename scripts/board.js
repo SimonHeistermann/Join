@@ -59,11 +59,11 @@ function renderTasks(tasks) {
     if (!task) {
       continue;
     }
-
     taskContainer.innerHTML =
       `
       
- <div class="task" onclick="openpopup()" >
+ <div class="task">
+ <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
 <div class="task__type user__story">User Story</div>
 <h3>${task.name}</h3> 
 <p>${task.description}</p>
@@ -88,9 +88,69 @@ ${task.ubtasks ? task.ubtasks.join(", ") : ""}</p> Subtasks</div>
     </div>
 </div>
 </div>
+</div>
 
   ` + taskContainer.innerHTML;
   }
+}
+function showPopup(task) {
+  let popupContainer = document.getElementById("popup-container");
+  popupContainer.innerHTML = createPopup(task);
+  popupContainer.style.display = "block";
+}
+
+function closePopup() {
+  document.getElementById("popup-container").style.display = "none";
+}
+function createPopup(task) {
+  let assignedTo = task.assigned_to ? task.assigned_to.join(", ") : "Niemand";
+  let priority = task.prio ? String(task.prio).toLowerCase() : "unknown"; // Sicherstellen, dass `prio` ein String ist
+
+  return `
+  <div class="overlayPopup">
+    <div class="popup">
+      <div class="popup__card-header">
+      <div class=" close__btn__popup">
+        <span class="popup__card-label">Technical Task</span>
+        <button onclick="closePopup()">&times;</button>
+        </div>
+      </div>
+      <div class="all__content">
+
+      <div class="title_header"> ${task.name}</div>
+      <div class="popup__card-section">
+        <p>${task.description}</p>
+      </div>
+      <div class="popup__card-section">
+        <p><strong>Due date:</strong> ${
+          task.due_date || "Kein Datum angegeben"
+        }</p>
+        </div>
+        <p><strong>Priority:</strong>
+         <span class="popup__card-priority">${priority}</span></p>
+      </div>
+      <div class="popup__card-section">
+        <p><strong>Assigned To:</strong> ${assignedTo}</p>
+        <div class="popup__card-section">
+        <p><strong>Subtasks:</strong> ${
+          task.subtasks ? task.subtasks.join(", ") : "Keine Subtasks"
+        }</p>
+      </div>
+      <div class="conten__delete__editiBTN">
+      <div class="popup__card-actions">
+        <button onclick="deleteTask('${
+          task.id
+        }')"class="delete-btn"><img src="assets/icons/delete_icon_blue.png" alt=""> Delete</button>
+      
+        <button id="popup_edit_button" class="edit_button"><img src="assets/icons/edit_icon_blue.png" alt="">Edit</button>
+      </div>
+      </div>
+    </div>
+    </div>
+      </div>
+      </div>
+      
+  `;
 }
 
 async function saveTask(status = "to-do") {
@@ -164,10 +224,10 @@ function closeAddtask() {
   document.getElementById("cover__all_addTask").style.display = "none";
 }
 
-function openpopup() {
+/* function openpopup() {
   document.getElementById("popup_card").style.display = "block";
   document.getElementById("cover_all").style.display = "block";
-}
+} */
 
 function closepopup() {
   document.getElementById("popup_card").style.display = "none";
