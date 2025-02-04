@@ -140,7 +140,8 @@
                       class="plus__icon"
                       src="assets/icons/plus button.png"
                       alt=""
-                      onclick="openNav()"
+                      saveTask(status="to-do"
+                      )
                     />
                   </span>
                 </h2>
@@ -156,10 +157,11 @@
                       class="plus__icon"
                       src="assets/icons/plus button.png"
                       alt=""
-                      onclick="openNav()"
+                      onclick="openAddtask()"
                     />
                   </span>
                 </h2>
+                <div id="content_inprogress"></div>
                 <div id="empty_in_progress" class="empty__message">
                   No tasks To do
                 </div>
@@ -173,10 +175,12 @@
                       class="plus__icon"
                       src="assets/icons/plus button.png"
                       alt=""
-                      onclick="openNav()"
+                      id="saveTaskButton"
+                      onclick="openAddtask()"
                     />
                   </span>
                 </h2>
+                <div id="content_await"></div>
                 <div id="empty_feedback" class="empty__message">
                   No tasks To do
                 </div>
@@ -328,7 +332,11 @@
                 <button class="secondary_button clear" onclick="clearForm()">
                   Clear <img src="assets/icons/cancel_icon_blue.png" alt="" />
                 </button>
-                <button class="button1 create_task" onclick="saveTask()">
+                <button
+                  class="button1 create_task"
+                  id="saveTaskButton"
+                  onclick="saveTask()"
+                >
                   Create Task <img src="assets/icons/check.png" alt="" />
                 </button>
               </div>

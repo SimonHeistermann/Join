@@ -9,15 +9,6 @@ async function init() {
   await loadTasks();
 }
 
-/**
- * Fetches all tasks from Firebase and displays them on the webpage.
- * If no tasks exist, an empty object is assigned to prevent errors.
- */
-async function init() {
-  console.log("Test Initializations");
-  await loadTasks(); // Lädt bestehende Tasks
-}
-
 // Task in Firebase speichern
 async function addNewTasks(newTasks) {
   let response = await fetch(`${baseUrl}/tasks.json`);
@@ -56,7 +47,10 @@ async function loadTasks() {
 // 🔥 Tasks in HTML anzeigen (mit `for`-Schleife)
 function renderTasks(tasks) {
   let taskContainer = document.getElementById("content");
+  let taskProgress = document.getElementById("content_inprogress");
+  let taskAwaitFeedback = document.getElementById("content_await");
   taskContainer.innerHTML = ""; // Vorherige Inhalte löschen
+  taskProgress.innerHTML = ""; // Vorherige Inhalte löschen
 
   let taskIds = Object.keys(tasks);
   for (let i = 0; i < taskIds.length; i++) {
@@ -99,8 +93,7 @@ ${task.ubtasks ? task.ubtasks.join(", ") : ""}</p> Subtasks</div>
   }
 }
 
-// Task speichern, wenn der "Create Task"-Button geklickt wird
-async function saveTask() {
+async function saveTask(status = "to-do") {
   const title = document.getElementById("text__title").value;
   const description = document.getElementById("description").value;
   const assignedTo = document.getElementById("assigned__to").value;
@@ -108,7 +101,6 @@ async function saveTask() {
   const category = document.getElementById("category").value;
   const subtask = document.getElementById("subtask").value;
 
-  // Priorität aus Radio-Buttons ermitteln
   let prio = 2; // Standard Medium
   if (document.getElementById("prio_urgent").checked) {
     prio = 1;
@@ -116,13 +108,11 @@ async function saveTask() {
     prio = 3;
   }
 
-  // Sicherstellen, dass die Pflichtfelder ausgefüllt sind
   if (!title || !dueDate || !category) {
     alert("Bitte fülle alle Pflichtfelder aus!");
     return;
   }
 
-  // Neues Task-Objekt erstellen
   const newTask = {
     name: title,
     description: description,
@@ -131,15 +121,12 @@ async function saveTask() {
     prio: prio,
     category: category,
     subtask: subtask ? [subtask] : [],
+    status: status, // Status setzen (default: "to-do")
   };
 
-  // 🔥 FEHLER GEFIXT: Task in Firebase speichern
-  await addNewTasks([newTask]); // `newTask` wird als Array übergeben
+  await addNewTasks([newTask]);
 
-  // Nach dem Speichern das Formular leeren
   clearForm();
-
-  // Neu laden, um die Task-Liste zu aktualisieren
   await loadTasks();
 }
 
@@ -149,7 +136,7 @@ function clearForm() {
   document.getElementById("description").value = "";
   document.getElementById("assigned__to").value = "";
   document.getElementById("date__input").value = "";
-  document.getElementById("prio_medium").checked = true; // Standard auf Medium setzen
+  document.getElementById("prio_medium").checked = true;
   document.getElementById("category").value = "";
   document.getElementById("subtask").value = "";
 }
