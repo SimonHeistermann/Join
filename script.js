@@ -80,7 +80,8 @@ async function fetchTasks() {
     try {
         let response = await fetch(tasksUrl);
         let fetchedTasks = await response.json();
-        tasks.push(fetchedTasks);
+        tasks = fetchedTasks
+        localStorage.setItem("tasks", JSON.stringify(tasks));
     } catch (error) {
         console.error("Error getting tasks:", error);
     }
