@@ -1,6 +1,37 @@
 /**
  * Base URL for Firebase database.
  */
+/* const tasks = [
+  {
+    assigned_to: ["User1", "User2"],
+    description: "Kochwelt Page & Recipe Recommender",
+    due_date: "2025-02-10T10:00:00+01:00",
+    name: "Page & Recipe Recommender",
+    prio: 2,
+  },
+  {
+    assigned_to: ["User3", "User4"],
+    description: "Contact Form & Imprint",
+    due_date: "2025-02-01T10:00:00+01:00",
+    name: "Contact Form & Imprint",
+    prio: 1,
+  },
+  {
+    assigned_to: ["User5", "User6"],
+    description: "Implement daily recipe and portion calculator",
+    due_date: "2025-02-09T10:00:00+01:00",
+    name: "Daily Kochwelt Recipe",
+    prio: 2,
+  },
+  {
+    assigned_to: ["User7", "User8"],
+    description: "Define CSS naming conventions and structure",
+    due_date: "2025-02-02T10:00:00+01:00",
+    name: "CSS Architecture Planning",
+    prio: 1,
+  },
+]; */
+
 let baseUrl =
   "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/";
 
@@ -64,7 +95,7 @@ function renderTasks(tasks) {
       
  <div class="task">
  <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
-<div class="task__type user__story">User Story</div>
+<div class="task__type user__story">${task.category}</div>
 <h3>${task.name}</h3> 
 <p>${task.description}</p>
 <div class="progress">
@@ -83,7 +114,7 @@ ${task.ubtasks ? task.ubtasks.join(", ") : ""}</p> Subtasks</div>
             <div class="avatar" style="background-color: #ff4646">MB</div>
         </div>
         <div>
-            <img src="assets/icons/Priority symbols (1).png" alt="Priority Icon" width="32" onclick="openpopup()" />
+            <img src="assets/icons/Priority symbols (1).png" alt="Priority Icon" width="32" />
         </div>
     </div>
 </div>
@@ -102,29 +133,29 @@ function showPopup(task) {
 function closePopup() {
   document.getElementById("popup-container").style.display = "none";
 }
+
 function createPopup(task) {
   let assignedTo = task.assigned_to ? task.assigned_to.join(", ") : "Niemand";
-  let priority = task.prio ? String(task.prio).toLowerCase() : "unknown"; // Sicherstellen, dass `prio` ein String ist
+  let priority = task.prio ? String(task.prio).toLowerCase() : "unknown";
 
   return `
   <div class="overlayPopup">
     <div class="popup">
       <div class="popup__card-header">
-      <div class=" close__btn__popup">
-        <span class="popup__card-label">Technical Task</span>
-        <button onclick="closePopup()">&times;</button>
+        <div class="close__btn__popup">
+          <span class="task__type user__story">${task.category}</span>
+          <button onclick="closePopup()">&times;</button>
         </div>
       </div>
       <div class="all__content">
-
-      <div class="title_header"> ${task.name}</div>
-      <div class="popup__card-section">
-        <p>${task.description}</p>
-      </div>
-      <div class="popup__card-section">
-        <p><strong>Due date:</strong> ${
-          task.due_date || "Kein Datum angegeben"
-        }</p>
+        <div class="title_header">${task.name}</div>
+        <div class="popup__card-section">
+          <p>${task.description}</p>
+        </div>
+        <div class="popup__card-section">
+          <p><strong>Due date:</strong> ${
+            task.due_date || "Kein Datum angegeben"
+          }</p>
         </div>
         <p><strong>Priority:</strong>
          <span class="popup__card-priority">${priority}</span></p>
@@ -132,24 +163,26 @@ function createPopup(task) {
       <div class="popup__card-section">
         <p><strong>Assigned To:</strong> ${assignedTo}</p>
         <div class="popup__card-section">
-        <p><strong>Subtasks:</strong> ${
-          task.subtasks ? task.subtasks.join(", ") : "Keine Subtasks"
-        }</p>
+          <p><strong>Subtasks:</strong> ${
+            task.subtasks ? task.subtasks.join(", ") : "Keine Subtasks"
+          }</p>
+        </div>
       </div>
       <div class="conten__delete__editiBTN">
-      <div class="popup__card-actions">
-        <button onclick="deleteTask('${
-          task.id
-        }')"class="delete-btn"><img src="assets/icons/delete_icon_blue.png" alt=""> Delete</button>
-      
-        <button id="popup_edit_button" class="edit_button"><img src="assets/icons/edit_icon_blue.png" alt="">Edit</button>
-      </div>
+        <div class="popup__card-actions">
+         <button class="delete-btn" onclick="deleteTask('${
+           task.id ? task.id : ""
+         }')">
+
+            <img src="assets/icons/delete_icon_blue.png" alt=""> Delete
+          </button>
+          <button id="popup_edit_button" class="edit_button">
+            <img src="assets/icons/edit_icon_blue.png" alt="">Edit
+          </button>
+        </div>
       </div>
     </div>
-    </div>
-      </div>
-      </div>
-      
+  </div>
   `;
 }
 
