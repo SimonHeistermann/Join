@@ -1,37 +1,3 @@
-/**
- * Base URL for Firebase database.
- */
-/* const tasks = [
-  {
-    assigned_to: ["User1", "User2"],
-    description: "Kochwelt Page & Recipe Recommender",
-    due_date: "2025-02-10T10:00:00+01:00",
-    name: "Page & Recipe Recommender",
-    prio: 2,
-  },
-  {
-    assigned_to: ["User3", "User4"],
-    description: "Contact Form & Imprint",
-    due_date: "2025-02-01T10:00:00+01:00",
-    name: "Contact Form & Imprint",
-    prio: 1,
-  },
-  {
-    assigned_to: ["User5", "User6"],
-    description: "Implement daily recipe and portion calculator",
-    due_date: "2025-02-09T10:00:00+01:00",
-    name: "Daily Kochwelt Recipe",
-    prio: 2,
-  },
-  {
-    assigned_to: ["User7", "User8"],
-    description: "Define CSS naming conventions and structure",
-    due_date: "2025-02-02T10:00:00+01:00",
-    name: "CSS Architecture Planning",
-    prio: 1,
-  },
-]; */
-
 let baseUrl =
   "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/";
 
