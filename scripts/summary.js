@@ -106,4 +106,13 @@ function sortDueDates(){
         return new Date(a) - new Date(b);
     });
     next_urgend = allDueDates[0];
+    compareDate();
+}
+
+function compareDate(){
+    let today = new Date().toISOString().slice(0, 10);
+    if(today <= allDueDates){
+        let color = document.querySelector('.urgent__date');
+        color.style.color = '#fb3c53';
+    }
 }
