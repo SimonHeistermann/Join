@@ -109,10 +109,13 @@ function sortDueDates(){
     compareDate();
 }
 
-function compareDate(){
+function compareDate() {
     let today = new Date().toISOString().slice(0, 10);
-    if(today <= allDueDates){
-        let color = document.querySelector('.urgent__date');
-        color.style.color = '#fb3c53';
+
+    if (allDueDates.length > 0 && today <= allDueDates[0]) {
+        let element = document.querySelector('.urgent__date');
+        if (element) {
+            element.style.color = '#fb3c53'; 
+        }
     }
 }
