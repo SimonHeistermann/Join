@@ -25,6 +25,7 @@ async function saveTask() {
     prio: prio,
     category: category,
     subtask: subtask,
+    position: 1,
   };
 
   try {

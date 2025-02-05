@@ -2,6 +2,7 @@ let to_do;
 let done;
 let in_progress;
 let feedback;
+let allTasks
 let urgend_amount;
 let next_urgend ;
 let allDueDates =[]; 
@@ -12,21 +13,19 @@ let allDueDates =[];
      fillTheTag();
      await fetchTasks();
      getFutureTasks();   
-     console.log('wird aufgerufen');
-        
+     renderSummary();       
  }
 
 
 async function getTheTasks() {
     let storedTaskArray = localStorage.getItem("tasks");
     tasks = JSON.parse(storedTaskArray)
-    console.log(tasks); ;
     }
 
-function renderSummary() {
+function renderSummary(to_do, done, in_progress, feedback, allTasks, next_urgend, urgend_amount) {
     const summaryContentref = document.getElementById("summary_content");
     summaryContentref.innerHTML = "";
-    summaryContentref.innerHTML += renderHTMLSummary();
+    summaryContentref.innerHTML += renderHTMLSummary(to_do, done, in_progress, feedback, allTasks, next_urgend, urgend_amount);
 }
 
 function howManyToDo(){
@@ -36,7 +35,7 @@ function howManyToDo(){
             amount++;
         }
     });
-    return amount;
+    to_do = amount;
 }
 
 function howManyDone(){
@@ -46,7 +45,7 @@ function howManyDone(){
             amount++;
         }
     });
-    return amount;
+    done = amount;
 }
 
 function howManyInProgress(){
@@ -56,7 +55,7 @@ function howManyInProgress(){
             amount ++;
         }
     });
-    return amount;
+    in_progress = amount;
 }
 
 function howManyFeedback(){
@@ -66,11 +65,11 @@ function howManyFeedback(){
             amount ++;
         }
     });
-    return amount;
+    feedback = amount;
 }
 
 function howManyTasks(){
-    return tasks.length;
+    allTasks =  tasks.length;
 }
 
 function howManyUrgend(){
@@ -80,7 +79,7 @@ function howManyUrgend(){
             amount++;
         }
     });
-    return amount;
+    urgend_amount = amount;
 }
 
 function getCurrentDate(){

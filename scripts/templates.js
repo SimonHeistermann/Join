@@ -227,7 +227,7 @@ function renderHTMLAddContactOverlay() {
 
 // Summary:
 
-function renderHTMLSummary() {
+function renderHTMLSummary(to_do, done, in_progress, feedback, allTasks, next_urgend, urgend_amount, currentUser) {
     return  `
             <div class="keymetrics__container">
                 <div class="firstrow__keymetrics">
@@ -238,7 +238,7 @@ function renderHTMLSummary() {
                                 <img class="blue__todoicon" src="./assets/icons/edit_icon_todo_blue.png" alt="Edit">
                             </div>
                             <div class="todo__textbox">
-                                <span class="keymetrics__number">1</span>
+                                <span class="keymetrics__number">${to_do}</span>
                                 <h3 class="keymetrics__text">To-do</h3>
                             </div>
                         </div>
@@ -250,7 +250,7 @@ function renderHTMLSummary() {
                                 <img class="blue__doneicon" src="./assets/icons/hook_icon_done_blue.png" alt="Hook">
                             </div>
                             <div class="done__textbox">
-                                <span class="keymetrics__number">1</span>
+                                <span class="keymetrics__number">${done}</span>
                                 <h3 class="keymetrics__text">Done</h3>
                             </div>
                         </div>
@@ -264,13 +264,13 @@ function renderHTMLSummary() {
                                     <img src="./assets/icons/arrows_up_urgent_icon_white.png" alt="Arrows Up">
                                 </div>
                                 <div class="urgent__textbox">
-                                    <span class="keymetrics__number">1</span>
+                                    <span class="keymetrics__number">${urgend_amount}</span>
                                     <h3 class="keymetrics__text">Urgent</h3>
                                 </div>
                             </div>
                             <div class="urgent__seperator"></div>
                             <div class="urgent__textboxright">
-                                <span class="urgent__date"> October 16, 2022</span>
+                                <span class="urgent__date">${next_urgend}</span>
                                 <span class="keymetrics__text">Upcoming Deadline</span>
                             </div>
                         </div>
@@ -279,19 +279,19 @@ function renderHTMLSummary() {
                 <div class="thirdrow__keymetrics">
                     <div class="thirdrow__behindbox">
                         <div class="keymetrics__box keymetrics__lastrow">
-                            <span class="keymetrics__number">2</span>
+                            <span class="keymetrics__number">${allTasks}</span>
                             <h3 class="keymetrics__textthirdrow">Tasks in Board</h3>
                         </div>
                     </div>
                     <div class="thirdrow__behindbox">
                         <div class="keymetrics__box keymetrics__lastrow">
-                            <span class="keymetrics__number">2</span>
+                            <span class="keymetrics__number">${in_progress}</span>
                             <h3 class="keymetrics__textthirdrow">Tasks in Progress</h3>
                         </div>
                     </div>
                     <div class="thirdrow__behindbox">
                         <div class="keymetrics__box keymetrics__lastrow">
-                            <span class="keymetrics__number">2</span>
+                            <span class="keymetrics__number">${feedback}</span>
                             <h3 class="keymetrics__textthirdrow">Awaiting Feedback</h3>
                         </div>
                     </div>
@@ -299,7 +299,7 @@ function renderHTMLSummary() {
             </div>
             <div class="greet__box">
                 <span class="greeting">Good Morning,</span>
-                <span class="greeting__name">Sofia Müller</span>
+                <span class="greeting__name">${currentUser}</span>
             </div>
             `
 }
