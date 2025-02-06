@@ -41,57 +41,7 @@ async function loadTasks() {
   renderTasks(tasks);
 }
 
-// 🔥 Tasks in HTML anzeigen (mit `for`-Schleife)
-/* function renderTasks(tasks) {
-  let taskContainer = document.getElementById("content");
-  let taskProgress = document.getElementById("content_inprogress");
-  let taskAwaitFeedback = document.getElementById("content_await");
-  taskContainer.innerHTML = ""; // Vorherige Inhalte löschen
-  taskProgress.innerHTML = ""; // Vorherige Inhalte löschen
-
-  let taskIds = Object.keys(tasks);
-  for (let i = 0; i < taskIds.length; i++) {
-    let taskId = taskIds[i];
-    let task = tasks[taskId];
-    if (!task) {
-      continue;
-    }
-    taskContainer.innerHTML =
-      `
-      
- <div class="task">
- <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
-<div class="task__type user__story">${task.category}</div>
-<h3>${task.name}</h3> 
-<p>${task.description}</p>
-<div class="progress">
- <div class="progress__bar" style="width: ${task.progress || 2}%">
- </div>
-</div>
-<div class="subtasks">1/2 
-<p>
-${task.ubtasks ? task.ubtasks.join(", ") : ""}</p> Subtasks</div>
-
-<div class="avatars">
-    <div class="avatars__menuIcon">
-        <div class="avatars__group">
-            <div class="avatar" style="background-color: #b2a745">AM</div>
-            <div class="avatar" style="background-color: #ff7a00">EM</div>
-            <div class="avatar" style="background-color: #ff4646">MB</div>
-        </div>
-        <div>
-            <img src="assets/icons/Priority symbols (1).png" alt="Priority Icon" width="32" />
-        </div>
-    </div>
-</div>
-</div>
-</div>
-
-  ` + taskContainer.innerHTML;
-  }
-} */
-
-function renderTasks(tasks) { 
+function renderTasks(tasks) {
   let taskContainer = document.getElementById("content");
   let taskProgress = document.getElementById("content_inprogress");
   let taskAwaitFeedback = document.getElementById("content_await");
@@ -255,6 +205,13 @@ function clearForm() {
 function openAddtask() {
   document.getElementById("popup_open").style.display = "block";
   document.getElementById("cover__all_addTask").style.display = "block";
+}
+function openAddtaskInprogress() {
+  document.getElementById("addTask__in__progress").style.display = "block";
+}
+function openAddtaskInprogressClose() {
+  document.getElementById("addTask__in__progress").style.display = "none";
+  document.getElementById("popup_open").style.display = "none";
 }
 
 /**
