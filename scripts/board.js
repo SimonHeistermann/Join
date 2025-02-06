@@ -42,7 +42,7 @@ async function loadTasks() {
 }
 
 // 🔥 Tasks in HTML anzeigen (mit `for`-Schleife)
-function renderTasks(tasks) {
+/* function renderTasks(tasks) {
   let taskContainer = document.getElementById("content");
   let taskProgress = document.getElementById("content_inprogress");
   let taskAwaitFeedback = document.getElementById("content_await");
@@ -89,7 +89,56 @@ ${task.ubtasks ? task.ubtasks.join(", ") : ""}</p> Subtasks</div>
 
   ` + taskContainer.innerHTML;
   }
+} */
+
+function renderTasks(tasks) { 
+  let taskContainer = document.getElementById("content");
+  let taskProgress = document.getElementById("content_inprogress");
+  let taskAwaitFeedback = document.getElementById("content_await");
+
+  // Spalten leeren
+  taskContainer.innerHTML = "";
+  taskProgress.innerHTML = "";
+  taskAwaitFeedback.innerHTML = "";
+
+  let taskIds = Object.keys(tasks);
+  for (let i = 0; i < taskIds.length; i++) {
+    let taskId = taskIds[i];
+    let task = tasks[taskId];
+
+    if (!task) {
+      continue;
+    }
+
+    let taskHTML = `
+        <div class="task">
+          <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
+            <div class="task__type user__story">${task.category}</div>
+            <h3>${task.name}</h3> 
+            <p>${task.description}</p>
+            <div class="progress">
+              <div class="progress__bar" style="width: ${
+                task.progress || 2
+              }%"></div>
+            </div>
+            <div class="subtasks">1/2 
+              <p>${task.subtasks ? task.subtasks.join(", ") : ""}</p> Subtasks
+            </div>
+          </div>
+        </div>
+      `;
+
+    // Je nach Status in die richtige Spalte einsortieren
+    if (task.status === "to-do") {
+      taskContainer.innerHTML = taskHTML + taskContainer.innerHTML;
+    } else if (task.status === "in-progress") {
+      taskProgress.innerHTML = taskHTML + taskProgress.innerHTML;
+    } else if (task.status === "await-feedback") {
+      taskAwaitFeedback.innerHTML = taskHTML + taskAwaitFeedback.innerHTML;
+    }
+  }
 }
+
 function showPopup(task) {
   let popupContainer = document.getElementById("popup-container");
   popupContainer.innerHTML = createPopup(task);
