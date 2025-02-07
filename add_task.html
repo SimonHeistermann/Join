@@ -19,20 +19,21 @@
 
     <title>Add Task</title>
 
-    <link rel="stylesheet" href="./assets/fonts/fonts.css" />
-    <link rel="stylesheet" href="./style.css" />
-    <link rel="stylesheet" href="./styles/sidebar.css" />
-    <link rel="stylesheet" href="./styles/add_task.css" />
-    <link rel="stylesheet" href="./styles/standard.css" />
-    <link rel="stylesheet" href="./styles/assets.css" />
-    <link rel="stylesheet" href="./styles/bgcolors.css" />
+    <link rel="stylesheet" href="./assets/fonts/fonts.css"/>
+    <link rel="stylesheet" href="./style.css"/>
+    <link rel="stylesheet" href="./styles/keyframes.css"/>
+    <link rel="stylesheet" href="./styles/sidebar.css"/>
+    <link rel="stylesheet" href="./styles/add_task.css"/>
+    <link rel="stylesheet" href="./styles/standard.css"/>
+    <link rel="stylesheet" href="./styles/assets.css"/>
+    <link rel="stylesheet" href="./styles/bgcolors.css"/>
 
     <script src="./script.js"></script>
     <script src="./scripts/templates.js"></script>
     <script src="./scripts/add_task.js"></script>
     <script src="./scripts/assets.js"></script>
   </head>
-  <body id="body" onload="">
+  <body id="body" onload="initAddTasks()">
     <div class="overall">
       <div class="sidebar">
         <div class="sidebar__container">
@@ -117,7 +118,6 @@
                 id="text__input"
                 name="title"
                 placeholder="Enter a title"
-                required
               />
               <label class="label" for="description">Description</label>
               <textarea
@@ -126,16 +126,30 @@
                 id="description"
                 placeholder="Enter a Description"
               ></textarea>
-              <div class="is_required">
-                <div class="star" id="star_textArea">*</div>
-                This field is required
+              <div class="dropdown__container">
+                <label for="assignee_search"><h3>Assigned to</h3></label>
+                <div class="dropdown__content">
+                  <button class="dropdown__toggle" id="dropdown_toggle" onclick="openDropdownList(event)">
+                    <h3>Select contacts to assign</h3>
+                    <span class="dropdown__arrow__icon__container">
+                      <img id="dropdown_arrow_icon" class="dropdown__arrow__icon__default" src="./assets/icons/arrow_drop_down_icon.png" alt="Drop Down Icon">
+                      <img id="dropdown_arrow_icon_hover" class="dropdown__arrow__icon__hover" src="./assets/icons/arrow_drop_down_icon_hover.png" alt="Drop Down Icon">
+                    </span>
+                  </button>
+                  <div class="dropdown__search__container d__none" id="dropdown_search_container">
+                    <input type="text" class="dropdown__search__input" id="assignee_search_input" placeholder="" oninput="filterContacts()"/>
+                    <button onclick="closeDropDownList(event)" class="close__dropdown__button">
+                      <img id="dropdown_arrow_up_icon" class="dropdown__arrow__up__icon__default" src="./assets/icons/arrow_drop_down_up_icon.png" alt="Drop Down Up Icon">
+                      <img id="dropdown_arrow_up_icon_hover" class="dropdown__arrow__up__icon__hover" src="./assets/icons/arrow_drop_down_up_icon_hover.png" alt="Drop Down Up Icon">
+                    </button>
+                  </div>
+                  <div class="dropdown__list__wrapper" id="dropdown_list_wrapper">
+                    <ul class="dropdown__list" id="dropdown_list"></ul>
+                  </div>
+                </div>
+                <div class="choosen__contacts__container" id="choosen_contacts_container">
+                </div>
               </div>
-              <label class="label" for="assigned_to">Assigned to</label>
-              <select
-                class="assigned_to"
-                name="assigned_to"
-                id="assigned__to"
-              ></select>
             </div>
             <div class="the_divider"></div>
             <div class="right_side">
@@ -149,7 +163,6 @@
                 id="date__input"
                 name="date"
                 placeholder="dd/mm/yyyy"
-                required
               />
 
               <label class="label" for="prio">Prio</label>
@@ -179,7 +192,7 @@
                 >Category
                 <div class="star" id="star_category">*</div></label
               >
-              <select type="select" name="category" class="category" required>
+              <select type="select" name="category" class="category">
                 <option value="">Select task category</option>
                 <option value="tt">Technikal Task</option>
                 <option value="us">User Story</option>

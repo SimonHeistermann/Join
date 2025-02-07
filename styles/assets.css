@@ -95,3 +95,11 @@
 .zero__opacity{
     opacity: 0;
 }
+
+.d__flex {
+    display: flex !important;
+}
+
+.blue__border {
+    border: 1px solid #29ABE2;
+}

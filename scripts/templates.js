@@ -303,3 +303,42 @@ function renderHTMLSummary(to_do, done, in_progress, feedback, allTasks, next_ur
             </div>
             `
 }
+
+/**
+ * Generates the HTML for a chosen contact to be displayed in the chosen contacts container.
+ * The contact's avatar (including the badge color) and initials are rendered.
+ * 
+ * @param {Object} contact - The chosen contact to render.
+ * @param {string} contact.name - The name of the contact (used to determine the badge color).
+ * @param {string} contact.initials - The initials of the contact (displayed in the avatar).
+ * 
+ * @returns {string} The HTML string for displaying the chosen contact's avatar.
+ */
+function renderHTMLChoosenContact(contact) {
+    return  `
+            <div class="dropdown__avatar ${getBadgeColor(contact.name)}">${contact.initials}</div>
+            `;
+}
+
+/**
+ * Generates the HTML template for displaying a contact in the dropdown.
+ * The contact's styling (e.g., selected state) is dynamically applied based on whether it is chosen.
+ * @param {Object} contact - The contact to render.
+ * @returns {string} The HTML string for the contact item.
+ */
+function generateContactTemplate(contact) {
+    const isSelected = choosenContacts.some(c => c.id === contact.id);
+    return `
+        <li onclick="contactChoosen(${contact.id})" class="dropdown__item ${isSelected ? 'dropdown__item__checked' : ''}" id="contact_${contact.id}">
+            <div class="dropdown__item__left">
+                <div class="dropdown__avatar ${getBadgeColor(contact.name)}">${contact.initials}</div>
+                <h3>${contact.name}</h3>
+            </div>
+            <label class="contact__checkbox__container">
+                <input onclick="contactChoosen(${contact.id})" class="contact__checkbox" type="checkbox" id="contact_checkbox_${contact.id}" ${isSelected ? 'checked' : ''}>
+                <span class="custom__checkbox ${isSelected ? 'd__none' : ''}" id="checkbox_blue_${contact.id}"></span>
+                <span class="custom__checkbox__white ${isSelected ? '' : 'd__none'}" id="checkbox_white_${contact.id}"></span>
+            </label>
+        </li>
+    `;
+}

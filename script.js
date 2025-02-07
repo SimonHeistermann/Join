@@ -6,11 +6,10 @@ let currentUser = {};
 let contactUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/contacts.json"
 let tasksUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/tasks.json"
 let usersUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/users.json"
+const BASE_URL = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/";
 
 
 // --> Nur falls du damit arbeiten möchtest, hier einmal das aus dem Chat :)
-
-const BASE_URL = "";
 
 async function loadData(path = "") {
     try {
@@ -114,4 +113,17 @@ function showErrorAlert() {
 function fillTheTag(){
     let tagLetters = currentUser.initials;
     document.getElementById('header_tag').innerHTML = tagLetters;
+}
+
+/**
+ * Fetches contacts from storage and filters out invalid entries.
+ */
+async function fetchContacts() {
+    try {
+        let fetchedContacts = await loadData("contacts");
+        if (!fetchedContacts) fetchedContacts = [];
+        contacts = Object.values(fetchedContacts).filter(contact => contact !== null && contact !== undefined);
+    } catch (error) {
+        console.error("Error getting contacts:", error);
+    }
 }

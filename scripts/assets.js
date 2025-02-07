@@ -65,3 +65,14 @@ function maskPassword(id1, id2){
         maskPassword.innerHTML += '*';
     }
 }
+
+/**
+ * Determines the badge color based on the contact name.
+ * @param {string} name - The contact's name.
+ * @returns {string} - The badge color class.
+ */
+function getBadgeColor(name) {
+    const totalColors = 15;
+    const index = (name.charCodeAt(0) + name.charCodeAt(name.length - 1)) % totalColors;
+    return `bgcolor__${index + 1}`;
+}
