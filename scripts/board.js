@@ -55,7 +55,7 @@ function renderTasks(tasks) {
       continue;
     }
 
-    taskContainer.nnerHTML += `
+    taskContainer.innerHTML += `
         <div class="task">
           <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
             <div class="task__type user__story">${task.category}</div>
