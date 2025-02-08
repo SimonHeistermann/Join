@@ -43,13 +43,8 @@ async function loadTasks() {
 
 function renderTasks(tasks) {
   let taskContainer = document.getElementById("content");
-  let taskProgress = document.getElementById("content_inprogress");
-  let taskAwaitFeedback = document.getElementById("content_await");
 
-  // Spalten leeren
   taskContainer.innerHTML = "";
-  taskProgress.innerHTML = "";
-  taskAwaitFeedback.innerHTML = "";
 
   let taskIds = Object.keys(tasks);
   for (let i = 0; i < taskIds.length; i++) {
@@ -60,7 +55,7 @@ function renderTasks(tasks) {
       continue;
     }
 
-    let taskHTML = `
+    taskContainer.nnerHTML += `
         <div class="task">
           <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
             <div class="task__type user__story">${task.category}</div>
@@ -77,15 +72,6 @@ function renderTasks(tasks) {
           </div>
         </div>
       `;
-
-    // Je nach Status in die richtige Spalte einsortieren
-    if (task.status === "to-do") {
-      taskContainer.innerHTML = taskHTML + taskContainer.innerHTML;
-    } else if (task.status === "in-progress") {
-      taskProgress.innerHTML = taskHTML + taskProgress.innerHTML;
-    } else if (task.status === "await-feedback") {
-      taskAwaitFeedback.innerHTML = taskHTML + taskAwaitFeedback.innerHTML;
-    }
   }
 }
 
