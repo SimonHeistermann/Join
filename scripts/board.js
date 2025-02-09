@@ -56,7 +56,7 @@ function renderTasks(tasks) {
     }
 
     taskContainer.innerHTML += `
-        <div class="task">
+        <div class="task"draggable="true"ondragstart="drag(${taskId})">
           <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
             <div class="task__type user__story">${task.category}</div>
             <h3>${task.name}</h3> 
@@ -72,6 +72,22 @@ function renderTasks(tasks) {
           </div>
         </div>
       `;
+  }
+}
+
+let currentTaskId;
+function drag(event, id) {
+  currentTaskId = id;
+}
+
+function allowDrop(event) {
+  event.preventDefault();
+}
+
+function drop(status) {
+  if (currentTaskId && tasks[currentTaskId]) {
+    tasks[currentTaskId].status = status;
+    renderTasks();
   }
 }
 
@@ -137,7 +153,7 @@ function createPopup(task) {
   `;
 }
 
-async function saveTask(status = "to-do") {
+async function saveTask() {
   const title = document.getElementById("text__title").value;
   const description = document.getElementById("description").value;
   const assignedTo = document.getElementById("assigned__to").value;
@@ -165,7 +181,7 @@ async function saveTask(status = "to-do") {
     prio: prio,
     category: category,
     subtask: subtask ? [subtask] : [],
-    status: status, // Status setzen (default: "to-do")
+    status: "status", // Status setzen (default: "to-do")
   };
 
   await addNewTasks([newTask]);
@@ -185,24 +201,6 @@ function clearForm() {
   document.getElementById("subtask").value = "";
 }
 
-/** *
- * Opens the add task popup.
- */
-function openAddtask() {
-  document.getElementById("popup_open").style.display = "block";
-  document.getElementById("cover__all_addTask").style.display = "block";
-}
-function openAddtaskInprogress() {
-  document.getElementById("addTask__in__progress").style.display = "block";
-}
-function openAddtaskInprogressClose() {
-  document.getElementById("addTask__in__progress").style.display = "none";
-  document.getElementById("popup_open").style.display = "none";
-}
-
-/**
- * Opens the add task popup.
- */
 function showEmtyMassage() {
   document.getElementById("empty_done").style.display = "block";
   document.getElementById("empty_todo").style.display = "block";
@@ -215,7 +213,10 @@ function closeAddtask() {
   document.getElementById("cover__all_addTask").style.display = "none";
 }
 
-/* function openpopup() {
+function openAddtask() {
+  document.getElementById("cover__all_addTask").style.display = "block";
+}
+/* / function openpopup() {
   document.getElementById("popup_card").style.display = "block";
   document.getElementById("cover_all").style.display = "block";
 } */
@@ -223,44 +224,4 @@ function closeAddtask() {
 function closepopup() {
   document.getElementById("popup_card").style.display = "none";
   document.getElementById("cover_all").style.display = "none";
-}
-
-function initSearch() {
-  const searchInput = document.getElementById("find_task");
-
-  searchInput.oninput = function () {
-    const searchText = searchInput.value.toLowerCase();
-    const tasks = document.getElementsByClassName("task");
-    let found = false;
-
-    for (let i = 0; i < tasks.length; i++) {
-      const task = tasks[i];
-      const title = task
-        .getElementsByTagName("h3")[0]
-        .textContent.toLowerCase();
-      const description = task
-        .getElementsByTagName("p")[0]
-        .textContent.toLowerCase();
-
-      if (title.includes(searchText) || description.includes(searchText)) {
-        task.style.display = "block";
-        found = true;
-      } else {
-        task.style.display = "none";
-      }
-    }
-
-    const searchArea = document.getElementById("search_area");
-    const searchMessage = document.getElementById("search_message");
-
-    if (!found) {
-      if (!searchMessage) {
-        searchArea.innerHTML +=
-          '<p id="search_message" style="text-align:center; font-size:12px; color:gray; ">No Task</p>';
-        showEmtyMassage();
-      }
-    } else {
-      if (searchMessage) searchMessage.remove();
-    }
-  };
 }

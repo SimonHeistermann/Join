@@ -161,7 +161,11 @@
                     />
                   </span>
                 </h2>
-                <div id="content_inprogress"></div>
+                <div
+                  id="content_inprogress"
+                  ondrop="drop('content_inprogress')"
+                  ondragover="allowDrop(event)"
+                ></div>
                 <div id="empty_in_progress" class="empty__message">
                   No tasks To do
                 </div>
@@ -180,7 +184,11 @@
                     />
                   </span>
                 </h2>
-                <div id="content_await"></div>
+                <div
+                  id="content_await"
+                  ondrop="drop('content_await')"
+                  ondragover="allowDrop(event)"
+                ></div>
 
                 <div id="empty_feedback" class="empty__message">
                   No tasks To do
@@ -189,6 +197,11 @@
 
               <div class="column">
                 <h2>Done</h2>
+                <div
+                  id="content_done"
+                  ondrop="drop('content_done')"
+                  ondragover="allowDrop(event)"
+                ></div>
                 <div id="empty_done" class="empty__message">No tasks</div>
               </div>
             </div>
