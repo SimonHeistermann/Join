@@ -40,7 +40,7 @@ async function loadTasks() {
 
   renderTasks(tasks);
 }
-
+/* 
 function renderTasks(tasks) {
   let taskContainer = document.getElementById("content");
 
@@ -56,39 +56,85 @@ function renderTasks(tasks) {
     }
 
     taskContainer.innerHTML += `
-        <div class="task"draggable="true"ondragstart="drag(${taskId})">
-          <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
-            <div class="task__type user__story">${task.category}</div>
-            <h3>${task.name}</h3> 
-            <p>${task.description}</p>
-            <div class="progress">
-              <div class="progress__bar" style="width: ${
-                task.progress || 2
-              }%"></div>
-            </div>
-            <div class="subtasks">1/2 
-              <p>${task.subtasks ? task.subtasks.join(", ") : ""}</p> Subtasks
-            </div>
+        <div class="task"${taskId}"draggable="true" ondragstart="drag(event)">
+        <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
+
+                <div class="task-type">${task.category}</div>
+                  <h3>${task.name}</h3>
+               p>${task.description}</p>
+                  <div class="progress">
+                    <div class="progress-bar" style="width: ${
+                      task.progress || 2
+                    }%"></div>
+                  </div>
+                  <div class="subtasks">1/2 
+              <p>${
+                task.subtasks ? task.subtasks.join(", ") : ""
+              }</p> Subtasks</div>
+                
+                </div>
+
+                
+
+        
+      `;
+  }
+} */
+function renderTasks(tasks) {
+  let taskContainer = document.getElementById("content");
+
+  taskContainer.innerHTML = "";
+
+  let taskIds = Object.keys(tasks);
+  for (let i = 0; i < taskIds.length; i++) {
+    let taskId = taskIds[i];
+    let task = tasks[taskId];
+
+    if (!task) {
+      continue;
+    }
+
+    taskContainer.innerHTML += `
+          <div id="task${taskId}" class="task" draggable="true" ondragstart="drag(event)">
+              <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
+                  <div class="task-type">${task.category}</div>
+                  <h3>${task.name}</h3>
+                  <p>${task.description}</p>
+                  <div class="progress">
+                      <div class="progress-bar" style="width: ${
+                        task.progress || 2
+                      }%"></div>
+                  </div>
+                  <div class="subtasks">1/2 
+                      <p>${
+                        task.subtasks ? task.subtasks.join(", ") : ""
+                      }</p> Subtasks
+                  </div>
+              </div>
           </div>
-        </div>
       `;
   }
 }
 
-let currentTaskId;
-function drag(event, id) {
-  currentTaskId = id;
-}
+function drop(ev) {
+  ev.preventDefault();
+  let taskId = ev.dataTransfer.getData("text");
+  let taskElement = document.getElementById(taskId);
 
-function allowDrop(event) {
-  event.preventDefault();
-}
+  // Sicherstellen, dass das Ziel eine "tasks"-Spalte ist
+  let dropTarget = ev.target.closest(".tasks");
 
-function drop(status) {
-  if (currentTaskId && tasks[currentTaskId]) {
-    tasks[currentTaskId].status = status;
-    renderTasks();
+  if (taskElement && dropTarget) {
+    dropTarget.appendChild(taskElement);
   }
+}
+
+function allowDrop(ev) {
+  ev.preventDefault();
+}
+
+function drag(ev) {
+  ev.dataTransfer.setData("text", ev.target.id);
 }
 
 function showPopup(task) {
