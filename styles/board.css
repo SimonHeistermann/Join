@@ -122,11 +122,15 @@ img {
 .column-header {
   font-size: 18px;
   font-weight: bold;
-  color: #333;
+  color: #42526e;
   margin-bottom: 15px;
   text-align: center;
-  /* border-bottom: 2px solid #ddd; */
   padding-bottom: 10px;
+  font-family: "Inter";
+  font-weight: 700;
+  font-size: 20px;
+  line-height: 24px;
+  letter-spacing: 0%;
 }
 
 .tasks {
