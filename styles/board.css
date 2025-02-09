@@ -570,13 +570,3 @@ button {
     hue-rotate(180deg);
   color: #42526e;
 }
-.delete-btn:hover img,
-button:hover {
-  color: #2a3647;
-  filter: brightness(0) saturate(100%) invert(35%) sepia(99%) saturate(2000%)
-    hue-rotate(180deg);
-}
-
-/* .delete-btn,button,img:hover {
-  color: #42526e00;
-} */
