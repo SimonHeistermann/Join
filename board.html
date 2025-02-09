@@ -17,25 +17,16 @@
       media="(prefers-color-scheme: dark)"
     />
 
-    <title>Board</title>
 
     <link rel="stylesheet" href="./assets/fonts/fonts.css" />
     <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="./styles/sidebar.css" />
-    <link rel="stylesheet" href="./styles/add_task.css" />
     <link rel="stylesheet" href="./styles/board.css" />
     <link rel="stylesheet" href="./styles/standard.css" />
     <link rel="stylesheet" href="./styles/assets.css" />
-    <link rel="stylesheet" href="./styles/bgcolors.css" />
-
-    <script src="./script.js"></script>
-    <script src="./scripts/templates.js"></script>
-    <script src="./scripts/search.js"></script>
-    <script src="./scripts/add_task.js"></script>
-    <script src="./scripts/board.js"></script>
-    <script src="./scripts/assets.js"></script>
   </head>
-  <body id="body" onload="init()">
+  <body>
+    <!-- Das fehlende <body>-Tag wurde hier eingefügt -->
     <div class="overall">
       <div class="sidebar">
         <div class="sidebar__container">
@@ -44,8 +35,8 @@
           </div>
           <div class="sidebar__navbarcontainer">
             <div class="sidebar__navbar">
-              <div class="behind__sidebarbuttons">
-                <button class="sidebar__button">
+              <div class="behind__sidebarbuttons sidebarbutton__open">
+                <button class="sidebar__button sidebarbutton__open">
                   <img
                     src="./assets/icons/summary_icon_white.png"
                     alt="Summary"
@@ -62,8 +53,8 @@
                   Add Task
                 </button>
               </div>
-              <div class="behind__sidebarbuttons sidebarbutton__open">
-                <button class="sidebar__button sidebarbutton__open">
+              <div class="behind__sidebarbuttons">
+                <button class="sidebar__button">
                   <img src="./assets/icons/board_icon_white.png" alt="Board" />
                   Board
                 </button>
@@ -89,7 +80,6 @@
           </div>
         </div>
       </div>
-
       <div class="content__right">
         <header>
           <div class="header__container">
@@ -98,7 +88,7 @@
               <button class="help__button">
                 <img src="./assets/icons/help_icon.png" alt="Help" />
               </button>
-              <button class="profile__button">SM</button>
+              <button class="profile__button" id="header_tag">SM</button>
             </div>
           </div>
         </header>
@@ -131,384 +121,52 @@
 
           <div class="kanban__board">
             <div class="columns">
-              <div class="column" data-column-id="to-do">
-                <div id="create_popup"></div>
-                <h2>
-                  To do
-                  <span class="add-task" onclick="closepopup()">
-                    <img
-                      class="plus__icon"
-                      src="assets/icons/plus button.png"
-                      alt=""
-                      saveTask(status="to-do"
-                      )
-                    />
-                  </span>
-                </h2>
-                <div id="content"></div>
-                <div id="empty_todo" class="empty__message">No tasks To do</div>
+              <div id="todo_header" class="columns__header">
+                <h2>To Do</h2>
+                <img
+                  class="plus__icon"
+                  src="assets/icons/plus button.png"
+                  alt=""
+                  onclick=" saveTask()"
+                />
+              </div>
+              <div id="in_progress_header" class="columns__header">
+                <h2>In progress</h2>
+                <img
+                  class="plus__icon"
+                  src="assets/icons/plus button.png"
+                  alt=""
+                  onclick=" saveTask()"
+                />
+              </div>
+              <div id="wait _feedback_header" class="columns__header">
+                <h2>Await feedback</h2>
+                <img
+                  class="plus__icon"
+                  src="assets/icons/plus button.png"
+                  alt=""
+                  onclick=" saveTask()"
+                />
               </div>
 
-              <div class="column">
-                <h2>
-                  In progress
-                  <span class="add__task">
-                    <img
-                      class="plus__icon"
-                      src="assets/icons/plus button.png"
-                      alt=""
-                      onclick="openAddtaskInprogress()"
-                    />
-                  </span>
-                </h2>
-                <div
-                  id="content_inprogress"
-                  ondrop="drop('content_inprogress')"
-                  ondragover="allowDrop(event)"
-                ></div>
-                <div id="empty_in_progress" class="empty__message">
-                  No tasks To do
-                </div>
-              </div>
-
-              <div class="column">
-                <h2>
-                  Await feedback
-                  <span class="add__task">
-                    <img
-                      class="plus__icon"
-                      src="assets/icons/plus button.png"
-                      alt=""
-                      id="saveTaskButton"
-                      onclick="openAddtaskInprogress()"
-                    />
-                  </span>
-                </h2>
-                <div
-                  id="content_await"
-                  ondrop="drop('content_await')"
-                  ondragover="allowDrop(event)"
-                ></div>
-
-                <div id="empty_feedback" class="empty__message">
-                  No tasks To do
-                </div>
-              </div>
-
-              <div class="column">
+              <div id="done_header" class="columns__header">
                 <h2>Done</h2>
-                <div
-                  id="content_done"
-                  ondrop="drop('content_done')"
-                  ondragover="allowDrop(event)"
-                ></div>
-                <div id="empty_done" class="empty__message">No tasks</div>
               </div>
+            </div>
+
+            <div class="drag__drop__Container">
+              <div class="column">
+                <p id="content"></p>
+                <div id="create_popup"></div>
+              </div>
+              <div class="column"></div>
+              <div class="column"></div>
+              <div class="column"></div>
             </div>
           </div>
         </main>
       </div>
     </div>
-    <!--  Overlay Addtask -- Hiden -->
-    <div class="cover__all_addTask" id="cover__all_addTask">
-      <div class="overlay__popup" id="overlay_popup">
-        <section>
-          <div class="add__task__main" id="popup_open">
-            <div class="close__btn">
-              <h2 class="">Add Task</h2>
-              <img
-                onclick="closeAddtask()"
-                src="assets/icons/cancel_icon_blue.png"
-                alt=""
-                width="18"
-              />
-            </div>
-
-            <form class="inputfields">
-              <div class="left_side">
-                <lable class="label" for="title"
-                  >Title
-                  <div class="star">*</div></lable
-                >
-                <input
-                  type="text"
-                  class="text_input"
-                  id="text__title"
-                  name="title"
-                  placeholder="Enter a title"
-                  required
-                />
-                <div class="is_required">
-                  <div class="star" id="star_title">*</div>
-                </div>
-                <label class="label" for="description">Description</label>
-                <textarea
-                  class="description"
-                  name="description"
-                  id="description"
-                  placeholder="Enter a Description"
-                ></textarea>
-                <div class="is_required">
-                  <div class="star" id="star_textArea">*</div>
-                </div>
-                <label class="label" for="assigned_to">Assigned to</label>
-                <select
-                  class="assigned_to"
-                  name="assigned_to"
-                  id="assigned__to"
-                ></select>
-              </div>
-              <div class="the_divider"></div>
-              <div class="right_side">
-                <label class="label" for="date"
-                  >Due date
-                  <div class="star">*</div></label
-                >
-                <input
-                  type="date"
-                  class="date"
-                  id="date__input"
-                  name="date"
-                  placeholder="dd/mm/yyyy"
-                  required
-                />
-                <div class="is_required">
-                  <div class="star" id="star">*</div>
-                </div>
-                <label class="label" for="prio">Prio</label>
-                <div class="radio_overall">
-                  <label class="radio radio_urgend">
-                    <input
-                      type="radio"
-                      name="prio"
-                      value="1"
-                      id="prio_urgent"
-                      onclick=""
-                    />
-                    Urgent
-                    <img src="assets/icons/Property 1=Urgent.png" alt="↑" />
-                  </label>
-                  <label class="radio radio_medium">
-                    <input
-                      type="radio"
-                      name="prio"
-                      value="2"
-                      id="prio_medium"
-                      checked
-                      onclick=""
-                    />
-                    Medium
-                    <img src="assets/icons/Property 1=Medium.png" alt="=" />
-                  </label>
-                  <label class="radio radio_low">
-                    <input
-                      type="radio"
-                      name="prio"
-                      value="3"
-                      id="prio_low"
-                      onclick=""
-                    />
-                    Low <img src="assets/icons/Property 1=Low.png" alt="↓" />
-                  </label>
-                </div>
-                <label class="label" for="category"
-                  >Category
-                  <div class="star">*</div></label
-                >
-                <select
-                  type="select"
-                  name="category"
-                  class="category"
-                  id="category"
-                  required
-                >
-                  <option value="">Select task category</option>
-                  <option value="Technikal Task">Technikal Task</option>
-                  <option value="User Story">User Story</option>
-                </select>
-                <label for="subtask">Subtask</label>
-                <input
-                  type="text"
-                  name="subtask"
-                  id="subtask"
-                  class="subtask"
-                  placeholder="Add new subtask"
-                />
-                <div class="table_subtask" id="subtask_table"></div>
-              </div>
-            </form>
-            <div class="text_and_buttons">
-              <div class="is_required">
-                <div class="star">*</div>
-                This field is required
-              </div>
-              <div class="task_butons">
-                <button class="secondary_button clear" onclick="clearForm()">
-                  Clear <img src="assets/icons/cancel_icon_blue.png" alt="" />
-                </button>
-                <button class="button1 create_task" onclick="saveTask()">
-                  Create Task <img src="assets/icons/check.png" alt="" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
-    <!-- Second -->
-
-    <div class="in__progress">
-      <div class="cover__in__progress" id="addTask__in__progress">
-        <section>
-          <div class="add__task__main" id="popup_open">
-            <div class="close__btn">
-              <h2 class="">Add Task</h2>
-              <img
-                onclick="openAddtaskInprogressClose()"
-                src="assets/icons/cancel_icon_blue.png"
-                alt=""
-                width="18"
-              />
-            </div>
-
-            <form class="inputfields">
-              <div class="left_side">
-                <lable class="label" for="title"
-                  >Title
-                  <div class="star">*</div></lable
-                >
-                <input
-                  type="text"
-                  class="text_input"
-                  id="text__title"
-                  name="title"
-                  placeholder="Enter a title"
-                  required
-                />
-                <div class="is_required">
-                  <div class="star" id="star_title">*</div>
-                </div>
-                <label class="label" for="description">Description</label>
-                <textarea
-                  class="description"
-                  name="description"
-                  id="description"
-                  placeholder="Enter a Description"
-                ></textarea>
-                <div class="is_required">
-                  <div class="star" id="star_textArea">*</div>
-                </div>
-                <label class="label" for="assigned_to">Assigned to</label>
-                <select
-                  class="assigned_to"
-                  name="assigned_to"
-                  id="assigned__to"
-                ></select>
-              </div>
-              <div class="the_divider"></div>
-              <div class="right_side">
-                <label class="label" for="date"
-                  >Due date
-                  <div class="star">*</div></label
-                >
-                <input
-                  type="date"
-                  class="date"
-                  id="date__input"
-                  name="date"
-                  placeholder="dd/mm/yyyy"
-                  required
-                />
-                <div class="is_required">
-                  <div class="star" id="star">*</div>
-                </div>
-                <label class="label" for="prio">Prio</label>
-                <div class="radio_overall">
-                  <label class="radio radio_urgend">
-                    <input
-                      type="radio"
-                      name="prio"
-                      value="1"
-                      id="prio_urgent"
-                      onclick=""
-                    />
-                    Urgent
-                    <img src="assets/icons/Property 1=Urgent.png" alt="↑" />
-                  </label>
-                  <label class="radio radio_medium">
-                    <input
-                      type="radio"
-                      name="prio"
-                      value="2"
-                      id="prio_medium"
-                      checked
-                      onclick=""
-                    />
-                    Medium
-                    <img src="assets/icons/Property 1=Medium.png" alt="=" />
-                  </label>
-                  <label class="radio radio_low">
-                    <input
-                      type="radio"
-                      name="prio"
-                      value="3"
-                      id="prio_low"
-                      onclick=""
-                    />
-                    Low <img src="assets/icons/Property 1=Low.png" alt="↓" />
-                  </label>
-                </div>
-                <label class="label" for="category"
-                  >Category
-                  <div class="star">*</div></label
-                >
-                <select
-                  type="select"
-                  name="category"
-                  class="category"
-                  id="category"
-                  required
-                >
-                  <option value="">Select task category</option>
-                  <option value="Technikal Task">Technikal Task</option>
-                  <option value="User Story">User Story</option>
-                </select>
-                <label for="subtask">Subtask</label>
-                <input
-                  type="text"
-                  name="subtask"
-                  id="subtask"
-                  class="subtask"
-                  placeholder="Add new subtask"
-                />
-                <div class="table_subtask" id="subtask_table"></div>
-              </div>
-            </form>
-            <div class="text_and_buttons">
-              <div class="is_required">
-                <div class="star">*</div>
-                This field is required
-              </div>
-              <div class="task_butons">
-                <button class="secondary_button clear" onclick="clearForm()">
-                  Clear <img src="assets/icons/cancel_icon_blue.png" alt="" />
-                </button>
-                <button
-                  class="button1 create_task"
-                  id="saveTaskButton"
-                  onclick="saveTask('in-progress')"
-                >
-                  Create Task <img src="assets/icons/check.png" alt="" />
-                </button>
-              </div>
-            </div>
-          </div>
-        </section>
-      </div>
-    </div>
-
-    <!-- Hidden Popup taska -->
-    <div id="popup-container"></div>
-    <div id="popup-close"></div>
+    <script src="board.js"></script>
   </body>
 </html>
