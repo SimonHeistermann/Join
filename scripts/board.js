@@ -4,6 +4,7 @@ let baseUrl =
 async function init() {
   console.log("Test Initializations");
   await loadTasks();
+  loadTasksFromLocalStorage();
 }
 
 // Task in Firebase speichern
@@ -40,46 +41,6 @@ async function loadTasks() {
 
   renderTasks(tasks);
 }
-/* 
-function renderTasks(tasks) {
-  let taskContainer = document.getElementById("content");
-
-  taskContainer.innerHTML = "";
-
-  let taskIds = Object.keys(tasks);
-  for (let i = 0; i < taskIds.length; i++) {
-    let taskId = taskIds[i];
-    let task = tasks[taskId];
-
-    if (!task) {
-      continue;
-    }
-
-    taskContainer.innerHTML += `
-        <div class="task"${taskId}"draggable="true" ondragstart="drag(event)">
-        <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
-
-                <div class="task-type">${task.category}</div>
-                  <h3>${task.name}</h3>
-               p>${task.description}</p>
-                  <div class="progress">
-                    <div class="progress-bar" style="width: ${
-                      task.progress || 2
-                    }%"></div>
-                  </div>
-                  <div class="subtasks">1/2 
-              <p>${
-                task.subtasks ? task.subtasks.join(", ") : ""
-              }</p> Subtasks</div>
-                
-                </div>
-
-                
-
-        
-      `;
-  }
-} */
 function renderTasks(tasks) {
   let taskContainer = document.getElementById("content");
 
@@ -141,10 +102,6 @@ function showPopup(task) {
   let popupContainer = document.getElementById("popup-container");
   popupContainer.innerHTML = createPopup(task);
   popupContainer.style.display = "block";
-}
-
-function closePopup() {
-  document.getElementById("popup-container").style.display = "none";
 }
 
 function createPopup(task) {
@@ -254,20 +211,17 @@ function showEmtyMassage() {
   document.getElementById("empty_feedback").style.display = "block";
 }
 
+function closePopup() {
+  document.getElementById("popup-container").style.display = "none";
+}
 function closeAddtask() {
-  document.getElementById("popup_open").style.display = "none";
   document.getElementById("cover__all_addTask").style.display = "none";
 }
 
 function openAddtask() {
   document.getElementById("cover__all_addTask").style.display = "block";
 }
-/* / function openpopup() {
-  document.getElementById("popup_card").style.display = "block";
-  document.getElementById("cover_all").style.display = "block";
-} */
 
 function closepopup() {
   document.getElementById("popup_card").style.display = "none";
-  document.getElementById("cover_all").style.display = "none";
 }
