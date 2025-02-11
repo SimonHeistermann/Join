@@ -10,7 +10,6 @@
 }
 
 .board__navigator {
-  margin-left: 200px;
   width: 100%;
   height: 232px;
   padding: 8px 10px;
@@ -98,11 +97,9 @@ img {
   border-radius: 5px;
 }
 .kanban__board {
-  margin-left: 200px;
 }
 
 .kanban-board {
-  margin-left: 200px;
   display: flex;
   gap: 20px;
   width: 90%;
