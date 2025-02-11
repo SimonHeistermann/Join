@@ -4,7 +4,7 @@ let baseUrl =
 async function init() {
   console.log("Test Initializations");
   await loadTasks();
-  loadTasksFromLocalStorage();
+  quantityUpdate();
 }
 
 // Task in Firebase speichern
@@ -96,6 +96,14 @@ function allowDrop(ev) {
 
 function drag(ev) {
   ev.dataTransfer.setData("text", ev.target.id);
+}
+
+function quantityUpdate() {
+  let todoColumn = document.getElementById("column_todo");
+  let progressColumn = document.getElementById("column_progress");
+  let awitfeedbackColumn = document.getElementById("column_await");
+  let doneColumn = document.getElementById("column_done");
+  console.log(todoColumn);
 }
 
 function showPopup(task) {
