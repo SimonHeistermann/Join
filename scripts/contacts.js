@@ -314,11 +314,9 @@ async function processForm(type) {
     let updatedContact = null;
     if(type === 'add') newContact = await addNewContact();
     else if(type === 'edit') updatedContact = await editContact();
-    
     document.querySelector(".add__contact__form").reset();
     closeContactOverlay();
     await initContacts();
-    
     if (newContact) {
         openNewlyAddedContact(newContact);
         displayContactSuccNotification("created");

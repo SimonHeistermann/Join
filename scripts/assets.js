@@ -1,4 +1,96 @@
 /**
+ * Reloads the current website by reassigning the location.
+ */
+function reloadWebsite() {
+    location.href = location.href;
+}
+
+/**
+ * Redirects the user to the login page with an animation.
+ */
+function openLoginWithAnimation() {
+    window.location.href = 'login.html';
+}
+
+/**
+ * Redirects the user to the registration page.
+ */
+function openSignUpWebsite() {
+    window.location.href = 'register.html';
+}
+
+/**
+ * Redirects the user to the summary page.
+ */
+function openSummaryWebsite() {
+    window.location.href = 'summary.html';
+}
+
+/**
+ * Redirects the user to the add task page.
+ */
+function openAddTaskWebsite() {
+    window.location.href = 'add_task.html';
+}
+
+/**
+ * Redirects the user to the board page.
+ */
+function openBoardWebsite() {
+    window.location.href = 'board.html';
+}
+
+/**
+ * Redirects the user to the contacts page.
+ */
+function openContactsWebsite() {
+    window.location.href = 'contacts.html';
+}
+
+/**
+ * Redirects the user to the privacy policy page.
+ */
+function openPrivacyPolicyWebsite() {
+    window.location.href = 'privacy_policy.html';
+}
+
+/**
+ * Redirects the user to the legal notice page.
+ */
+function openLegalNoticeWebsite() {
+    window.location.href = 'legal_notice.html';
+}
+
+/**
+ * Redirects the user to the privacy policy page without login requirements.
+ */
+function openPrivacyPolicyWebsiteNoLogin() {
+    window.location.href = 'privacy_policy_nologin.html';
+}
+
+/**
+ * Redirects the user to the legal notice page without login requirements.
+ */
+function openLegalNoticeWebsiteNoLogin() {
+    window.location.href = 'legal_notice_nologin.html';
+}
+
+/**
+ * Redirects the user to the help page.
+ */
+function openHelpWebsite() {
+    window.location.href = 'help.html';
+}
+
+/**
+ * Toggles the visibility of the submenu by adding or removing the 'd__none' class.
+ */
+function toggleSubMenu() {
+    const subMenuRef = document.getElementById('submenu');
+    subMenuRef.classList.toggle('d__none');
+}
+
+/**
  * Prevents scrolling on the body by fixing its position and storing the scroll position.
  */
 function fixateScrollingOnBody() {

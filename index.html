@@ -11,6 +11,7 @@
 
     <link rel="stylesheet" href="./assets/fonts/fonts.css"/>
     <link rel="stylesheet" href="./style.css"/>
+    <link rel="stylesheet" href="./styles/keyframes.css"/>
     <link rel="stylesheet" href="./styles/sidebar.css"/>
     <link rel="stylesheet" href="./styles/register.css"/>
     <link rel="stylesheet" href="./styles/add_task.css"/>
@@ -81,17 +82,21 @@
                 <div class="header__container">
                     <h3>Kanban Project Management Tool</h3>
                     <div class="headerbox__right">
-                        <button class="help__button">
+                        <button onclick="openHelpWebsite()" class="help__button">
                             <img src="./assets/icons/help_icon.png" alt="Help">
                         </button>
-                        <button class="profile__button">
-                            SM
-                        </button>
+                        <button onclick="toggleSubMenu()" id="currentuser_initials_ref" class="profile__button">SM</button>
                     </div>
                 </div>
             </header>
             <main>
             </main>
+            <div id="submenu" class="profile__button__submenu d__none">
+                <button onclick="openHelpWebsite()" class="submenu__button d__none">Help</button>
+                <button onclick="openLegalNoticeWebsite()" class="submenu__button">Legal Notice</button>
+                <button onclick="openPrivacyPolicyWebsite()" class="submenu__button">Privacy Policy</button>
+                <button onclick="logOut()" class="submenu__button">Log Out</button>
+              </div>
         </div>
     </div>
 </body>
