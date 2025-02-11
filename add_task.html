@@ -239,14 +239,14 @@
                 <option value="us">User Story</option>
               </select>
               <label for="subtask">Subtask</label>
-              <div class="exisiting__subtasks" id="exsisting_subtasks"></div>
-              <input
-                type="text"
-                name="subtask"
-                id="subtask"
-                class="subtask"
-                placeholder="Add new subtask"
-              />
+              <div class="exisiting__subtasks d__none" id="exsisting_subtasks"><ul id="exsisting_subtasks_list">
+
+              </ul></div>
+              <div class="input__container">
+                <input type="text" class="sub__input" name="subtask" id="subtask" class="subtask" placeholder="Add new subtask" onclick="changePngs()"/>
+                <button class="subtask__input__btn" id="sub_btn1" onclick="changePngs()"><img id="sub_btn1_img" src="./assets/icons/add_sub.png" alt="+" ></button>
+                <button class="subtask__input__btn d__none" id="sub_btn2" onclick="addNewSubtask()"><img src="./assets/icons/check_sub.png" alt="check" ></button>
+              </div>
               <div class="table_subtask" id="subtask_table"></div>
             </div>
           </form>
