@@ -6,6 +6,7 @@ let allTasks
 let urgend_amount;
 let next_urgend ;
 let allDueDates =[]; 
+let theName
  
 /**
  * Initialisiert die Zusammenfassung der Aufgaben und Benutzerinformationen.
@@ -23,7 +24,7 @@ let allDueDates =[];
      await fetchTasks();
      getFutureTasks();  
      getTheSummary(); 
-     renderSummary(to_do, done, in_progress, feedback, allTasks, next_urgend, urgend_amount);       
+     renderSummary(to_do, done, in_progress, feedback, allTasks, next_urgend, urgend_amount, theName);       
  }
 
 /**
@@ -53,10 +54,10 @@ async function getTheTasks() {
  * @param {string} next_urgend - Beschreibung oder Name der dringendsten nächsten Aufgabe.
  * @param {number} urgend_amount - Anzahl der dringenden Aufgaben.
  */ 
-function renderSummary(to_do, done, in_progress, feedback, allTasks, next_urgend, urgend_amount) {
+function renderSummary(to_do, done, in_progress, feedback, allTasks, next_urgend, urgend_amount, theName) {
     const summaryContentref = document.getElementById("summary_content");
     summaryContentref.innerHTML = "";
-    summaryContentref.innerHTML += renderHTMLSummary(to_do, done, in_progress, feedback, allTasks, next_urgend, urgend_amount);
+    summaryContentref.innerHTML += renderHTMLSummary(to_do, done, in_progress, feedback, allTasks, next_urgend, urgend_amount, theName);
 }
 
 /**
@@ -73,6 +74,7 @@ function getTheSummary(){
     howManyTasks();
     howManyToDo();
     howManyUrgend();
+    whatsTheName();
 }
 
 /**
@@ -164,6 +166,21 @@ function howManyUrgend(){
         }
     });
     urgend_amount = amount;
+}
+
+/**
+ * Setzt den Wert von `theName` basierend auf dem Namen des aktuellen Benutzers.
+ * 
+ * Falls der Benutzer "Guest" ist, wird `theName` auf einen leeren String gesetzt.  
+ * Andernfalls wird `theName` mit dem Namen des aktuellen Benutzers belegt.
+ */
+function whatsTheName(){
+    if(currentUser.name === 'Guest'){
+        theName = '';
+    }
+    else{
+    theName = currentUser.name;
+    }
 }
 
 /**

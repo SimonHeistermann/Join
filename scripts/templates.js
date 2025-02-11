@@ -227,7 +227,7 @@ function renderHTMLAddContactOverlay() {
 
 // Summary:
 
-function renderHTMLSummary(to_do, done, in_progress, feedback, allTasks, next_urgend, urgend_amount, currentUser) {
+function renderHTMLSummary(to_do, done, in_progress, feedback, allTasks, next_urgend, urgend_amount, theName) {
     return  `
             <div class="keymetrics__container">
                 <div class="firstrow__keymetrics">
@@ -299,7 +299,7 @@ function renderHTMLSummary(to_do, done, in_progress, feedback, allTasks, next_ur
             </div>
             <div class="greet__box">
                 <span class="greeting">Good Morning,</span>
-                <span class="greeting__name">${currentUser}</span>
+                <span class="greeting__name">${theName}</span>
             </div>
             `
 }
