@@ -3,8 +3,6 @@
 }
 
 .content__right {
-  width: 100%;
-  min-height: 100%;
   display: flex;
   flex-direction: column;
   width: calc(100% - clamp(172px, 17vw, 232px));
