@@ -119,6 +119,7 @@ function testpPasswordLogin(inputPw, userIndex){
         document.getElementById('wrong_email_password').classList.remove('d__none');
         document.getElementById('password_container').classList.add('error__inputs');
         document.getElementById('password_input_login').value = '';
+        document.getElementById('mask_input_password_login').innerHTML = '';
     }
 }
 
