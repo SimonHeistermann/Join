@@ -191,7 +191,7 @@ function filterContacts() {
 }
 
 async function saveTask() {
-  const name = document.getElementById("text__input").value;
+  const name = document.getElementById("text__title").value;
   const description = document.getElementById("description").value;
   const assignedTo = document.getElementById("assigned__to").value;
   const dueDate = document.getElementById("date__input").value;
@@ -200,7 +200,7 @@ async function saveTask() {
   const subtask = document.getElementById("subtask").value;
 
   if (!name || !description || !assignedTo || !dueDate || !prio || !category) {
-    document.getElementById("star_date").innerHTML =
+    document.getElementById("date__input").innerHTML =
       "Bitte alle Felder ausfüllen!";
     document.getElementById("star_textArea").innerHTML =
       "Bitte alle Felder ausfüllen!";
@@ -251,30 +251,30 @@ function clearForm() {
   document.getElementById("subtask").value = "";
 }
 
-
-function gatherSubtasks(){
+function gatherSubtasks() {
   let storedTaskArray = localStorage.getItem("tasks");
-    tasks = JSON.parse(storedTaskArray);
-    let filteredSubtasks = tasks.filter(task => task.subtasks && task.subtasks.length > 0);
-  let allSubtasks = filteredSubtasks.map(task => task.subtasks).flat();
+  tasks = JSON.parse(storedTaskArray);
+  let filteredSubtasks = tasks.filter(
+    (task) => task.subtasks && task.subtasks.length > 0
+  );
+  let allSubtasks = filteredSubtasks.map((task) => task.subtasks).flat();
   justSubtasksName(allSubtasks);
 }
 
-function justSubtasksName(allSubtasks){
-  let justTheNames = allSubtasks.map(task => task.name);
+function justSubtasksName(allSubtasks) {
+  let justTheNames = allSubtasks.map((task) => task.name);
   fillThelist(justTheNames);
-   
 }
 
-function fillThelist(allSubtasks){
-  list = document.getElementById('exsisting_subtasks_list');
-  allSubtasks.forEach(task => {
+function fillThelist(allSubtasks) {
+  list = document.getElementById("exsisting_subtasks_list");
+  allSubtasks.forEach((task) => {
     list.innerHTML += `<label for="subtask_${task}"></label>
-                        <li ondblclick="turnIntoInput(${task}" id="${task}_id")">${task}</li>`
-  } )
+                        <li ondblclick="turnIntoInput(${task}" id="${task}_id")">${task}</li>`;
+  });
 }
 
-function changePngs(){
-  document.getElementById('sub_btn1_img').src = "./assets/icons/close_sub.png";
-  document.getElementById('sub_btn2').classList.remove("d__none");
+function changePngs() {
+  document.getElementById("sub_btn1_img").src = "./assets/icons/close_sub.png";
+  document.getElementById("sub_btn2").classList.remove("d__none");
 }
