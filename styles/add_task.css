@@ -460,3 +460,7 @@ beide Label und button die klasse radio und radioinput spricht aber gerade nur d
   display: flex;
   justify-content: space-between;
 }
+
+.subtask__li__element:hover{
+  cursor: pointer;
+}
