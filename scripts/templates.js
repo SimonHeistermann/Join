@@ -342,3 +342,10 @@ function generateContactTemplate(contact) {
         </li>
     `;
 }
+
+function generateSubtaskListelement(task){
+    return `<label for="subtask_${task}"></label>
+                        <li class="subtask__li__element" onclick="addSubTaskToList(${task})" ondblclick="turnIntoInput(${task}" id="${task}_id")">${task}
+                        <div><button onclick="turnIntoInput(${task}; return false;"><img src="./assets/icons/edit_sub.png" alt="edit"></button><button onclick="deleteSubtaks(${task}); return false;">
+                        <img src="./assets/icons/delete_sub.png" alt="delete"></button></div></li>`;
+}

@@ -1,5 +1,6 @@
 let choosenContacts = [];
 let exsistingSubtasks = [];
+let justTheNames = [];
 
 /**
  * Initializes the task-related functionalities, including fetching contacts.
@@ -260,19 +261,27 @@ function gatherSubtasks(){
 }
 
 function justSubtasksName(allSubtasks){
-  let justTheNames = allSubtasks.map(task => task.name);
+  justTheNames = allSubtasks.map(task => task.name);
   fillThelist(justTheNames);
+}
+
+  function searchTheSubtasks(justTheNames){
+  let actualInput = document.getElementById('subtask').value;
+  let searchedtasks = justTheNames.filter(name => name.includes(actualInput));
+  fillThelist(searchedtasks);
 }
 
 function fillThelist(allSubtasks){
   list = document.getElementById('exsisting_subtasks_list');
+  list.innerHTML = '';
   allSubtasks.forEach(task => {
-    list.innerHTML += `<label for="subtask_${task}"></label>
-                        <li ondblclick="turnIntoInput(${task}" id="${task}_id")">${task}</li>`;
+    list.innerHTML += generateSubtaskListelement(task)
   });
 }
 
-function changePngs(){
-  document.getElementById('sub_btn1_img').src = "./assets/icons/close_sub.png";
-  document.getElementById('sub_btn2').classList.remove('d__none');
+function changeBtns(){
+  document.getElementById('sub_btn1').classList.toggle('d__none');
+  document.getElementById('sub_btn2').classList.toggle('d__none');
+  document.getElementById('sub_btn3').classList.toggle('d__none');
+  document.getElementById('exsisting_subtasks').classList.toggle('d__none');
 }
