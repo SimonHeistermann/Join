@@ -265,18 +265,21 @@ function changeBtnsAgain(){
     document.getElementById('sub_btn3').classList.toggle('d__none');  
 }
 
-function turnIntoInput(name){
-  let liElement =  document.getElementById(name + '_id');
-  liElement.innerHTML='';
-  liElement.innerHTML = '<input>'; 
-}
-
 function addNewSubtask(){
   let newSubtask = document.getElementById('subtask');
   list = document.getElementById('subtask_table');
   list.innerHTML += generateNewSubtaskListElement(newSubtask.value);
   newSubtasks.push(newSubtask.value);
   newSubtask.value = '';
-  changeBtnsAgain();
+  changeBtnsAgain();  
+}
+
+function turnIntoInput(name){
+  console.log(name);
   
+  let subTask =  document.getElementById("subtask_"+name+"_text");
+  subTaskText = subTask.innerHTML;
+  subTask.innerHTML = `<div class="subtask__content">
+                      <input class="subtask__text" id="subtask_${name}_text" ondblclick='turnIntoInput("${name}")'>${name}
+                      </div>`; 
 }

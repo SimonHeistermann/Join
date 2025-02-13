@@ -354,12 +354,12 @@ function generateNewSubtaskListElement(task){
     return `
             <li class="subtask__li__element" id="new_${task}_id">
                 <div class="subtask__content">
-                    <span class="subtask__text" ondblclick="turnIntoInput(${task})">${task}</span>
+                    <span class="subtask__text" id="subtask_${task}_text" ondblclick='turnIntoInput("${task}")'>${task}</span>
                     <div class="subtask__buttons">
-                        <button onclick="turnIntoInput(${task}); return false;">
+                        <button onclick='turnIntoInput("${task}"); return false;'>
                             <img src="./assets/icons/edit_sub.png" alt="edit">
                         </button>
-                        <button onclick="deleteSubtaks(${task}); return false;">
+                        <button onclick='deleteSubtaks("${task}"); return false;'>
                             <img src="./assets/icons/delete_sub.png" alt="delete">
                         </button>
                     </div>
