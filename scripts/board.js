@@ -58,7 +58,7 @@ function renderTasks(tasks) {
     taskContainer.innerHTML += `
           <div id="task${taskId}" class="task" draggable="true" ondragstart="drag(event)">
               <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
-                  <div class="task-type">${task.category}</div>
+                  <div class="task-type">Category</div>
                   <h3>${task.name}</h3>
                   <p>${task.description}</p>
                   <div class="progress">
@@ -88,6 +88,7 @@ function drop(ev) {
   if (taskElement && dropTarget) {
     dropTarget.appendChild(taskElement);
   }
+  quantityUpdate();
 }
 
 function allowDrop(ev) {
@@ -99,11 +100,12 @@ function drag(ev) {
 }
 
 function quantityUpdate() {
-  let todoColumn = document.getElementById("column_todo");
-  let progressColumn = document.getElementById("column_progress");
-  let awitfeedbackColumn = document.getElementById("column_await");
-  let doneColumn = document.getElementById("column_done");
-  console.log(todoColumn);
+  let todColumn = document.getElementById("content");
+  let todoHeader = document.getElementById("todo_counter");
+  todoHeader.innerHTML = `${todoHeader.innerHTML[0]}(${todColumn.children.length})`;
+  if (todColumn.children.length === 0) {
+    todoHeader.innerHTML = " Keine Task mehr";
+  }
 }
 
 function showPopup(task) {
