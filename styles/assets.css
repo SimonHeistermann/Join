@@ -152,6 +152,24 @@
     background-color: #2A3D59;
 }
 
+.submenu__button__help {
+    background: transparent;
+    color: #CDCDCD;
+    font-size: 16px;
+    font-weight: 400;
+    height: 46px;
+    align-items: center;
+    justify-content: flex-start;
+    width: 130px;
+    padding: 8px 12px;
+    transition: background-color 125ms;
+    display: none;
+}
+
+.submenu__button__help:hover {
+    background-color: #2A3D59;
+}
+
 .error__color {
     color: #FF001F !important;
 }
