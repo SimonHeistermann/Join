@@ -95,7 +95,7 @@ main {
     gap: 36px;
     padding: 16px 36px;
     border-radius: 10px;
-    transition: background 125ms, box-shadow 75ms ;
+    transition: background 125ms, box-shadow 75ms;
 }
 
 .contact:hover {

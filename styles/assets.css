@@ -104,6 +104,20 @@
     border: 1px solid #29ABE2;
 }
 
+.mask__input{
+    position: absolute;
+    min-height: 40px;
+    width: 100%;
+    border-width: 0;
+    background-color: transparent;
+    font-size: 20px;
+    font-weight: 400;
+    color: black;
+    caret-color: transparent;
+    letter-spacing: 3px;
+    pointer-events: none;
+}
+
 .profile__button__submenu {
     position: fixed;
     z-index: 1000;
@@ -136,4 +150,30 @@
 
 .submenu__button:hover {
     background-color: #2A3D59;
+}
+
+.error__color {
+    color: #FF001F !important;
+}
+
+@media(max-width: 768px) {
+    .help__button {
+        display: none;
+    }
+
+    .profile__button {
+        width: 40px;
+        height: 40px;
+        font-size: 16px;
+        font-weight: 600;
+    }
+
+    .profile__button__submenu {
+        height: 204px;
+        top: 80px;
+    }
+
+    .submenu__button__help {
+        display: flex;
+    }
 }
