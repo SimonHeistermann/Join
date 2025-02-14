@@ -457,21 +457,60 @@ beide Label und button die klasse radio und radioinput spricht aber gerade nur d
 }
 
 .subtask__li__element {
-  list-style-type: square; 
+  list-style-type: square;
+}
+
+.subtask__li__element.editing {
+  list-style-type: none;
 }
 
 .subtask__content {
   display: flex;
   justify-content: space-between;
   align-items: center;
-  width: 100%; 
+  width: 100%;
+  margin-top: 4px;
+}
+
+.subtask__input-container {
+  position: relative;
+  display: flex;
+  align-items: center;
+  width: 100%;
+}
+
+.subtask__label {
+  display: flex;
+  align-items: center;
+  border: 1px solid #ccc;
+  padding: 5px;
+  border-radius: 5px;
+  background: white;
+  width: 100%;
 }
 
 .subtask__text {
-  flex-grow: 1; 
+  border: none;
+  outline: none;
+  flex-grow: 1;
+  width: 100%;
+}
+
+.subtask__edit__button {
+  background: none;
+  border: none;
+  cursor: pointer;
+  margin-left: 5px;
 }
 
 .subtask__buttons {
   display: flex;
-  gap: 8px; 
+  align-items: center;
+  gap: 5px;
+}
+
+.subtask__divider {
+  width: 1px;
+  height: 16px;
+  background-color: #ccc;
 }

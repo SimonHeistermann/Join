@@ -250,36 +250,54 @@ function clearForm() {
   document.getElementById("subtask").value = "";
 }
 
-function changeBtns(){
-  button = document.getElementById('sub_btn3');
-  if(button.classList.contains('d__none')){
-  document.getElementById('sub_btn1').classList.toggle('d__none');
-  document.getElementById('sub_btn2').classList.toggle('d__none');
-  document.getElementById('sub_btn3').classList.toggle('d__none');
+function changeBtns() {
+  let button = document.getElementById('sub_btn3');
+  if (button.classList.contains('d__none')) {
+      document.getElementById('sub_btn1').classList.toggle('d__none');
+      document.getElementById('sub_btn2').classList.toggle('d__none');
+      document.getElementById('sub_btn3').classList.toggle('d__none');
   }
 }
 
-function changeBtnsAgain(){
-    document.getElementById('sub_btn1').classList.toggle('d__none');
-    document.getElementById('sub_btn2').classList.toggle('d__none');
-    document.getElementById('sub_btn3').classList.toggle('d__none');  
+function changeBtnsAgain() {
+  document.getElementById('sub_btn1').classList.toggle('d__none');
+  document.getElementById('sub_btn2').classList.toggle('d__none');
+  document.getElementById('sub_btn3').classList.toggle('d__none');
 }
 
-function addNewSubtask(){
+function addNewSubtask() {
   let newSubtask = document.getElementById('subtask');
-  list = document.getElementById('subtask_table');
-  list.innerHTML += generateNewSubtaskListElement(newSubtask.value);
   newSubtasks.push(newSubtask.value);
+  makeTheListGreatAgain();
   newSubtask.value = '';
-  changeBtnsAgain();  
+  changeBtnsAgain();
 }
 
-function turnIntoInput(name){
+function turnIntoInput(name) {
+  let safeName = name.replace(/\s+/g, "_");
+  let subTask = document.getElementById("subtask_" + safeName + "_text");  
+  let listItem = document.getElementById("new_" + safeName + "_id");
+  if (listItem) {
+      listItem.classList.add("editing");
+  }
+  subTask.innerHTML = generateInput(name);
+  let inputElement = document.getElementById("subtask_" + safeName + "_input");
+  if (inputElement) {
+      inputElement.focus();
+  }
+}
+
+function deleteSubtask(name){
   console.log(name);
-  
-  let subTask =  document.getElementById("subtask_"+name+"_text");
-  subTaskText = subTask.innerHTML;
-  subTask.innerHTML = `<div class="subtask__content">
-                      <input class="subtask__text" id="subtask_${name}_text" ondblclick='turnIntoInput("${name}")'>${name}
-                      </div>`; 
+  let safeName = name.replace(/\s+/g, "_");
+  let toDelete = document.getElementById('subtask_'+ safeName +'_input');  
+  let deleteIndex = newSubtasks.findIndex(subtask => subtask === toDelete.value);
+  newSubtasks.splice(deleteIndex,1);
+  makeTheListGreatAgain();
+}
+
+function makeTheListGreatAgain(){
+  let list = document.getElementById('subtask_table');
+  list.innerHTML = '';
+  newSubtasks.forEach(task => {list.innerHTML += generateNewSubtaskListElement(task)});
 }
