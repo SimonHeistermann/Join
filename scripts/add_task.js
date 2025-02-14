@@ -257,6 +257,8 @@ function changeBtns() {
       document.getElementById('sub_btn2').classList.toggle('d__none');
       document.getElementById('sub_btn3').classList.toggle('d__none');
   }
+  let inputElement = document.getElementById('subtask');
+  inputElement.focus();
 }
 
 function changeBtnsAgain() {
@@ -277,14 +279,10 @@ function turnIntoInput(name) {
   let safeName = name.replace(/\s+/g, "_");
   let subTask = document.getElementById("subtask_" + safeName + "_text");  
   let listItem = document.getElementById("new_" + safeName + "_id");
-  if (listItem) {
       listItem.classList.add("editing");
-  }
-  subTask.innerHTML = generateInput(name);
+      subTask.innerHTML = generateInput(name);
   let inputElement = document.getElementById("subtask_" + safeName + "_input");
-  if (inputElement) {
-      inputElement.focus();
-  }
+        inputElement.focus();
 }
 
 function deleteSubtask(name){
