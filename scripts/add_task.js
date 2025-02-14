@@ -286,7 +286,6 @@ function turnIntoInput(name) {
 }
 
 function deleteSubtask(name){
-  console.log(name);
   let safeName = name.replace(/\s+/g, "_");
   let toDelete = document.getElementById('subtask_'+ safeName +'_input');  
   let deleteIndex = newSubtasks.findIndex(subtask => subtask === toDelete.value);
@@ -298,4 +297,17 @@ function makeTheListGreatAgain(){
   let list = document.getElementById('subtask_table');
   list.innerHTML = '';
   newSubtasks.forEach(task => {list.innerHTML += generateNewSubtaskListElement(task)});
+}
+
+function turnIntoLi(name){
+  console.log(name);
+  let safeName = name.replace(/\s+/g, "_");
+  
+  let value = document.getElementById('subtask_'+ safeName + '_input').value;
+  console.log(value);
+  let listItem = document.getElementById("new_" + safeName + "_id");
+      listItem.classList.remove("editing");
+  let toBeExchanced = newSubtasks.findIndex(subtask => subtask === name);
+  newSubtasks.splice(toBeExchanced,1, value);
+
 }

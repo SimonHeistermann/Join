@@ -367,13 +367,13 @@ function generateInput(name) {
         <div class="subtask__content">
             <div class="subtask__input-container">
                 <label class="subtask__label">
-                    <input class="subtask__text" id="subtask_${safeName}_input" value="${name}">
+                    <input class="subtask__text" onblur="" id="subtask_${safeName}_input" value="${name}">
                     <div class="subtask__buttons">
                         <button type="button" class="subtask__edit__button" onclick='deleteSubtask("${name}"); return false;'>
                             <img src="./assets/icons/delete_sub.png" alt="delete">
                         </button>
                         <div class="subtask__divider"></div> 
-                        <button type="button" class="subtask__edit__button" onclick='turnIntoLi("${safeName}"); return false;'>
+                        <button type="button" class="subtask__edit__button" onclick='turnIntoLi("${name}"); return false;'>
                             <img src="./assets/icons/check_sub.png" alt="edit">
                         </button>
                     </div>
@@ -381,4 +381,12 @@ function generateInput(name) {
             </div>
         </div>
     `;
+}
+
+function generateLiContent(task){
+    let safeName = task.replace(/\s+/g, "_");
+    return `<div class="subtask__content">
+                <div class="subtask__text" id="subtask_${safeName}_text" ondblclick='turnIntoInput("${task}")'>${task}</div>
+            </div>
+            `
 }
