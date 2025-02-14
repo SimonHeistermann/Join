@@ -101,10 +101,14 @@ function drag(ev) {
 
 function quantityUpdate() {
   let todColumn = document.getElementById("content");
+
   let todoHeader = document.getElementById("todo_counter");
-  todoHeader.innerHTML = `${todoHeader.innerHTML[0]}(${todColumn.children.length})`;
+  todoHeader.innerHTML = `${todoHeader.innerHTML[0]} `;
   if (todColumn.children.length === 0) {
     todoHeader.innerHTML = " Keine Task mehr";
+    todoHeader.style.display = "block";
+  } else {
+    todoHeader.style.display = "none";
   }
 }
 

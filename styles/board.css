@@ -96,8 +96,6 @@ img {
   color: #d9d9d9;
   border-radius: 5px;
 }
-.kanban__board {
-}
 
 .kanban-board {
   display: flex;
@@ -518,4 +516,7 @@ button {
   filter: brightness(0) saturate(100%) invert(35%) sepia(99%) saturate(2000%)
     hue-rotate(180deg);
   color: #42526e;
+}
+#todo_counter {
+  display: none;
 }
