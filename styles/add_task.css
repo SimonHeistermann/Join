@@ -456,11 +456,22 @@ beide Label und button die klasse radio und radioinput spricht aber gerade nur d
   overflow: scroll;
 }
 
-.subtask__li__element{
-  display: flex;
-  justify-content: space-between;
+.subtask__li__element {
+  list-style-type: square; 
 }
 
-.subtask__li__element:hover{
-  cursor: pointer;
+.subtask__content {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 100%; 
+}
+
+.subtask__text {
+  flex-grow: 1; 
+}
+
+.subtask__buttons {
+  display: flex;
+  gap: 8px; 
 }

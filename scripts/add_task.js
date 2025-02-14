@@ -1,6 +1,5 @@
 let choosenContacts = [];
-let exsistingSubtasks = [];
-let justTheNames = [];
+let newSubtasks = [];
 
 /**
  * Initializes the task-related functionalities, including fetching contacts.
@@ -9,7 +8,6 @@ async function initAddTasks() {
   try {
     await fetchContacts();
     renderContactList(contacts);
-    gatherSubtasks();
   } catch (error) {
     console.error("Error initializing app:", error);
   }
@@ -252,36 +250,36 @@ function clearForm() {
   document.getElementById("subtask").value = "";
 }
 
-function gatherSubtasks(){
-  let storedTaskArray = localStorage.getItem("tasks");
-  tasks = JSON.parse(storedTaskArray);
-  let filteredSubtasks = tasks.filter(task => task.subtasks && task.subtasks.length > 0);
-  let allSubtasks = filteredSubtasks.map(task => task.subtasks).flat();
-  justSubtasksName(allSubtasks);
-}
-
-function justSubtasksName(allSubtasks){
-  justTheNames = allSubtasks.map(task => task.name);
-  fillThelist(justTheNames);
-}
-
-  function searchTheSubtasks(justTheNames){
-  let actualInput = document.getElementById('subtask').value;
-  let searchedtasks = justTheNames.filter(name => name.includes(actualInput));
-  fillThelist(searchedtasks);
-}
-
-function fillThelist(allSubtasks){
-  list = document.getElementById('exsisting_subtasks_list');
-  list.innerHTML = '';
-  allSubtasks.forEach(task => {
-    list.innerHTML += generateSubtaskListelement(task)
-  });
-}
-
 function changeBtns(){
+  button = document.getElementById('sub_btn3');
+  if(button.classList.contains('d__none')){
   document.getElementById('sub_btn1').classList.toggle('d__none');
   document.getElementById('sub_btn2').classList.toggle('d__none');
   document.getElementById('sub_btn3').classList.toggle('d__none');
-  document.getElementById('exsisting_subtasks').classList.toggle('d__none');
+  }
+}
+
+function changeBtnsAgain(){
+    document.getElementById('sub_btn1').classList.toggle('d__none');
+    document.getElementById('sub_btn2').classList.toggle('d__none');
+    document.getElementById('sub_btn3').classList.toggle('d__none');  
+}
+
+function addNewSubtask(){
+  let newSubtask = document.getElementById('subtask');
+  list = document.getElementById('subtask_table');
+  list.innerHTML += generateNewSubtaskListElement(newSubtask.value);
+  newSubtasks.push(newSubtask.value);
+  newSubtask.value = '';
+  changeBtnsAgain();  
+}
+
+function turnIntoInput(name){
+  console.log(name);
+  
+  let subTask =  document.getElementById("subtask_"+name+"_text");
+  subTaskText = subTask.innerHTML;
+  subTask.innerHTML = `<div class="subtask__content">
+                      <input class="subtask__text" id="subtask_${name}_text" ondblclick='turnIntoInput("${name}")'>${name}
+                      </div>`; 
 }
