@@ -159,84 +159,83 @@
               />
             </div>
           </div>
-
-          <div class="kanban-board">
-            <div class="column" data-status="to-do">
-              <div class="column-header" id="column_todo">
-                <h2>To do</h2>
-                <img
-                  src="assets/icons/plus button.png"
-                  alt=""
-                  onclick="openAddtask()"
-                />
-              </div>
-              <div
-                class="tasks"
-                id="todo_todo"
-                ondrop="drop(event)"
-                ondragleave="removeHighlight('todo_todo')"
-                ondragover="allowDrop(event) ;hightlight('todo_todo')"
-              >
-                <p id="tast_counter" class="no__tasks">tasks</p>
-                <div id="content"></div>
-              </div>
+        </main>
+        <div class="kanban-board">
+          <div class="column" data-status="to-do">
+            <div class="column-header" id="column_todo">
+              <h2>To do</h2>
+              <img
+                src="assets/icons/plus button.png"
+                alt=""
+                onclick="openAddtask()"
+              />
             </div>
-
-            <div class="column" data-status="in-progress">
-              <div class="column-header" id="column_progress">
-                <h2>In progress</h2>
-                <img
-                  src="assets/icons/plus button.png"
-                  alt=""
-                  onclick="openAddtask()"
-                />
-              </div>
-              <div
-                class="tasks"
-                id="todo_pro"
-                ondrop="drop(event)"
-                ondragleave="removeHighlight('todo_pro')"
-                ondragover="allowDrop(event); hightlight('todo_pro')"
-              >
-                <p id="notasks_inpro" class="no__tasks">Task</p>
-              </div>
-            </div>
-
-            <div class="column" data-status="await-feedback">
-              <div class="column-header" id="column_await">
-                <h2>Await feedback</h2>
-                <img
-                  src="assets/icons/plus button.png"
-                  alt=""
-                  onclick="openAddtask()"
-                />
-              </div>
-              <div
-                class="tasks"
-                id="tod_await"
-                ondrop="drop(event)"
-                ondragleave="removeHighlight('tod_await')"
-                ondragover="allowDrop(event);
-                hightlight('tod_await') "
-              >
-                <p id="no_task_await" class="no__tasks"></p>
-              </div>
-            </div>
-
-            <div class="column" data-status="done">
-              <div class="column-header" id="column_done">Done</div>
-              <div
-                class="tasks"
-                id="tod_done"
-                ondrop="drop(event)"
-                ondragleave="removeHighlight('tod_done')"
-                ondragover="allowDrop(event);hightlight('tod_done')"
-              >
-                <p id="no_task_done" class="no__tasks"></p>
-              </div>
+            <div
+              class="tasks"
+              id="todo_todo"
+              ondrop="drop(event)"
+              ondragleave="removeHighlight('todo_todo')"
+              ondragover="allowDrop(event) ;hightlight('todo_todo')"
+            >
+              <p id="tast_counter" class="no__tasks">tasks</p>
+              <div id="content"></div>
             </div>
           </div>
-        </main>
+
+          <div class="column" data-status="in-progress">
+            <div class="column-header" id="column_progress">
+              <h2>In progress</h2>
+              <img
+                src="assets/icons/plus button.png"
+                alt=""
+                onclick="openAddtask()"
+              />
+            </div>
+            <div
+              class="tasks"
+              id="todo_pro"
+              ondrop="drop(event)"
+              ondragleave="removeHighlight('todo_pro')"
+              ondragover="allowDrop(event); hightlight('todo_pro')"
+            >
+              <p id="notasks_inpro" class="no__tasks">Task</p>
+            </div>
+          </div>
+
+          <div class="column" data-status="await-feedback">
+            <div class="column-header" id="column_await">
+              <h2>Await feedback</h2>
+              <img
+                src="assets/icons/plus button.png"
+                alt=""
+                onclick="openAddtask()"
+              />
+            </div>
+            <div
+              class="tasks"
+              id="tod_await"
+              ondrop="drop(event)"
+              ondragleave="removeHighlight('tod_await')"
+              ondragover="allowDrop(event);
+              hightlight('tod_await') "
+            >
+              <p id="no_task_await" class="no__tasks"></p>
+            </div>
+          </div>
+
+          <div class="column" data-status="done">
+            <div class="column-header" id="column_done">Done</div>
+            <div
+              class="tasks"
+              id="tod_done"
+              ondrop="drop(event)"
+              ondragleave="removeHighlight('tod_done')"
+              ondragover="allowDrop(event);hightlight('tod_done')"
+            >
+              <p id="no_task_done" class="no__tasks"></p>
+            </div>
+          </div>
+        </div>
       </div>
     </div>
     <div class="cover__all_addTask" id="cover__all_addTask">
