@@ -20,7 +20,8 @@
   justify-content: space-between;
   align-items: center;
 }
-.search__and__addTasks .board__title {
+.search__and__addTasks,
+.board__title {
   font-family: "Inter";
   font-size: 61px;
   font-weight: 700;
@@ -63,36 +64,35 @@
   gap: 5px;
   background: #ffff;
   width: 312px;
-  height: 58px;
+  height: 50px;
   padding: 8px 16px 8px 16px;
   border-radius: 10px;
   border: 1px solid #a8a8a8;
   cursor: pointer;
 }
 .search__area input {
-  height: 58px;
+  height: 50px;
   border: none;
   font-family: "Inter";
   cursor: pointer;
   border: none;
-  padding: 8px 6px;
+  padding: 5px 6px;
   font-size: 16px;
   outline: none;
   background: transparent;
   flex: 1;
 }
 
-.search__area span {
+span {
   border: none;
-  height: 31px;
-  font-size: 26px;
+  font-size: 21px;
   color: #d1d1d1;
 }
 
 .search__icon,
 img {
-  width: 17px;
-  height: 17px;
+  width: 25px;
+  height: 27px;
   color: #d9d9d9;
   border-radius: 5px;
 }
@@ -101,7 +101,6 @@ img {
   display: flex;
   gap: 20px;
   width: 90%;
-  max-width: 1200px;
 }
 
 .column {
@@ -213,6 +212,26 @@ img {
 }
 
 /* Mobile Responsive Styles */
+@media (min-width: 1200px) {
+  .mobile__resposeive {
+    display: none;
+  }
+}
+@media (max-width: 1200px) {
+  .board__navigator .search__and__addTasks,
+  .board__navigator {
+    display: none;
+  }
+  .search__area,
+  input {
+    width: 60%;
+    height: 38px;
+    padding: 0;
+  }
+  #find_task {
+    text-align: center;
+  }
+}
 
 @media (max-width: 768px) {
   .columns {
@@ -547,4 +566,11 @@ button {
   text-align: center;
   padding-top: 12px;
   font-weight: 400;
+}
+
+.board__addBTN {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  width: 80%;
 }

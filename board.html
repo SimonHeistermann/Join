@@ -122,11 +122,41 @@
                     onclick="searchTasks()"
                   />
                 </div>
-                <button class="add__button" onclick="openAddtask()">
-                  Add
-                  <img class="add__icon" src="assets/icons/add.png" alt="" />
-                </button>
+                <div>
+                  <button class="add__button" onclick="openAddtask()">
+                    Add
+                    <img class="add__icon" src="assets/icons/add.png" alt="" />
+                  </button>
+                </div>
               </div>
+            </div>
+          </div>
+
+          <!-- BoadMobile -->
+          <div class="mobile__resposeive">
+            <div class="board__addBTN">
+              <p class="board__title">Board</p>
+
+              <button class="add__button" onclick="openAddtask()">
+                Add
+                <img class="add__icon" src="assets/icons/add.png" alt="" />
+              </button>
+            </div>
+            <div class="search__area">
+              <input
+                type="text"
+                id="find_task"
+                placeholder="find Task"
+                oninput="searchTasks()"
+              />
+              <span>|</span>
+              <img
+                id="search_area"
+                class="search__icon"
+                src="assets/icons/search@2x.png"
+                alt=""
+                onclick="searchTasks()"
+              />
             </div>
           </div>
 
