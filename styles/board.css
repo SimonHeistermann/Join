@@ -116,6 +116,12 @@ img {
   min-width: 300px;
 }
 
+.column__hightlight {
+  border: 1px dashed #a8a8a8;
+  background: #e7e7e7;
+  border-radius: 10px;
+}
+
 .column-header {
   display: flex;
   justify-content: space-between;
@@ -518,5 +524,27 @@ button {
   color: #42526e;
 }
 #todo_counter {
+  display: block;
+}
+#notasks_inpro {
+  display: block;
+}
+#no_task_await {
   display: none;
+}
+#no_task_done {
+  display: none;
+}
+
+.no__tasks {
+  background: #a8a8a8;
+  width: 252px;
+  height: 48px;
+  border: 1px solid #e7e7e7;
+  border-radius: 10px;
+  font-family: "Open Sans";
+  font-size: 16px;
+  text-align: center;
+  padding-top: 12px;
+  font-weight: 400;
 }

@@ -142,11 +142,12 @@
               </div>
               <div
                 class="tasks"
+                id="todo_todo"
                 ondrop="drop(event)"
-                ondragover="allowDrop(event)"
+                ondragleave="removeHighlight('todo_todo')"
+                ondragover="allowDrop(event) ;hightlight('todo_todo')"
               >
-                <p id="todo_counter">Task</p>
-
+                <p id="tast_counter" class="no__tasks">tasks</p>
                 <div id="content"></div>
               </div>
             </div>
@@ -164,8 +165,11 @@
                 class="tasks"
                 id="todo_pro"
                 ondrop="drop(event)"
-                ondragover="allowDrop(event)"
-              ></div>
+                ondragleave="removeHighlight('todo_pro')"
+                ondragover="allowDrop(event); hightlight('todo_pro')"
+              >
+                <p id="notasks_inpro" class="no__tasks">Task</p>
+              </div>
             </div>
 
             <div class="column" data-status="await-feedback">
@@ -181,9 +185,11 @@
                 class="tasks"
                 id="tod_await"
                 ondrop="drop(event)"
-                ondragover="allowDrop(event)"
+                ondragleave="removeHighlight('tod_await')"
+                ondragover="allowDrop(event);
+                hightlight('tod_await') "
               >
-                <p id="no_task_awit"></p>
+                <p id="no_task_await" class="no__tasks"></p>
               </div>
             </div>
 
@@ -193,9 +199,10 @@
                 class="tasks"
                 id="tod_done"
                 ondrop="drop(event)"
-                ondragover="allowDrop(event)"
+                ondragleave="removeHighlight('tod_done')"
+                ondragover="allowDrop(event);hightlight('tod_done')"
               >
-                <p id="no_task_done"></p>
+                <p id="no_task_done" class="no__tasks"></p>
               </div>
             </div>
           </div>

@@ -99,17 +99,51 @@ function drag(ev) {
   ev.dataTransfer.setData("text", ev.target.id);
 }
 
-function quantityUpdate() {
-  let todColumn = document.getElementById("content");
+/* function quantityUpdate() {
+  let todoColumn = document.getElementById("content");
+  let proColumn = document.getElementById("todo_pro");
+  let awaitColumn = document.getElementById("tod_await");
+  let doneColumn = document.getElementById("tod_done");
 
   let todoHeader = document.getElementById("todo_counter");
-  todoHeader.innerHTML = `${todoHeader.innerHTML[0]} `;
-  if (todColumn.children.length === 0) {
-    todoHeader.innerHTML = " Keine Task mehr";
-    todoHeader.style.display = "block";
-  } else {
-    todoHeader.style.display = "none";
+  let proHeader = document.getElementById("notasks_inpro");
+  let awaitHeader = document.getElementById("no_task_await");
+  let doneHeader = document.getElementById("no_task_done");
+  todoHeader.innerText = `${todoHeader.innerText}`;
+  proHeader.innerHTML = `${proHeader.innerHTML[0]} (${proColumn.children.length})`;
+  doneHeader.innerHTML = `${doneHeader.innerHTML[0]}`;
+
+  if (todoColumn.children.length == 0) {
+    todoHeader.innerText = "  Keine Task Mehr";
   }
+} */
+
+function quantityUpdate() {
+  let columns = {
+    content: "tast_counter",
+    todo_pro: "notasks_inpro",
+    tod_await: "no_task_await",
+    tod_done: "no_task_done",
+  };
+
+  for (let colId in columns) {
+    let column = document.getElementById(colId);
+    let header = document.getElementById(columns[colId]);
+
+    if (column.children.length <= (colId === "content" ? 0 : 1)) {
+      header.innerHTML = "Keine Task Mehr";
+      header.style.display = "block";
+    } else {
+      header.style.display = "none";
+    }
+  }
+}
+
+function hightlight(id) {
+  document.getElementById(id).classList.add("column__hightlight");
+}
+function removeHighlight(id) {
+  document.getElementById(id).classList.remove("column__hightlight");
 }
 
 function showPopup(task) {
