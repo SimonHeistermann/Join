@@ -99,31 +99,12 @@ function drag(ev) {
   ev.dataTransfer.setData("text", ev.target.id);
 }
 
-/* function quantityUpdate() {
-  let todoColumn = document.getElementById("content");
-  let proColumn = document.getElementById("todo_pro");
-  let awaitColumn = document.getElementById("tod_await");
-  let doneColumn = document.getElementById("tod_done");
-
-  let todoHeader = document.getElementById("todo_counter");
-  let proHeader = document.getElementById("notasks_inpro");
-  let awaitHeader = document.getElementById("no_task_await");
-  let doneHeader = document.getElementById("no_task_done");
-  todoHeader.innerText = `${todoHeader.innerText}`;
-  proHeader.innerHTML = `${proHeader.innerHTML[0]} (${proColumn.children.length})`;
-  doneHeader.innerHTML = `${doneHeader.innerHTML[0]}`;
-
-  if (todoColumn.children.length == 0) {
-    todoHeader.innerText = "  Keine Task Mehr";
-  }
-} */
-
 function quantityUpdate() {
   let columns = {
     content: "tast_counter",
-    todo_pro: "notasks_inpro",
-    tod_await: "no_task_await",
-    tod_done: "no_task_done",
+    column_progress: "notasks_inpro",
+    column_await: "no_task_await",
+    column_done: "no_task_done",
   };
 
   for (let colId in columns) {

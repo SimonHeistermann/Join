@@ -132,7 +132,7 @@
             </div>
           </div>
 
-          <!-- BoadMobile -->
+          <!-- BoadMobile  HidenContent-->
           <div class="mobile__resposeive">
             <div class="board__addBTN">
               <p class="board__title">Board</p>
@@ -162,7 +162,7 @@
         </main>
         <div class="kanban-board">
           <div class="column" data-status="to-do">
-            <div class="column-header" id="column_todo">
+            <div class="column-header">
               <h2>To do</h2>
               <img
                 src="assets/icons/plus button.png"
@@ -172,10 +172,10 @@
             </div>
             <div
               class="tasks"
-              id="todo_todo"
+              id="column_todo"
               ondrop="drop(event)"
-              ondragleave="removeHighlight('todo_todo')"
-              ondragover="allowDrop(event) ;hightlight('todo_todo')"
+              ondragleave="removeHighlight('column_todo')"
+              ondragover="allowDrop(event) ;hightlight('column_todo')"
             >
               <p id="tast_counter" class="no__tasks">tasks</p>
               <div id="content"></div>
@@ -183,7 +183,7 @@
           </div>
 
           <div class="column" data-status="in-progress">
-            <div class="column-header" id="column_progress">
+            <div class="column-header">
               <h2>In progress</h2>
               <img
                 src="assets/icons/plus button.png"
@@ -193,17 +193,17 @@
             </div>
             <div
               class="tasks"
-              id="todo_pro"
+              id="column_progress"
               ondrop="drop(event)"
-              ondragleave="removeHighlight('todo_pro')"
-              ondragover="allowDrop(event); hightlight('todo_pro')"
+              ondragleave="removeHighlight('column_progress')"
+              ondragover="allowDrop(event); hightlight('column_progress')"
             >
               <p id="notasks_inpro" class="no__tasks">Task</p>
             </div>
           </div>
 
           <div class="column" data-status="await-feedback">
-            <div class="column-header" id="column_await">
+            <div class="column-header">
               <h2>Await feedback</h2>
               <img
                 src="assets/icons/plus button.png"
@@ -213,24 +213,24 @@
             </div>
             <div
               class="tasks"
-              id="tod_await"
+              id="column_await"
               ondrop="drop(event)"
-              ondragleave="removeHighlight('tod_await')"
+              ondragleave="removeHighlight('column_await')"
               ondragover="allowDrop(event);
-              hightlight('tod_await') "
+              hightlight('column_await') "
             >
               <p id="no_task_await" class="no__tasks"></p>
             </div>
           </div>
 
           <div class="column" data-status="done">
-            <div class="column-header" id="column_done">Done</div>
+            <div class="column-header">Done</div>
             <div
               class="tasks"
-              id="tod_done"
+              id="column_done"
               ondrop="drop(event)"
-              ondragleave="removeHighlight('tod_done')"
-              ondragover="allowDrop(event);hightlight('tod_done')"
+              ondragleave="removeHighlight('column_done')"
+              ondragover="allowDrop(event);hightlight('column_done')"
             >
               <p id="no_task_done" class="no__tasks"></p>
             </div>
