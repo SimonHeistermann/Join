@@ -138,8 +138,8 @@ function createPopup(task) {
   let priority = task.prio ? String(task.prio).toLowerCase() : "unknown";
 
   return `
-  <div class="overlayPopup">
-    <div class="popup">
+ <div class="overlayPopup">
+   <div class="popup">
       <div class="popup__card-header">
         <div class="close__btn__popup">
           <span class="task__type user__story">${task.category}</span>
@@ -180,19 +180,18 @@ function createPopup(task) {
           </button>
         </div>
       </div>
-    </div>
-  </div>
-
-
- <div class="mobile__responsive">
-      <div class="popup__card-header">
+  
+   </div>
+    
+ <div class="popupMobile">
+    <div class="popup__card-header">
         <div class="close__btn__popup">
           <span class="task__type user__story">${task.category}</span>
           <button onclick="closePopup()">&times;</button>
         </div>
       </div>
       <div class="all__content">
-        <div class="title_header_respo">${task.name}</div>
+        <div class="title_header__mobile">${task.name}</div>
         <div class="popup__card-section">
           <p>${task.description}</p>
         </div>
@@ -225,8 +224,8 @@ function createPopup(task) {
           </button>
         </div>
       </div>
-    </div>
-
+  </div>
+</div>
 
   `;
 }
