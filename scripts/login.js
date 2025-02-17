@@ -16,7 +16,6 @@ function initLogin() {
 function logoAnimation(skipAnimation) {
     const overlay = document.getElementById('overlay'); // Overlay element that covers the page during animation.
     const bigLogoDiv = document.getElementById('biglogo_div'); // Div containing the large logo.
-
     if (skipAnimation) {
         skipLogoAnimation(overlay, bigLogoDiv); // Skip the animation and immediately hide elements.
     } else {
@@ -43,11 +42,9 @@ function startLogoAnimation(overlay, bigLogoDiv) {
     setTimeout(() => {
         overlay.classList.add("hidden"); // Fades out the overlay after 500ms.
     }, 500); 
-
     setTimeout(() => {
         bigLogoDiv.classList.add("move__to__corner"); // Moves the big logo to the corner after 100ms.
     }, 100);
-
     endLogoAnimation(overlay, bigLogoDiv); // Completes the animation sequence.
 }
 
@@ -58,20 +55,12 @@ function startLogoAnimation(overlay, bigLogoDiv) {
  */
 function endLogoAnimation(overlay, bigLogoDiv) {
     const smallLogo = document.getElementById('small_logo'); // The small logo element that appears at the end.
-
     setTimeout(() => {
         overlay.classList.add("d__none"); // Hides the overlay completely after 1000ms.
         bigLogoDiv.classList.add("d__none"); // Hides the big logo completely after 1000ms.
         smallLogo.classList.add("visible"); // Makes the small logo visible after 1000ms.
     }, 1000);
 }
-
-/* --> noch ein Problem:
-function maskPassword(input) {
-    const actualValue = input.value;  
-    input.dataset.actualValue = actualValue;  
-    input.value = '*'.repeat(actualValue.length); 
-}*/
 
 /**
  * Handles the login process by preventing the default form submission,
@@ -91,7 +80,6 @@ function login(event){
     let email = document.getElementById('email_input_login').value;
     let inputPw = document.getElementById('password_input_login').value;
     let userIndex = users.findIndex(user => user.email == email);
-
     if(userIndex !==-1){
         testpPasswordLogin(inputPw, userIndex);        
     }else{
@@ -148,7 +136,6 @@ function guestLogIN(event){
     let email = 'guest';
     let inputPw = 'guest123'; 
     let userIndex = users.findIndex(user => user.email == email);
-
     if(userIndex !==-1){
         testpPasswordLogin(inputPw, userIndex);        
     }else{

@@ -236,11 +236,9 @@ async function registerUserInFirebase() {
         body: JSON.stringify(users)     
         })
     }
-
      catch (error) {
         showErrorAlert();
     }
-    
 }
 
 /**
@@ -255,7 +253,6 @@ async function registerUserInFirebase() {
  */
 function enableRegisterButton(){
     let isChecked = document.getElementById('agree_privacy_policy').checked;
-
     if(isChecked == true){
         document.getElementById('register_button').disabled = false;
     }
@@ -264,7 +261,6 @@ function enableRegisterButton(){
 /**
  * Setzt das Anmeldeformular zurück und stellt den Standardzustand der Eingabefelder wieder her.
  */
-
 function resetFormBecauseEmail(){
     document.getElementById('sign_up_form').reset();
     document.getElementById('confirm_password_input_register').value = '';
@@ -277,6 +273,12 @@ function resetFormBecauseEmail(){
     document.getElementById('mask_input_confirmation').classList.add('zero__opacity');
 }
 
+/**
+ * Setzt die Initialen des Benutzers im `userObject`, basierend auf dem Namen aus `formData`.
+ *
+ * @param {FormData} formData - Die Formulardaten, die den Namen des Benutzers enthalten.
+ * @param {Object} userObject - Das Benutzerobjekt, dem die Initialen hinzugefügt werden.
+ */
 function setInitialsToObject(formData, userObject){
     let fullName = formData.get('name');
     let tag = getInitials(fullName);

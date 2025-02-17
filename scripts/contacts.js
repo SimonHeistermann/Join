@@ -461,11 +461,19 @@ async function deleteContact(contactElement, event, from) {
     }
 }
 
+/**
+ * Kehrt zur Kontaktübersicht zurück, indem aktive Stile für Kontaktboxen 
+ * und die mobile Ansicht entfernt werden.
+ */
 function backToContactTable() {
     removeAllContactBoxActiveStyling();
     removeActiveOverviewStylingMobile();
 }
 
+/**
+ * Öffnet oder schließt das Menü für Kontaktoptionen, indem die entsprechenden 
+ * Klassen für das Fly-in-Menü und das Overlay umgeschaltet werden.
+ */
 function openMenuContactOptions() {
     const addAndEditFlyInRef = document.getElementById('add_and_edit_fly_in');
     addAndEditFlyInRef.classList.toggle('add__and__edit__fly__in__active');
@@ -473,6 +481,10 @@ function openMenuContactOptions() {
     overlayAddAndEditFlyInRef.classList.toggle('d__none');
 }
 
+/**
+ * Schließt das Menü für Kontaktoptionen, indem die entsprechenden 
+ * Klassen für das Fly-in-Menü und das Overlay umgeschaltet werden.
+ */
 function closeMenuContactOptions() {
     const addAndEditFlyInRef = document.getElementById('add_and_edit_fly_in');
     addAndEditFlyInRef.classList.toggle('add__and__edit__fly__in__active');

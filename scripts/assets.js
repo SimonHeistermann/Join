@@ -169,6 +169,11 @@ function getBadgeColor(name) {
     return `bgcolor__${index + 1}`;
 }
 
+/**
+ * Prüft, ob die aktuelle Bildschirmbreite der eines mobilen Geräts entspricht.
+ *
+ * @returns {boolean} `true`, wenn die Bildschirmbreite maximal 768px beträgt, sonst `false`.
+ */
 function isMobile() {
     return window.matchMedia("(max-width: 768px)").matches;
 }

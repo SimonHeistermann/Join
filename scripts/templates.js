@@ -224,6 +224,12 @@ function renderHTMLAddContactOverlay() {
             `
 }
 
+/**
+ * Erstellt das HTML für das mobile Kontaktoptionsmenü mit Bearbeitungs- und Löschfunktionen.
+ *
+ * @param {Object} contact - Das Kontaktobjekt mit relevanten Daten.
+ * @returns {string} Der generierte HTML-Code für das Menü.
+ */
 function renderHTMLContactDetailsMobileMenu(contact) {
     return  `
             <div onclick="closeMenuContactOptions()" id="overlay_add_and_edit_fly_in" class="overlay__add__and__edit__fly__in d__none">
@@ -244,8 +250,19 @@ function renderHTMLContactDetailsMobileMenu(contact) {
 }
 
 
-// Summary:
-
+/**
+ * Erstellt das HTML für die Zusammenfassung der Aufgabenstatistiken.
+ *
+ * @param {number} to_do - Anzahl der offenen Aufgaben.
+ * @param {number} done - Anzahl der abgeschlossenen Aufgaben.
+ * @param {number} in_progress - Anzahl der Aufgaben in Bearbeitung.
+ * @param {number} feedback - Anzahl der Aufgaben, die auf Feedback warten.
+ * @param {number} allTasks - Gesamtanzahl der Aufgaben im Board.
+ * @param {string} next_urgend - Nächstes dringendes Fälligkeitsdatum.
+ * @param {number} urgend_amount - Anzahl der dringenden Aufgaben.
+ * @param {string} theName - Der Name des Nutzers für die Begrüßung.
+ * @returns {string} Der generierte HTML-Code für die Aufgabenübersicht.
+ */
 function renderHTMLSummary(to_do, done, in_progress, feedback, allTasks, next_urgend, urgend_amount, theName) {
     return  `
             <div class="keymetrics__container">
@@ -362,6 +379,12 @@ function generateContactTemplate(contact) {
     `;
 }
 
+/**
+ * Generiert den HTML-Code für ein Listenelement eines Subtasks mit Bearbeitungs- und Löschbuttons.
+ *
+ * @param {string} task - Der Name des Subtasks.
+ * @returns {string} Der generierte HTML-Code für das Listenelement.
+ */
 function generateSubtaskListelement(task){
     return `<label for="subtask_${task}"></label>
                         <li class="subtask__li__element" onclick="addSubTaskToList(${task})" ondblclick="turnIntoInput(${task})" id="${task}_id">${task}
@@ -369,6 +392,12 @@ function generateSubtaskListelement(task){
                         <img src="./assets/icons/delete_sub.png" alt="delete"></button></div></li>`;
 }
 
+/**
+ * Generiert den HTML-Code für ein neues Listenelement eines Subtasks.
+ *
+ * @param {string} task - Der Name des Subtasks.
+ * @returns {string} Der generierte HTML-Code für das Listenelement.
+ */
 function generateNewSubtaskListElement(task) {
     let safeName = task.replace(/\s+/g, "_");
     return `
@@ -380,6 +409,12 @@ function generateNewSubtaskListElement(task) {
     `;
 }
 
+/**
+ * Erstellt den HTML-Code für ein bearbeitbares Eingabefeld eines Subtasks mit Steuerungsbuttons.
+ *
+ * @param {string} name - Der Name des Subtasks.
+ * @returns {string} Der generierte HTML-Code für das Eingabefeld.
+ */
 function generateInput(name) {
     let safeName = name.replace(/\s+/g, "_");
     return `
@@ -402,6 +437,12 @@ function generateInput(name) {
     `;
 }
 
+/**
+ * Erstellt den HTML-Inhalt für ein Listenelement eines Subtasks.
+ *
+ * @param {string} task - Der Name des Subtasks.
+ * @returns {string} Der generierte HTML-Code für das Listenelement.
+ */
 function generateLiContent(task){
     let safeName = task.replace(/\s+/g, "_");
     return `<div class="subtask__content">
