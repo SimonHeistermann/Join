@@ -33,7 +33,6 @@
   font-size: 21px;
   font-weight: 700;
   padding: 8px 16px 8px 16px;
-
   background-color: #2a3647;
   color: #ffff;
   border: 1px;
@@ -100,7 +99,6 @@ img {
   flex-direction: column;
   display: flex;
   padding: 5px;
-  min-height: 700px;
   min-width: 300px;
 }
 
@@ -202,14 +200,13 @@ img {
   display: none;
 }
 
-/*Wenn die Bildschirmbreite <= 800px ist */
 @media (max-width: 800px) {
   .popup {
-    display: none; /* Große Version verstecken */
+    display: none;
   }
 
   .popupMobile {
-    display: block; /* Mobile Version anzeigen */
+    display: block;
     position: absolute;
     width: auto;
     top: 100px;
@@ -264,100 +261,34 @@ img {
   }
 }
 
-h1 {
-  font-size: 16px;
-}
-
-h2 {
-  font-size: 12px;
-}
-
-.task {
-  padding: 10px;
-}
-
-.progress-bar {
-  height: 5px;
-}
-
-.avatar {
-  width: 25px;
-  height: 25px;
-  font-size: 10px;
-}
-
-h1 {
-  font-size: 16px;
-}
-
-h2 {
-  font-size: 14px;
-}
-
-.add__task {
-  font-size: 12px;
-}
-
-.task {
-  margin-bottom: 10px;
-}
-
-.avatar {
-  width: 20px;
-  height: 20px;
-  font-size: 8px;
-}
-
-.subtasks {
-  font-size: 8px;
-}
-
-@media (max-width: 1200px) {
-  .inputfields {
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex-direction: column;
-    width: 100%;
-  }
-}
-
-.add__task__main {
-  width: fit-content;
-  padding: 0 10px 0 25px;
-  background: #ffffff;
-  border-radius: 23px;
-  height: 100%;
-  padding: 8px 25px;
-  animation: fadeInRight 0.5s ease-out;
-  transform: translateX(-50%, -50%);
-}
 .cover__all_addTask {
   position: absolute;
   top: 100px;
-  left: 200px;
-  right: -500px;
+  left: 0px;
   z-index: 1500;
   height: 100vh;
   background: transparent;
-  width: 100%;
+  width: fit-content;
   display: none;
+  background: white;
 }
-
-.cover__in__progress {
+.add__task__main {
+  width: fit-content;
+  background: #ffff;
+  padding: 16px;
+  border-radius: 24px;
   position: absolute;
-  top: 100px;
-  left: 200px;
-  right: -500px;
-  z-index: 1500;
-  height: 100vh;
-  background: transparent;
-  width: 100%;
-  display: none;
+  left: 100px;
+  height: auto;
 }
-
-.inputfields {
-  margin-top: 0;
+.task_butons {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 24px;
+}
+.text_and_buttons {
+  margin-top: 12px;
 }
 
 .text_and_buttons {
@@ -371,35 +302,6 @@ h2 {
   cursor: pointer;
 }
 
-.text_and_buttons {
-  display: flex;
-  justify-content: space-between;
-  align-items: center;
-}
-.task_butons {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 24px;
-}
-.secondary_button {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
-.button1 {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  gap: 8px;
-}
-
-.popup-container {
-  display: none;
-}
-
-/*  Tasks Popup */
 .overlayPopup {
   position: fixed;
   top: 0;
