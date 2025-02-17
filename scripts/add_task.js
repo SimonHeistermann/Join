@@ -347,3 +347,4 @@ function turnIntoLi(name){
   editTable.innerHTML = '';
   makeTheListGreatAgain();
 }
+
