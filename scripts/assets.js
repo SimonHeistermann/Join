@@ -168,3 +168,7 @@ function getBadgeColor(name) {
     const index = (name.charCodeAt(0) + name.charCodeAt(name.length - 1)) % totalColors;
     return `bgcolor__${index + 1}`;
 }
+
+function isMobile() {
+    return window.matchMedia("(max-width: 768px)").matches;
+}

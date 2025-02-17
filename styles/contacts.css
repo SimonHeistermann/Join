@@ -163,6 +163,10 @@ main {
     border-radius: 3px;
 }
 
+.contact__overview__header__seperator__mobile {
+    display: none;
+}
+
 .contact__overwiev__content {
     display: flex;
     flex-direction: column;
@@ -238,6 +242,14 @@ main {
     display: block;
 }
 
+.edit__contact__button:active .edit__icon__default {
+    display: none;
+}
+
+.edit__contact__button:active .edit__icon__hover {
+    display: block;
+}
+
 .edit__icon__default {
     width: 24px;
     height: 24px;
@@ -271,6 +283,14 @@ main {
 }
 
 .delete__contact__button:hover .delete__icon__hover {
+    display: block;
+}
+
+.delete__contact__button:active .delete__icon__default {
+    display: none;
+}
+
+.delete__contact__button:active .delete__icon__hover {
     display: block;
 }
 
@@ -345,4 +365,33 @@ main {
 
 .contact__created__notification__active {
     transform: translateX(-2000px);
+}
+
+.back__button {
+    display: none;
+    align-items: center;
+    justify-content: center;
+    background-color: transparent;
+    width: 32px;
+    height: 32px;
+    position: fixed;
+    top: 122px;
+    right: 16px;
+}
+
+.back__button img {
+    width: 32px;
+    height: 32px;
+}
+
+.back__button:hover .thin__back__button {
+   display: none;
+}
+
+.back__button:hover .thick__back__button {
+    display: block;
+ }
+
+.thick__back__button {
+    display: none;
 }

@@ -224,6 +224,25 @@ function renderHTMLAddContactOverlay() {
             `
 }
 
+function renderHTMLContactDetailsMobileMenu(contact) {
+    return  `
+            <div onclick="closeMenuContactOptions()" id="overlay_add_and_edit_fly_in" class="overlay__add__and__edit__fly__in d__none">
+                <div id="add_and_edit_fly_in" class="add__and__edit__fly__in">
+                    <button onclick="openEditContact(this)" class="edit__contact__button" data-contact='${JSON.stringify(contact)}'>
+                        <img class="edit__icon__default" src="./assets/icons/edit_icon_blue.png" alt="Edit Icon">
+                        <img class="edit__icon__hover" src="./assets/icons/edit_icon_lightblue.png" alt="Edit Icon">
+                        Edit
+                    </button>
+                    <button onclick="deleteContact(this)" class="delete__contact__button" data-contact='${JSON.stringify(contact)}'>
+                        <img class="delete__icon__default" src="./assets/icons/delete_icon_blue.png" alt="Delete Icon">
+                        <img class="delete__icon__hover" src="./assets/icons/delete_icon_lightblue.png" alt="Delete Icon">
+                        Delete
+                    </button>
+                </div>
+            </div>
+            `
+}
+
 
 // Summary:
 

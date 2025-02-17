@@ -189,6 +189,7 @@
     .profile__button__submenu {
         height: 204px;
         top: 80px;
+        right: 16px;
     }
 
     .submenu__button__help {
