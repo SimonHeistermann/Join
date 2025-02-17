@@ -132,7 +132,7 @@ img {
   flex-direction: column;
   gap: 15px;
   overflow-y: auto;
-  min-height: 700px;
+  min-height: 500px;
 }
 
 .task {
