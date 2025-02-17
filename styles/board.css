@@ -127,11 +127,10 @@ img {
 }
 
 .tasks {
-  width: 255px;
+  width: 252px;
   display: flex;
   flex-direction: column;
   gap: 15px;
-  overflow-y: auto;
   min-height: 500px;
 }
 
@@ -237,6 +236,21 @@ img {
     display: block;
     width: auto;
     padding: 0;
+  }
+  .tasks {
+    width: auto;
+    overflow-y: auto;
+  }
+  #content {
+    display: flex;
+    width: fit-content;
+    overflow: auto;
+    gap: 32px;
+  }
+  .task {
+    display: flex;
+    overflow: 0;
+    gap: 32px;
   }
 }
 

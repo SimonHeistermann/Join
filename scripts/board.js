@@ -1,7 +1,7 @@
 let baseUrl =
   "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/";
 
-  /**
+/**
  * Initialisiert die Anwendung, lädt die Aufgaben und aktualisiert die Task-Anzahl-Anzeige.
  */
 async function init() {
@@ -32,8 +32,8 @@ async function addNewTasks(newTasks) {
 }
 
 /**
- * Lädt die Aufgaben von der API, wandelt die Antwort in JSON um 
- * und übergibt die Daten an `renderTasks()`. Falls keine Aufgaben vorhanden sind, 
+ * Lädt die Aufgaben von der API, wandelt die Antwort in JSON um
+ * und übergibt die Daten an `renderTasks()`. Falls keine Aufgaben vorhanden sind,
  * wird ein leeres Array verwendet.
  */
 async function loadTasks() {
@@ -79,7 +79,7 @@ function renderTasks(tasks) {
 }
 
 /**
- * Verarbeitet das Ablegen eines Drag & Drop-Elements, verschiebt die Task in das neue Ziel 
+ * Verarbeitet das Ablegen eines Drag & Drop-Elements, verschiebt die Task in das neue Ziel
  * und aktualisiert die Task-Anzahl-Anzeige.
  *
  * @param {DragEvent} ev - Das Drop-Event.
@@ -105,7 +105,7 @@ function allowDrop(ev) {
 }
 
 /**
- * Speichert die ID des gezogenen Elements in den `dataTransfer`-Daten, 
+ * Speichert die ID des gezogenen Elements in den `dataTransfer`-Daten,
  * um es für das Drag & Drop-Event verfügbar zu machen.
  *
  * @param {DragEvent} ev - Das Drag-Event.
@@ -115,7 +115,7 @@ function drag(ev) {
 }
 
 /**
- * Aktualisiert die Task-Anzahl-Anzeige in den verschiedenen Spalten 
+ * Aktualisiert die Task-Anzahl-Anzeige in den verschiedenen Spalten
  * und blendet einen Hinweis ein, wenn keine Tasks mehr vorhanden sind.
  */
 function quantityUpdate() {
@@ -301,8 +301,8 @@ async function saveTask() {
 }
 
 /**
- * Setzt alle Formularfelder zurück, indem die Werte von Texteingaben, 
- * der Kategorieauswahl und des Subtask-Feldes geleert werden. 
+ * Setzt alle Formularfelder zurück, indem die Werte von Texteingaben,
+ * der Kategorieauswahl und des Subtask-Feldes geleert werden.
  * Die Priorität wird auf "Medium" zurückgesetzt.
  */
 function clearForm() {

@@ -20,8 +20,7 @@ function searchTasks() {
 
 function renderTasks(tasks) {
   let taskContainer = document.getElementById("content");
-  let noResultsMessage = document.getElementById("noResultsMessage1");
-  let found = false;
+
   taskContainer.innerHTML = "";
   let taskIds = Object.keys(tasks);
 
@@ -31,25 +30,25 @@ function renderTasks(tasks) {
 
     if (!task) continue;
 
-    let taskHTML = `
-    
-        <div id="task${taskId}" class="task" draggable="true" ondragstart="drag(event)">
-        <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
-            <div class="task-type">Category</div>
-            <h3 class="task-title">${task.name}</h3>
-            <p class="task-description">${task.description}</p>
-            <div class="progress">
-              <div class="progress-bar" style="width: ${
-                task.progress || 2
-              }%"></div>
-            </div>
-            <div class="subtasks">1/2 
-              <p>${task.subtasks ? task.subtasks.join(", ") : ""}</p> Subtasks
-            </div>
-          </div>
-        </div>
-      `;
-
+    let taskHTML = callbackCode(taskId, task);
     taskContainer.innerHTML += taskHTML;
   }
+}
+
+function callbackCode(taskId, task) {
+  return `
+    <div id="task${taskId}" class="task" draggable="true" ondragstart="drag(event)">
+      <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
+        <div class="task-type">Category</div>
+        <h3 class="task-title">${task.name}</h3>
+        <p class="task-description">${task.description}</p>
+        <div class="progress">
+          <div class="progress-bar" style="width: ${task.progress ?? 2}%"></div>
+        </div>
+        <div class="subtasks">1/2 
+          <p>${task.subtasks ? task.subtasks.join(", ") : ""}</p> Subtasks
+        </div>
+      </div>
+    </div>
+  `;
 }
