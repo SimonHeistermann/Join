@@ -84,8 +84,7 @@
               </div>
               <div class="behind__noticesbuttons">
                 <a href="legal_notice.html" class="notices__button"
-                  >Legal notice</a
-                >
+                  >Legal notice</a>
               </div>
             </div>
           </div>
@@ -209,18 +208,19 @@
               <label class="label" for="prio">Prio</label>
               <div class="radio_overall">
                 <label class="radio radio_urgend">
-                  <input type="radio" name="prio" value="1" onclick="" />
+                  <input type="radio" name="prio" value="1" onclick="changeUrgend()" />
                   Urgent
-                  <img src="assets/icons/Property 1=Urgent.png" alt="↑" />
+                  <img id="urgend_img" src="assets/icons/Property 1=Urgent.png" alt="↑" />
                 </label>
                 <label class="radio radio_medium">
-                  <input type="radio" name="prio" value="2" checked onclick=""/>
+                  <input type="radio" name="prio" value="2" checked onclick="changeMedium()"/>
                   Medium
-                  <img src="assets/icons/Property 1=Medium.png" alt="=" />
+                  <img id="medium_img" src="assets/icons/Prio media.png" alt="=" />
                 </label>
                 <label class="radio radio_low">
-                  <input type="radio" name="prio" value="3" onclick="" />
-                  Low <img src="assets/icons/Property 1=Low.png" alt="↓" />
+                  <input type="radio" name="prio" value="3" onclick="changeLow()" />
+                  Low 
+                  <img id="low_img"src="assets/icons/Property 1=Low.png" alt="↓" />
                 </label>
               </div>
               <label class="label" for="category"

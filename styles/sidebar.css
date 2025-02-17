@@ -132,6 +132,7 @@
         min-height: unset;
         height: 80px;
         width: min(100%, 768px);
+        position: fixed;
     }
 
     .sidebar__container {

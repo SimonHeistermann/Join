@@ -16,19 +16,6 @@ async function initContacts() {
 }
 
 /**
- * Fetches contacts from storage and filters out invalid entries.
- */
-async function fetchContacts() {
-    try {
-        let fetchedContacts = await loadData("contacts");
-        if (!fetchedContacts) fetchedContacts = [];
-        contacts = Object.values(fetchedContacts).filter(contact => contact !== null && contact !== undefined);
-    } catch (error) {
-        console.error("Error getting contacts:", error);
-    }
-}
-
-/**
  * Renders the contact list in the UI.
  */
 function renderContacts() {
@@ -53,28 +40,32 @@ function generateContactSections(validContacts) {
 }
 
 /**
- * Groups contacts by their first letter.
+ * Groups contacts by their first letter and sorts them by last name.
  * @param {Array} contacts - The list of contacts.
- * @returns {Object} - An object where keys are letters and values are arrays of contacts.
+ * @returns {Object} - An object where keys are letters and values are sorted arrays of contacts.
  */
 function groupContactsByLetter(contacts) {
     return contacts.reduce((acc, contact) => {
         const firstLetter = contact.name.charAt(0).toUpperCase();
         if (!acc[firstLetter]) acc[firstLetter] = [];
         acc[firstLetter].push(contact);
+        acc[firstLetter].sort((a, b) => {
+            const lastNameA = getLastName(a.name);
+            const lastNameB = getLastName(b.name);
+            return lastNameA.localeCompare(lastNameB);
+        });
         return acc;
     }, {});
 }
 
 /**
- * Determines the badge color based on the contact name.
- * @param {string} name - The contact's name.
- * @returns {string} - The badge color class.
+ * Extracts the last name from a full name.
+ * @param {string} name - The full name.
+ * @returns {string} - The extracted last name.
  */
-function getBadgeColor(name) {
-    const totalColors = 15;
-    const index = (name.charCodeAt(0) + name.charCodeAt(name.length - 1)) % totalColors;
-    return `bgcolor__${index + 1}`;
+function getLastName(name) {
+    const nameParts = name.split(" ");
+    return nameParts.length > 1 ? nameParts[nameParts.length - 1] : name;
 }
 
 /**
@@ -96,6 +87,7 @@ function formatContactName(name) {
  */
 function openContactDetails(contactElement) {
     removeAllContactBoxActiveStyling();
+    if(isMobile()) addActiveOverviewStylingMobile();
     contactElement.classList.add('contacts__active');
     const contactData = JSON.parse(contactElement.getAttribute('data-contact'));
     const contactDetailsRef = document.getElementById('contact_overview');
@@ -121,6 +113,10 @@ function removeAllContactBoxActiveStyling() {
 function renderContactDetails(contactData, contactDetailsRef) {
     contactDetailsRef.innerHTML = "";
     contactDetailsRef.innerHTML += renderHTMLContactDetails(contactData);
+    if(isMobile()) {
+        const bodyRef = document.getElementById('body');
+        bodyRef.innerHTML += renderHTMLContactDetailsMobileMenu(contactData);
+    }
 }
 
 /**
@@ -131,12 +127,42 @@ function addActiveOverviewStyling(contentRef) {
     contentRef.classList.add('contact__overview__content__active');
 }
 
+function addActiveOverviewStylingMobile() {
+    const contactTableRef = document.getElementById('contacts_table');
+    contactTableRef.classList.add('d__none');
+    const contactOverviewHeaderRef = document.getElementById('contact_overview_header');
+    contactOverviewHeaderRef.classList.add('d__flex');
+    const backToContactsTableButtonRef = document.getElementById('back_to_contacts_table_button');
+    backToContactsTableButtonRef.classList.add('d__flex');
+    const addNewContactButtonMobileRef = document.getElementById('add_new_contact_button_mobile');
+    addNewContactButtonMobileRef.classList.add('d__none');
+    const openMenuContactOptionsButtonRef = document.getElementById('open_menu_contact_options_button');
+    openMenuContactOptionsButtonRef.classList.remove('d__none');
+    const contactDetailsRef = document.getElementById('contact_overview');
+    contactDetailsRef.classList.add('contact__overview__content__active');
+}
+
 /**
  * Removes active styling from a given content container.
  * @param {HTMLElement} contentRef - The container element.
  */
 function removeActiveOverviewStyling(contentRef) {
     contentRef.classList.remove('contact__overview__content__active');
+}
+
+function removeActiveOverviewStylingMobile() {
+    const contactTableRef = document.getElementById('contacts_table');
+    contactTableRef.classList.remove('d__none');
+    const contactOverviewHeaderRef = document.getElementById('contact_overview_header');
+    contactOverviewHeaderRef.classList.remove('d__flex');
+    const backToContactsTableButtonRef = document.getElementById('back_to_contacts_table_button');
+    backToContactsTableButtonRef.classList.remove('d__flex');
+    const addNewContactButtonMobileRef = document.getElementById('add_new_contact_button_mobile');
+    addNewContactButtonMobileRef.classList.remove('d__none');
+    const openMenuContactOptionsButtonRef = document.getElementById('open_menu_contact_options_button');
+    openMenuContactOptionsButtonRef.classList.add('d__none');
+    const contactDetailsRef = document.getElementById('contact_overview');
+    contactDetailsRef.classList.remove('contact__overview__content__active');
 }
 
 /**
@@ -337,13 +363,12 @@ async function addNewContact() {
         email: document.getElementById("email_input_add_contact").value,
         tel: document.getElementById("phone_input_add_contact").value,
         initials: getInitials(document.getElementById("person_input_add_contact").value),
-        id: contacts.length
+        id: getNextAvailableId()
     };
     contacts.push(newContact);
     await putData("contacts", contacts);
     return newContact;
 }
-
 /**
  * Edits an existing contact in the contacts list.
  * @returns {Promise<Object>} The updated contact object.
@@ -434,4 +459,35 @@ async function deleteContact(contactElement, event, from) {
     } catch (error) {
         console.error("Error while deleting contact:", error);
     }
+}
+
+/**
+ * Kehrt zur Kontaktübersicht zurück, indem aktive Stile für Kontaktboxen 
+ * und die mobile Ansicht entfernt werden.
+ */
+function backToContactTable() {
+    removeAllContactBoxActiveStyling();
+    removeActiveOverviewStylingMobile();
+}
+
+/**
+ * Öffnet oder schließt das Menü für Kontaktoptionen, indem die entsprechenden 
+ * Klassen für das Fly-in-Menü und das Overlay umgeschaltet werden.
+ */
+function openMenuContactOptions() {
+    const addAndEditFlyInRef = document.getElementById('add_and_edit_fly_in');
+    addAndEditFlyInRef.classList.toggle('add__and__edit__fly__in__active');
+    const overlayAddAndEditFlyInRef = document.getElementById('overlay_add_and_edit_fly_in');
+    overlayAddAndEditFlyInRef.classList.toggle('d__none');
+}
+
+/**
+ * Schließt das Menü für Kontaktoptionen, indem die entsprechenden 
+ * Klassen für das Fly-in-Menü und das Overlay umgeschaltet werden.
+ */
+function closeMenuContactOptions() {
+    const addAndEditFlyInRef = document.getElementById('add_and_edit_fly_in');
+    addAndEditFlyInRef.classList.toggle('add__and__edit__fly__in__active');
+    const overlayAddAndEditFlyInRef = document.getElementById('overlay_add_and_edit_fly_in');
+    overlayAddAndEditFlyInRef.classList.toggle('d__none');
 }

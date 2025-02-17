@@ -240,6 +240,10 @@ async function saveTask() {
   }
 }
 
+/**
+ * Setzt alle Formularfelder zurück, indem es die Werte von Texteingaben, 
+ * der Prioritätsauswahl, der Kategorieauswahl und des Subtask-Feldes leert.
+ */
 function clearForm() {
   document.getElementById("text__input").value = "";
   document.getElementById("description").value = "";
@@ -250,6 +254,10 @@ function clearForm() {
   document.getElementById("subtask").value = "";
 }
 
+/**
+ * Wechselt die Sichtbarkeit der Buttons `sub_btn1`, `sub_btn2` und `sub_btn3`, 
+ * falls `sub_btn3` aktuell ausgeblendet ist, und setzt den Fokus auf das Eingabefeld `subtask`.
+ */
 function changeBtns() {
   let button = document.getElementById('sub_btn3');
   if (button.classList.contains('d__none')) {
@@ -261,12 +269,20 @@ function changeBtns() {
   inputElement.focus();
 }
 
+/**
+ * Wechselt die Sichtbarkeit der Buttons mit den IDs `sub_btn1`, `sub_btn2` und `sub_btn3`, 
+ * indem die Klasse `d__none` ein- oder ausgeblendet wird.
+ */
 function changeBtnsAgain() {
   document.getElementById('sub_btn1').classList.toggle('d__none');
   document.getElementById('sub_btn2').classList.toggle('d__none');
   document.getElementById('sub_btn3').classList.toggle('d__none');
 }
 
+/**
+ * Fügt einen neuen Subtask zur Liste `newSubtasks` hinzu, aktualisiert die Anzeige 
+ * und setzt das Eingabefeld zurück.
+ */
 function addNewSubtask() {
   let newSubtask = document.getElementById('subtask');
   newSubtasks.push(newSubtask.value);
@@ -275,6 +291,11 @@ function addNewSubtask() {
   changeBtnsAgain();
 }
 
+/**
+ * Wandelt einen angezeigten Subtask in ein Eingabefeld um, um die Bearbeitung zu ermöglichen.
+ *
+ * @param {string} name - Der Name des Subtasks, der in ein Eingabefeld umgewandelt werden soll.
+ */
 function turnIntoInput(name) {
   let safeName = name.replace(/\s+/g, "_");
   let subTask = document.getElementById("subtask_" + safeName + "_text");  
@@ -285,6 +306,11 @@ function turnIntoInput(name) {
         inputElement.focus();
 }
 
+/**
+ * Löscht einen Subtask aus der Liste `newSubtasks` und aktualisiert die Anzeige.
+ *
+ * @param {string} name - Der Name des Subtasks, der gelöscht werden soll.
+ */
 function deleteSubtask(name){
   let safeName = name.replace(/\s+/g, "_");
   let toDelete = document.getElementById('subtask_'+ safeName +'_input');  
@@ -293,21 +319,32 @@ function deleteSubtask(name){
   makeTheListGreatAgain();
 }
 
+/**
+ * Erstellt die Subtask-Liste neu, indem alle aktuellen Einträge entfernt 
+ * und anschließend mit den Werten aus `newSubtasks` wieder hinzugefügt werden.
+ */
 function makeTheListGreatAgain(){
   let list = document.getElementById('subtask_table');
   list.innerHTML = '';
   newSubtasks.forEach(task => {list.innerHTML += generateNewSubtaskListElement(task)});
 }
 
+
+/**
+ * Ersetzt einen vorhandenen Eintrag in der Liste `newSubtasks` durch einen neuen Wert 
+ * und aktualisiert die Anzeige der Subtask-Liste.
+ *
+ * @param {string} name - Der Name des Subtasks, der ersetzt werden soll.
+ */
 function turnIntoLi(name){
   console.log(name);
   let safeName = name.replace(/\s+/g, "_");
-  
   let value = document.getElementById('subtask_'+ safeName + '_input').value;
   console.log(value);
-  let listItem = document.getElementById("new_" + safeName + "_id");
-      listItem.classList.remove("editing");
   let toBeExchanced = newSubtasks.findIndex(subtask => subtask === name);
   newSubtasks.splice(toBeExchanced,1, value);
-
+  let editTable = document.getElementById('subtask_table');
+  editTable.innerHTML = '';
+  makeTheListGreatAgain();
 }
+

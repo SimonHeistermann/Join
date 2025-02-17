@@ -17,6 +17,7 @@
     <link rel="stylesheet" href="./styles/contacts.css"/>
     <link rel="stylesheet" href="./styles/contact_overlay.css"/>
     <link rel="stylesheet" href="./styles/add_and_edit_contact.css"/>
+    <link rel="stylesheet" href="./styles/contacts_mobile.css"/>
     <link rel="stylesheet" href="./styles/bgcolors.css"/>
     <link rel="stylesheet" href="./styles/keyframes.css"/>
 
@@ -27,45 +28,51 @@
 </head>
 <body id="body" onload="initContacts()">
     <div class="overall">
-      <div class="sidebar">
-        <div class="sidebar__container">
-            <div class="sidebar__logocontainer">
-                <img src="./assets/icons/logo_sidebar.png" alt="Join Logo">
-            </div>
-            <div class="sidebar__navbarcontainer">
+        <div class="sidebar">
+            <div class="sidebar__container">
+              <div class="sidebar__logocontainer">
+                <img src="./assets/icons/logo_sidebar.png" alt="Join Logo" />
+              </div>
+              <div class="sidebar__navbarcontainer">
                 <div class="sidebar__navbar">
-                    <div class="behind__sidebarbuttons">
-                        <button class="sidebar__button">
-                            <img src="./assets/icons/summary_icon_white.png" alt="Summary">
-                            Summary
-                        </button>
-                    </div>
-                    <div class="behind__sidebarbuttons">
-                        <button class="sidebar__button">
-                            <img src="./assets/icons/add_task_icon_white.png" alt="Add Task">
-                            Add Task
-                        </button>
-                    </div>
-                    <div class="behind__sidebarbuttons">
-                        <button class="sidebar__button">
-                            <img src="./assets/icons/board_icon_white.png" alt="Board">
-                            Board
-                        </button>
-                    </div>
-                    <div class="behind__sidebarbuttons sidebarbutton__open">
-                        <button class="sidebar__button sidebarbutton__open">
-                            <img src="./assets/icons/contacts_icon_white.png" alt="Contacts">
-                            Contacts
-                        </button>
-                    </div>
+                  <div class="behind__sidebarbuttons">
+                    <a href="summary.html" class="sidebar__button">
+                      <img
+                        src="./assets/icons/summary_icon_white.png"
+                        alt="Summary"
+                      />
+                      Summary
+                    </a>
+                  </div>
+                  <div class="behind__sidebarbuttons">
+                    <a href="add_task.html" class="sidebar__button">
+                        <img src="./assets/icons/add_task_icon_white.png" alt="Add Task">
+                        Add Task
+                    </a>
+                </div>
+                <div class="behind__sidebarbuttons">
+                    <a href="board.html" class="sidebar__button">
+                      <img src="./assets/icons/board_icon_white.png" alt="Board" />
+                      Board
+                    </a>
+                  </div>
+              <div class="behind__sidebarbuttons sidebarbutton__open">
+                <button class="sidebar__button sidebarbutton__open">
+                    <img src="./assets/icons/summary_icon_white.png" alt="Summary">
+                    Contacts
+                </button>
+            </div>
                 </div>
                 <div class="sidebar__noticescontainer">
-                    <div class="behind__noticesbuttons">
-                        <button class="notices__button">Privacy Policy</button>
-                    </div>
-                    <div class="behind__noticesbuttons">
-                        <button class="notices__button">Legal notice</button>
-                    </div>
+                  <div class="behind__noticesbuttons">
+                    <a href="privacy_policy.html" class="notices__button"
+                      >Privacy Policy</a
+                    >
+                  </div>
+                  <div class="behind__noticesbuttons">
+                    <a href="legal_notice.html" class="notices__button"
+                      >Legal notice</a>
+                  </div>
                 </div>
             </div>
         </div>
@@ -78,18 +85,22 @@
                         <button onclick="openHelpWebsite()" class="help__button">
                             <img src="./assets/icons/help_icon.png" alt="Help">
                         </button>
-                        <button onclick="toggleSubMenu()" id="currentuser_initials_ref" class="profile__button"></button>
+                        <button onclick="toggleSubMenu()" id="currentuser_initials_ref" class="profile__button">SM</button>
                     </div>
+                    <button onclick="reloadWebsite()" class="header__logo__mobile">
+                        <img src="./assets/icons/header_logo_icon_mobile.png" alt="Join Logo">
+                    </button>
                 </div>
             </header>
             <main>
                 <div class="contacts__table" id="contacts_table">
                 </div>
-                <div class="contact__overview">
+                <div class="contact__overview" id="contact_overview_header">
                     <div class="contact__overview__header">
                         <h1>Contacts</h1>
                         <div class="contact__overview__header__seperator"></div>
                         <h2>Better with a team</h2>
+                        <div class="contact__overview__header__seperator__mobile"></div>
                     </div>
                     <div class="contact__overwiev__content" id="contact_overview">
                     </div>
@@ -106,10 +117,19 @@
             </div>
         </div>
     </div>
+    <button id="back_to_contacts_table_button" class="back__button" onclick="backToContactTable()">
+        <img class="thin__back__button" src="./assets/icons/arrow_left_icon_light_blue_thin.png" alt="Arrow Left">
+        <img class="thick__back__button" src="./assets/icons/arrow_left_icon_light_blue_thick.png" alt="Arrow Left">
+    </button>
+    <button id="add_new_contact_button_mobile" onclick="openAddNewContact()" class="add__contact__button__mobile">
+        <img src="./assets/icons/person_add_icon_white.png" alt="Add Contact Icon">
+    </button>
+    <button id="open_menu_contact_options_button" onclick="openMenuContactOptions()" class="add__contact__button__mobile d__none">
+        <img src="./assets/icons/three_dots_icon_white.png" alt=":">
+    </button>
     <!--Contact Overlay-->
     <div class="overlay d__none" id="contact_overlay">
         <div class="overlay__content" id="contact_overlay_content">
-            
         </div>
     </div>
 </body>

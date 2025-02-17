@@ -150,6 +150,7 @@ beide Label und button die klasse radio und radioinput spricht aber gerade nur d
 .radio_urgend:has(input:checked) {
   background-color: #ff3d00;
   color: white;
+  gap: 4px
 }
 
 .radio_medium input:checked + label,
@@ -157,12 +158,14 @@ beide Label und button die klasse radio und radioinput spricht aber gerade nur d
   /* has habe ich im Internet gefunden, ist wohl relativ neu und spricht das Parent an */
   background-color: #ffa800;
   color: white;
+  gap: 4px;
 }
 
 .radio_low input:checked + label,
 .radio_low:has(input:checked) {
   background-color: #7ae229;
   color: white;
+  gap: 4px;
 }
 
 .category {

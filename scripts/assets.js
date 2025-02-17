@@ -168,3 +168,48 @@ function getBadgeColor(name) {
     const index = (name.charCodeAt(0) + name.charCodeAt(name.length - 1)) % totalColors;
     return `bgcolor__${index + 1}`;
 }
+
+/**
+ * Prüft, ob die aktuelle Bildschirmbreite der eines mobilen Geräts entspricht.
+ *
+ * @returns {boolean} `true`, wenn die Bildschirmbreite maximal 768px beträgt, sonst `false`.
+ */
+function isMobile() {
+    return window.matchMedia("(max-width: 768px)").matches;
+}
+
+/**
+ * Aktualisiert die Prioritätsicons, um "Urgent" als ausgewählte Priorität hervorzuheben.
+ *
+ * Diese Funktion setzt das Bild für "Medium" und "Low" auf ihre Standardwerte
+ * und aktualisiert das "Urgent"-Icon, um die Auswahl anzuzeigen.
+ */
+function changeUrgend(){
+    document.getElementById('urgend_img').src = "assets/icons/Prio alta.png"
+    document.getElementById('medium_img').src = "assets/icons/Property 1=Medium.png";
+    document.getElementById('low_img').src = "assets/icons/Property 1=Low.png";
+}
+
+/**
+ * Aktualisiert die Prioritätsicons, um "Medium" als ausgewählte Priorität hervorzuheben.
+ *
+ * Diese Funktion setzt das Bild für "Urgent" und "Low" auf ihre Standardwerte
+ * und aktualisiert das "Medium"-Icon, um die Auswahl anzuzeigen.
+ */
+function changeMedium(){
+    document.getElementById('urgend_img').src = "assets/icons/Property 1=Urgent.png"
+    document.getElementById('medium_img').src = "assets/icons/Prio media.png";
+    document.getElementById('low_img').src = "assets/icons/Property 1=Low.png";
+}
+
+/**
+ * Aktualisiert die Prioritätsicons, um "Low" als ausgewählte Priorität hervorzuheben.
+ *
+ * Diese Funktion setzt das Bild für "Urgent" und "Medium" auf ihre Standardwerte
+ * und aktualisiert das "Low"-Icon, um die Auswahl anzuzeigen.
+ */
+function changeLow(){
+    document.getElementById('urgend_img').src = "assets/icons/Property 1=Urgent.png"
+    document.getElementById('medium_img').src = "assets/icons/Property 1=Medium.png";
+    document.getElementById('low_img').src = "assets/icons/Prio baja.png";
+}
