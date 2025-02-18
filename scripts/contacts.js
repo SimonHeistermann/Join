@@ -13,6 +13,7 @@ async function initContacts() {
     } catch (error) {
         console.error("Error initializing app:", error);
     }
+    fillTheTag();
 }
 
 /**
@@ -127,6 +128,11 @@ function addActiveOverviewStyling(contentRef) {
     contentRef.classList.add('contact__overview__content__active');
 }
 
+/**
+ * Aktiviert das Styling für die mobile Kontaktübersicht, indem bestimmte Elemente 
+ * ein- und ausgeblendet werden.
+ */
+
 function addActiveOverviewStylingMobile() {
     const contactTableRef = document.getElementById('contacts_table');
     contactTableRef.classList.add('d__none');
@@ -150,6 +156,10 @@ function removeActiveOverviewStyling(contentRef) {
     contentRef.classList.remove('contact__overview__content__active');
 }
 
+/**
+ * Deaktiviert das Styling für die mobile Kontaktübersicht, indem bestimmte Elemente 
+ * zurückgesetzt und ihre ursprünglichen Klassen wiederhergestellt werden.
+ */
 function removeActiveOverviewStylingMobile() {
     const contactTableRef = document.getElementById('contacts_table');
     contactTableRef.classList.remove('d__none');

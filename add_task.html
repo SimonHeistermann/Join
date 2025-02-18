@@ -96,12 +96,15 @@
           <div class="header__container">
             <h3>Kanban Project Management Tool</h3>
             <div class="headerbox__right">
-              <button class="help__button">
-                <img src="./assets/icons/help_icon.png" alt="Help" />
+              <button onclick="openHelpWebsite()" class="help__button">
+                  <img src="./assets/icons/help_icon.png" alt="Help">
               </button>
-              <button class="profile__button">SM</button>
-            </div>
+              <button onclick="toggleSubMenu()" id="currentuser_initials_ref" class="profile__button"></button>
           </div>
+          <button onclick="reloadWebsite()" class="header__logo__mobile">
+              <img src="./assets/icons/header_logo_icon_mobile.png" alt="Join Logo">
+          </button>
+      </div>
         </header>
 
         <main class="add__task__main">
@@ -263,6 +266,7 @@
               </select>
               <label for="subtask">Subtask</label>
               <div class="input__container">
+<<<<<<< HEAD
                 <input
                   type="text"
                   class="sub__input"
@@ -301,6 +305,12 @@
                 >
                   <img src="./assets/icons/check_sub.png" alt="check" />
                 </button>
+=======
+                <input type="text" class="sub__input" name="subtask" id="subtask" class="subtask" placeholder="Add new subtask" onclick="changeBtns(); return false;" onkeydown="handleEnter(event)"/>
+                <button class="subtask__input__btn" id="sub_btn1" onclick="changeBtns(); return false;"><img id="sub_btn1_img" src="./assets/icons/add_sub.png" alt="+" ></button>
+                <button class="subtask__input__btn d__none" id="sub_btn3" onclick="changeBtnsAgain(); return false;"><img id="sub_btn3_img" src="./assets/icons/close_sub.png" alt="+" ></button>
+                <button class="subtask__input__btn d__none" id="sub_btn2" onclick="addNewSubtask(); return false;"><img src="./assets/icons/check_sub.png" alt="check" ></button>
+>>>>>>> 3eb6585bc3957a65a1293b6da6ba8d93ad073690
               </div>
               <ul class="table_subtask" id="subtask_table"></ul>
             </div>
@@ -320,6 +330,14 @@
             </div>
           </div>
         </main>
+        <div id="submenu" class="profile__button__submenu d__none">
+          <button onclick="openHelpWebsite()" class="submenu__button__help">Help</button>
+          <button onclick="openLegalNoticeWebsite()" class="submenu__button">Legal Notice</button>
+          <button onclick="openPrivacyPolicyWebsite()" class="submenu__button">Privacy Policy</button>
+          <button onclick="logOut()" class="submenu__button">Log Out</button>
+      </div>
+  </div>
+</div>
       </div>
     </div>
   </body>

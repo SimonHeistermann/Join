@@ -8,6 +8,7 @@ async function init() {
   console.log("Test Initializations");
   await loadTasks();
   quantityUpdate();
+  fillTheTag();
 }
 
 /**
@@ -46,6 +47,7 @@ async function loadTasks() {
   renderTasks(tasks);
 }
 
+<<<<<<< HEAD
 /* function renderTasks(tasks) {
   let taskContainer = document.getElementById("content");
   taskContainer.innerHTML = "";
@@ -71,6 +73,13 @@ async function loadTasks() {
     );
   }
 } */
+=======
+/**
+ * Rendert eine Liste von Aufgaben (Tasks) und fügt sie in den DOM ein.
+ * 
+ * @param {Object} tasks - Ein Objekt mit Aufgaben, wobei die Schlüssel die Task-IDs sind.
+ */
+>>>>>>> 3eb6585bc3957a65a1293b6da6ba8d93ad073690
 function renderTasks(tasks) {
   let taskContainer = document.getElementById("content");
   taskContainer.innerHTML = "";
@@ -83,6 +92,7 @@ function renderTasks(tasks) {
     if (!task) {
       continue;
     }
+<<<<<<< HEAD
 
     let subTasks = task.subTasks || [];
     let completedSubtasks = subTasks.filter((st) => st.completed).length;
@@ -96,6 +106,9 @@ function renderTasks(tasks) {
       totalSubtasks, // Hier wurde totalSubtasks hinzugefügt
       subTaskList
     );
+=======
+    taskContainer.innerHTML += renderTaskContainer();
+>>>>>>> 3eb6585bc3957a65a1293b6da6ba8d93ad073690
   }
 }
 
@@ -187,11 +200,15 @@ function showPopup(task) {
   popupContainer.style.display = "block";
 }
 
+<<<<<<< HEAD
 function createPopup(task) {
   let assignedTo = task.assigned_to ? task.assigned_to.join(", ") : "Niemand";
   let priority = task.prio ? String(task.prio).toLowerCase() : "unknown";
   return generateOverlayTemplate(task);
 }
+=======
+
+>>>>>>> 3eb6585bc3957a65a1293b6da6ba8d93ad073690
 
 async function saveTask() {
   const title = document.getElementById("text__title").value;
@@ -221,9 +238,7 @@ async function saveTask() {
     subtask: subtask ? [subtask] : [],
     status: "status", // Status setzen (default: "to-do")
   };
-
   await addNewTasks([newTask]);
-
   clearForm();
   await loadTasks();
 }
