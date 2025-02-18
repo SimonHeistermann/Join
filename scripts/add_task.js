@@ -11,6 +11,7 @@ async function initAddTasks() {
   } catch (error) {
     console.error("Error initializing app:", error);
   }
+  fillTheTag();
 }
 
 /**

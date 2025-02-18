@@ -8,6 +8,7 @@ async function init() {
   console.log("Test Initializations");
   await loadTasks();
   quantityUpdate();
+  fillTheTag();
 }
 
 /**

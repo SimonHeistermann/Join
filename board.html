@@ -100,12 +100,15 @@
           <div class="header__container">
             <h3>Kanban Project Management Tool</h3>
             <div class="headerbox__right">
-              <button class="help__button">
-                <img src="./assets/icons/help_icon.png" alt="Help" />
+              <button onclick="openHelpWebsite()" class="help__button">
+                  <img src="./assets/icons/help_icon.png" alt="Help">
               </button>
-              <button class="profile__button" id="header_tag">SM</button>
-            </div>
+              <button onclick="toggleSubMenu()" id="currentuser_initials_ref" class="profile__button"></button>
           </div>
+          <button onclick="reloadWebsite()" class="header__logo__mobile">
+              <img src="./assets/icons/header_logo_icon_mobile.png" alt="Join Logo">
+          </button>
+      </div>
         </header>
         <main>
           <div class="board__navigator">

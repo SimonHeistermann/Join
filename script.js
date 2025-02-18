@@ -111,8 +111,9 @@ function showErrorAlert() {
  *
  */
 function fillTheTag(){
+    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
     let tagLetters = currentUser.initials;
-    document.getElementById('header_tag').innerHTML = tagLetters;
+    document.getElementById('currentuser_initials_ref').innerHTML = tagLetters;
 }
 
 /**
