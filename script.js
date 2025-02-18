@@ -132,6 +132,10 @@ async function fetchContacts() {
     }
 }
 
+/**
+ * Loggt den Benutzer aus, indem der "currentUser" aus dem localStorage entfernt wird.
+ * Anschließend wird der Benutzer zur Login-Seite weitergeleitet.
+ */
 function logOut(){
     localStorage.removeItem("currentUser"); 
     window.location.href = "./login.html";

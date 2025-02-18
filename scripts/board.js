@@ -47,6 +47,11 @@ async function loadTasks() {
   renderTasks(tasks);
 }
 
+/**
+ * Rendert eine Liste von Aufgaben (Tasks) und fügt sie in den DOM ein.
+ * 
+ * @param {Object} tasks - Ein Objekt mit Aufgaben, wobei die Schlüssel die Task-IDs sind.
+ */
 function renderTasks(tasks) {
   let taskContainer = document.getElementById("content");
   taskContainer.innerHTML = "";
@@ -57,25 +62,7 @@ function renderTasks(tasks) {
     if (!task) {
       continue;
     }
-    taskContainer.innerHTML += `
-          <div id="task${taskId}" class="task" draggable="true" ondragstart="drag(event)">
-              <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
-                  <div class="task-type">Category</div>
-                  <h3>${task.name}</h3>
-                  <p>${task.description}</p>
-                  <div class="progress">
-                      <div class="progress-bar" style="width: ${
-                        task.progress || 2
-                      }%"></div>
-                  </div>
-                  <div class="subtasks">1/2 
-                      <p>${
-                        task.subtasks ? task.subtasks.join(", ") : ""
-                      }</p> Subtasks
-                  </div>
-              </div>
-          </div>
-      `;
+    taskContainer.innerHTML += renderTaskContainer();
   }
 }
 

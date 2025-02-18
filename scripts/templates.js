@@ -450,3 +450,139 @@ function generateLiContent(task){
             </div>
             `
 }
+
+/**
+ * Erstellt und gibt das HTML-Template für eine einzelne Aufgabe zurück.
+ * 
+ * @returns {string} HTML-String für die Darstellung eines Aufgaben-Containers.
+ */
+function renderTaskContainer(){
+    return `<div id="task${taskId}" class="task" draggable="true" ondragstart="drag(event)">
+              <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
+                  <div class="task-type">Category</div>
+                  <h3>${task.name}</h3>
+                  <p>${task.description}</p>
+                  <div class="progress">
+                      <div class="progress-bar" style="width: ${
+                        task.progress || 2
+                      }%"></div>
+                  </div>
+                  <div class="subtasks">1/2 
+                      <p>${
+                        task.subtasks ? task.subtasks.join(", ") : ""
+                      }</p> Subtasks
+                  </div>
+              </div>
+          </div>
+        `
+}
+
+/**
+ * Erstellt das HTML für ein Popup mit den Details einer Aufgabe.
+ * 
+ * @param {Object} task - Das Aufgaben-Objekt mit allen relevanten Details.
+ * @param {string} task.id - Die eindeutige ID der Aufgabe.
+ * @param {string} task.category - Die Kategorie der Aufgabe.
+ * @param {string} task.name - Der Name/Titel der Aufgabe.
+ * @param {string} [task.description=""] - Die Beschreibung der Aufgabe.
+ * @param {string} [task.due_date] - Das Fälligkeitsdatum der Aufgabe.
+ * @param {string} [task.prio="unknown"] - Die Priorität der Aufgabe.
+ * @param {string[]} [task.assigned_to] - Die Personen, denen die Aufgabe zugewiesen ist.
+ * @param {string[]} [task.subtasks] - Die Unteraufgaben der Aufgabe.
+ * @returns {string} Das HTML-Template für das Aufgaben-Popup.
+ */
+function createPopup(task) {
+    let assignedTo = task.assigned_to ? task.assigned_to.join(", ") : "Niemand";
+    let priority = task.prio ? String(task.prio).toLowerCase() : "unknown";
+    return `
+   <div class="overlayPopup">
+     <div class="popup">
+        <div class="popup__card-header">
+          <div class="close__btn__popup">
+            <span class="task__type user__story">${task.category}</span>
+            <button onclick="closePopup()">&times;</button>
+          </div>
+        </div>
+        <div class="all__content">
+          <div class="title_header">${task.name}</div>
+          <div class="popup__card-section">
+            <p>${task.description}</p>
+          </div>
+          <div class="popup__card-section">
+            <p><strong>Due date:</strong> ${
+              task.due_date || "Kein Datum angegeben"
+            }</p>
+          </div>
+          <p><strong>Priority:</strong>
+           <span class="popup__card-priority">${priority}</span></p>
+        </div>
+        <div class="popup__card-section">
+          <p><strong>Assigned To:</strong> ${assignedTo}</p>
+          <div class="popup__card-section">
+            <p><strong>Subtasks:</strong> ${
+              task.subtasks ? task.subtasks.join(", ") : "Keine Subtasks"
+            }</p>
+          </div>
+        </div>
+        <div class="conten__delete__editiBTN">
+          <div class="popup__card-actions">
+           <button class="delete-btn" onclick="deleteTask('${
+             task.id ? task.id : ""
+           }')">
+  
+              <img src="assets/icons/delete_icon_blue.png" alt=""> Delete
+            </button>
+            <button id="popup_edit_button" class="edit_button">
+              <img src="assets/icons/edit_icon_blue.png" alt="">Edit
+            </button>
+          </div>
+        </div>
+    
+     </div>
+      
+   <div class="popupMobile">
+      <div class="popup__card-header">
+          <div class="close__btn__popup">
+            <span class="task__type user__story">${task.category}</span>
+            <button onclick="closePopup()">&times;</button>
+          </div>
+        </div>
+        <div class="all__content">
+          <div class="title_header__mobile">${task.name}</div>
+          <div class="popup__card-section">
+            <p>${task.description}</p>
+          </div>
+          <div class="popup__card-section">
+            <p><strong>Due date:</strong> ${
+              task.due_date || "Kein Datum angegeben"
+            }</p>
+          </div>
+          <p><strong>Priority:</strong>
+           <span class="popup__card-priority">${priority}</span></p>
+        </div>
+        <div class="popup__card-section">
+          <p><strong>Assigned To:</strong> ${assignedTo}</p>
+          <div class="popup__card-section">
+            <p><strong>Subtasks:</strong> ${
+              task.subtasks ? task.subtasks.join(", ") : "Keine Subtasks"
+            }</p>
+          </div>
+        </div>
+        <div class="conten__delete__editiBTN">
+          <div class="popup__card-actions">
+           <button class="delete-btn" onclick="deleteTask('${
+             task.id ? task.id : ""
+           }')">
+  
+              <img src="assets/icons/delete_icon_blue.png" alt=""> Delete
+            </button>
+            <button id="popup_edit_button" class="edit_button">
+              <img src="assets/icons/edit_icon_blue.png" alt="">Edit
+            </button>
+          </div>
+        </div>
+    </div>
+  </div>
+  
+    `;
+  }

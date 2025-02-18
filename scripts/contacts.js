@@ -128,6 +128,11 @@ function addActiveOverviewStyling(contentRef) {
     contentRef.classList.add('contact__overview__content__active');
 }
 
+/**
+ * Aktiviert das Styling für die mobile Kontaktübersicht, indem bestimmte Elemente 
+ * ein- und ausgeblendet werden.
+ */
+
 function addActiveOverviewStylingMobile() {
     const contactTableRef = document.getElementById('contacts_table');
     contactTableRef.classList.add('d__none');
