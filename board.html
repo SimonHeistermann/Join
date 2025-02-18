@@ -33,6 +33,7 @@
     <script src="./scripts/assets.js"></script>
     <script src="scripts/add_task.js"></script>
     <script src="scripts/search.js"></script>
+    <script src="scripts/board_template.js"></script>
   </head>
   <body onload="init()">
     <div class="overall">
@@ -247,147 +248,227 @@
       </div>
     </div>
     <div class="cover__all_addTask" id="cover__all_addTask">
-      <section>
-        <div class="add__task__main" id="popup_open">
-          <div class="close__btn">
-            <h2 class="">Add Task</h2>
-            <img
-              onclick="closeAddtask()"
-              src="assets/icons/cancel_icon_blue.png"
-              alt=""
-              width="18"
-            />
-          </div>
+      <div class="add__task__main">
+        <div class="close__btn">
+          <h1>Add Task</h1>
+          <img
+            onclick="closeAddtask()"
+            src="assets/icons/cancel_icon_blue.png"
+            width="18"
+          />
+        </div>
 
-          <form class="inputfields">
-            <div class="left_side">
-              <lable class="label" for="title"
-                >Title
-                <div class="star">*</div></lable
-              >
-              <input
-                type="text"
-                class="text_input"
-                id="text__title"
-                name="title"
-                placeholder="Enter a title"
-                required
-              />
-              <div class="is_required">
-                <div class="star" id="star_title">*</div>
+        <form class="inputfields">
+          <div class="left_side">
+            <lable class="label" for="title"
+              >Title
+              <div class="star" id="star_title">*</div></lable
+            >
+            <input
+              type="text"
+              class="text_input"
+              id="text__input"
+              name="title"
+              placeholder="Enter a title"
+            />
+            <label class="label" for="description">Description</label>
+            <textarea
+              class="description"
+              name="description"
+              id="description"
+              placeholder="Enter a Description"
+            ></textarea>
+            <div class="dropdown__container">
+              <label for="assignee_search"><h3>Assigned to</h3></label>
+              <div class="dropdown__content">
+                <button
+                  class="dropdown__toggle"
+                  id="dropdown_toggle"
+                  onclick="openDropdownList(event)"
+                >
+                  <h3>Select contacts to assign</h3>
+                  <span class="dropdown__arrow__icon__container">
+                    <img
+                      id="dropdown_arrow_icon"
+                      class="dropdown__arrow__icon__default"
+                      src="./assets/icons/arrow_drop_down_icon.png"
+                      alt="Drop Down Icon"
+                    />
+                    <img
+                      id="dropdown_arrow_icon_hover"
+                      class="dropdown__arrow__icon__hover"
+                      src="./assets/icons/arrow_drop_down_icon_hover.png"
+                      alt="Drop Down Icon"
+                    />
+                  </span>
+                </button>
+                <div
+                  class="dropdown__search__container d__none"
+                  id="dropdown_search_container"
+                >
+                  <input
+                    type="text"
+                    class="dropdown__search__input"
+                    id="assignee_search_input"
+                    placeholder=""
+                    oninput="filterContacts()"
+                  />
+                  <button
+                    onclick="closeDropDownList(event)"
+                    class="close__dropdown__button"
+                  >
+                    <img
+                      id="dropdown_arrow_up_icon"
+                      class="dropdown__arrow__up__icon__default"
+                      src="./assets/icons/arrow_drop_down_up_icon.png"
+                      alt="Drop Down Up Icon"
+                    />
+                    <img
+                      id="dropdown_arrow_up_icon_hover"
+                      class="dropdown__arrow__up__icon__hover"
+                      src="./assets/icons/arrow_drop_down_up_icon_hover.png"
+                      alt="Drop Down Up Icon"
+                    />
+                  </button>
+                </div>
+                <div class="dropdown__list__wrapper" id="dropdown_list_wrapper">
+                  <ul class="dropdown__list" id="dropdown_list"></ul>
+                </div>
               </div>
-              <label class="label" for="description">Description</label>
-              <textarea
-                class="description"
-                name="description"
-                id="description"
-                placeholder="Enter a Description"
-              ></textarea>
-              <div class="is_required">
-                <div class="star" id="star_textArea">*</div>
-              </div>
-              <label class="label" for="assigned_to">Assigned to</label>
-              <select
-                class="assigned_to"
-                name="assigned_to"
-                id="assigned__to"
-              ></select>
+              <div
+                class="choosen__contacts__container"
+                id="choosen_contacts_container"
+              ></div>
             </div>
-            <div class="the_divider"></div>
-            <div class="right_side">
-              <label class="label" for="date"
-                >Due date
-                <div class="star">*</div></label
-              >
-              <input
-                type="date"
-                class="date"
-                id="date__input"
-                name="date"
-                placeholder="dd/mm/yyyy"
-                required
-              />
-              <div class="is_required">
-                <div class="star" id="star">*</div>
-              </div>
-              <label class="label" for="prio">Prio</label>
-              <div class="radio_overall">
-                <label class="radio radio_urgend">
-                  <input
-                    type="radio"
-                    name="prio"
-                    value="1"
-                    id="prio_urgent"
-                    onclick=""
-                  />
-                  Urgent
-                  <img src="assets/icons/Property 1=Urgent.png" alt="↑" />
-                </label>
-                <label class="radio radio_medium">
-                  <input
-                    type="radio"
-                    name="prio"
-                    value="2"
-                    id="prio_medium"
-                    checked
-                    onclick=""
-                  />
-                  Medium
-                  <img src="assets/icons/Property 1=Medium.png" alt="=" />
-                </label>
-                <label class="radio radio_low">
-                  <input
-                    type="radio"
-                    name="prio"
-                    value="3"
-                    id="prio_low"
-                    onclick=""
-                  />
-                  Low <img src="assets/icons/Property 1=Low.png" alt="↓" />
-                </label>
-              </div>
-              <label class="label" for="category"
-                >Category
-                <div class="star">*</div></label
-              >
-              <select
-                type="select"
-                name="category"
-                class="category"
-                id="category"
-                required
-              >
-                <option value="">Select task category</option>
-                <option value="Technikal Task">Technikal Task</option>
-                <option value="User Story">User Story</option>
-              </select>
-              <label for="subtask">Subtask</label>
+          </div>
+          <div class="the_divider"></div>
+          <div class="right_side">
+            <label class="label" for="date"
+              >Due date
+              <div class="star" id="star_date">*</div></label
+            >
+            <input
+              type="date"
+              class="date"
+              id="date__input"
+              name="date"
+              placeholder="dd/mm/yyyy"
+            />
+
+            <label class="label" for="prio">Prio</label>
+            <div class="radio_overall">
+              <label class="radio radio_urgend">
+                <input
+                  type="radio"
+                  name="prio"
+                  value="1"
+                  onclick="changeUrgend()"
+                />
+                Urgent
+                <img
+                  id="urgend_img"
+                  src="assets/icons/Property 1=Urgent.png"
+                  alt="↑"
+                />
+              </label>
+              <label class="radio radio_medium">
+                <input
+                  type="radio"
+                  name="prio"
+                  value="2"
+                  checked
+                  onclick="changeMedium()"
+                />
+                Medium
+                <img
+                  id="medium_img"
+                  src="assets/icons/Prio media.png"
+                  alt="="
+                />
+              </label>
+              <label class="radio radio_low">
+                <input
+                  type="radio"
+                  name="prio"
+                  value="3"
+                  onclick="changeLow()"
+                />
+                Low
+                <img
+                  id="low_img"
+                  src="assets/icons/Property 1=Low.png"
+                  alt="↓"
+                />
+              </label>
+            </div>
+            <label class="label" for="category"
+              >Category
+              <div class="star" id="star_category">*</div></label
+            >
+            <select type="select" name="category" class="category">
+              <option value="">Select task category</option>
+              <option value="tt">Technikal Task</option>
+              <option value="us">User Story</option>
+            </select>
+            <label for="subtask">Subtask</label>
+            <div class="input__container">
               <input
                 type="text"
+                class="sub__input"
                 name="subtask"
                 id="subtask"
                 class="subtask"
                 placeholder="Add new subtask"
+                onclick="changeBtns(); return false;"
               />
-              <div class="table_subtask" id="subtask_table"></div>
-            </div>
-          </form>
-          <div class="text_and_buttons">
-            <div class="is_required">
-              <div class="star">*</div>
-              This field is required
-            </div>
-            <div class="task_butons">
-              <button class="secondary_button clear" onclick="clearForm()">
-                Clear <img src="assets/icons/cancel_icon_blue.png" alt="" />
+              <button
+                class="subtask__input__btn"
+                id="sub_btn1"
+                onclick="changeBtns(); return false;"
+              >
+                <img
+                  id="sub_btn1_img"
+                  src="./assets/icons/add_sub.png"
+                  alt="+"
+                />
               </button>
-              <button class="button1 create_task" onclick="saveTask()">
-                Create Task <img src="assets/icons/check.png" alt="" />
+              <button
+                class="subtask__input__btn d__none"
+                id="sub_btn3"
+                onclick="changeBtnsAgain(); return false;"
+              >
+                <img
+                  id="sub_btn3_img"
+                  src="./assets/icons/close_sub.png"
+                  alt="+"
+                />
+              </button>
+              <button
+                class="subtask__input__btn d__none"
+                id="sub_btn2"
+                onclick="addNewSubtask(); return false;"
+              >
+                <img src="./assets/icons/check_sub.png" alt="check" />
               </button>
             </div>
+            <ul class="table_subtask" id="subtask_table"></ul>
+          </div>
+        </form>
+        <div class="text_and_buttons">
+          <div class="is_required">
+            <div class="star">*</div>
+            This field is required
+          </div>
+          <div class="task_butons">
+            <button class="secondary_button clear" onclick="clearForm()">
+              <img src="assets/icons/cancel_icon_blue.png" alt="" />
+            </button>
+            <button class="button1 create_task" onclick="saveTask()">
+              Create Task
+            </button>
           </div>
         </div>
-      </section>
+      </div>
     </div>
     <!-- Second -->
     <div id="popup-container"></div>

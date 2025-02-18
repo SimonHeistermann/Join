@@ -46,35 +46,56 @@ async function loadTasks() {
   renderTasks(tasks);
 }
 
+/* function renderTasks(tasks) {
+  let taskContainer = document.getElementById("content");
+  taskContainer.innerHTML = "";
+  let taskIds = Object.keys(tasks);
+
+  for (let i = 0; i < taskIds.length; i++) {
+    let taskId = taskIds[i];
+    let task = tasks[taskId];
+
+    if (!task) {
+      continue;
+    }
+    let subTasks = task.subTasks || [];
+    let completedSubtasks = subTasks.filter((st) => st.completed).length; //
+    let totalSubtasks = subTasks.length;
+    let subTaskList = subTasks.map((st) => `<li>${st.name}</li>`).join("");
+
+    taskContainer.innerHTML += generatBoardTemplate(
+      taskId,
+      task,
+      completedSubtasks,
+      subTaskList
+    );
+  }
+} */
 function renderTasks(tasks) {
   let taskContainer = document.getElementById("content");
   taskContainer.innerHTML = "";
   let taskIds = Object.keys(tasks);
+
   for (let i = 0; i < taskIds.length; i++) {
     let taskId = taskIds[i];
     let task = tasks[taskId];
+
     if (!task) {
       continue;
     }
-    taskContainer.innerHTML += `
-          <div id="task${taskId}" class="task" draggable="true" ondragstart="drag(event)">
-              <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
-                  <div class="task-type">Category</div>
-                  <h3>${task.name}</h3>
-                  <p>${task.description}</p>
-                  <div class="progress">
-                      <div class="progress-bar" style="width: ${
-                        task.progress || 2
-                      }%"></div>
-                  </div>
-                  <div class="subtasks">1/2 
-                      <p>${
-                        task.subtasks ? task.subtasks.join(", ") : ""
-                      }</p> Subtasks
-                  </div>
-              </div>
-          </div>
-      `;
+
+    let subTasks = task.subTasks || [];
+    let completedSubtasks = subTasks.filter((st) => st.completed).length;
+    let totalSubtasks = subTasks.length;
+    let subTaskList = subTasks.map((st) => `<li>${st.name}</li>`).join("");
+
+    taskContainer.innerHTML += generateBoardTemplate(
+      taskId,
+      task,
+      completedSubtasks,
+      totalSubtasks, // Hier wurde totalSubtasks hinzugefügt
+      subTaskList
+    );
   }
 }
 
@@ -169,98 +190,7 @@ function showPopup(task) {
 function createPopup(task) {
   let assignedTo = task.assigned_to ? task.assigned_to.join(", ") : "Niemand";
   let priority = task.prio ? String(task.prio).toLowerCase() : "unknown";
-
-  return `
- <div class="overlayPopup">
-   <div class="popup">
-      <div class="popup__card-header">
-        <div class="close__btn__popup">
-          <span class="task__type user__story">${task.category}</span>
-          <button onclick="closePopup()">&times;</button>
-        </div>
-      </div>
-      <div class="all__content">
-        <div class="title_header">${task.name}</div>
-        <div class="popup__card-section">
-          <p>${task.description}</p>
-        </div>
-        <div class="popup__card-section">
-          <p><strong>Due date:</strong> ${
-            task.due_date || "Kein Datum angegeben"
-          }</p>
-        </div>
-        <p><strong>Priority:</strong>
-         <span class="popup__card-priority">${priority}</span></p>
-      </div>
-      <div class="popup__card-section">
-        <p><strong>Assigned To:</strong> ${assignedTo}</p>
-        <div class="popup__card-section">
-          <p><strong>Subtasks:</strong> ${
-            task.subtasks ? task.subtasks.join(", ") : "Keine Subtasks"
-          }</p>
-        </div>
-      </div>
-      <div class="conten__delete__editiBTN">
-        <div class="popup__card-actions">
-         <button class="delete-btn" onclick="deleteTask('${
-           task.id ? task.id : ""
-         }')">
-
-            <img src="assets/icons/delete_icon_blue.png" alt=""> Delete
-          </button>
-          <button id="popup_edit_button" class="edit_button">
-            <img src="assets/icons/edit_icon_blue.png" alt="">Edit
-          </button>
-        </div>
-      </div>
-  
-   </div>
-    
- <div class="popupMobile">
-    <div class="popup__card-header">
-        <div class="close__btn__popup">
-          <span class="task__type user__story">${task.category}</span>
-          <button onclick="closePopup()">&times;</button>
-        </div>
-      </div>
-      <div class="all__content">
-        <div class="title_header__mobile">${task.name}</div>
-        <div class="popup__card-section">
-          <p>${task.description}</p>
-        </div>
-        <div class="popup__card-section">
-          <p><strong>Due date:</strong> ${
-            task.due_date || "Kein Datum angegeben"
-          }</p>
-        </div>
-        <p><strong>Priority:</strong>
-         <span class="popup__card-priority">${priority}</span></p>
-      </div>
-      <div class="popup__card-section">
-        <p><strong>Assigned To:</strong> ${assignedTo}</p>
-        <div class="popup__card-section">
-          <p><strong>Subtasks:</strong> ${
-            task.subtasks ? task.subtasks.join(", ") : "Keine Subtasks"
-          }</p>
-        </div>
-      </div>
-      <div class="conten__delete__editiBTN">
-        <div class="popup__card-actions">
-         <button class="delete-btn" onclick="deleteTask('${
-           task.id ? task.id : ""
-         }')">
-
-            <img src="assets/icons/delete_icon_blue.png" alt=""> Delete
-          </button>
-          <button id="popup_edit_button" class="edit_button">
-            <img src="assets/icons/edit_icon_blue.png" alt="">Edit
-          </button>
-        </div>
-      </div>
-  </div>
-</div>
-
-  `;
+  return generateOverlayTemplate(task);
 }
 
 async function saveTask() {
@@ -270,14 +200,12 @@ async function saveTask() {
   const dueDate = document.getElementById("date__input").value;
   const category = document.getElementById("category").value;
   const subtask = document.getElementById("subtask").value;
-
   let prio = 2; // Standard Medium
   if (document.getElementById("prio_urgent").checked) {
     prio = 1;
   } else if (document.getElementById("prio_low").checked) {
     prio = 3;
   }
-
   if (!title || !dueDate || !category) {
     alert("Bitte fülle alle Pflichtfelder aus!");
     return;
@@ -315,7 +243,7 @@ function clearForm() {
   document.getElementById("subtask").value = "";
 }
 
-/**
+/*
  * Blendet die leeren Statusmeldungen für die verschiedenen Task-Kategorien ein.
  */
 function showEmtyMassage() {

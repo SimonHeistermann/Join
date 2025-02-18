@@ -84,7 +84,8 @@
               </div>
               <div class="behind__noticesbuttons">
                 <a href="legal_notice.html" class="notices__button"
-                  >Legal notice</a>
+                  >Legal notice</a
+                >
               </div>
             </div>
           </div>
@@ -208,19 +209,47 @@
               <label class="label" for="prio">Prio</label>
               <div class="radio_overall">
                 <label class="radio radio_urgend">
-                  <input type="radio" name="prio" value="1" onclick="changeUrgend()" />
+                  <input
+                    type="radio"
+                    name="prio"
+                    value="1"
+                    onclick="changeUrgend()"
+                  />
                   Urgent
-                  <img id="urgend_img" src="assets/icons/Property 1=Urgent.png" alt="↑" />
+                  <img
+                    id="urgend_img"
+                    src="assets/icons/Property 1=Urgent.png"
+                    alt="↑"
+                  />
                 </label>
                 <label class="radio radio_medium">
-                  <input type="radio" name="prio" value="2" checked onclick="changeMedium()"/>
+                  <input
+                    type="radio"
+                    name="prio"
+                    value="2"
+                    checked
+                    onclick="changeMedium()"
+                  />
                   Medium
-                  <img id="medium_img" src="assets/icons/Prio media.png" alt="=" />
+                  <img
+                    id="medium_img"
+                    src="assets/icons/Prio media.png"
+                    alt="="
+                  />
                 </label>
                 <label class="radio radio_low">
-                  <input type="radio" name="prio" value="3" onclick="changeLow()" />
-                  Low 
-                  <img id="low_img"src="assets/icons/Property 1=Low.png" alt="↓" />
+                  <input
+                    type="radio"
+                    name="prio"
+                    value="3"
+                    onclick="changeLow()"
+                  />
+                  Low
+                  <img
+                    id="low_img"
+                    src="assets/icons/Property 1=Low.png"
+                    alt="↓"
+                  />
                 </label>
               </div>
               <label class="label" for="category"
@@ -234,10 +263,44 @@
               </select>
               <label for="subtask">Subtask</label>
               <div class="input__container">
-                <input type="text" class="sub__input" name="subtask" id="subtask" class="subtask" placeholder="Add new subtask" onclick="changeBtns(); return false;"/>
-                <button class="subtask__input__btn" id="sub_btn1" onclick="changeBtns(); return false;"><img id="sub_btn1_img" src="./assets/icons/add_sub.png" alt="+" ></button>
-                <button class="subtask__input__btn d__none" id="sub_btn3" onclick="changeBtnsAgain(); return false;"><img id="sub_btn3_img" src="./assets/icons/close_sub.png" alt="+" ></button>
-                <button class="subtask__input__btn d__none" id="sub_btn2" onclick="addNewSubtask(); return false;"><img src="./assets/icons/check_sub.png" alt="check" ></button>
+                <input
+                  type="text"
+                  class="sub__input"
+                  name="subtask"
+                  id="subtask"
+                  class="subtask"
+                  placeholder="Add new subtask"
+                  onclick="changeBtns(); return false;"
+                />
+                <button
+                  class="subtask__input__btn"
+                  id="sub_btn1"
+                  onclick="changeBtns(); return false;"
+                >
+                  <img
+                    id="sub_btn1_img"
+                    src="./assets/icons/add_sub.png"
+                    alt="+"
+                  />
+                </button>
+                <button
+                  class="subtask__input__btn d__none"
+                  id="sub_btn3"
+                  onclick="changeBtnsAgain(); return false;"
+                >
+                  <img
+                    id="sub_btn3_img"
+                    src="./assets/icons/close_sub.png"
+                    alt="+"
+                  />
+                </button>
+                <button
+                  class="subtask__input__btn d__none"
+                  id="sub_btn2"
+                  onclick="addNewSubtask(); return false;"
+                >
+                  <img src="./assets/icons/check_sub.png" alt="check" />
+                </button>
               </div>
               <ul class="table_subtask" id="subtask_table"></ul>
             </div>

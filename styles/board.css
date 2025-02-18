@@ -100,6 +100,7 @@ img {
   display: flex;
   padding: 5px;
   min-width: 300px;
+  overflow: auto;
 }
 
 .column__hightlight {
@@ -127,11 +128,9 @@ img {
 }
 
 .tasks {
-  width: 252px;
-  display: flex;
-  flex-direction: column;
-  gap: 15px;
   min-height: 500px;
+  gap: 15px;
+  overflow-y: auto;
 }
 
 .task {
@@ -237,20 +236,34 @@ img {
     width: auto;
     padding: 0;
   }
-  .tasks {
-    width: auto;
-    overflow-y: auto;
-  }
+
   #content {
     display: flex;
     width: fit-content;
     overflow: auto;
     gap: 32px;
   }
-  .task {
+  #column_progress {
     display: flex;
-    overflow: 0;
+    width: fit-content;
     gap: 32px;
+    min-width: 500px;
+  }
+  #column_await {
+    display: flex;
+    width: fit-content;
+    gap: 32px;
+    min-width: 500px;
+  }
+  #column_done {
+    display: flex;
+    width: fit-content;
+    gap: 32px;
+    min-width: 500px;
+  }
+
+  .tasks {
+    min-height: auto;
   }
 }
 
