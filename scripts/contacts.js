@@ -13,6 +13,7 @@ async function initContacts() {
     } catch (error) {
         console.error("Error initializing app:", error);
     }
+    fillTheTag();
 }
 
 /**

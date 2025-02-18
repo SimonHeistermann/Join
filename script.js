@@ -112,6 +112,9 @@ function showErrorAlert() {
  */
 function fillTheTag(){
     let currentUser = JSON.parse(localStorage.getItem("currentUser"));
+    if(currentUser === null){
+        window.location.href="./login.html"
+    }
     let tagLetters = currentUser.initials;
     document.getElementById('currentuser_initials_ref').innerHTML = tagLetters;
 }
@@ -127,4 +130,9 @@ async function fetchContacts() {
     } catch (error) {
         console.error("Error getting contacts:", error);
     }
+}
+
+function logOut(){
+    localStorage.removeItem("currentUser"); 
+    window.location.href = "./login.html";
 }
