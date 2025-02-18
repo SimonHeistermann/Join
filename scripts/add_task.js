@@ -338,10 +338,8 @@ function makeTheListGreatAgain(){
  * @param {string} name - Der Name des Subtasks, der ersetzt werden soll.
  */
 function turnIntoLi(name){
-  console.log(name);
   let safeName = name.replace(/\s+/g, "_");
   let value = document.getElementById('subtask_'+ safeName + '_input').value;
-  console.log(value);
   let toBeExchanced = newSubtasks.findIndex(subtask => subtask === name);
   newSubtasks.splice(toBeExchanced,1, value);
   let editTable = document.getElementById('subtask_table');

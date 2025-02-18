@@ -421,13 +421,13 @@ function generateInput(name) {
         <div class="subtask__content">
             <div class="subtask__input-container">
                 <label class="subtask__label">
-                    <input class="subtask__text" onblur="" id="subtask_${safeName}_input" value="${name}">
+                    <input class="subtask__text" onblur="" id="subtask_${safeName}_input" value="${name}" onkeydown="handleEnterEdit(event, '${name}')">
                     <div class="subtask__buttons">
                         <button type="button" class="subtask__edit__button" onclick='deleteSubtask("${name}"); return false;'>
                             <img src="./assets/icons/delete_sub.png" alt="delete">
                         </button>
                         <div class="subtask__divider"></div> 
-                        <button type="button" class="subtask__edit__button" onclick='turnIntoLi("${name}"); return false;'>
+                        <button type="button" class="subtask__edit__button" onclick='turnIntoLi("${name}" ); return false;'>
                             <img src="./assets/icons/check_sub.png" alt="edit">
                         </button>
                     </div>

@@ -9,8 +9,13 @@ let usersUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.ap
 const BASE_URL = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/";
 
 
-// --> Nur falls du damit arbeiten möchtest, hier einmal das aus dem Chat :)
-
+/**
+ * Lädt Daten von einer bestimmten API-Route per HTTP GET und gibt die Server-Antwort zurück.
+ * 
+ * @async
+ * @param {string} [path=""] - Der API-Pfad, von dem die Daten abgerufen werden.
+ * @returns {Promise<Object|undefined>} Die Server-Antwort als JSON oder `undefined`, falls ein Fehler auftritt.
+ */
 async function loadData(path = "") {
     try {
         let response = await fetch(BASE_URL + path + ".json");
@@ -20,6 +25,15 @@ async function loadData(path = "") {
         console.error("Error loading data:", error);
     }
 }
+
+/**
+ * Sendet Daten per HTTP POST an eine bestimmte API-Route und gibt die Server-Antwort zurück.
+ * 
+ * @async
+ * @param {string} [path=""] - Der API-Pfad, an den die Daten gesendet werden.
+ * @param {Object} [data={}] - Die Daten, die als JSON an den Server gesendet werden.
+ * @returns {Promise<Object|undefined>} Die Server-Antwort als JSON oder `undefined`, falls ein Fehler auftritt.
+ */
 
 async function postData(path = "", data = {}) {
     try {
@@ -36,6 +50,14 @@ async function postData(path = "", data = {}) {
     }
 }
 
+/**
+ * Löscht Daten von einer bestimmten API-Route per HTTP DELETE und gibt die Server-Antwort zurück.
+ * 
+ * @async
+ * @param {string} [path=""] - Der API-Pfad, von dem die Daten gelöscht werden.
+ * @returns {Promise<Object|undefined>} Die Server-Antwort als JSON oder `undefined`, falls ein Fehler auftritt.
+ */
+
 async function deleteData(path = "") {
     try {
         let response = await fetch(BASE_URL + path + ".json", {
@@ -47,6 +69,14 @@ async function deleteData(path = "") {
     }
 }
 
+/**
+ * Sendet Daten per HTTP PUT an eine bestimmte API-Route und gibt die Server-Antwort zurück.
+ * 
+ * @async
+ * @param {string} [path=""] - Der API-Pfad, an den die Daten gesendet werden.
+ * @param {Object} [data={}] - Die Daten, die als JSON an den Server gesendet werden.
+ * @returns {Promise<Object|undefined>} Die Server-Antwort als JSON oder `undefined`, falls ein Fehler auftritt.
+ */
 async function putData(path = "", data = {}) {
     try {
         let response = await fetch(BASE_URL + path + ".json", {
@@ -62,8 +92,12 @@ async function putData(path = "", data = {}) {
     }
 }
 
-//fetch der Daten on onload
-
+/**
+ * Ruft die Benutzerdaten von einer externen URL ab und speichert sie im localStorage.
+ * 
+ * @async
+ * @param {string} usersUrl - Die URL, von der die Benutzerdaten abgerufen werden.
+ */
 async function fetchUsers(){
     try {
         let response = await fetch(usersUrl);
@@ -75,6 +109,12 @@ async function fetchUsers(){
     }
 }
 
+/**
+ * Ruft Aufgaben (Tasks) von einer externen URL ab und speichert sie im localStorage.
+ * 
+ * @async
+ * @param {string} tasksUrl - Die URL, von der die Aufgaben abgerufen werden.
+ */
 async function fetchTasks() {
     try {
         let response = await fetch(tasksUrl);
@@ -86,6 +126,10 @@ async function fetchTasks() {
     }
 }
 
+/**
+ * Speichert das globale `users`-Array im localStorage.
+ * Die Daten werden als JSON-String gespeichert.
+ */
 function toLocalStorage(){
     localStorage.setItem("users", JSON.stringify(users));
 }
@@ -139,4 +183,18 @@ async function fetchContacts() {
 function logOut(){
     localStorage.removeItem("currentUser"); 
     window.location.href = "./login.html";
+}
+
+function handleEnter(event) {
+    if (event.key === "Enter") {
+      event.preventDefault();  
+      addNewSubtask();         
+    }
+}
+
+function handleEnterEdit(event, name){
+    if (event.key === "Enter") {
+        event.preventDefault();  
+        turnIntoLi(name)        
+      }
 }

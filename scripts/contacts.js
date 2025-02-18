@@ -156,6 +156,10 @@ function removeActiveOverviewStyling(contentRef) {
     contentRef.classList.remove('contact__overview__content__active');
 }
 
+/**
+ * Deaktiviert das Styling für die mobile Kontaktübersicht, indem bestimmte Elemente 
+ * zurückgesetzt und ihre ursprünglichen Klassen wiederhergestellt werden.
+ */
 function removeActiveOverviewStylingMobile() {
     const contactTableRef = document.getElementById('contacts_table');
     contactTableRef.classList.remove('d__none');

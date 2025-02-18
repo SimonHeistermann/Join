@@ -237,7 +237,7 @@
               </select>
               <label for="subtask">Subtask</label>
               <div class="input__container">
-                <input type="text" class="sub__input" name="subtask" id="subtask" class="subtask" placeholder="Add new subtask" onclick="changeBtns(); return false;"/>
+                <input type="text" class="sub__input" name="subtask" id="subtask" class="subtask" placeholder="Add new subtask" onclick="changeBtns(); return false;" onkeydown="handleEnter(event)"/>
                 <button class="subtask__input__btn" id="sub_btn1" onclick="changeBtns(); return false;"><img id="sub_btn1_img" src="./assets/icons/add_sub.png" alt="+" ></button>
                 <button class="subtask__input__btn d__none" id="sub_btn3" onclick="changeBtnsAgain(); return false;"><img id="sub_btn3_img" src="./assets/icons/close_sub.png" alt="+" ></button>
                 <button class="subtask__input__btn d__none" id="sub_btn2" onclick="addNewSubtask(); return false;"><img src="./assets/icons/check_sub.png" alt="check" ></button>
