@@ -7,7 +7,7 @@ let baseUrl =
 async function init() {
   console.log("Test Initializations");
   await loadTasks();
-  quantityUpdate();
+
   fillTheTag();
 }
 
@@ -121,73 +121,28 @@ function drag(ev) {
  * und blendet einen Hinweis ein, wenn keine Tasks mehr vorhanden sind.
  */
 
-
-    function quantityUpdate() {
-    let columns = {
-      content: "task_counter",
-      column_progress: "no_tasks_inpro", 
-      column_await: "no_task_await",
-      column_done: "no_task_done",
-    };
-  
-    for (let colId in columns) {
-      let column = document.getElementById(colId);
-      let header = document.getElementById(columns[colId]);
-  
-      
-      if (!column || !header) {
-        console.error(`Element mit ID '${colId}' oder '${columns[colId]}' nicht gefunden.`);
-        continue; 
-  
-      if (column.children.length <= (colId === "content" ? 0 : 1)) {
-        header.innerHTML = "Keine Task Mehr";
-        header.style.display = "block";
-      } else {
-        header.style.display = "none";
-      }
-    }
-  }
-} 
-   
-
-  
-   
-  
+ 
 
 /**
  * Hebt ein Element durch das Hinzufügen der Klasse `column__hightlight` hervor.
  *
  * @param {string} id - Die ID des Elements, das hervorgehoben werden soll.
  */
- function hightlight(id) {
+  function hightlight(id) {
   document.getElementById(id).classList.add("column__hightlight");
  }
+ 
 
-
-
-  /* function highlight(columnId) {
-    let column = document.getElementById(columnId);
-    if (column) {
-        column.style.backgroundColor = "#f0f0f0"; // Ändert die Hintergrundfarbe beim Dragging
-    }
-}
-
-function removeHighlight(columnId) {
-    let column = document.getElementById(columnId);
-    if (column) {
-        column.style.backgroundColor = ""; // Entfernt die Hintergrundfarbe
-    }
-}
- */
+ 
 
 /**
  * Entfernt die Hervorhebung eines Elements, indem die Klasse `column__hightlight` entfernt wird.
  *
  * @param {string} id - Die ID des Elements, dessen Hervorhebung entfernt werden soll.
  */
- function removeHighlight(id) {
+  function removeHighlight(id) {
   document.getElementById(id).classList.remove("column__hightlight");
-} 
+}  
 
 /**
  * Zeigt ein Popup mit den Details einer Aufgabe an.
@@ -206,12 +161,12 @@ function createPopup(task) {
   return generateOverlayTemplate(task);
 }
 
-async function saveTask() {
-  const title = document.getElementById("text__title").value;
+/* async function saveTask() {
+  const title = document.getElementById("text__input").value;
   const description = document.getElementById("description").value;
-  const assignedTo = document.getElementById("assigned__to").value;
+  const assignedTo = document.getElementById("dropdown_toggle").value;
   const dueDate = document.getElementById("date__input").value;
-  const category = document.getElementById("category").value;
+  const category = document.getElementById("star_category").value;
   const subtask = document.getElementById("subtask").value;
   let prio = 2; // Standard Medium
   if (document.getElementById("prio_urgent").checked) {
@@ -237,7 +192,53 @@ async function saveTask() {
   await addNewTasks([newTask]);
   clearForm();
   await loadTasks();
-}
+} */
+
+  async function saveTask() {
+    const title = document.getElementById("text__input").value;
+    const description = document.getElementById("description").value;
+    const assignedToElement = document.getElementById("dropdown_toggle");
+    const assignedTo = assignedToElement ? [assignedToElement.innerText] : [];
+    const dueDate = document.getElementById("date__input").value;
+    const categoryElement = document.querySelector(".category");
+    const category = categoryElement ? categoryElement.value : "";
+    const subtask = document.getElementById("subtask").value;
+  
+    let prio = 2; // Standard: Medium
+    if (document.getElementById("prio_urgent").checked) {
+      prio = 1;
+    } else if (document.getElementById("prio_low").checked) {
+      prio = 3;
+    }
+  
+    // Überprüfung, ob Pflichtfelder leer sind
+    if (!title || !dueDate || !category) {
+      alert("Bitte fülle alle Pflichtfelder aus!");
+      return;
+    }
+  
+    const newTask = {
+      name: title,
+      description: description || "",
+      assigned_to: assignedTo,
+      due_date: dueDate,
+      prio: prio,
+      category: category,
+      subtask: subtask ? [subtask] : [],
+      status: "to-do",
+    };
+  
+    try {
+      await addNewTasks([newTask]); // Warte auf das Hinzufügen der neuen Aufgabe
+      clearForm();
+      await loadTasks(); // Lade die Aufgaben neu, um die Liste zu aktualisieren
+      closeAddtask(); // Schließe das Fenster nach dem Speichern
+    } catch (error) {
+      console.error("Fehler beim Speichern der Aufgabe:", error);
+      alert("Fehler beim Speichern der Aufgabe. Bitte versuche es erneut.");
+    }
+  }
+  
 
 /**
  * Setzt alle Formularfelder zurück, indem die Werte von Texteingaben,
@@ -245,12 +246,13 @@ async function saveTask() {
  * Die Priorität wird auf "Medium" zurückgesetzt.
  */
 function clearForm() {
-  document.getElementById("text__title").value = "";
+  document.getElementById("text__input").value = "";
   document.getElementById("description").value = "";
-  document.getElementById("assigned__to").value = "";
+  document.getElementById("dropdown_toggle").value = "";
   document.getElementById("date__input").value = "";
   document.getElementById("prio_medium").checked = true;
-  document.getElementById("category").value = "";
+
+  document.querySelector(".category").value = "";
   document.getElementById("subtask").value = "";
 }
 

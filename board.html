@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="./styles/standard.css" />
     <link rel="stylesheet" href="./styles/assets.css" />
     <link rel="stylesheet" href="styles/add_task.css" />
+    
 
     <script src="./script.js"></script>
     <script src="./scripts/templates.js"></script>
@@ -34,6 +35,8 @@
     <script src="scripts/add_task.js"></script>
     <script src="scripts/search.js"></script>
     <script src="scripts/board_template.js"></script>
+    <script src="scripts/contacts.js"></script>
+    <script src="./scripts/board.js"></script>
   </head>
   
   <body onload="init()">
@@ -240,15 +243,15 @@
                   <label class="label" for="prio">Prio</label>
                   <div class="radio_overall">
                       <label class="radio radio_urgend">
-                          <input type="radio" name="prio" value="1" onclick="changeUrgend()"> Urgent
+                          <input type="radio" name="prio" id="prio_urgent" value="1" onclick="changeUrgend()"> Urgent
                           <img id="urgend_img" src="assets/icons/Property 1=Urgent.png" alt="↑">
                       </label>
                       <label class="radio radio_medium">
-                          <input type="radio" name="prio" value="2" checked onclick="changeMedium()"> Medium
+                          <input type="radio" name="prio" id="prio_medium" value="2" checked onclick="changeMedium()"> Medium
                           <img id="medium_img" src="assets/icons/Prio media.png" alt="=">
                       </label>
                       <label class="radio radio_low">
-                          <input type="radio" name="prio" value="3" onclick="changeLow()"> Low
+                          <input type="radio" id="prio_low" name="prio" value="3" onclick="changeLow()"> Low
                           <img id="low_img" src="assets/icons/Property 1=Low.png" alt="↓">
                       </label>
                   </div>
@@ -300,6 +303,6 @@
   </div>
 </div>
 </div>
-<script src="./scripts/board.js"></script>
+
   </body>
 </html>
