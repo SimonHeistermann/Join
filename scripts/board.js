@@ -47,31 +47,7 @@ async function loadTasks() {
   renderTasks(tasks);
 }
 
-/* function renderTasks(tasks) {
-  let taskContainer = document.getElementById("content");
-  taskContainer.innerHTML = "";
-  let taskIds = Object.keys(tasks);
 
-  for (let i = 0; i < taskIds.length; i++) {
-    let taskId = taskIds[i];
-    let task = tasks[taskId];
-
-    if (!task) {
-      continue;
-    }
-    let subTasks = task.subTasks || [];
-    let completedSubtasks = subTasks.filter((st) => st.completed).length; //
-    let totalSubtasks = subTasks.length;
-    let subTaskList = subTasks.map((st) => `<li>${st.name}</li>`).join("");
-
-    taskContainer.innerHTML += generatBoardTemplate(
-      taskId,
-      task,
-      completedSubtasks,
-      subTaskList
-    );
-  }
-} */
 function renderTasks(tasks) {
   let taskContainer = document.getElementById("content");
   taskContainer.innerHTML = "";
@@ -99,7 +75,7 @@ function renderTasks(tasks) {
       subTaskList
     );
 
-    taskContainer.innerHTML += renderTaskContainer();
+    taskContainer.innerHTML += renderTaskContainer(taskId,task);
 
   }
 }
@@ -144,24 +120,35 @@ function drag(ev) {
  * Aktualisiert die Task-Anzahl-Anzeige in den verschiedenen Spalten
  * und blendet einen Hinweis ein, wenn keine Tasks mehr vorhanden sind.
  */
-function quantityUpdate() {
-  let columns = {
-    content: "tast_counter",
-    column_progress: "notasks_inpro",
-    column_await: "no_task_await",
-    column_done: "no_task_done",
-  };
-  for (let colId in columns) {
-    let column = document.getElementById(colId);
-    let header = document.getElementById(columns[colId]);
-    if (column.children.length <= (colId === "content" ? 0 : 1)) {
-      header.innerHTML = "Keine Task Mehr";
-      header.style.display = "block";
-    } else {
-      header.style.display = "none";
+
+
+  function quantityUpdate() {
+    let columns = {
+      content: "task_counter", // Korrigiert
+      column_progress: "no_tasks_inpro", // Korrigiert
+      column_await: "no_task_await",
+      column_done: "no_task_done",
+    };
+  
+    for (let colId in columns) {
+      let column = document.getElementById(colId);
+      let header = document.getElementById(columns[colId]);
+  
+      // Prüfen, ob die Elemente existieren, um Fehler zu vermeiden
+      if (!column || !header) {
+        console.error(`Element mit ID '${colId}' oder '${columns[colId]}' nicht gefunden.`);
+        continue; // Überspringe die aktuelle Schleifeniteration
+      }
+  
+      if (column.children.length <= (colId === "content" ? 0 : 1)) {
+        header.innerHTML = "Keine Task Mehr";
+        header.style.display = "block";
+      } else {
+        header.style.display = "none";
+      }
     }
   }
-}
+  
 
 /**
  * Hebt ein Element durch das Hinzufügen der Klasse `column__hightlight` hervor.

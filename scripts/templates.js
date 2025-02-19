@@ -470,7 +470,7 @@ function generateLiContent(task){
  * 
  * @returns {string} HTML-String für die Darstellung eines Aufgaben-Containers.
  */
-function renderTaskContainer(){
+function renderTaskContainer(taskId,task){
     return `<div id="task${taskId}" class="task" draggable="true" ondragstart="drag(event)">
               <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
                   <div class="task-type">Category</div>
