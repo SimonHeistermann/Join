@@ -29,12 +29,13 @@
 
     <script src="./script.js"></script>
     <script src="./scripts/templates.js"></script>
-    <script src="./scripts/board.js"></script>
+   
     <script src="./scripts/assets.js"></script>
     <script src="scripts/add_task.js"></script>
     <script src="scripts/search.js"></script>
     <script src="scripts/board_template.js"></script>
   </head>
+  
   <body onload="init()">
     <div class="overall">
       <div class="sidebar">
@@ -99,34 +100,34 @@
       <div class="content__right">
         <header>
           <div class="header__container">
-            <h3>Kanban Project Management Tool</h3>
+   <h3>Kanban Project Management Tool</h3>
             <div class="headerbox__right">
-              <button onclick="openHelpWebsite()" class="help__button">
-                  <img src="./assets/icons/help_icon.png" alt="Help">
-              </button>
-              <button onclick="toggleSubMenu()" id="currentuser_initials_ref" class="profile__button"></button>
+     <button onclick="openHelpWebsite()" class="help__button">
+    <img src="./assets/icons/help_icon.png" alt="Help">
+    </button>
+      <button onclick="toggleSubMenu()" id="currentuser_initials_ref" class="profile__button"></button>
           </div>
           <button onclick="reloadWebsite()" class="header__logo__mobile">
-              <img src="./assets/icons/header_logo_icon_mobile.png" alt="Join Logo">
+             <img src="./assets/icons/header_logo_icon_mobile.png" alt="Join Logo">
           </button>
       </div>
         </header>
         <main>
-          <div class="board__navigator">
-            <div class="search__and__addTasks">
-                <p class="board__title">Board</p>
-                <div class="inputicon__addButton">
-                    <div class="search__area">
-                        <input type="text" id="searchInput" placeholder="Find Task" oninput="searchTasks()">
-                        <span>|</span>
-                        <img id="search_area" class="search__icon" src="assets/icons/search@2x.png" alt="" onclick="searchTasks()">
-                    </div>
-                    <div>
-                        <button class="add__button" onclick="openAddtask()">
-                            Add
-                            <img class="add__icon" src="assets/icons/add.png" alt="">
-                        </button>
-                    </div>
+         <div class="board__navigator">
+         <div class="search__and__addTasks">
+         <p class="board__title">Board</p>
+       <div class="inputicon__addButton">
+        <div class="search__area">
+       <input type="text" id="searchInput" placeholder="Find Task" oninput="searchTasks()">
+       <span>|</span>
+        <img id="search_area" class="search__icon" src="assets/icons/search@2x.png" alt="" onclick="searchTasks()">
+       </div>
+        <div>
+          <button class="add__button" onclick="openAddtask()">
+            Add
+              <img class="add__icon" src="assets/icons/add.png" alt="">
+               </button>
+              </div>
                 </div>
             </div>
         </div>
@@ -149,10 +150,10 @@
         </main>
       
          
-           <div class="kanban-board">
+   <div class="kanban-board">
           <div class="column" data-status="to-do">
               <div class="column-header">
-                  <h2>To do</h2>
+          <h2>To do</h2>
                   <img src="assets/icons/plus button.png" alt="" onclick="openAddtask()">
               </div>
               <div class="tasks" id="column_todo" ondrop="drop(event)" ondragleave="removeHighlight('column_todo')" ondragover="allowDrop(event); highlight('column_todo')">
@@ -195,36 +196,36 @@
     </div>
     <div class="cover__all_addTask" id="cover__all_addTask">
       <div class="add__task__main">
-          <div class="close__btn">
-              <h1>Add Task</h1>
-              <img onclick="closeAddtask()" src="assets/icons/cancel_icon_blue.png" width="18">
+    <div class="close__btn">
+   <h1>Add Task</h1>
+    <img onclick="closeAddtask()" src="assets/icons/cancel_icon_blue.png" width="18">
           </div>
-          <form class="inputfields">
-              <div class="left_side">
-                  <label class="label" for="title">Title<div class="star" id="star_title">*</div></label>
-                  <input type="text" class="text_input" id="text__input" name="title" placeholder="Enter a title">
+   <form class="inputfields">
+        <div class="left_side">
+          <label class="label" for="title">Title<div class="star" id="star_title">*</div></label>
+        <input type="text" class="text_input" id="text__input" name="title" placeholder="Enter a title">
                   
-                  <label class="label" for="description">Description</label>
-                  <textarea class="description" name="description" id="description" placeholder="Enter a Description"></textarea>
+        <label class="label" for="description">Description</label>
+      <textarea class="description" name="description" id="description" placeholder="Enter a Description"></textarea>
                   
-                  <div class="dropdown__container">
-                      <label for="assignee_search"><h3>Assigned to</h3></label>
-                      <div class="dropdown__content">
-                          <button class="dropdown__toggle" id="dropdown_toggle" onclick="openDropdownList(event)">
-                              <h3>Select contacts to assign</h3>
-                              <span class="dropdown__arrow__icon__container">
-                                  <img id="dropdown_arrow_icon" class="dropdown__arrow__icon__default" src="./assets/icons/arrow_drop_down_icon.png" alt="Drop Down Icon">
-                                  <img id="dropdown_arrow_icon_hover" class="dropdown__arrow__icon__hover" src="./assets/icons/arrow_drop_down_icon_hover.png" alt="Drop Down Icon">
-                              </span>
-                          </button>
-                          <div class="dropdown__search__container d__none" id="dropdown_search_container">
-                              <input type="text" class="dropdown__search__input" id="assignee_search_input" oninput="filterContacts()">
-                              <button onclick="closeDropDownList(event)" class="close__dropdown__button">
-                                  <img id="dropdown_arrow_up_icon" class="dropdown__arrow__up__icon__default" src="./assets/icons/arrow_drop_down_up_icon.png" alt="Drop Down Up Icon">
-                                  <img id="dropdown_arrow_up_icon_hover" class="dropdown__arrow__up__icon__hover" src="./assets/icons/arrow_drop_down_up_icon_hover.png" alt="Drop Down Up Icon">
-                              </button>
-                          </div>
-                          <div class="dropdown__list__wrapper" id="dropdown_list_wrapper">
+   <div class="dropdown__container">
+         <label for="assignee_search"><h3>Assigned to</h3></label>
+          <div class="dropdown__content">
+            <button class="dropdown__toggle" id="dropdown_toggle" onclick="openDropdownList(event)">
+            <h3>Select contacts to assign</h3>
+            <span class="dropdown__arrow__icon__container">
+          <img id="dropdown_arrow_icon" class="dropdown__arrow__icon__default" src="./assets/icons/arrow_drop_down_icon.png" alt="Drop Down Icon">
+          <img id="dropdown_arrow_icon_hover" class="dropdown__arrow__icon__hover" src="./assets/icons/arrow_drop_down_icon_hover.png" alt="Drop Down Icon">
+          </span>
+           </button>
+              <div class="dropdown__search__container d__none" id="dropdown_search_container">
+               <input type="text" class="dropdown__search__input" id="assignee_search_input" oninput="filterContacts()">
+                <button onclick="closeDropDownList(event)" class="close__dropdown__button">
+                 <img id="dropdown_arrow_up_icon" class="dropdown__arrow__up__icon__default" src="./assets/icons/arrow_drop_down_up_icon.png" alt="Drop Down Up Icon">
+                <img id="dropdown_arrow_up_icon_hover" class="dropdown__arrow__up__icon__hover" src="./assets/icons/arrow_drop_down_up_icon_hover.png" alt="Drop Down Up Icon">
+               </button>
+                 </div>
+                <div class="dropdown__list__wrapper" id="dropdown_list_wrapper">
                               <ul class="dropdown__list" id="dropdown_list"></ul>
                           </div>
                       </div>
@@ -299,5 +300,6 @@
   </div>
 </div>
 </div>
+<script src="./scripts/board.js"></script>
   </body>
 </html>

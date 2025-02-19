@@ -122,10 +122,10 @@ function drag(ev) {
  */
 
 
-  function quantityUpdate() {
+    function quantityUpdate() {
     let columns = {
-      content: "task_counter", // Korrigiert
-      column_progress: "no_tasks_inpro", // Korrigiert
+      content: "task_counter",
+      column_progress: "no_tasks_inpro", 
       column_await: "no_task_await",
       column_done: "no_task_done",
     };
@@ -134,11 +134,10 @@ function drag(ev) {
       let column = document.getElementById(colId);
       let header = document.getElementById(columns[colId]);
   
-      // Prüfen, ob die Elemente existieren, um Fehler zu vermeiden
+      
       if (!column || !header) {
         console.error(`Element mit ID '${colId}' oder '${columns[colId]}' nicht gefunden.`);
-        continue; // Überspringe die aktuelle Schleifeniteration
-      }
+        continue; 
   
       if (column.children.length <= (colId === "content" ? 0 : 1)) {
         header.innerHTML = "Keine Task Mehr";
@@ -148,6 +147,11 @@ function drag(ev) {
       }
     }
   }
+} 
+   
+
+  
+   
   
 
 /**
@@ -155,18 +159,35 @@ function drag(ev) {
  *
  * @param {string} id - Die ID des Elements, das hervorgehoben werden soll.
  */
-function hightlight(id) {
+ function hightlight(id) {
   document.getElementById(id).classList.add("column__hightlight");
+ }
+
+
+
+  /* function highlight(columnId) {
+    let column = document.getElementById(columnId);
+    if (column) {
+        column.style.backgroundColor = "#f0f0f0"; // Ändert die Hintergrundfarbe beim Dragging
+    }
 }
+
+function removeHighlight(columnId) {
+    let column = document.getElementById(columnId);
+    if (column) {
+        column.style.backgroundColor = ""; // Entfernt die Hintergrundfarbe
+    }
+}
+ */
 
 /**
  * Entfernt die Hervorhebung eines Elements, indem die Klasse `column__hightlight` entfernt wird.
  *
  * @param {string} id - Die ID des Elements, dessen Hervorhebung entfernt werden soll.
  */
-function removeHighlight(id) {
+ function removeHighlight(id) {
   document.getElementById(id).classList.remove("column__hightlight");
-}
+} 
 
 /**
  * Zeigt ein Popup mit den Details einer Aufgabe an.
