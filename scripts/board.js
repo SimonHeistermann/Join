@@ -92,7 +92,7 @@ function renderTasks(tasks) {
     if (!task) {
       continue;
     }
-<<<<<<< HEAD
+<<<<<< HEAD
 
     let subTasks = task.subTasks || [];
     let completedSubtasks = subTasks.filter((st) => st.completed).length;
