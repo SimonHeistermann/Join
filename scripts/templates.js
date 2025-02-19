@@ -379,17 +379,22 @@ function generateContactTemplate(contact) {
     `;
 }
 
-/**
- * Generiert den HTML-Code für ein Listenelement eines Subtasks mit Bearbeitungs- und Löschbuttons.
- *
- * @param {string} task - Der Name des Subtasks.
- * @returns {string} Der generierte HTML-Code für das Listenelement.
- */
+
 function generateSubtaskListelement(task){
-    return `<label for="subtask_${task}"></label>
-                        <li class="subtask__li__element" onclick="addSubTaskToList(${task})" ondblclick="turnIntoInput(${task})" id="${task}_id">${task}
-                        <div><button onclick="turnIntoInput(${task}; return false;"><img src="./assets/icons/edit_sub.png" alt="edit"></button><button onclick="deleteSubtaks(${task}); return false;">
-                        <img src="./assets/icons/delete_sub.png" alt="delete"></button></div></li>`;
+    let safeName = task.replace(/\s+/g, "_");
+    return `<li class="subtask__li__element" onmouseover="showBtns('${task}')" onmouseout="hideBtns('${task}')" id="${safeName}_id">
+                <div class="li__element_content" id="li_element_content_${safeName}" ondblclick="turnIntoInput('${task}')">
+                    <div class="subtask__text" id="subtask_${safeName}_text" >${task}</div>
+                    <div id="li_btn_div_${safeName}" class="li__btn__div d__none">
+                        <button onclick="turnIntoInput('${task}'); return false;">
+                            <img src="./assets/icons/edit_sub.png" alt="edit">
+                        </button>
+                        <button onclick="deleteSubtask('${task}'); return false;">
+                            <img src="./assets/icons/delete_sub.png" alt="delete">
+                        </button>
+                    </div>
+                </div>
+            </li>`;
 }
 
 /**
@@ -418,10 +423,17 @@ function generateNewSubtaskListElement(task) {
 function generateInput(name) {
     let safeName = name.replace(/\s+/g, "_");
     return `
+    </ul>
         <div class="subtask__content">
             <div class="subtask__input-container">
-                <label class="subtask__label">
-                    <input class="subtask__text" onblur="" id="subtask_${safeName}_input" value="${name}" onkeydown="handleEnterEdit(event, '${name}')">
+                <label class="subtask__label" style="width: 100%;">
+                    <input 
+                        class="subtask__text" 
+                        id="subtask_${safeName}_input" 
+                        value="${name}" 
+                        onkeydown="handleEnterEdit(event, '${name}')"
+                        style="width: 100%; box-sizing: border-box;"
+                    >
                     <div class="subtask__buttons">
                         <button type="button" class="subtask__edit__button" onclick='deleteSubtask("${name}"); return false;'>
                             <img src="./assets/icons/delete_sub.png" alt="delete">
@@ -434,8 +446,10 @@ function generateInput(name) {
                 </label>
             </div>
         </div>
+        <ul>
     `;
 }
+
 
 /**
  * Erstellt den HTML-Inhalt für ein Listenelement eines Subtasks.

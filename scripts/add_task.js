@@ -300,9 +300,9 @@ function addNewSubtask() {
 function turnIntoInput(name) {
   let safeName = name.replace(/\s+/g, "_");
   let subTask = document.getElementById("subtask_" + safeName + "_text");  
-  let listItem = document.getElementById("new_" + safeName + "_id");
+  let listItem = document.getElementById(safeName+"_id");
       listItem.classList.add("editing");
-      subTask.innerHTML = generateInput(name);
+      listItem.innerHTML = generateInput(name);
   let inputElement = document.getElementById("subtask_" + safeName + "_input");
         inputElement.focus();
 }
@@ -327,7 +327,7 @@ function deleteSubtask(name){
 function makeTheListGreatAgain(){
   let list = document.getElementById('subtask_table');
   list.innerHTML = '';
-  newSubtasks.forEach(task => {list.innerHTML += generateNewSubtaskListElement(task)});
+  newSubtasks.forEach(task => {list.innerHTML += generateSubtaskListelement(task)});
 }
 
 
@@ -347,3 +347,14 @@ function turnIntoLi(name){
   makeTheListGreatAgain();
 }
 
+function showBtns(task) {
+  let safeName = task.trim().replace(/\s+/g, "_"); 
+  let btnDiv = document.getElementById(`li_btn_div_${safeName}`);
+      btnDiv.classList.remove('d__none');
+}
+
+function hideBtns(task) {
+  let safeName = task.trim().replace(/\s+/g, "_"); 
+  let btnDiv = document.getElementById(`li_btn_div_${safeName}`);
+      btnDiv.classList.add('d__none');
+}

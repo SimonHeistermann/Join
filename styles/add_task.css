@@ -467,6 +467,14 @@ beide Label und button die klasse radio und radioinput spricht aber gerade nur d
   list-style-type: none;
 }
 
+.li__element_content{
+  display: flex;
+}
+
+.li__btn__div{
+  display: flex;
+}
+
 .subtask__content {
   display: flex;
   justify-content: space-between;
