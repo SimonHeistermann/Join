@@ -150,29 +150,25 @@
                 <img id="search_area" class="search__icon" src="assets/icons/search@2x.png" alt="" onclick="searchTasks()">
             </div>
         </div>
-        </main>
-      
-         
-   <div class="kanban-board">
-          <div class="column" data-status="to-do">
-              <div class="column-header">
-          <h2>To do</h2>
-                  <img src="assets/icons/plus button.png" alt="" onclick="openAddtask()">
-              </div>
-              <div class="tasks" id="column_todo" ondrop="drop(event)" ondragleave="removeHighlight('column_todo')" ondragover="allowDrop(event); highlight('column_todo')">
-                  <p id="task_counter" class="no__tasks">tasks</p>
-                  <div id="content"></div>
-              </div>
-          </div>
-      
-          <div class="column" data-status="in-progress">
-              <div class="column-header">
-                  <h2>In progress</h2>
-                  <img src="assets/icons/plus button.png" alt="" onclick="openAddtask()">
-              </div>
-              <div class="tasks" id="column_progress" ondrop="drop(event)" ondragleave="removeHighlight('column_progress')" ondragover="allowDrop(event); highlight('column_progress')">
-                  <p id="no_tasks_inpro" class="no__tasks">Task</p>
-              </div>
+ <div class="kanban-board">
+       <div class="column" data-status="to-do">
+       <div class="column-header">
+        <h2 >To do</h2>
+        <img src="assets/icons/plus button.png" alt="" onclick="openAddtask()">
+        </div>
+        <div class="tasks"  id="column-todo" ondrop="drop(event)" ondragleave="removeHighlight('column_todo')" ondragover="allowDrop(event); hightlight('column-todo')">
+        <p id="task_counter" class="no__tasks">tasks</p>
+        <div id="content" ></div>
+      </div>
+        </div>
+<div class="column" data-status="in-progress">
+   <div class="column-header"  >
+    <h2>In progress</h2>
+    <img src="assets/icons/plus button.png" alt="" onclick="openAddtask()">
+    </div>
+    <div class="tasks" id="column_progress"  ondrop="drop(event)" ondragleave="removeHighlight('column_progress')" ondragover="allowDrop(event); hightlight('column_progress')">
+     <p id="no_tasks_inpro" class="no__tasks">Task</p>
+       </div>
           </div>
       
           <div class="column" data-status="await-feedback">
@@ -180,8 +176,8 @@
                   <h2>Await feedback</h2>
                   <img src="assets/icons/plus button.png" alt="" onclick="openAddtask()">
               </div>
-              <div class="tasks" id="column_await" ondrop="drop(event)" ondragleave="removeHighlight('column_await')" ondragover="allowDrop(event); highlight('column_await')">
-                  <p id="no_task_await" class="no__tasks"></p>
+              <div class="tasks" id="column_await" ondrop="drop(event)" ondragleave="removeHighlight('column_await')" ondragover="allowDrop(event); hightlight('column_await')">
+                  <p id="no_task_await" class="no__tasks">Task</p>
               </div>
           </div>
       
@@ -189,11 +185,16 @@
               <div class="column-header">
                   <h2>Done</h2>
               </div>
-              <div class="tasks" id="column_done" ondrop="drop(event)" ondragleave="removeHighlight('column_done')" ondragover="allowDrop(event); highlight('column_done')">
-                  <p id="no_task_done" class="no__tasks"></p>
+              <div class="tasks" id="column_done" ondrop="drop(event)" ondragleave="removeHighlight('column_done')" ondragover="allowDrop(event); hightlight('column_done')">
+                  <p id="no_task_done" class="no__tasks"> Task</p>
               </div>
           </div>
       </div>
+
+        </main>
+      
+         
+   
       </div>
 
     </div>
@@ -240,27 +241,28 @@
                   <label class="label" for="date">Due date<div class="star" id="star_date">*</div></label>
                   <input type="date" class="date" id="date__input" name="date" placeholder="dd/mm/yyyy">
                   
-                  <label class="label" for="prio">Prio</label>
-                  <div class="radio_overall">
-                      <label class="radio radio_urgend">
-                          <input type="radio" name="prio" id="prio_urgent" value="1" onclick="changeUrgend()"> Urgent
-                          <img id="urgend_img" src="assets/icons/Property 1=Urgent.png" alt="↑">
-                      </label>
-                      <label class="radio radio_medium">
-                          <input type="radio" name="prio" id="prio_medium" value="2" checked onclick="changeMedium()"> Medium
-                          <img id="medium_img" src="assets/icons/Prio media.png" alt="=">
-                      </label>
-                      <label class="radio radio_low">
-                          <input type="radio" id="prio_low" name="prio" value="3" onclick="changeLow()"> Low
-                          <img id="low_img" src="assets/icons/Property 1=Low.png" alt="↓">
-                      </label>
+           <label class="label" for="prio">Prio</label>
+            <div class="radio_overall">
+         <label class="radio radio_urgend">
+           <input type="radio" name="prio" id="prio_urgent" value="1" onclick="changeUrgend()"> Urgent
+                 <img id="urgend_img" src="assets/icons/Property 1=Urgent.png" alt="↑">
+               </label>
+               <label class="radio radio_medium">
+                <input type="radio" name="prio" id="prio_medium" value="2" checked onclick="changeMedium()">Medium
+                <img id="medium_img_add" src="assets/icons/Prio media.png" alt="="/> 
+                 
+                </label>
+                   <label class="radio radio_low">
+                   <input type="radio" id="prio_low" name="prio" value="3" onclick="changeLow()"> Low
+                   <img id="low_img" src="assets/icons/Property 1=Low.png" alt="↓">
+                  </label>
                   </div>
                   
                   <label class="label" for="category">Category<div class="star" id="star_category">*</div></label>
                   <select name="category" class="category">
                       <option value="">Select task category</option>
-                      <option value="tt">Technical Task</option>
-                      <option value="us">User Story</option>
+                      <option value="Technical Task">Technical Task</option>
+                      <option value="User Story">User Story</option>
                   </select>
                   
                   <label for="subtask">Subtask</label>

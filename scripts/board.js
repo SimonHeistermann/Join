@@ -1,3 +1,4 @@
+
 let baseUrl =
   "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/";
 
@@ -7,8 +8,10 @@ let baseUrl =
 async function init() {
   console.log("Test Initializations");
   await loadTasks();
-
   fillTheTag();
+  quantityUpdate();
+
+ 
 }
 
 /**
@@ -48,7 +51,7 @@ async function loadTasks() {
 }
 
 
-function renderTasks(tasks) {
+ function renderTasks(tasks) {
   let taskContainer = document.getElementById("content");
   taskContainer.innerHTML = "";
   let taskIds = Object.keys(tasks);
@@ -60,33 +63,25 @@ function renderTasks(tasks) {
     if (!task) {
       continue;
     }
-
-
-    let subTasks = task.subTasks || [];
+let subTasks = task.subTasks || [];
     let completedSubtasks = subTasks.filter((st) => st.completed).length;
     let totalSubtasks = subTasks.length;
     let subTaskList = subTasks.map((st) => `<li>${st.name}</li>`).join("");
 
-    taskContainer.innerHTML += generateBoardTemplate(
-      taskId,
-      task,
-      completedSubtasks,
-      totalSubtasks, // Hier wurde totalSubtasks hinzugefügt
-      subTaskList
-    );
-
-    taskContainer.innerHTML += renderTaskContainer(taskId,task);
+  
+  taskContainer.innerHTML += generateBoardTemplate(taskId, task, completedSubtasks, totalSubtasks);
+    ;
 
   }
-}
+} 
 
 /**
  * Verarbeitet das Ablegen eines Drag & Drop-Elements, verschiebt die Task in das neue Ziel
  * und aktualisiert die Task-Anzahl-Anzeige.
  *
- * @param {DragEvent} ev - Das Drop-Event.
+ * /* @param {DragEvent} ev - Das Drop-Event.
  */
-function drop(ev) {
+  function drop(ev) {
   ev.preventDefault();
   let taskId = ev.dataTransfer.getData("text");
   let taskElement = document.getElementById(taskId);
@@ -95,17 +90,18 @@ function drop(ev) {
     dropTarget.appendChild(taskElement);
   }
   quantityUpdate();
-}
+} 
 
 /**
  * Ermöglicht das Ablegen eines Elements, indem das Standardverhalten des Browsers verhindert wird.
  *
  * @param {DragEvent} ev - Das Drag-Event.
  */
-function allowDrop(ev) {
+ function allowDrop(ev) {
   ev.preventDefault();
+  quantityUpdate()
 }
-
+ 
 /**
  * Speichert die ID des gezogenen Elements in den `dataTransfer`-Daten,
  * um es für das Drag & Drop-Event verfügbar zu machen.
@@ -114,14 +110,49 @@ function allowDrop(ev) {
  */
 function drag(ev) {
   ev.dataTransfer.setData("text", ev.target.id);
-}
+
+}  
 
 /**
  * Aktualisiert die Task-Anzahl-Anzeige in den verschiedenen Spalten
  * und blendet einen Hinweis ein, wenn keine Tasks mehr vorhanden sind.
  */
 
- 
+
+
+
+
+  function quantityUpdate() {
+    const columns = [
+        { columnId: 'content', headerId: 'task_counter' },
+        { columnId: 'column_progress', headerId: 'no_tasks_inpro' },
+        { columnId: 'column_await', headerId: 'no_task_await' },
+        { columnId: 'column_done', headerId: 'no_task_done' }
+    ];
+
+    columns.forEach(({ columnId, headerId }) => {
+        const column = document.getElementById(columnId);
+        const header = document.getElementById(headerId);
+    const taskCount = [...column.children].filter(child => !child.classList.contains('no__tasks')).length;
+      updatedTodoColumns(header, taskCount);
+         if (taskCount === 0) {
+            header.style.display = "block";
+            header.innerHTML = "Keine Task Mehr";
+        } else {
+            header.style.display = "none"; 
+        }
+    });
+}
+
+function updatedTodoColumns(header, count) {
+      header.innerHTML = `${header.innerHTML.split('')[0]}(${count})`;
+  }
+   
+      
+
+
+
+  
 
 /**
  * Hebt ein Element durch das Hinzufügen der Klasse `column__hightlight` hervor.
@@ -161,40 +192,8 @@ function createPopup(task) {
   return generateOverlayTemplate(task);
 }
 
-/* async function saveTask() {
-  const title = document.getElementById("text__input").value;
-  const description = document.getElementById("description").value;
-  const assignedTo = document.getElementById("dropdown_toggle").value;
-  const dueDate = document.getElementById("date__input").value;
-  const category = document.getElementById("star_category").value;
-  const subtask = document.getElementById("subtask").value;
-  let prio = 2; // Standard Medium
-  if (document.getElementById("prio_urgent").checked) {
-    prio = 1;
-  } else if (document.getElementById("prio_low").checked) {
-    prio = 3;
-  }
-  if (!title || !dueDate || !category) {
-    alert("Bitte fülle alle Pflichtfelder aus!");
-    return;
-  }
 
-  const newTask = {
-    name: title,
-    description: description,
-    assigned_to: assignedTo ? [assignedTo] : [],
-    due_date: dueDate,
-    prio: prio,
-    category: category,
-    subtask: subtask ? [subtask] : [],
-    status: "status", // Status setzen (default: "to-do")
-  };
-  await addNewTasks([newTask]);
-  clearForm();
-  await loadTasks();
-} */
-
-  async function saveTask() {
+/*   async function saveTask() {
     const title = document.getElementById("text__input").value;
     const description = document.getElementById("description").value;
     const assignedToElement = document.getElementById("dropdown_toggle");
@@ -203,16 +202,25 @@ function createPopup(task) {
     const categoryElement = document.querySelector(".category");
     const category = categoryElement ? categoryElement.value : "";
     const subtask = document.getElementById("subtask").value;
-  
-    let prio = 2; // Standard: Medium
-    if (document.getElementById("prio_urgent").checked) {
-      prio = 1;
-    } else if (document.getElementById("prio_low").checked) {
-      prio = 3;
+    if (categoryElement) {
+      categoryElement.classList.remove("task-type__overlay", "task__technical"); 
+      if (category.value === "User Story") {
+        category.classList.add("task-type__overlay");
+      } else {
+        categoryElement.classList.add("task__technical");
+      }
+
     }
+    
+
   
-    // Überprüfung, ob Pflichtfelder leer sind
-    if (!title || !dueDate || !category) {
+    let prio = `Medium <img id="medium_img"src="assets/icons/Prio media.png"alt="="/>` // Standard: Medium
+    if (document.getElementById("prio_urgent").checked) {
+      prio = `Urgent <img id="urgend_img" src="assets/icons/Property 1=Urgent.png" alt="↑">`;
+    } else if (document.getElementById("prio_low").checked) {
+      prio = `Low <img id="low_img" src="assets/icons/Property 1=Low.png" alt="↓">  `;
+    }
+   if (!title || !dueDate || !category) {
       alert("Bitte fülle alle Pflichtfelder aus!");
       return;
     }
@@ -228,17 +236,56 @@ function createPopup(task) {
       status: "to-do",
     };
   
-    try {
-      await addNewTasks([newTask]); // Warte auf das Hinzufügen der neuen Aufgabe
+   await addNewTasks([newTask]); 
       clearForm();
-      await loadTasks(); // Lade die Aufgaben neu, um die Liste zu aktualisieren
-      closeAddtask(); // Schließe das Fenster nach dem Speichern
-    } catch (error) {
-      console.error("Fehler beim Speichern der Aufgabe:", error);
-      alert("Fehler beim Speichern der Aufgabe. Bitte versuche es erneut.");
-    }
-  }
+      await loadTasks();
+      closeAddtask(); 
+    
   
+} */
+  
+
+      async function saveTask() {
+        const title = document.getElementById("text__input").value;
+        const description = document.getElementById("description").value;
+        const assignedToElement = document.getElementById("dropdown_toggle");
+        const assignedTo = assignedToElement ? [assignedToElement.innerText] : [];
+        const dueDate = document.getElementById("date__input").value;
+        const categoryElement = document.querySelector(".category"); 
+        const category = categoryElement ? categoryElement.value : ""; 
+        const subtask = document.getElementById("subtask").value;
+    
+        
+        if (!title || !dueDate || !category) {
+            alert("Bitte fülle alle Pflichtfelder aus!");
+            return;
+        }
+    
+        let prio = `Medium <img id="medium_img" src="assets/icons/Prio media.png" alt="="/>`; // Standard: Medium
+        if (document.getElementById("prio_urgent").checked) {
+            prio = `Urgent <img id="urgend_img" src="assets/icons/Property 1=Urgent.png" alt="↑">`;
+        } else if (document.getElementById("prio_low").checked) {
+            prio = `Low <img id="low_img" src="assets/icons/Property 1=Low.png" alt="↓">`;
+        }
+    
+        const newTask = {
+            name: title,
+            description: description || "",
+            assigned_to: assignedTo,
+            due_date: dueDate,
+            prio: prio,
+            category: category,
+            subtask: subtask ? [subtask] : [],
+            status: "to-do",
+        };
+    
+        await addNewTasks([newTask]);
+        clearForm();
+        await loadTasks();
+        closeAddtask();
+    }
+   
+    
 
 /**
  * Setzt alle Formularfelder zurück, indem die Werte von Texteingaben,
@@ -251,7 +298,6 @@ function clearForm() {
   document.getElementById("dropdown_toggle").value = "";
   document.getElementById("date__input").value = "";
   document.getElementById("prio_medium").checked = true;
-
   document.querySelector(".category").value = "";
   document.getElementById("subtask").value = "";
 }
@@ -293,3 +339,7 @@ function openAddtask() {
 function closepopup() {
   document.getElementById("popup_card").style.display = "none";
 }
+
+
+
+

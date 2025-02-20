@@ -1,24 +1,4 @@
-/* function generatBoardTemplate(taskId, task, completedSubtasks, subTaskList) {
-  return `
-   
-          <div id="task${taskId}" class="task" draggable="true" ondragstart="drag(event)">
-              <div class="Overlay" onclick='showPopup(${JSON.stringify(task)})'>
-                  <div class="task-type">${task.category}</div>
-                  <h3>${task.name}</h3>
-                  <p>${task.description}</p>
-                  <div class="progress">
-                      <div class="progress-bar" style="width: ${
-                        task.progress || 2
-                      }%"></div>
-                  </div>
-                  <div class="subtasks">${completedSubtasks}/${totalSubtasks} erledigt
-                      <ul>${subTaskList}</ul>
-                  </div>
-              </div>
-          </div>
-          
-      `;
-} */
+
 
 function generateBoardTemplate(
   taskId,
@@ -32,7 +12,7 @@ function generateBoardTemplate(
                     <div class="Overlay" onclick='showPopup(${JSON.stringify(
                       task
                     )})'>
-                        <div class="task-type">${task.category}</div>
+                        <div class="task__technical">${task.category}</div>
                         <h3>${task.name}</h3>
                         <p>${task.description}</p>
                         <div class="progress">
@@ -54,7 +34,7 @@ function generateOverlayTemplate(task, priority, assignedTo) {
    <div class="popup">
       <div class="popup__card-header">
         <div class="close__btn__popup">
-          <span class="task__type user__story">${task.category}</span>
+          <span class="task-type__overlay">${task.category}</span>
           <button onclick="closePopup()">&times;</button>
         </div>
       </div>
@@ -69,10 +49,10 @@ function generateOverlayTemplate(task, priority, assignedTo) {
           }</p>
         </div>
         <p><strong>Priority:</strong>
-         <span class="popup__card-priority">${priority}</span></p>
+         <span class="popup__card-priority">${task.prio}</span></p>
       </div>
       <div class="popup__card-section">
-        <p><strong>Assigned To:</strong> ${assignedTo}</p>
+        <p><strong>Assigned To:</strong> ${task.assigned_to}</p>
         <div class="popup__card-section">
           <p><strong>Subtasks:</strong> ${
             task.subtasks ? task.subtasks.join(", ") : "Keine Subtasks"
@@ -98,7 +78,7 @@ function generateOverlayTemplate(task, priority, assignedTo) {
  <div class="popupMobile">
     <div class="popup__card-header">
         <div class="close__btn__popup">
-          <span class="task__type user__story">${task.category}</span>
+          <span class="">${task.category}</span>
           <button onclick="closePopup()">&times;</button>
         </div>
       </div>
