@@ -148,12 +148,7 @@ function updatedTodoColumns(header, count) {
       header.innerHTML = `${header.innerHTML.split('')[0]}(${count})`;
   }
    
-      
-
-
-
   
-
 /**
  * Hebt ein Element durch das Hinzufügen der Klasse `column__hightlight` hervor.
  *

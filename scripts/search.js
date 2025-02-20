@@ -1,41 +1,78 @@
-function searchTasks() {
-  let searchQuery = document
-    .getElementById("searchInput")
-    .value.toLowerCase()
-    .trim();
+ function searchTasks() {
+      let searchInput = document.getElementById("searchInput").value.toLowerCase();
+       fetch(`${baseUrl}/tasks.json`)
+        .then((response) => response.json())
+        .then((tasks) => {
+          if (!tasks) {
+            tasks = {};
+          }
+          emtyHTML()
+       let taskIds = Object.keys(tasks);
+          let foundTasks = false;
+    
+          taskIds.forEach((taskId) => {
+            let task = tasks[taskId];
+          if (
+              task.name.toLowerCase().includes(searchInput) ||
+              (task.description && task.description.toLowerCase().includes(searchInput))
+            ) {
+              foundTasks = true;
+    
+           
+              let totalSubtasks = task.subtasks ? task.subtasks.length : 0;
+              let completedSubtasks = task.subtasks
+                ? task.subtasks.filter((sub) => sub.completed).length
+                : 0;
+              let subTaskList = task.subtasks
+                ? task.subtasks.map((sub) => `<li>${sub.name}</li>`).join("")
+                : "";
+    
+              let taskHTML = generateBoardTemplate(taskId, task, completedSubtasks, totalSubtasks, subTaskList);
+              
+              let columnMap = {
+                "to-do": "column-todo",
+                "in-progress": "column_progress",
+                "await-feedback": "column_await",
+                "done": "column_done"
+              };
+              
+              let columnId = columnMap[task.status] || "column-todo";
+              
+              document.getElementById(columnId).innerHTML += taskHTML;
+            }
+          });
+    
+        if (!foundTasks) {
+            htmlreturn()
+          }
+        })
+       
+    } 
+    
+        
 
-  if (!searchQuery) {
-    loadTasks(); // Falls das Suchfeld leer ist, lade alle Aufgaben neu
-    return;
-  }
+     function standerTasks(){
 
-  let taskContainer = document.getElementById("content");
-  taskContainer.innerHTML = "";
+    }
 
-  fetch(`${baseUrl}/tasks.json`)
-    .then((response) => response.json())
-    .then((tasks) => {
-      if (!tasks) {
-        tasks = [];
+
+      function htmlreturn(){
+        document.getElementById("column-todo").innerHTML = `<p class="no__tasks">No tasks</p>`;
+        document.getElementById("column_progress").innerHTML =`<p class="no__tasks">No tasks</p>`;
+        document.getElementById("column_await").innerHTML = `<p class="no__tasks">No tasks</p>`;
+        document.getElementById("column_done").innerHTML = `<p class="no__tasks">No tasks</p>`;
+
       }
 
-      let taskIds = Object.keys(tasks);
-      let filteredTasks = taskIds
-        .map((id) => tasks[id])
-        .filter(
-          (task) =>
-            task.name.toLowerCase().includes(searchQuery) ||
-            (task.description &&
-              task.description.toLowerCase().includes(searchQuery))
-        );
+        function emtyHTML(){
+          document.getElementById("column-todo").innerHTML = "";
+          document.getElementById("column_progress").innerHTML = "";
+          document.getElementById("column_await").innerHTML = "";
+          document.getElementById("column_done").innerHTML = "";
 
-      if (filteredTasks.length > 0) {
-        filteredTasks.forEach((task) => {
-          taskContainer.innerHTML += generatBoardTemplate(task); // Verwende dein `generatBoardTemplate()` für das Rendering
-        });
-      } else {
-        taskContainer.innerHTML = "<p>Keine Aufgaben gefunden</p>";
-      }
-    })
-    .catch((error) => console.error("Fehler beim Laden der Aufgaben:", error));
-}
+
+        }
+
+       
+
+       
