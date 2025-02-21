@@ -9,7 +9,7 @@ async function fetchTheTasks(){
     let response = await fetch(`${baseUrl}/tasks.json`);
     let existingTasks = await response.json();
     existingTasks.forEach(task => savedTask.push(task));
-    sortTheTasks()
+    sortTheTasks();
 }
 
 function sortTheTasks(){
