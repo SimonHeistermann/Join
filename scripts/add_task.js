@@ -349,12 +349,17 @@ function turnIntoLi(name){
 
 function showBtns(task) {
   let safeName = task.trim().replace(/\s+/g, "_"); 
-  let btnDiv = document.getElementById(`li_btn_div_${safeName}`);
+  let btnDiv = document.getElementById("li_btn_div_"+safeName);
+  if(btnDiv){
       btnDiv.classList.remove('d__none');
+  }
 }
 
 function hideBtns(task) {
   let safeName = task.trim().replace(/\s+/g, "_"); 
-  let btnDiv = document.getElementById(`li_btn_div_${safeName}`);
-      btnDiv.classList.add('d__none');
+  let btnDiv = document.getElementById("li_btn_div_" + safeName);
+  
+  if (btnDiv) {
+    btnDiv.classList.add('d__none');
+  }
 }
