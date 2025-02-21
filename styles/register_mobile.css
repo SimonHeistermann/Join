@@ -1,20 +1,96 @@
 @media(max-width: 1000px) {
     .main__content{
-        margin-top: 120px;
         height: 600px;
     }
 
 
 .register__logocontainer{
 width: clamp(64px, 10.1vw, 101px);
-height: clamp(78px, 12.2vw, 122px);
+height: clamp(154px, 12.2vw, 122px);
 }
 
 .register__container{
-    padding-bottom: 8px;
-    padding-top: 8px;
+    padding-bottom: 16px;
+    padding-top: 16px;
     padding-left: 44px;
     padding-right: 44px;
+
 }
 
+}
+
+@media(max-width: 540px){
+.register__container{
+    width: clamp(295px, 92.41vw, 499px);    
+    }
+.back__button{
+    right: clamp(36px, 10vw, 120px);
+}
+
+.register__inputbox{
+    width: clamp(250px, 78.14vw, 422px);
+    min-width: 250px;
+}
+
+}
+
+@media(max-width: 428px){
+    h1{ font-size: 46px;}
+}
+
+@media(max-height: 880px){
+    main {
+        padding-top: 100px
+    }
+    
+    .header__container{
+        margin-top: clamp(1px, 3vh, 32px);
+    }
+
+    .register__logocontainer{
+        height: clamp(100px, 17.5vh ,154px);
+    }
+
+    .header__logo{
+        height: clamp(80px, 13.86vh, 122px);
+    }
+
+    .main__content{
+        height: clamp(450px, 70.31vh, 600px);
+    }
+
+    .register__headlinecontainer{
+        height: clamp(50px, 8.52vh, 75px);
+    }
+
+    .register__container{
+        height: clamp(295px, 64,25vw, 514px);    
+        }
+    .register__inputbox{
+        height: clamp();
+    }
+
+    .person__container{
+        height: clamp(30px, 4.68vh, 40px);
+    }
+
+    .email__container{
+        height: clamp(30px, 4.68vh, 40px);
+    }
+
+    .password__container{
+        height: clamp(30px, 4.68vh, 40px);
+    }
+
+    .confirmation__container{
+        height: clamp(30px, 4.68vh, 40px);
+    }
+
+    .checkbox__wrapper{
+        height: 14px;
+    }
+
+    .register__buttonbox{
+        height: clamp();
+    }
 }
