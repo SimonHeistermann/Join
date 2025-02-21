@@ -17,9 +17,7 @@
               (task.description && task.description.toLowerCase().includes(searchInput))
             ) {
               foundTasks = true;
-    
-           
-              let totalSubtasks = task.subtasks ? task.subtasks.length : 0;
+             let totalSubtasks = task.subtasks ? task.subtasks.length : 0;
               let completedSubtasks = task.subtasks
                 ? task.subtasks.filter((sub) => sub.completed).length
                 : 0;
@@ -43,7 +41,7 @@
           });
     
         if (!foundTasks) {
-            htmlreturn()
+            htmlreturn();
           }
         })
        

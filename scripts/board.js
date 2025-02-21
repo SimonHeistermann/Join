@@ -11,7 +11,6 @@ async function init() {
   fillTheTag();
   quantityUpdate();
 
- 
 }
 
 /**
@@ -51,7 +50,7 @@ async function loadTasks() {
 }
 
 
- function renderTasks(tasks) {
+  function renderTasks(tasks) {
   let taskContainer = document.getElementById("content");
   taskContainer.innerHTML = "";
   let taskIds = Object.keys(tasks);
@@ -73,7 +72,8 @@ let subTasks = task.subTasks || [];
     ;
 
   }
-} 
+}   
+
 
 /**
  * Verarbeitet das Ablegen eines Drag & Drop-Elements, verschiebt die Task in das neue Ziel
@@ -90,7 +90,7 @@ let subTasks = task.subTasks || [];
     dropTarget.appendChild(taskElement);
   }
   quantityUpdate();
-} 
+}  
 
 /**
  * Ermöglicht das Ablegen eines Elements, indem das Standardverhalten des Browsers verhindert wird.
@@ -117,10 +117,6 @@ function drag(ev) {
  * Aktualisiert die Task-Anzahl-Anzeige in den verschiedenen Spalten
  * und blendet einen Hinweis ein, wenn keine Tasks mehr vorhanden sind.
  */
-
-
-
-
 
   function quantityUpdate() {
     const columns = [
@@ -158,9 +154,6 @@ function updatedTodoColumns(header, count) {
   document.getElementById(id).classList.add("column__hightlight");
  }
  
-
- 
-
 /**
  * Entfernt die Hervorhebung eines Elements, indem die Klasse `column__hightlight` entfernt wird.
  *
@@ -188,7 +181,7 @@ function createPopup(task) {
 }
 
 
-/*   async function saveTask() {
+  async function saveTask() {
     const title = document.getElementById("text__input").value;
     const description = document.getElementById("description").value;
     const assignedToElement = document.getElementById("dropdown_toggle");
@@ -209,7 +202,7 @@ function createPopup(task) {
     
 
   
-    let prio = `Medium <img id="medium_img"src="assets/icons/Prio media.png"alt="="/>` // Standard: Medium
+    let prio = `Medium <img id="medium_img_add" src="assets/icons/Prio media.png" alt="="/>` // Standard: Medium
     if (document.getElementById("prio_urgent").checked) {
       prio = `Urgent <img id="urgend_img" src="assets/icons/Property 1=Urgent.png" alt="↑">`;
     } else if (document.getElementById("prio_low").checked) {
@@ -237,51 +230,8 @@ function createPopup(task) {
       closeAddtask(); 
     
   
-} */
+} 
   
-
-      async function saveTask() {
-        const title = document.getElementById("text__input").value;
-        const description = document.getElementById("description").value;
-        const assignedToElement = document.getElementById("dropdown_toggle");
-        const assignedTo = assignedToElement ? [assignedToElement.innerText] : [];
-        const dueDate = document.getElementById("date__input").value;
-        const categoryElement = document.querySelector(".category"); 
-        const category = categoryElement ? categoryElement.value : ""; 
-        const subtask = document.getElementById("subtask").value;
-    
-        
-        if (!title || !dueDate || !category) {
-            alert("Bitte fülle alle Pflichtfelder aus!");
-            return;
-        }
-    
-        let prio = `Medium <img id="medium_img" src="assets/icons/Prio media.png" alt="="/>`; // Standard: Medium
-        if (document.getElementById("prio_urgent").checked) {
-            prio = `Urgent <img id="urgend_img" src="assets/icons/Property 1=Urgent.png" alt="↑">`;
-        } else if (document.getElementById("prio_low").checked) {
-            prio = `Low <img id="low_img" src="assets/icons/Property 1=Low.png" alt="↓">`;
-        }
-    
-        const newTask = {
-            name: title,
-            description: description || "",
-            assigned_to: assignedTo,
-            due_date: dueDate,
-            prio: prio,
-            category: category,
-            subtask: subtask ? [subtask] : [],
-            status: "to-do",
-        };
-    
-        await addNewTasks([newTask]);
-        clearForm();
-        await loadTasks();
-        closeAddtask();
-    }
-   
-    
-
 /**
  * Setzt alle Formularfelder zurück, indem die Werte von Texteingaben,
  * der Kategorieauswahl und des Subtask-Feldes geleert werden.
@@ -300,11 +250,16 @@ function clearForm() {
 /*
  * Blendet die leeren Statusmeldungen für die verschiedenen Task-Kategorien ein.
  */
-function showEmtyMassage() {
-  document.getElementById("empty_done").style.display = "block";
-  document.getElementById("empty_todo").style.display = "block";
-  document.getElementById("empty_in_ progress").style.display = "block";
-  document.getElementById("empty_feedback").style.display = "block";
+
+function saveTaskToLocalStorage(task) {
+  let localTasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  localTasks.push(task);
+  localStorage.setItem("tasks", JSON.stringify(localTasks));
+}
+function loadLocalTasks() {
+  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
+  console.log("Geladene lokale Aufgaben:", tasks);
+  renderTasks(tasks);
 }
 
 /**
