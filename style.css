@@ -11,12 +11,11 @@
 .header__container {
     padding-right: 32px;
     margin-left: 120px;
-    width: min(100vw, 1920px);
+    width: 100%;
     display: flex;
     align-items: center;
     justify-content: space-between;
     position: relative;
-    box-sizing: border-box;
 }
 
 .headerbox__right {
@@ -53,8 +52,7 @@
         margin: 0;
         padding-inline: clamp(16px, 6vw, 64px);
         position: unset;
-        /*flex-direction: row-reverse;*/
-        flex: 1;
+        flex-direction: row-reverse;
     }
 
     .header__container h3 {
