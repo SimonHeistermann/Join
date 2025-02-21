@@ -1,12 +1,6 @@
 
 
-function generateBoardTemplate(
-  taskId,
-  task,
-  completedSubtasks,
-  totalSubtasks,
-  subTaskList
-) {
+function generateBoardTemplate(taskId, task, completedSubtasks, totalSubtasks, subTaskList) {
   return `
                 <div id="task${taskId}" class="task" draggable="true" ondragstart="drag(event)">
                     <div class="Overlay" onclick='showPopup(${JSON.stringify(

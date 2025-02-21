@@ -22,7 +22,7 @@
     <link rel="stylesheet" href="./assets/fonts/fonts.css" />
     <link rel="stylesheet" href="./style.css" />
     <link rel="stylesheet" href="./styles/sidebar.css" />
-    <link rel="stylesheet" href="./styles/board.css" />
+    <link rel="stylesheet" href="./styles/board_carlos.css" />
     <link rel="stylesheet" href="./styles/standard.css" />
     <link rel="stylesheet" href="./styles/assets.css" />
     <link rel="stylesheet" href="styles/add_task.css" />
@@ -36,10 +36,10 @@
     <script src="scripts/search.js"></script>
     <script src="scripts/board_template.js"></script>
     <script src="scripts/contacts.js"></script>
-    <script src="./scripts/board.js"></script>
+    <script src="./scripts/board_carlos.js"></script>
   </head>
   
-  <body onload="init()">
+  <body onload="fetchTheTasks()">
     <div class="overall">
       <div class="sidebar">
         <div class="sidebar__container">
@@ -151,16 +151,34 @@
             </div>
         </div>
  <div class="kanban-board">
-       <div class="column" data-status="to-do">
-       <div class="column-header">
+    <div class="column" data-status="to-do">
+      <div class="column-header">
         <h2 >To do</h2>
         <img src="assets/icons/plus button.png" alt="" onclick="openAddtask()">
-        </div>
-        <div class="tasks"  id="column-todo" ondrop="drop(event)" ondragleave="removeHighlight('column_todo')" ondragover="allowDrop(event); hightlight('column-todo')">
-        <p id="task_counter" class="no__tasks">tasks</p>
-        <div id="content" ></div>
       </div>
+      <div class="tasks"  id="column-todo" ondrop="drop(event)" ondragleave="removeHighlight('column_todo')" ondragover="allowDrop(event); hightlight('column-todo')">
+        <p id="task_counter" class="no__tasks">tasks</p>
+        <div id="content" >
+          <div class="taskcard" onclick="openTaskDetails()" id='taskcard_${}'>
+            <div class="category__task technical__task" id='category_${}'>UserStory</div>
+            <div class="headline__Task" id='headline_Task_${}'>Headline</div>
+            <div class="description__Task" id='description_Task_${}'>Description</div>
+            <div class="bar__quantity_Subtasks">  
+              <div class="progress">
+                <div class="outer__bar">
+                  <div class="progress-bar" role="progressbar" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100"></div>
+                </div>
+              </div>
+              <div class="how__many_subtasks" id='subtask_quantity_${}'><p class="completed__Subtasks" id='completed_Subtasks_${}'>x</p>/ <p class="allTasks">y</p> Subtasks</div>
+            </div>
+            <div class="assigned__prio">
+                <div class="assigned" id='assigned_${}'>people</div>
+                <div class="prio" id='img_prio_${}'></div>
+            </div>
+          </div>
         </div>
+      </div>
+    </div>
 <div class="column" data-status="in-progress">
    <div class="column-header"  >
     <h2>In progress</h2>
