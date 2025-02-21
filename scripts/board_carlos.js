@@ -2,7 +2,7 @@ let savedTask = [];
 let baseUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/";
 let toDoTasks = [];
 let inProgressTasks = [];
-let awaitfeedbackTasks = [];
+let awaitFeedbackTasks = [];
 let doneTasks = [];
 
 async function fetchTheTasks(){
@@ -10,6 +10,10 @@ async function fetchTheTasks(){
     let existingTasks = await response.json();
     existingTasks.forEach(task => savedTask.push(task));
     sortTheTasks();
+    renderToDoColumn();
+    renderInProgress();
+    renderAwaitFeedback();
+    renderDone();
 }
 
 function sortTheTasks(){
@@ -39,7 +43,7 @@ function sortTheTasksInProgress(){
 function sortTheTasksAwaitFeedback(){
     savedTask.forEach(task => 
         {if(task.status === "await-feedback")
-         awaitfeedbackTasks.push(task);
+         awaitFeedbackTasks.push(task);
         }
         )
 }
@@ -55,29 +59,94 @@ function sortTheTasksDone(){
 function renderToDoColumn(){
     let column = document.getElementById('column-todo');
     column.innerHTML = '';
-    toDoTasks.forEach(task => {
-        taskId = task
-    })
+    gatherAllInformations(toDoTasks, column);
 }
 
-function gatherAllInformations(){
-    toDoTasks.forEach(task=> {
+function renderInProgress(){
+    let column = document.getElementById('column_progress');
+    column.innerHTML = '';
+    gatherAllInformations(inProgressTasks, column);
+}
+
+function renderAwaitFeedback(){
+    let column = document.getElementById('column_await');
+    column.innerHTML = '';
+    gatherAllInformations(awaitFeedbackTasks, column);
+}
+
+function renderDone(){
+    let column = document.getElementById('column_done');
+    column.innerHTML = '';
+    gatherAllInformations(doneTasks, column);
+}
+
+function gatherAllInformations(array, column){
+    console.log(array);
+    
+    array.forEach(task=> {
         let name = task.name;
-        let category = task.category;
         let description = task.description;
-        let completedSubtasks = gatherCompletedSubtasks();
-        let allSubTasks = task.subtasks.length;
-        let prioImgURL = prioImgUrl();
+        let prioImgURL = prioImgUrl(task);
+        let completedSubtasks =  0;
+        let allSubTasks = 0;
+        if (task.subtasks.length > 0){
+            completedSubtasks = gatherCompletedSubtasks(task.subtasks); 
+            allSubTasks = task.subtasks.length;
+        }
+        renderTaskCard(name, description, prioImgURL, completedSubtasks, allSubTasks, column);
+        whichCategory(task.category, task.name);
     })
+    
 }
 
-column.innerHTML += generateBoardTemplate(taskId, task, completedSubtasks, totalSubtasks, subTaskList)
+function gatherCompletedSubtasks(subtasks){
+    let i = 0;
+    subtasks.forEach(subtask => { 
+        if(subtask.status === 1) i++; 
+    });
+    return i;
+}
 
+function prioImgUrl(task){
+    let url;
+    if(task.prio === 1){
+        url = 'assets/icons/Property 1=Low.png';
+    }
+    else if(task.prio === 3){
+        url = 'assets/icons/Property 1=Urgent.png';
+    }
+    else{
+        url ='assets/icons/Property 1=Medium.png'
+    }
+    return url;
+}
+
+function renderTaskCard(title, description, prioImgURL, completedSubtasks, allSubTasks, column){
+    column.innerHTML += generateBoardTemplate(title, description, prioImgURL, completedSubtasks, allSubTasks);
+        //setCategoryColor(category);
+        //fillupassigned();
+}
+
+function whichCategory(category, name){
+    let safename = name.replace(/\s+/g, "_");    
+    let taskCategory;
+    let colorSetting = document.getElementById('category_'+safename);  
+    if(category === 'us'){
+        taskCategory = 'UserStory';
+        colorSetting.classList.add('userStory__task');
+        colorSetting.innerHTML = taskCategory;
+    }
+    else{
+        taskCategory = 'Technical Task';
+        colorSetting.classList.add('technical__task');
+        colorSetting.innerHTML = taskCategory;
+        console.log(taskCategory);
+        
+        
+
+    }
+}
 
 function openTaskDetails(){
 
 }
-
-renderTaskCard();
-        setCategoryColor();
-        fillupassigned();
