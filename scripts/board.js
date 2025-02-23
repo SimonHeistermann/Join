@@ -6,10 +6,10 @@ let baseUrl =
  * Initialisiert die Anwendung, lädt die Aufgaben und aktualisiert die Task-Anzahl-Anzeige.
  */
 async function init() {
-  console.log("Test Initializations");
-  await loadTasks();
+ loadTasks();
   fillTheTag();
   quantityUpdate();
+ fetchContacts(contacts);
 
 }
 
@@ -251,16 +251,6 @@ function clearForm() {
  * Blendet die leeren Statusmeldungen für die verschiedenen Task-Kategorien ein.
  */
 
-function saveTaskToLocalStorage(task) {
-  let localTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  localTasks.push(task);
-  localStorage.setItem("tasks", JSON.stringify(localTasks));
-}
-function loadLocalTasks() {
-  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  console.log("Geladene lokale Aufgaben:", tasks);
-  renderTasks(tasks);
-}
 
 /**
  * Schließt das Popup, indem es ausgeblendet wird.
@@ -281,6 +271,7 @@ function closeAddtask() {
  */
 function openAddtask() {
   document.getElementById("cover__all_addTask").style.display = "block";
+  renderContactList(contacts);
 }
 
 /**

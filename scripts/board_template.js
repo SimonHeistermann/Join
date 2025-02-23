@@ -121,3 +121,4 @@ function generateOverlayTemplate(task, priority, assignedTo) {
 
   `;
 }
+ 
