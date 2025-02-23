@@ -165,6 +165,7 @@ function moveTo(column){
     });
     emptyAll();
    makeTheBoardGreatAgain();
+   updateTasksInFirebase();
 }
 
 function emptyAll(){
@@ -174,7 +175,20 @@ function emptyAll(){
     doneTasks=[];
 }
 
-
+async function updateTasksInFirebase() {
+    const options = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(savedTask), // Array in JSON umwandeln
+    };
+    try {
+        const response = await fetch(`${baseUrl}/tasks.json`, options);
+    } catch (error) {
+        console.error("Fehler beim Update:", error);
+    }
+}
  //ondragleave="removeHighlight('open')"
 
 
