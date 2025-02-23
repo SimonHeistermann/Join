@@ -156,7 +156,7 @@
         <h2 >To do</h2>
         <img src="assets/icons/plus button.png" alt="" onclick="openAddtask()">
       </div>
-      <div class="tasks"  id="column-todo" ondrop="drop(event)" ondragleave="removeHighlight('column_todo')" ondragover="allowDrop(event); hightlight('column-todo')">
+      <div class="tasks"  id="column-todo" ondrop="moveTo('to-do')" ondragover="allowDrop(event)">
         <p id="task_counter" class="no__tasks">tasks</p>
         <div id="content" >
           
@@ -168,7 +168,7 @@
     <h2>In progress</h2>
     <img src="assets/icons/plus button.png" alt="" onclick="openAddtask()">
     </div>
-    <div class="tasks" id="column_progress"  ondrop="drop(event)" ondragleave="removeHighlight('column_progress')" ondragover="allowDrop(event); hightlight('column_progress')">
+    <div class="tasks" id="column_progress" ondrop="moveTo('in-progress')" ondragover="allowDrop(event)">
      <p id="no_tasks_inpro" class="no__tasks">Task</p>
        </div>
           </div>
@@ -178,7 +178,7 @@
                   <h2>Await feedback</h2>
                   <img src="assets/icons/plus button.png" alt="" onclick="openAddtask()">
               </div>
-              <div class="tasks" id="column_await" ondrop="drop(event)" ondragleave="removeHighlight('column_await')" ondragover="allowDrop(event); hightlight('column_await')">
+              <div class="tasks" id="column_await" ondrop="moveTo('await-feedback')" ondragover="allowDrop(event)">
                   <p id="no_task_await" class="no__tasks">Task</p>
               </div>
           </div>
@@ -187,7 +187,7 @@
               <div class="column-header">
                   <h2>Done</h2>
               </div>
-              <div class="tasks" id="column_done" ondrop="drop(event)" ondragleave="removeHighlight('column_done')" ondragover="allowDrop(event); hightlight('column_done')">
+              <div class="tasks" id="column_done" ondrop="moveTo('done')" ondragover="allowDrop(event)">
                   <p id="no_task_done" class="no__tasks"> Task</p>
               </div>
           </div>

@@ -4,11 +4,16 @@ let toDoTasks = [];
 let inProgressTasks = [];
 let awaitFeedbackTasks = [];
 let doneTasks = [];
+let currendeDraggedElement;
 
 async function fetchTheTasks(){
     let response = await fetch(`${baseUrl}/tasks.json`);
     let existingTasks = await response.json();
     existingTasks.forEach(task => savedTask.push(task));
+    makeTheBoardGreatAgain();
+}
+
+function makeTheBoardGreatAgain(){
     sortTheTasks();
     renderToDoColumn();
     renderInProgress();
@@ -80,9 +85,7 @@ function renderDone(){
     gatherAllInformations(doneTasks, column);
 }
 
-function gatherAllInformations(array, column){
-    console.log(array);
-    
+function gatherAllInformations(array, column){  
     array.forEach(task=> {
         let name = task.name;
         let description = task.description;
@@ -95,8 +98,7 @@ function gatherAllInformations(array, column){
         }
         renderTaskCard(name, description, prioImgURL, completedSubtasks, allSubTasks, column);
         whichCategory(task.category, task.name);
-    })
-    
+    })  
 }
 
 function gatherCompletedSubtasks(subtasks){
@@ -140,12 +142,41 @@ function whichCategory(category, name){
         taskCategory = 'Technical Task';
         colorSetting.classList.add('technical__task');
         colorSetting.innerHTML = taskCategory;
-        console.log(taskCategory);
-        
-        
-
     }
 }
+
+function startDragging(draggedName){    
+ currendeDraggedElement = draggedName;
+}
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function moveTo(column){
+   let draggedTask = savedTask.find(task => task.name === currendeDraggedElement);
+   draggedTask.status = column;
+   console.log(draggedTask.status);
+   savedTask = savedTask.map(task => {
+    if (task.name === draggedTask.name) {
+        return draggedTask;
+    }
+    return task;
+    });
+    emptyAll();
+   makeTheBoardGreatAgain();
+}
+
+function emptyAll(){
+    toDoTasks =[];
+    inProgressTasks=[];
+    awaitFeedbackTasks=[];
+    doneTasks=[];
+}
+
+
+ //ondragleave="removeHighlight('open')"
+
 
 function openTaskDetails(){
 

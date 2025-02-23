@@ -1,7 +1,7 @@
 function generateBoardTemplate(title, description, prioImgURL, completedSubtasks, allSubTasks) {
     let safename = title.replace(/\s+/g, "_");
     return `
-                  <div class="taskcard" id='taskcard_${safename}'>
+                  <div class="taskcard" draggable="true" ondragstart="startDragging('${title}')" id='taskcard_${safename}'>
             <div class="category__task technical__task" id='category_${safename}'></div>
             <div class="headline__Task" id='headline_Task_${safename}'>${title}</div>
             <div class="description__Task" id='description_Task_${safename}'>${description}</div>
