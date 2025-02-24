@@ -96,10 +96,23 @@ function gatherAllInformations(array, column){
             completedSubtasks = gatherCompletedSubtasks(task.subtasks); 
             allSubTasks = task.subtasks.length;
         }
-        renderTaskCard(name, description, prioImgURL, completedSubtasks, allSubTasks, column);
+        let width = fillUpTheBar(completedSubtasks, allSubTasks);        
+        renderTaskCard(name, description, prioImgURL, completedSubtasks, allSubTasks, column, width);
         whichCategory(task.category, task.name);
     })  
 }
+
+function fillUpTheBar(completedSubtasks, allSubTasks){
+    let w 
+    if(allSubTasks === 0){
+        w = 0;
+    }
+    else{
+     w = (100/allSubTasks)*completedSubtasks;
+    }    
+    return w;
+}
+
 
 function gatherCompletedSubtasks(subtasks){
     let i = 0;
@@ -123,8 +136,8 @@ function prioImgUrl(task){
     return url;
 }
 
-function renderTaskCard(title, description, prioImgURL, completedSubtasks, allSubTasks, column){
-    column.innerHTML += generateBoardTemplate(title, description, prioImgURL, completedSubtasks, allSubTasks);
+function renderTaskCard(title, description, prioImgURL, completedSubtasks, allSubTasks, column, width){
+    column.innerHTML += generateBoardTemplate(title, description, prioImgURL, completedSubtasks, allSubTasks, width);
         //setCategoryColor(category);
         //fillupassigned();
 }
@@ -154,18 +167,22 @@ function allowDrop(ev) {
 }
 
 function moveTo(column){
-   let draggedTask = savedTask.find(task => task.name === currendeDraggedElement);
-   draggedTask.status = column;
-   console.log(draggedTask.status);
-   savedTask = savedTask.map(task => {
-    if (task.name === draggedTask.name) {
-        return draggedTask;
-    }
-    return task;
-    });
+    draggQueenOperation(column);
     emptyAll();
    makeTheBoardGreatAgain();
    updateTasksInFirebase();
+}
+
+function draggQueenOperation(column){
+    let draggedTask = savedTask.find(task => task.name === currendeDraggedElement);
+    draggedTask.status = column;
+    console.log(draggedTask.status);
+    savedTask = savedTask.map(task => {
+     if (task.name === draggedTask.name) {
+         return draggedTask;
+     }
+     return task;
+     });
 }
 
 function emptyAll(){

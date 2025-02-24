@@ -1,4 +1,5 @@
-function generateBoardTemplate(title, description, prioImgURL, completedSubtasks, allSubTasks) {
+function generateBoardTemplate(title, description, prioImgURL, completedSubtasks, allSubTasks, width) {
+    console.log(width);
     let safename = title.replace(/\s+/g, "_");
     return `
                   <div class="taskcard" draggable="true" ondragstart="startDragging('${title}')" id='taskcard_${safename}'>
@@ -8,7 +9,7 @@ function generateBoardTemplate(title, description, prioImgURL, completedSubtasks
             <div class="bar__quantity_Subtasks">  
               <div class="progress">
                 <div class="outer__bar">
-                  <div class="progress-bar" role="progressbar" style="width:25%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id='progress_bar_${safename}'></div>
+                  <div class="progress-bar" role="progressbar" style="width:${width}%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id='progress_bar_${safename}'></div>
                 </div>
               </div>
               <div class="how__many_subtasks" id='subtask_quantity_${safename}'><p class="completed__Subtasks" id='completed_Subtasks_${safename}'>${completedSubtasks}</p>/ <p class="allTasks">${allSubTasks}</p> Subtasks</div>
