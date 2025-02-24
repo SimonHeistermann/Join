@@ -39,7 +39,7 @@
     <script src="./scripts/board.js"></script>
   </head>
   
-  <body onload="fetchTheTasks()">
+<body onload="fetchTheTasks()">
     <div class="overall">
       <div class="sidebar">
         <div class="sidebar__container">
@@ -100,106 +100,120 @@
           </div>
         </div>
       </div>
-      <div class="content__right">
-        <header>
-          <div class="header__container">
-   <h3>Kanban Project Management Tool</h3>
+  <div class="content__right">
+    <header>
+      <div class="header__container">
+        <h3>Kanban Project Management Tool</h3>
             <div class="headerbox__right">
-     <button onclick="openHelpWebsite()" class="help__button">
-    <img src="./assets/icons/help_icon.png" alt="Help">
-    </button>
-      <button onclick="toggleSubMenu()" id="currentuser_initials_ref" class="profile__button"></button>
-          </div>
-          <button onclick="reloadWebsite()" class="header__logo__mobile">
-             <img src="./assets/icons/header_logo_icon_mobile.png" alt="Join Logo">
-          </button>
+              <button onclick="openHelpWebsite()" class="help__button">
+                  <img src="./assets/icons/help_icon.png" alt="Help">
+              </button>
+              <button onclick="toggleSubMenu()" id="currentuser_initials_ref" class="profile__button"></button>
+            </div>
+            <button onclick="reloadWebsite()" class="header__logo__mobile">
+              <img src="./assets/icons/header_logo_icon_mobile.png" alt="Join Logo">
+            </button>
       </div>
-        </header>
-        <main>
-         <div class="board__navigator">
-         <div class="search__and__addTasks">
-         <p class="board__title">Board</p>
-       <div class="inputicon__addButton">
-        <div class="search__area">
-       <input type="text" id="searchInput" placeholder="Find Task" oninput="searchTasks()">
-       <span>|</span>
-        <img id="search_area" class="search__icon" src="assets/icons/search@2x.png" alt="" onclick="searchTasks()">
-       </div>
-        <div>
+    </header>
+    <main>
+      <div class="board__navigator">
+        <div class="search__and__addTasks">
+          <p class="board__title">Board</p>
+          <div class="inputicon__addButton">
+            <div class="search__area">
+              <input type="text" id="searchInput" placeholder="Find Task" oninput="searchTasks()">
+                <span>|</span>
+              <img id="search_area" class="search__icon" src="assets/icons/search@2x.png" alt="" onclick="searchTasks()">
+            </div>
+            <div>
+              <button class="add__button" onclick="openAddtask()">
+                Add
+                <img class="add__icon" src="assets/icons/add.png" alt="">
+              </button>
+            </div>
+          </div>
+        </div>
+      </div>
+
+  <!-- BoardMobile  HidenContent-->
+      <div class="mobile__responsive">
+        <div class="board__addBTN">
+          <p class="board__title">Board</p>
           <button class="add__button" onclick="openAddtask()">
             Add
-              <img class="add__icon" src="assets/icons/add.png" alt="">
-               </button>
-              </div>
-                </div>
-            </div>
+            <img class="add__icon" src="assets/icons/add.png" alt="">
+          </button>
         </div>
-
-          <!-- BoadMobile  HidenContent-->
-          <div class="mobile__responsive">
-            <div class="board__addBTN">
-                <p class="board__title">Board</p>
-                <button class="add__button" onclick="openAddtask()">
-                    Add
-                    <img class="add__icon" src="assets/icons/add.png" alt="">
-                </button>
-            </div>
-            <div class="search__area">
-                <input type="text" id="find_task" placeholder="Find Task" oninput="searchTasks()">
-                <span>|</span>
-                <img id="search_area" class="search__icon" src="assets/icons/search@2x.png" alt="" onclick="searchTasks()">
-            </div>
-        </div>
- <div class="kanban-board">
-    <div class="column" data-status="to-do">
-      <div class="column-header">
-        <h2 >To do</h2>
-        <img src="assets/icons/plus button.png" alt="" onclick="openAddtask()">
-      </div>
-      <div class="tasks"  id="column-todo" ondrop="moveTo('to-do')" ondragover="allowDrop(event)">
-        <p id="task_counter" class="no__tasks">tasks</p>
-        <div id="content" >
-          
+        <div class="search__area">
+          <input type="text" id="find_task" placeholder="Find Task" oninput="searchTasks()">
+          <span>|</span>
+          <img id="search_area" class="search__icon" src="assets/icons/search@2x.png" alt="" onclick="searchTasks()">
         </div>
       </div>
-    </div>
-<div class="column" data-status="in-progress">
-   <div class="column-header"  >
-    <h2>In progress</h2>
-    <img src="assets/icons/plus button.png" alt="" onclick="openAddtask()">
-    </div>
-    <div class="tasks" id="column_progress" ondrop="moveTo('in-progress')" ondragover="allowDrop(event)">
-     <p id="no_tasks_inpro" class="no__tasks">Task</p>
-       </div>
+      <div class="kanban-board">
+          <div class="column" data-status="to-do">
+            <div class="column-header">
+              <h2 >To do</h2>
+              <img src="assets/icons/plus button.png" alt="" onclick="openAddtask()">
+            </div>
+            <div class="tasks"  id="column-todo" ondrop="moveTo('to-do')" ondragover="allowDrop(event)">
+              <p id="task_counter" class="no__tasks">tasks</p>
+              <div id="content" >
+              </div>
+            </div>
           </div>
-      
-          <div class="column" data-status="await-feedback">
-              <div class="column-header">
-                  <h2>Await feedback</h2>
-                  <img src="assets/icons/plus button.png" alt="" onclick="openAddtask()">
-              </div>
-              <div class="tasks" id="column_await" ondrop="moveTo('await-feedback')" ondragover="allowDrop(event)">
-                  <p id="no_task_await" class="no__tasks">Task</p>
-              </div>
+        <div class="column" data-status="in-progress">
+          <div class="column-header"  >
+            <h2>In progress</h2>
+            <img src="assets/icons/plus button.png" alt="" onclick="openAddtask()">
           </div>
-      
-          <div class="column" data-status="done">
-              <div class="column-header">
-                  <h2>Done</h2>
-              </div>
-              <div class="tasks" id="column_done" ondrop="moveTo('done')" ondragover="allowDrop(event)">
-                  <p id="no_task_done" class="no__tasks"> Task</p>
-              </div>
+          <div class="tasks" id="column_progress" ondrop="moveTo('in-progress')" ondragover="allowDrop(event)">
+            <p id="no_tasks_inpro" class="no__tasks">Task</p>
           </div>
+        </div>
+        <div class="column" data-status="await-feedback">
+          <div class="column-header">
+            <h2>Await feedback</h2>
+            <img src="assets/icons/plus button.png" alt="" onclick="openAddtask()">
+          </div>
+          <div class="tasks" id="column_await" ondrop="moveTo('await-feedback')" ondragover="allowDrop(event)">
+            <p id="no_task_await" class="no__tasks">Task</p>
+          </div>
+        </div>  
+        <div class="column" data-status="done">
+          <div class="column-header">
+            <h2>Done</h2>
+          </div>
+          <div class="tasks" id="column_done" ondrop="moveTo('done')" ondragover="allowDrop(event)">
+            <p id="no_task_done" class="no__tasks"> Task</p>
+          </div>
+        </div>
       </div>
+    </main>
+<!-- End of Board-->
+<!--Start Oberlay-->        
+  </div>
+    <div class="overlay__overall d__none">
+      <div class="single__task__card" id="single_task_card">
+        <div class="single__card__header the__single__card__standard"><div class="single__card__category" id='single_card_${}'>User Störy</div><button class="single_card_close_button"><img src="" alt="x"></button></div> 
+        <div class="singel__card__title the__single__card__standard">Title</div>
+        <div class="description__single__card the__single__card__standard"> Bla bla bla</div>
+        <div class="single__card__due_date the__single__card__standard">1223-23</div>
+        <div class="single__card__prio the__single__card__standard">uiuiui</div>
+        <div class="single__card__assigned the__single__card__standard">der das bass</div>
+        <div class="single__card__subtasks the__single__card__standard">
+          <button class="1" type="checkbox" id="checkbox_${}"></button>diesdasananans <br>
+          <button class="single__card__checkbox" type="checkbox" id="checkbox_${}"></button> <br>
+        </div>
+        <div class="single__card__buttons the__single__card__standard">
+          <button class="single__card__buttons__button"><img src="" alt="edit">Edit</button>
+          <button class="single__card__buttons__button"><img src="" alt="müll">Delete</button>
+        </div>
 
-        </main>
-      
-         
-   
       </div>
+    </div> 
 
-    </div>
+  </div>
     <div class="cover__all_addTask" id="cover__all_addTask">
       <div class="add__task__main">
     <div class="close__btn">

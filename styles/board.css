@@ -205,7 +205,6 @@ span {
   width: 100%;
   flex:1;
   background-color: #e7e7e7;
-  border: 1px solid red;
   border-radius: 8px;
 }
 
@@ -231,6 +230,69 @@ span {
 }
 .popupMobile {
   display: none;
+}
+
+/*Overlay starts*/
+
+.overlay__overall{
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100vw;
+  height: 100vh;
+  background-color: rgba(184, 185, 186, 0.75);
+  z-index: 1000;
+  display: flex;
+}
+
+.single__task__card{
+  background: white;
+  margin: auto;
+  width: 525px;
+  height: 931px;
+  border-radius: 30px;
+  padding-top: 32px;
+  padding-left: 32px;
+  padding-right: 32px;
+  padding-bottom: 32px;
+}
+
+.single__card__header{
+  height: 36px;
+  border: 1px solid green;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+
+.single__card__category{
+  border: 1px solid blue;
+  background-color: blue;
+  color: white;
+  border-radius: 8px;
+  height: 36px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 164px;
+  font-weight: bold;
+  font-size: 24px;
+}
+
+.the__single__card__standard{
+  margin-top: 24px;
+  font-size: 24px;
+}
+
+.singel__card__title{
+  font-size: 61px;
+  font-weight: bold;
+  margin-top: 24px;
+}
+
+.single__card__buttons{
+  display: flex;
+  flex-direction: row-reverse;
 }
 
 @media (max-width: 800px) {

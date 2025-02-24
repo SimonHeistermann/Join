@@ -1,8 +1,7 @@
 function generateBoardTemplate(title, description, prioImgURL, completedSubtasks, allSubTasks, width) {
-  console.log(width);
   let safename = title.replace(/\s+/g, "_");
   return `
-                <div class="taskcard" draggable="true" ondragstart="startDragging('${title}')" id='taskcard_${safename}'>
+                <div class="taskcard" draggable="true" ondragstart="startDragging('${title}')" id='taskcard_${safename}' onclick='generateSingleTaksCard(${safename, title, description, prioImgURL, completedSubtasks, allSubTasks, width})'>
           <div class="category__task technical__task" id='category_${safename}'></div>
           <div class="headline__Task" id='headline_Task_${safename}'>${title}</div>
           <div class="description__Task" id='description_Task_${safename}'>${description}</div>
@@ -19,4 +18,9 @@ function generateBoardTemplate(title, description, prioImgURL, completedSubtasks
               <div class="prio" id='img_prio_${safename}'><img src="${prioImgURL}" alt=""></div>
           </div>
         </div>`
+}
+
+function generateSingleTaksCard(safename, title, description, prioImgURL, completedSubtasks, allSubTasks, width){
+
+
 }
