@@ -1,12 +1,13 @@
-
-
 function generateBoardTemplate(
-  taskId,
-  task,
+  title,
+  description,
+  prioImgURL,
   completedSubtasks,
-  totalSubtasks,
-  subTaskList
+  allSubTasks,
+  width
 ) {
+  console.log(width);
+  let safename = title.replace(/\s+/g, "_");
   return `
                 <div id="task${taskId}" class="task" draggable="true" ondragstart="drag(event)">
                     <div class="Overlay" onclick='showPopup(${JSON.stringify(
@@ -121,4 +122,3 @@ function generateOverlayTemplate(task, priority, assignedTo) {
 
   `;
 }
- 
