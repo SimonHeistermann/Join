@@ -1,18 +1,6 @@
-<<<<<<< Updated upstream
-
-
-function generateBoardTemplate(
-  taskId,
-  task,
-  completedSubtasks,
-  totalSubtasks,
-  subTaskList
-) {
-=======
 function generateBoardTemplate(title, description, prioImgURL, completedSubtasks, allSubTasks, width) {
   console.log(width);
   let safename = title.replace(/\s+/g, "_");
->>>>>>> Stashed changes
   return `
                 <div class="taskcard" draggable="true" ondragstart="startDragging('${title}')" id='taskcard_${safename}'>
           <div class="category__task technical__task" id='category_${safename}'></div>
