@@ -193,7 +193,7 @@
 <!-- End of Board-->
 <!--Start Oberlay-->        
   </div>
-    <div class="overlay__overall d__none">
+    <div class="overlay__overall">
       <div class="single__task__card" id="single_task_card">
         <div class="single__card__header the__single__card__standard"><div class="single__card__category" id='single_card_${}'>User Störy</div><button class="single_card_close_button"><img src="" alt="x"></button></div> 
         <div class="singel__card__title the__single__card__standard">Title</div>
@@ -202,12 +202,14 @@
         <div class="single__card__prio the__single__card__standard">uiuiui</div>
         <div class="single__card__assigned the__single__card__standard">der das bass</div>
         <div class="single__card__subtasks the__single__card__standard">
-          <button class="1" type="checkbox" id="checkbox_${}"></button>diesdasananans <br>
-          <button class="single__card__checkbox" type="checkbox" id="checkbox_${}"></button> <br>
+          <div class="ceckbox__outer__rim">
+          <button class="single__card__checkbox" type="checkbox" id="checkbox_${}"><img id='checkbox_subtask_${}' src="./assets/icons/Check button checked.png" alt="checkbox"></button>diesdasananans</div> <br>
+          <div class="ceckbox__outer__rim">
+          <button class="single__card__checkbox" type="checkbox" id="checkbox_${}"><img id='checkbox_subtask_${}' src="./assets/icons/Check button.png" alt="checkbox"></button></div><br>
         </div>
         <div class="single__card__buttons the__single__card__standard">
-          <button class="single__card__buttons__button"><img src="" alt="edit">Edit</button>
-          <button class="single__card__buttons__button"><img src="" alt="müll">Delete</button>
+          <button class="single__card__buttons__button"><img src="./assets/icons/delete_sub.png" alt="edit">Edit</button>
+          <button class="single__card__buttons__button"><img src="./assets/icons/edit_sub.png" alt="müll">Delete</button>
         </div>
 
       </div>

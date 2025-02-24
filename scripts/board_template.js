@@ -21,6 +21,9 @@ function generateBoardTemplate(title, description, prioImgURL, completedSubtasks
 }
 
 function generateSingleTaksCard(safename, title, description, prioImgURL, completedSubtasks, allSubTasks, width){
-
-
+return `
+<div class="outer__bar">
+                <div class="progress-bar" role="progressbar" style="width:${width}%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id='progress_bar_${safename}'></div>
+              </div>
+              `
 }
