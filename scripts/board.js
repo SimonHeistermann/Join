@@ -1,295 +1,214 @@
+let savedTask = [];
+let baseUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/";
+let toDoTasks = [];
+let inProgressTasks = [];
+let awaitFeedbackTasks = [];
+let doneTasks = [];
+let currendeDraggedElement;
 
-let baseUrl =
-  "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/";
-
-/**
- * Initialisiert die Anwendung, lädt die Aufgaben und aktualisiert die Task-Anzahl-Anzeige.
- */
-async function init() {
-  console.log("Test Initializations");
-  await loadTasks();
-  fillTheTag();
-  quantityUpdate();
-
+async function fetchTheTasks(){
+    let response = await fetch(`${baseUrl}/tasks.json`);
+    let existingTasks = await response.json();
+    existingTasks.forEach(task => savedTask.push(task));
+    makeTheBoardGreatAgain();
 }
 
-/**
- * Fügt neue Aufgaben zur bestehenden Aufgabenliste hinzu und speichert die aktualisierte Liste in der API.
- *
- * @param {Array} newTasks - Die neuen Aufgaben, die hinzugefügt werden sollen.
- */
-async function addNewTasks(newTasks) {
-  let response = await fetch(`${baseUrl}/tasks.json`);
-  let existingTasks = await response.json();
-  if (!existingTasks) {
-    existingTasks = [];
-  }
-  let updatedTasks = [...existingTasks, ...newTasks];
-  await fetch(`${baseUrl}/tasks.json`, {
-    method: "PUT", // `PUT` speichert die komplette Liste
-    headers: {
-      "Content-Type": "application/json",
-    },
-    body: JSON.stringify(updatedTasks),
-  });
+function makeTheBoardGreatAgain(){
+    sortTheTasks();
+    renderToDoColumn();
+    renderInProgress();
+    renderAwaitFeedback();
+    renderDone();
 }
 
-/**
- * Lädt die Aufgaben von der API, wandelt die Antwort in JSON um
- * und übergibt die Daten an `renderTasks()`. Falls keine Aufgaben vorhanden sind,
- * wird ein leeres Array verwendet.
- */
-async function loadTasks() {
-  let response = await fetch(`${baseUrl}/tasks.json`);
-  let tasks = await response.json();
-  console.log(tasks);
-  if (!tasks) {
-    tasks = [];
-  }
-  renderTasks(tasks);
+function sortTheTasks(){
+    sortTheTasksToDO();
+    sortTheTasksInProgress();
+    sortTheTasksAwaitFeedback();
+    sortTheTasksDone();
 }
 
+function sortTheTasksToDO(){
+    savedTask.forEach(task => 
+        {if(task.status === "to-do")
+         toDoTasks.push(task);
 
-  function renderTasks(tasks) {
-  let taskContainer = document.getElementById("content");
-  taskContainer.innerHTML = "";
-  let taskIds = Object.keys(tasks);
-
-  for (let i = 0; i < taskIds.length; i++) {
-    let taskId = taskIds[i];
-    let task = tasks[taskId];
-
-    if (!task) {
-      continue;
-    }
-let subTasks = task.subTasks || [];
-    let completedSubtasks = subTasks.filter((st) => st.completed).length;
-    let totalSubtasks = subTasks.length;
-    let subTaskList = subTasks.map((st) => `<li>${st.name}</li>`).join("");
-
-  
-  taskContainer.innerHTML += generateBoardTemplate(taskId, task, completedSubtasks, totalSubtasks);
-    ;
-
-  }
-}   
-
-
-/**
- * Verarbeitet das Ablegen eines Drag & Drop-Elements, verschiebt die Task in das neue Ziel
- * und aktualisiert die Task-Anzahl-Anzeige.
- *
- * /* @param {DragEvent} ev - Das Drop-Event.
- */
-  function drop(ev) {
-  ev.preventDefault();
-  let taskId = ev.dataTransfer.getData("text");
-  let taskElement = document.getElementById(taskId);
-  let dropTarget = ev.target.closest(".tasks");
-  if (taskElement && dropTarget) {
-    dropTarget.appendChild(taskElement);
-  }
-  quantityUpdate();
-}  
-
-/**
- * Ermöglicht das Ablegen eines Elements, indem das Standardverhalten des Browsers verhindert wird.
- *
- * @param {DragEvent} ev - Das Drag-Event.
- */
- function allowDrop(ev) {
-  ev.preventDefault();
-  quantityUpdate()
-}
- 
-/**
- * Speichert die ID des gezogenen Elements in den `dataTransfer`-Daten,
- * um es für das Drag & Drop-Event verfügbar zu machen.
- *
- * @param {DragEvent} ev - Das Drag-Event.
- */
-function drag(ev) {
-  ev.dataTransfer.setData("text", ev.target.id);
-
-}  
-
-/**
- * Aktualisiert die Task-Anzahl-Anzeige in den verschiedenen Spalten
- * und blendet einen Hinweis ein, wenn keine Tasks mehr vorhanden sind.
- */
-
-  function quantityUpdate() {
-    const columns = [
-        { columnId: 'content', headerId: 'task_counter' },
-        { columnId: 'column_progress', headerId: 'no_tasks_inpro' },
-        { columnId: 'column_await', headerId: 'no_task_await' },
-        { columnId: 'column_done', headerId: 'no_task_done' }
-    ];
-
-    columns.forEach(({ columnId, headerId }) => {
-        const column = document.getElementById(columnId);
-        const header = document.getElementById(headerId);
-    const taskCount = [...column.children].filter(child => !child.classList.contains('no__tasks')).length;
-      updatedTodoColumns(header, taskCount);
-         if (taskCount === 0) {
-            header.style.display = "block";
-            header.innerHTML = "Keine Task Mehr";
-        } else {
-            header.style.display = "none"; 
         }
+        )
+}
+
+function sortTheTasksInProgress(){
+    savedTask.forEach(task => 
+        {if(task.status === "in-progress")
+            inProgressTasks.push(task);
+        }
+        )
+}
+
+function sortTheTasksAwaitFeedback(){
+    savedTask.forEach(task => 
+        {if(task.status === "await-feedback")
+         awaitFeedbackTasks.push(task);
+        }
+        )
+}
+
+function sortTheTasksDone(){
+    savedTask.forEach(task => 
+        {if(task.status === "done")
+         doneTasks.push(task);
+        }
+        )
+}
+
+function renderToDoColumn(){
+    let column = document.getElementById('column-todo');
+    column.innerHTML = '';
+    gatherAllInformations(toDoTasks, column);
+}
+
+function renderInProgress(){
+    let column = document.getElementById('column_progress');
+    column.innerHTML = '';
+    gatherAllInformations(inProgressTasks, column);
+}
+
+function renderAwaitFeedback(){
+    let column = document.getElementById('column_await');
+    column.innerHTML = '';
+    gatherAllInformations(awaitFeedbackTasks, column);
+}
+
+function renderDone(){
+    let column = document.getElementById('column_done');
+    column.innerHTML = '';
+    gatherAllInformations(doneTasks, column);
+}
+
+function gatherAllInformations(array, column){  
+    array.forEach(task=> {
+        let name = task.name;
+        let description = task.description;
+        let prioImgURL = prioImgUrl(task);
+        let completedSubtasks =  0;
+        let allSubTasks = 0;
+        if (task.subtasks.length > 0){
+            completedSubtasks = gatherCompletedSubtasks(task.subtasks); 
+            allSubTasks = task.subtasks.length;
+        }
+        let width = fillUpTheBar(completedSubtasks, allSubTasks);        
+        renderTaskCard(name, description, prioImgURL, completedSubtasks, allSubTasks, column, width);
+        whichCategory(task.category, task.name);
+    })  
+}
+
+function fillUpTheBar(completedSubtasks, allSubTasks){
+    let w 
+    if(allSubTasks === 0){
+        w = 0;
+    }
+    else{
+     w = (100/allSubTasks)*completedSubtasks;
+    }    
+    return w;
+}
+
+
+function gatherCompletedSubtasks(subtasks){
+    let i = 0;
+    subtasks.forEach(subtask => { 
+        if(subtask.status === 1) i++; 
     });
+    return i;
 }
 
-function updatedTodoColumns(header, count) {
-      header.innerHTML = `${header.innerHTML.split('')[0]}(${count})`;
-  }
-   
-  
-/**
- * Hebt ein Element durch das Hinzufügen der Klasse `column__hightlight` hervor.
- *
- * @param {string} id - Die ID des Elements, das hervorgehoben werden soll.
- */
-  function hightlight(id) {
-  document.getElementById(id).classList.add("column__hightlight");
- }
- 
-/**
- * Entfernt die Hervorhebung eines Elements, indem die Klasse `column__hightlight` entfernt wird.
- *
- * @param {string} id - Die ID des Elements, dessen Hervorhebung entfernt werden soll.
- */
-  function removeHighlight(id) {
-  document.getElementById(id).classList.remove("column__hightlight");
-}  
-
-/**
- * Zeigt ein Popup mit den Details einer Aufgabe an.
- *
- * @param {Object} task - Das Task-Objekt, das im Popup angezeigt werden soll.
- */
-function showPopup(task) {
-  let popupContainer = document.getElementById("popup-container");
-  popupContainer.innerHTML = createPopup(task);
-  popupContainer.style.display = "block";
+function prioImgUrl(task){
+    let url;
+    if(task.prio === 1){
+        url = 'assets/icons/Property 1=Low.png';
+    }
+    else if(task.prio === 3){
+        url = 'assets/icons/Property 1=Urgent.png';
+    }
+    else{
+        url ='assets/icons/Property 1=Medium.png'
+    }
+    return url;
 }
 
-function createPopup(task) {
-  let assignedTo = task.assigned_to ? task.assigned_to.join(", ") : "Niemand";
-  let priority = task.prio ? String(task.prio).toLowerCase() : "unknown";
-  return generateOverlayTemplate(task);
+function renderTaskCard(title, description, prioImgURL, completedSubtasks, allSubTasks, column, width){
+    column.innerHTML += generateBoardTemplate(title, description, prioImgURL, completedSubtasks, allSubTasks, width);
+        //setCategoryColor(category);
+        //fillupassigned();
 }
 
-
-  async function saveTask() {
-    const title = document.getElementById("text__input").value;
-    const description = document.getElementById("description").value;
-    const assignedToElement = document.getElementById("dropdown_toggle");
-    const assignedTo = assignedToElement ? [assignedToElement.innerText] : [];
-    const dueDate = document.getElementById("date__input").value;
-    const categoryElement = document.querySelector(".category");
-    const category = categoryElement ? categoryElement.value : "";
-    const subtask = document.getElementById("subtask").value;
-    if (categoryElement) {
-      categoryElement.classList.remove("task-type__overlay", "task__technical"); 
-      if (category.value === "User Story") {
-        category.classList.add("task-type__overlay");
-      } else {
-        categoryElement.classList.add("task__technical");
-      }
-
+function whichCategory(category, name){
+    let safename = name.replace(/\s+/g, "_");    
+    let taskCategory;
+    let colorSetting = document.getElementById('category_'+safename);  
+    if(category === 'us'){
+        taskCategory = 'UserStory';
+        colorSetting.classList.add('userStory__task');
+        colorSetting.innerHTML = taskCategory;
     }
-    
+    else{
+        taskCategory = 'Technical Task';
+        colorSetting.classList.add('technical__task');
+        colorSetting.innerHTML = taskCategory;
+    }
+}
 
-  
-    let prio = `Medium <img id="medium_img_add" src="assets/icons/Prio media.png" alt="="/>` // Standard: Medium
-    if (document.getElementById("prio_urgent").checked) {
-      prio = `Urgent <img id="urgend_img" src="assets/icons/Property 1=Urgent.png" alt="↑">`;
-    } else if (document.getElementById("prio_low").checked) {
-      prio = `Low <img id="low_img" src="assets/icons/Property 1=Low.png" alt="↓">  `;
-    }
-   if (!title || !dueDate || !category) {
-      alert("Bitte fülle alle Pflichtfelder aus!");
-      return;
-    }
-  
-    const newTask = {
-      name: title,
-      description: description || "",
-      assigned_to: assignedTo,
-      due_date: dueDate,
-      prio: prio,
-      category: category,
-      subtask: subtask ? [subtask] : [],
-      status: "to-do",
+function startDragging(draggedName){    
+ currendeDraggedElement = draggedName;
+}
+
+function allowDrop(ev) {
+    ev.preventDefault();
+}
+
+function moveTo(column){
+    draggQueenOperation(column);
+    emptyAll();
+   makeTheBoardGreatAgain();
+   updateTasksInFirebase();
+}
+
+function draggQueenOperation(column){
+    let draggedTask = savedTask.find(task => task.name === currendeDraggedElement);
+    draggedTask.status = column;
+    console.log(draggedTask.status);
+    savedTask = savedTask.map(task => {
+     if (task.name === draggedTask.name) {
+         return draggedTask;
+     }
+     return task;
+     });
+}
+
+function emptyAll(){
+    toDoTasks =[];
+    inProgressTasks=[];
+    awaitFeedbackTasks=[];
+    doneTasks=[];
+}
+
+async function updateTasksInFirebase() {
+    const options = {
+        method: "PUT",
+        headers: {
+            "Content-Type": "application/json",
+        },
+        body: JSON.stringify(savedTask), // Array in JSON umwandeln
     };
-  
-   await addNewTasks([newTask]); 
-      clearForm();
-      await loadTasks();
-      closeAddtask(); 
-    
-  
-} 
-  
-/**
- * Setzt alle Formularfelder zurück, indem die Werte von Texteingaben,
- * der Kategorieauswahl und des Subtask-Feldes geleert werden.
- * Die Priorität wird auf "Medium" zurückgesetzt.
- */
-function clearForm() {
-  document.getElementById("text__input").value = "";
-  document.getElementById("description").value = "";
-  document.getElementById("dropdown_toggle").value = "";
-  document.getElementById("date__input").value = "";
-  document.getElementById("prio_medium").checked = true;
-  document.querySelector(".category").value = "";
-  document.getElementById("subtask").value = "";
+    try {
+        const response = await fetch(`${baseUrl}/tasks.json`, options);
+    } catch (error) {
+        console.error("Fehler beim Update:", error);
+    }
 }
+ //ondragleave="removeHighlight('open')"
 
-/*
- * Blendet die leeren Statusmeldungen für die verschiedenen Task-Kategorien ein.
- */
 
-function saveTaskToLocalStorage(task) {
-  let localTasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  localTasks.push(task);
-  localStorage.setItem("tasks", JSON.stringify(localTasks));
+function openTaskDetails(){
+
 }
-function loadLocalTasks() {
-  let tasks = JSON.parse(localStorage.getItem("tasks")) || [];
-  console.log("Geladene lokale Aufgaben:", tasks);
-  renderTasks(tasks);
-}
-
-/**
- * Schließt das Popup, indem es ausgeblendet wird.
- */
-function closePopup() {
-  document.getElementById("popup-container").style.display = "none";
-}
-
-/**
- * Schließt das "Add Task"-Fenster, indem es ausgeblendet wird.
- */
-function closeAddtask() {
-  document.getElementById("cover__all_addTask").style.display = "none";
-}
-
-/**
- * Öffnet das "Add Task"-Fenster, indem es angezeigt wird.
- */
-function openAddtask() {
-  document.getElementById("cover__all_addTask").style.display = "block";
-}
-
-/**
- * Schließt das Popup-Fenster, indem es ausgeblendet wird.
- */
-function closepopup() {
-  document.getElementById("popup_card").style.display = "none";
-}
-
-
-
-

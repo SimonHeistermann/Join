@@ -1,3 +1,4 @@
+<<<<<<< Updated upstream
 
 
 function generateBoardTemplate(
@@ -7,117 +8,27 @@ function generateBoardTemplate(
   totalSubtasks,
   subTaskList
 ) {
+=======
+function generateBoardTemplate(title, description, prioImgURL, completedSubtasks, allSubTasks, width) {
+  console.log(width);
+  let safename = title.replace(/\s+/g, "_");
+>>>>>>> Stashed changes
   return `
-                <div id="task${taskId}" class="task" draggable="true" ondragstart="drag(event)">
-                    <div class="Overlay" onclick='showPopup(${JSON.stringify(
-                      task
-                    )})'>
-                        <div class="task__technical">${task.category}</div>
-                        <h3>${task.name}</h3>
-                        <p>${task.description}</p>
-                        <div class="progress">
-                            <div class="progress-bar" style="width: ${
-                              task.progress || 2
-                            }%"></div>
-                        </div>
-                        <div class="subtasks">${completedSubtasks}/${totalSubtasks} erledigt
-                            <ul>${subTaskList}</ul>
-                        </div>
-                    </div>
-                </div>
-            `;
-}
-
-function generateOverlayTemplate(task, priority, assignedTo) {
-  return `
- <div class="overlayPopup">
-   <div class="popup">
-      <div class="popup__card-header">
-        <div class="close__btn__popup">
-          <span class="task-type__overlay">${task.category}</span>
-          <button onclick="closePopup()">&times;</button>
-        </div>
-      </div>
-      <div class="all__content">
-        <div class="title_header">${task.name}</div>
-        <div class="popup__card-section">
-          <p>${task.description}</p>
-        </div>
-        <div class="popup__card-section">
-          <p><strong>Due date:</strong> ${
-            task.due_date || "Kein Datum angegeben"
-          }</p>
-        </div>
-        <p><strong>Priority:</strong>
-         <span class="popup__card-priority">${task.prio}</span></p>
-      </div>
-      <div class="popup__card-section">
-        <p><strong>Assigned To:</strong> ${task.assigned_to}</p>
-        <div class="popup__card-section">
-          <p><strong>Subtasks:</strong> ${
-            task.subtasks ? task.subtasks.join(", ") : "Keine Subtasks"
-          }</p>
-        </div>
-      </div>
-      <div class="conten__delete__editiBTN">
-        <div class="popup__card-actions">
-         <button class="delete-btn" onclick="deleteTask('${
-           task.id ? task.id : ""
-         }')">
-
-            <img src="assets/icons/delete_icon_blue.png" alt=""> Delete
-          </button>
-          <button id="popup_edit_button" class="edit_button">
-            <img src="assets/icons/edit_icon_blue.png" alt="">Edit
-          </button>
-        </div>
-      </div>
-  
-   </div>
-    
- <div class="popupMobile">
-    <div class="popup__card-header">
-        <div class="close__btn__popup">
-          <span class="">${task.category}</span>
-          <button onclick="closePopup()">&times;</button>
-        </div>
-      </div>
-      <div class="all__content">
-        <div class="title_header__mobile">${task.name}</div>
-        <div class="popup__card-section">
-          <p>${task.description}</p>
-        </div>
-        <div class="popup__card-section">
-          <p><strong>Due date:</strong> ${
-            task.due_date || "Kein Datum angegeben"
-          }</p>
-        </div>
-        <p><strong>Priority:</strong>
-         <span class="popup__card-priority">${priority}</span></p>
-      </div>
-      <div class="popup__card-section">
-        <p><strong>Assigned To:</strong> ${assignedTo}</p>
-        <div class="popup__card-section">
-          <p><strong>Subtasks:</strong> ${
-            task.subtasks ? task.subtasks.join(", ") : "Keine Subtasks"
-          }</p>
-        </div>
-      </div>
-      <div class="conten__delete__editiBTN">
-        <div class="popup__card-actions">
-         <button class="delete-btn" onclick="deleteTask('${
-           task.id ? task.id : ""
-         }')">
-
-            <img src="assets/icons/delete_icon_blue.png" alt=""> Delete
-          </button>
-          <button id="popup_edit_button" class="edit_button">
-            <img src="assets/icons/edit_icon_blue.png" alt="">Edit
-          </button>
-        </div>
-      </div>
-  </div>
-</div>
-
-  `;
+                <div class="taskcard" draggable="true" ondragstart="startDragging('${title}')" id='taskcard_${safename}'>
+          <div class="category__task technical__task" id='category_${safename}'></div>
+          <div class="headline__Task" id='headline_Task_${safename}'>${title}</div>
+          <div class="description__Task" id='description_Task_${safename}'>${description}</div>
+          <div class="bar__quantity_Subtasks">  
+            <div class="progress">
+              <div class="outer__bar">
+                <div class="progress-bar" role="progressbar" style="width:${width}%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id='progress_bar_${safename}'></div>
+              </div>
+            </div>
+            <div class="how__many_subtasks" id='subtask_quantity_${safename}'><p class="completed__Subtasks" id='completed_Subtasks_${safename}'>${completedSubtasks}</p>/ <p class="allTasks">${allSubTasks}</p> Subtasks</div>
+          </div>
+          <div class="assigned__prio">
+              <div class="assigned" id='assigned_${safename}'>people</div>
+              <div class="prio" id='img_prio_${safename}'><img src="${prioImgURL}" alt=""></div>
+          </div>
+        </div>`
 }
