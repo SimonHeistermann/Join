@@ -207,8 +207,44 @@ async function updateTasksInFirebase() {
     }
 }
  //ondragleave="removeHighlight('open')"
+function startSingleCard(title){
+    document.getElementById('overlay_overall').classList.remove('d__none')
+    generateSingleTaksCard(title);
+}
 
+function generateSingleTaksCard(title){
+    let safename = title.replace(/\s+/g, "_");
+    let singleCardData = savedTask.find(task => task.name === title);
+    let singleCardCategory = document.getElementById('single_card_' + safename);
+     if (singleCardData.category === 'us'){      
+        document.getElementById('single_card_category').classList.add('userStory__task');
+        document.getElementById('single_card_category').innerHTML = 'User Story';
+    }else{
+        document.getElementById('single_card_category').classList.add('technical__task');
+        document.getElementById('single_card_category').innerHTML = 'Technical Task';
+    }
+    document.getElementById('single_card_title').innerHTML = title;
+    document.getElementById('single_card_description').innerHTML = singleCardData.description;
+    setTheDateRight(singleCardData);
+    setSingleCardPrio(singleCardData);  
+}
 
-function openTaskDetails(){
+function setSingleCardPrio(singleCardData){
+    if(singleCardData.prio === 3){
+        document.getElementById('single_card_prio').innerHTML = 'Urgend';
+        document.getElementById('single_card_prio_img_url').src = './assets/icons/Property 1=Urgent.png';
+    }else if(singleCardData.prio === 2){
+        document.getElementById('single_card_prio').innerHTML = 'Medium';
+        document.getElementById('single_card_prio_img_url').src = './assets/icons/Property 1=Medium.png';
+    }
+    else{
+        document.getElementById('single_card_prio').innerHTML = 'Low';
+        document.getElementById('single_card_prio_img_url').src = './assets/icons/Property 1=Low.png';
+    }
+}
 
+function setTheDateRight(data){
+    let date = data.due_date;
+    let formattedDate = new Date(date).toLocaleDateString("de-DE");
+    document.getElementById('singel_card_date').innerHTML =  formattedDate;
 }

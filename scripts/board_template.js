@@ -1,7 +1,7 @@
 function generateBoardTemplate(title, description, prioImgURL, completedSubtasks, allSubTasks, width) {
   let safename = title.replace(/\s+/g, "_");
   return `
-                <div class="taskcard" draggable="true" ondragstart="startDragging('${title}')" id='taskcard_${safename}' onclick='generateSingleTaksCard(${safename, title, description, prioImgURL, completedSubtasks, allSubTasks, width})'>
+                <div class="taskcard" draggable="true" ondragstart="startDragging('${title}')" id='taskcard_${safename}' onclick='startSingleCard("${title}")'>
           <div class="category__task technical__task" id='category_${safename}'></div>
           <div class="headline__Task" id='headline_Task_${safename}'>${title}</div>
           <div class="description__Task" id='description_Task_${safename}'>${description}</div>
@@ -26,4 +26,12 @@ return `
                 <div class="progress-bar" role="progressbar" style="width:${width}%" aria-valuenow="0" aria-valuemin="0" aria-valuemax="100" id='progress_bar_${safename}'></div>
               </div>
               `
+}
+
+
+function renderSubtaskSingleCard(title, safename, ){
+  return   `<div class="ceckbox__outer__rim">
+          <button class="single__card__checkbox" id='checkbox_${1}'><img id='checkbox_subtask_${2}' src="./assets/icons/Check button checked.png" alt="checkbox"></button>diesdasananans</div> <br>
+          <div class="ceckbox__outer__rim">
+          <button class="single__card__checkbox" id="checkbox_${4}"><img id='checkbox_subtask_${3}' src="./assets/icons/Check button.png" alt="checkbox"></button></div><br>`
 }
