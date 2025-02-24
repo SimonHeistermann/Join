@@ -207,6 +207,8 @@ async function updateTasksInFirebase() {
     }
 }
  //ondragleave="removeHighlight('open')"
+
+ // Overlay Starts here
 function startSingleCard(title){
     document.getElementById('overlay_overall').classList.remove('d__none')
     generateSingleTaksCard(title);
@@ -215,18 +217,12 @@ function startSingleCard(title){
 function generateSingleTaksCard(title){
     let safename = title.replace(/\s+/g, "_");
     let singleCardData = savedTask.find(task => task.name === title);
-    let singleCardCategory = document.getElementById('single_card_' + safename);
-     if (singleCardData.category === 'us'){      
-        document.getElementById('single_card_category').classList.add('userStory__task');
-        document.getElementById('single_card_category').innerHTML = 'User Story';
-    }else{
-        document.getElementById('single_card_category').classList.add('technical__task');
-        document.getElementById('single_card_category').innerHTML = 'Technical Task';
-    }
+    setSingleCardCategory(singleCardData);
     document.getElementById('single_card_title').innerHTML = title;
     document.getElementById('single_card_description').innerHTML = singleCardData.description;
     setTheDateRight(singleCardData);
     setSingleCardPrio(singleCardData);  
+    setAssignedPeople(singleCardData);
 }
 
 function setSingleCardPrio(singleCardData){
@@ -247,4 +243,24 @@ function setTheDateRight(data){
     let date = data.due_date;
     let formattedDate = new Date(date).toLocaleDateString("de-DE");
     document.getElementById('singel_card_date').innerHTML =  formattedDate;
+}
+
+function setSingleCardCategory(singleCardData){
+    if (singleCardData.category === 'us'){      
+        document.getElementById('single_card_category').classList.add('userStory__task');
+        document.getElementById('single_card_category').innerHTML = 'User Story';
+    }else{
+        document.getElementById('single_card_category').classList.add('technical__task');
+        document.getElementById('single_card_category').innerHTML = 'Technical Task';
+    }
+}
+
+function setAssignedPeople(singleCardData){
+    let people = singleCardData.assigned_to;
+    people.forEach(person =>{ 
+        let initials = getInitials(person);
+        let badgecolor = getBadgeColor(person);
+        document.getElementById('assigned_content').innerHTML += 
+        `<div class="assigned_people"><div class="assigned__badge ${badgecolor}">${initials}</div>&emsp;<div class="asigned__user__name">${person}</div></div>`
+    })
 }

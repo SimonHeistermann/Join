@@ -26,6 +26,7 @@
     <link rel="stylesheet" href="./styles/standard.css" />
     <link rel="stylesheet" href="./styles/assets.css" />
     <link rel="stylesheet" href="styles/add_task.css" />
+    <link rel="stylesheet" href="./styles/bgcolors.css">
     
 
     <script src="./script.js"></script>
@@ -200,13 +201,16 @@
         <div class="description__single__card the__single__card__standard" id="single_card_description"></div>
         <div class="single__card__due_date the__single__card__standard"><div>Due Date:&emsp;</div>  <div class="date__content" id="singel_card_date"></div></div>
         <div class="single__card__prio the__single__card__standard">Priority:&emsp;&emsp;<div class="prio" id="single_card_prio"></div>&nbsp;<img src="" id="single_card_prio_img_url" alt="prio"></div>
-        <div class="single__card__assigned the__single__card__standard" id="single_card_assigned"></div>
+        <div class="single__card__assigned the__single__card__standard" id="single_card_assigned">
+          <div class="assigned__headline">Assigned To:</div>
+          <div class="assigned__content" id="assigned_content"></div>
+        </div>
         <div class="single__card__subtasks the__single__card__standard" id="single_card_subtasks">
           
         </div>
         <div class="single__card__buttons the__single__card__standard">
-          <button class="single__card__buttons__button"><img src="./assets/icons/delete_sub.png" alt="edit">Edit</button>
-          <button class="single__card__buttons__button"><img src="./assets/icons/edit_sub.png" alt="müll">Delete</button>
+          <button class="single__card__buttons__button"><img src="./assets/icons/edit_sub.png" alt="edit">Edit</button>
+          <button class="single__card__buttons__button"><img src="./assets/icons/delete_sub.png" alt="müll">Delete</button>
         </div>
 
       </div>
