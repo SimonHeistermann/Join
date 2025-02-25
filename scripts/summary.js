@@ -86,7 +86,7 @@ function getTheSummary(){
 function howManyToDo(){
     let amount = 0;
     tasks.forEach(task => {
-        if(task.position === 1){
+        if(task.status === 'to-do'){
             amount++;
         }
     });
@@ -102,7 +102,7 @@ function howManyToDo(){
 function howManyDone(){
     let amount = 0;
     tasks.forEach(task => {
-        if (task.position === 4) {
+        if (task.status === 'done') {
             amount++;
         }
     });
@@ -119,7 +119,7 @@ function howManyDone(){
 function howManyInProgress(){
     let amount = 0;
     tasks.forEach(task => {
-        if(task.position === 2) {
+        if(task.status === 'in-progress') {
             amount ++;
             console.log(amount);
         }
@@ -136,7 +136,7 @@ function howManyInProgress(){
 function howManyFeedback(){
     let amount = 0;
     tasks.forEach(task => {
-        if(task.position === 3){
+        if(task.status === 'await-feedback'){
             amount ++;
         }
     });
