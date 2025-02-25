@@ -196,7 +196,7 @@
   </div>
     <div class="overlay__overall d__none " id="overlay_overall">
       <div class="single__task__card" id="single_task_card">
-        <div class="single__card__header the__single__card__standard"><div class="single__card__category" id='single_card_category'></div><button class="single_card_close_button"><img src="./assets/icons/close_sub.png" alt="x"></button></div> 
+        <div class="single__card__header the__single__card__standard"><div class="single__card__category" id='single_card_category'></div><button class="single_card_close_button" onclick="singleCardColse()"><img src="./assets/icons/close_sub.png" alt="x"></button></div> 
         <div class="singel__card__title the__single__card__standard" id="single_card_title"></div>
         <div class="description__single__card the__single__card__standard" id="single_card_description"></div>
         <div class="single__card__due_date the__single__card__standard"><div>Due Date:&emsp;</div>  <div class="date__content" id="singel_card_date"></div></div>
@@ -205,8 +205,11 @@
           <div class="assigned__headline">Assigned To:</div>
           <div class="assigned__content" id="assigned_content"></div>
         </div>
-        <div class="single__card__subtasks the__single__card__standard" id="single_card_subtasks">
+        <div class="single__card__subtasks__overall  the__single__card__standard">
+          Subtasks
+          <div class="single__card__subtasks" id="single_card_subtasks">
           
+          </div>
         </div>
         <div class="single__card__buttons the__single__card__standard">
           <button class="single__card__buttons__button"><img src="./assets/icons/edit_sub.png" alt="edit">Edit</button>

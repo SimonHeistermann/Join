@@ -314,9 +314,18 @@ span {
   margin-bottom: 4px;
 }
 
+.single__card__subtasks {
+height: 100px;
+}
+
 .ceckbox__outer__rim{
   display: flex;
   align-items: center;
+  font-size: 16px;
+}
+
+.single__card__subtasks__overall{
+  font-size: 20px;
 }
 
 .single__card__buttons{

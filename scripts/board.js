@@ -223,6 +223,7 @@ function generateSingleTaksCard(title){
     setTheDateRight(singleCardData);
     setSingleCardPrio(singleCardData);  
     setAssignedPeople(singleCardData);
+    gatherSubtasks(singleCardData);
 }
 
 function setSingleCardPrio(singleCardData){
@@ -250,7 +251,7 @@ function setSingleCardCategory(singleCardData){
         document.getElementById('single_card_category').classList.add('userStory__task');
         document.getElementById('single_card_category').innerHTML = 'User Story';
     }else{
-        document.getElementById('single_card_category').classList.add('technical__task');
+        document.getElementById('single_card_category').classList.add('userStory__task');
         document.getElementById('single_card_category').innerHTML = 'Technical Task';
     }
 }
@@ -263,4 +264,51 @@ function setAssignedPeople(singleCardData){
         document.getElementById('assigned_content').innerHTML += 
         `<div class="assigned_people"><div class="assigned__badge ${badgecolor}">${initials}</div>&emsp;<div class="asigned__user__name">${person}</div></div>`
     })
+}
+
+function gatherSubtasks(singleCardData){   
+    if(singleCardData.subtasks.length > 0){
+        let subtasks = singleCardData.subtasks;  
+        subtasks.forEach(task => {
+            let subtaskName = task.name;
+            let src = setTheCheckbox(task);
+            let safename = subtaskName.replace(/\s+/g, "_");
+            document.getElementById('single_card_subtasks').innerHTML += `<div class="ceckbox__outer__rim">
+                                                                        <button class="single__card__checkbox" id='checkbox_${safename}'>
+                                                                        <img id='checkbox_img_${safename}' src='${src}' alt="checkbox"></button>${subtaskName}</div>`
+        })
+    }else{
+        document.getElementById('single_card_subtasks').innerHTML = 'No Subtasks saved';
+    }
+    
+}
+
+function setTheCheckbox(task){
+    let src;
+    if(task.status === 1){
+        src = './assets/icons/Check button checked.png';
+    }else{
+       src = './assets/icons/Check button.png';
+    }        
+    return src;
+}
+
+function singleCardColse(){
+    let singleCard = document.getElementById('overlay_overall');
+    singleCard.classList.add('d__none');
+    emptyAll();
+}
+
+function emptyAll(){
+ document.getElementById('single_card_category').innerHTML = '';
+ document.getElementById('single_card_category').classList.remove('userStory__task', 'andere_klasse');
+ document.getElementById('single_card_title').innerHTML = '';
+ document.getElementById('single_card_description').innerHTML = '';
+ document.getElementById('singel_card_date').innerHTML = '';
+ document.getElementById('single_card_prio').innerHTML = '';
+ document.getElementById('single_card_prio_img_url').src = '';
+ document.getElementById('assigned_content').innerHTML = '';
+ console.log(document.getElementById('single_card_subtasks'));
+
+ document.getElementById('single_card_subtasks').innerHTML='';
 }
