@@ -19,7 +19,7 @@ function generateBoardTemplate(title, description, prioImgURL, completedSubtasks
           </div>
         </div>
         <div class="assigned__prio">
-          <div class="assigned" id='assigned_${safename}'>people</div>
+          <div class="assigned" id='assigned_${safename}'></div>
           <div class="prio" id='img_prio_${safename}'><img src="${prioImgURL}" alt=""></div>
         </div>
       </div>`;
@@ -30,7 +30,7 @@ function generateBoardTemplate(title, description, prioImgURL, completedSubtasks
         <div class="headline__Task" id='headline_Task_${safename}'>${title}</div>
         <div class="description__Task" id='description_Task_${safename}'>${description}</div>
         <div class="assigned__prio">
-          <div class="assigned" id='assigned_${safename}'>people</div>
+          <div class="assigned" id='assigned_${safename}'></div>
           <div class="prio" id='img_prio_${safename}'><img src="${prioImgURL}" alt=""></div>
         </div>
       </div>`;

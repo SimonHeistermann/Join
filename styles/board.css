@@ -222,6 +222,21 @@ span {
 .assigned__prio{
   display: flex;
   justify-content: space-between;
+  align-items: center;
+}
+
+.assigned{
+  display: flex;
+  margin-top: 8px;
+}
+
+.assigned__badge {
+  position: relative;
+  margin-left: -10px; 
+  z-index: 1; 
+}
+.assigned__badge:first-child {
+  margin-left: 0; 
 }
 
 .column .tasks p {

@@ -99,6 +99,7 @@ function gatherAllInformations(array, column){
         let width = fillUpTheBar(completedSubtasks, allSubTasks);        
         renderTaskCard(name, description, prioImgURL, completedSubtasks, allSubTasks, column, width);
         whichCategory(task.category, task.name);
+        addAsignedPeople(task.assigned_to, task.name);
     })  
 }
 
@@ -138,8 +139,6 @@ function prioImgUrl(task){
 
 function renderTaskCard(title, description, prioImgURL, completedSubtasks, allSubTasks, column, width){
     column.innerHTML += generateBoardTemplate(title, description, prioImgURL, completedSubtasks, allSubTasks, width);
-        //setCategoryColor(category);
-        //fillupassigned();
 }
 
 function whichCategory(category, name){
@@ -156,6 +155,16 @@ function whichCategory(category, name){
         colorSetting.classList.add('technical__task');
         colorSetting.innerHTML = taskCategory;
     }
+}
+
+function addAsignedPeople(people, name){
+    let safename = name.replace(/\s+/g, "_");
+    people.forEach(person =>{ 
+        let initials = getInitials(person);
+        let badgecolor = getBadgeColor(person);
+        document.getElementById('assigned_' + safename).innerHTML += `<div class="assigned__badge ${badgecolor}">${initials}</div>`;
+        
+    })
 }
 
 function startDragging(draggedName){    
@@ -296,10 +305,10 @@ function setTheCheckbox(task){
 function singleCardColse(){
     let singleCard = document.getElementById('overlay_overall');
     singleCard.classList.add('d__none');
-    emptyAll();
+    emptyAllSingleCard();
 }
 
-function emptyAll(){
+function emptyAllSingleCard(){
  document.getElementById('single_card_category').innerHTML = '';
  document.getElementById('single_card_category').classList.remove('userStory__task', 'andere_klasse');
  document.getElementById('single_card_title').innerHTML = '';
