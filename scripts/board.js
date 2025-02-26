@@ -332,4 +332,5 @@ function completeSubtask(subName) {
         actualSubTask.status = 0;  
         document.getElementById('checkbox_img_' + safename).src = './assets/icons/Check button.png';
     }
+    updateTasksInFirebase();
 }
