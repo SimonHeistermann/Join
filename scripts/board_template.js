@@ -37,13 +37,3 @@ function generateBoardTemplate(title, description, prioImgURL, completedSubtasks
   }
 }
 
-
-
-
-
-function renderSubtaskSingleCard(title, safename, ){
-  return   `<div class="ceckbox__outer__rim">
-          <button class="single__card__checkbox" id='checkbox_${1}'><img id='checkbox_subtask_${2}' src="./assets/icons/Check button checked.png" alt="checkbox"></button>diesdasananans</div> <br>
-          <div class="ceckbox__outer__rim">
-          <button class="single__card__checkbox" id="checkbox_${4}"><img id='checkbox_subtask_${3}' src="./assets/icons/Check button.png" alt="checkbox"></button></div><br>`
-}

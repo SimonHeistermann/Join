@@ -224,7 +224,6 @@ function startSingleCard(title){
 }
 
 function generateSingleTaksCard(title){
-    let safename = title.replace(/\s+/g, "_");
     let singleCardData = savedTask.find(task => task.name === title);
     setSingleCardCategory(singleCardData);
     document.getElementById('single_card_title').innerHTML = title;
@@ -277,13 +276,13 @@ function setAssignedPeople(singleCardData){
 
 function gatherSubtasks(singleCardData){   
     if(singleCardData.subtasks.length > 0){
-        let subtasks = singleCardData.subtasks;  
-        subtasks.forEach(task => {
+        let subTasks = singleCardData.subtasks;  
+        subTasks.forEach(task => {
             let subtaskName = task.name;
             let src = setTheCheckbox(task);
             let safename = subtaskName.replace(/\s+/g, "_");
             document.getElementById('single_card_subtasks').innerHTML += `<div class="ceckbox__outer__rim">
-                                                                        <button class="single__card__checkbox" id='checkbox_${safename}'>
+                                                                        <button class="single__card__checkbox" id='checkbox_${safename}' onclick='completeSubtask("${subtaskName}")'>
                                                                         <img id='checkbox_img_${safename}' src='${src}' alt="checkbox"></button>${subtaskName}</div>`
         })
     }else{
@@ -306,6 +305,8 @@ function singleCardColse(){
     let singleCard = document.getElementById('overlay_overall');
     singleCard.classList.add('d__none');
     emptyAllSingleCard();
+    emptyAll();
+    makeTheBoardGreatAgain();
 }
 
 function emptyAllSingleCard(){
@@ -317,7 +318,18 @@ function emptyAllSingleCard(){
  document.getElementById('single_card_prio').innerHTML = '';
  document.getElementById('single_card_prio_img_url').src = '';
  document.getElementById('assigned_content').innerHTML = '';
- console.log(document.getElementById('single_card_subtasks'));
-
  document.getElementById('single_card_subtasks').innerHTML='';
+}
+
+function completeSubtask(subName) {
+    let safename = subName.replace(/\s+/g, "_");
+    let card = savedTask.find(array => array.subtasks.some(subtask => subtask.name === subName));
+    let actualSubTask = card.subtasks.find(subtask => subtask.name === subName);
+    if (actualSubTask.status === 0) {
+        actualSubTask.status = 1;
+        document.getElementById('checkbox_img_' + safename).src = './assets/icons/Check button checked.png';
+    } else {
+        actualSubTask.status = 0;  
+        document.getElementById('checkbox_img_' + safename).src = './assets/icons/Check button.png';
+    }
 }
