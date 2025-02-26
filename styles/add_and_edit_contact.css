@@ -363,7 +363,7 @@
     box-shadow: 0 4px 4px  #00000040;
 }
 
-.save__button {
+.save__button, .save__button__current__user {
     display: flex;
     align-items: center;
     justify-content: center;
@@ -378,12 +378,12 @@
     transition: background-color 125ms ease-in, box-shadow 125ms;
 }
 
-.save__button:hover {
+.save__button:hover, .save__button__current__user:hover {
     background-color: #29ABE2;
     box-shadow: 0 4px 4px  #00000040;
 }
 
-.save__button:active {
+.save__button:active, .save__button__current__user:active {
     background-color: #091931;
     box-shadow: 0 4px 4px  #00000040;
 }
@@ -395,6 +395,19 @@
     position: relative;
     left: 8px;
 }
+
+.edit__current__user__buttonbox {
+    display: flex;
+    align-items: center;
+    gap: 32px;
+    position: relative;
+    left: -40px;
+}
+
+.default__profilebadge__mobile, .contacts__profilebadge__big__mobile {
+    display: none;
+}
+
 
 
 

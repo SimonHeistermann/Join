@@ -4,6 +4,7 @@ header {
     box-shadow: unset;
     height: auto;
     z-index: 0;
+    position: unset;
 }
 
 .header__container {
@@ -11,7 +12,7 @@ header {
     justify-content: space-between;
     align-items: flex-start;
     width: min(100%, 1920px);
-    margin-top: 32px;
+    margin-top: 24px;
     margin-inline: auto;
     padding-inline: clamp(32px, 6vw, 64px);
 }
@@ -33,6 +34,11 @@ header {
     position: relative;
     top: 16px;
     right: 120px;
+}
+
+.back__button img {
+    width: 32px;
+    height: 32px;
 }
 
 .back__button:hover .thin__back__button {
@@ -72,23 +78,13 @@ main {
     width: min(100%, 1920px);
     margin-inline: auto;
     padding-inline: clamp(16px, 6vw, 64px);
-    margin-top: 0;
-    margin-bottom: 0;
+    margin-top: 16px;
+    margin-bottom: 32px;
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
-}
-
-.main__content {
-    width: min(100%, 1920px);
-    height: 100vh;
-    margin-inline: auto;
-    padding-inline: clamp(16px, 6vw, 64px);
-    position: absolute;
-    display: flex;
-    justify-content: center;
-    align-items: center;
+    overflow-x: hidden;
 }
 
 .register__container {
@@ -100,7 +96,10 @@ main {
     gap: 32px;
     background-color: white;
     border-radius: 30px;
-    padding: 48px 88px;
+    padding: 48px;
+    width: min(100%, 598px);
+    height: 630px;
+    margin-top: 32px;
 }
 
 .register__headlinecontainer {
@@ -123,7 +122,7 @@ main {
 }
 
 .register__inputbox {
-    min-width: 422px;
+    width: min(100%, 422px);
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -308,14 +307,16 @@ main {
     width: 24px;
 }
 
-.erorr__inputs {
-    border: 1px solid #FF001F;
+.error__inputs {
+    border: 1px solid #FF001F !important;
+    animation: shake 0.3s ease-in-out;
 }
 
 .errormessage__box {
     font-size: 13px;
     font-weight: 400;
     color: #FF8190;
+    height: 16px;
 }
 
 .register__checkbox {
@@ -429,16 +430,16 @@ footer {
 }
 
 .signed__up__notification__active {
-    transform: translateY(-1450px);
+    transform: translateY(-1400px);
 }
 
-.overlay__signed__up{
+.overlay__signed__up {
     position: absolute;
     top: 0;
     left: 0;
-    height: 100%;
+    height: 100vh;
     width: 100%;
     background-color: rgba(0, 0, 0, 0.1);
     filter: blur(5px);
-    z-index: 100;
+    z-index: 1000;
 }

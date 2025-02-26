@@ -56,6 +56,7 @@ header {
     display: flex;
     box-shadow: unset;
     height: auto;
+    position: unset;
 }
 
 .header__container {
@@ -89,6 +90,12 @@ header {
     gap: 16px;
 }
 
+.header__buttonbox__mobile {
+    display: none;
+    align-items: center;
+    gap: 16px;
+}
+
 .notajoinuser__button {
     background: transparent;
 }
@@ -118,12 +125,13 @@ main {
     width: min(100%, 1920px);
     margin-inline: auto;
     padding-inline: clamp(16px, 6vw, 64px);
-    margin-top: 32px;
-    margin-bottom: 160px;
+    margin-top: 16px;
+    margin-bottom: 32px;
     position: relative;
     display: flex;
-    justify-content: center;
+    justify-content: flex-start;
     align-items: center;
+    overflow-x: hidden;
 }
 
 .login__container {
@@ -135,7 +143,9 @@ main {
     gap: 32px;
     background-color: white;
     border-radius: 30px;
-    padding: 48px 115px;
+    padding: 48px;
+    width: min(652px, 100%);
+    margin-top: 32px;
 }
 
 .login__headlinebox {
@@ -153,7 +163,7 @@ main {
 }
 
 .login__inputbox {
-    min-width: 422px;
+    width: min(100%, 422px);
     display: flex;
     flex-direction: column;
     gap: 20px;
@@ -276,16 +286,6 @@ main {
     width: 24px;
 }
 
-.erorr__inputs {
-    border: 1px solid #FF001F;
-}
-
-.errormessage__box {
-    font-size: 13px;
-    font-weight: 400;
-    color: #FF8190;
-}
-
 .login__buttonbox {
     display: flex;
     align-items: center;
@@ -372,3 +372,16 @@ footer {
 .rightfooter__button {
     width: 107px;
 }
+
+.error__inputs {
+    border: 1px solid #FF001F !important;
+    animation: shake 0.3s ease-in-out;
+}
+
+.errormessage__box {
+    font-size: 13px;
+    font-weight: 400;
+    color: #FF8190;
+    height: 16px;
+}
+

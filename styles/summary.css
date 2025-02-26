@@ -33,7 +33,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 184px;
+    height: 186px;
     width: 282px;
 }
 
@@ -60,7 +60,7 @@
 .keymetrics__todo:hover {
     cursor: pointer;
     background-color: #2A3647;
-    height: 184px;
+    height: 186px;
     width: 282px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2); 
     color: white;
@@ -128,7 +128,7 @@
 .keymetrics__done:hover {
     cursor: pointer;
     background-color: #2A3647;
-    height: 184px;
+    height: 186px;
     width: 282px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     color: white;
@@ -179,7 +179,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 184px;
+    height: 186px;
     width: 576px;
 }
 
@@ -195,7 +195,7 @@
 .keymetrics__urgent:hover {
     cursor: pointer;
     background-color: #2A3647;
-    height: 184px;
+    height: 186px;
     width: 576px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     color: white;
@@ -267,8 +267,8 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    height: 184px;
-    width: 184px;
+    height: 186px;
+    width: 186px;
 }
 
 .keymetrics__lastrow{
@@ -284,8 +284,8 @@
 .keymetrics__lastrow:hover {
     cursor: pointer;
     background-color: #2A3647;
-    height: 184px;
-    width: 184px;
+    height: 186px;
+    width: 186px;
     box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
     color: white;
 }
@@ -305,6 +305,7 @@
     height: 48px;
     margin-inline: 8px;
     text-align: center;
+    width: 158px;
 }
 
 .greet__box {

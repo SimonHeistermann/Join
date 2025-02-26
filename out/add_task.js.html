@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: add_task.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: add_task.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>let flatpickrInstance;
+let choosenContacts = [];
+let taskPrio;
+let taskCategories = ['Technical Task', 'User Story'];
+let selectedTaskCategory = "";
+let addedSubtasks = [];
+let subtaskIdCounter = 0;
+let currentUserChoosen = false;
+
+
+/**
+ * Initializes the task-related functionalities, including the date picker and fetching contacts.
+ */
+async function initAddTasks() {
+    try {
+        initFlatpickr();
+        await init();
+        renderContactList(contacts);
+        renderTaskCategoryList();
+        renderSubtasks();
+    } catch (error) {
+        console.error("Error initializing app:", error);
+    }
+}
+
+/**
+ * Initializes the Flatpickr date picker with specific configurations.
+ */
+function initFlatpickr() {
+    flatpickrInstance = flatpickr("#task_due_date", {
+        dateFormat: "d/m/Y", altInput: true, altFormat: "d/m/Y", allowInput: true, disableMobile: true, locale: "de", placeholder: "dd/mm/yyyy",
+        onReady: function() {
+            this.input.setAttribute('name', 'task_due_date');
+            this.input.setAttribute('id', 'task_due_date_hidden');
+            if (this.altInput) { this.altInput.setAttribute('name', 'task_due_date'); this.altInput.setAttribute('id', 'task_due_date'); }
+            const calendar = this.calendarContainer;
+            calendar.querySelector('.flatpickr-monthDropdown-months')?.setAttribute('name', 'task_due_month');
+            calendar.querySelector('.cur-year')?.setAttribute('name', 'task_due_year');
+        },
+        onChange: function(selectedDates, dateStr, instance) { validateDate(dateStr);}
+    });
+}
+
+/**
+ * Validates a given date input and checks if it is in the past.
+ * Displays an error message if the date is invalid.
+ * @param {string} dateStr - The date string in "DD/MM/YYYY" format.
+ */
+function validateDate(dateStr) {
+    const inputContainerRef = document.getElementById('date_container_input');
+    const errorBox = document.getElementById('errormessage_box_date');
+    const selectedDate = parseDate(dateStr);
+    const today = getTodayDate();
+    if (isPastDate(selectedDate, today)) {
+        showDateError(inputContainerRef, errorBox);
+    } else {
+        clearDateError(inputContainerRef, errorBox);
+    }
+}
+
+/**
+ * Parses a date string in "DD/MM/YYYY" format and returns a Date object.
+ * @param {string} dateStr - The date string to parse.
+ * @returns {Date} The parsed Date object.
+ */
+function parseDate(dateStr) {
+    const [day, month, year] = dateStr.split('/').map(Number);
+    return new Date(year, month - 1, day);
+}
+
+/**
+ * Gets today's date with the time set to midnight.
+ * @returns {Date} The current date with hours, minutes, and seconds set to zero.
+ */
+function getTodayDate() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return today;
+}
+
+/**
+ * Checks if a given date is in the past.
+ * @param {Date} selectedDate - The date to compare.
+ * @param {Date} today - The current date.
+ * @returns {boolean} True if the selected date is before today, otherwise false.
+ */
+function isPastDate(selectedDate, today) {
+    return selectedDate &lt; today;
+}
+
+/**
+ * Displays an error message for an invalid date input.
+ * @param {HTMLElement} inputContainerRef - The container element of the date input.
+ * @param {HTMLElement} errorBox - The element where the error message will be displayed.
+ */
+function showDateError(inputContainerRef, errorBox) {
+    inputContainerRef.classList.add('error__inputs');
+    errorBox.innerHTML = "Please choose a current date!";
+}
+
+/**
+ * Clears the error message for the date input.
+ * @param {HTMLElement} inputContainerRef - The container element of the date input.
+ * @param {HTMLElement} errorBox - The element where the error message is displayed.
+ */
+function clearDateError(inputContainerRef, errorBox) {
+    inputContainerRef.classList.remove('error__inputs');
+    errorBox.innerHTML = "";
+}
+
+/**
+ * Renders the contact list in the dropdown.
+ * @param {Array} currentContacts - The list of contacts to display.
+ */
+function renderContactList(currentContacts) {
+    const sortedContacts = sortContactsByName(currentContacts);
+    const contactHTML = generateContactHTML(sortedContacts);
+    const dropDownRef = document.getElementById("dropdown_list");
+    dropDownRef.innerHTML = "";
+    dropDownRef.innerHTML += renderHTMLYouInContactList();
+    dropDownRef.innerHTML += contactHTML;
+}
+
+/**
+ * Sorts the contacts by their name alphabetically.
+ * @param {Array} currentContacts - The list of contacts to sort.
+ * @returns {Array} The sorted list of contacts.
+ */
+function sortContactsByName(currentContacts) {
+    return currentContacts.sort((a, b) => a.name.localeCompare(b.name));
+}
+
+/**
+ * Generates the HTML structure for displaying the contacts.
+ * @param {Array} currentContacts - The list of contacts to display.
+ * @returns {string} The HTML string for the contact list.
+ */
+function generateContactHTML(currentContacts) {
+    return currentContacts
+        .map(contact => generateContactTemplate(contact))
+        .join("");
+}
+
+/**
+ * Renders the task category list in the dropdown menu.
+ * Clears the existing content and inserts the updated category list.
+ */
+function renderTaskCategoryList() {
+    const taskCategoryHTML = generateTaskCategoryHTML();
+    const dropDownRef = document.getElementById("category_dropdown_list");
+    dropDownRef.innerHTML = "";
+    dropDownRef.innerHTML = taskCategoryHTML;
+}
+
+/**
+ * Generates the HTML markup for the task category list.
+ * @returns {string} The generated HTML string containing all task categories.
+ */
+function generateTaskCategoryHTML() {
+    return taskCategories
+        .map(category => generateTaskCategoryTemplate(category))
+        .join("");
+}
+
+/**
+ * Opens the dropdown list when the dropdown button is clicked.
+ * @param {Event} event - The click event.
+ */
+function openDropdownList(event) {
+    event.preventDefault();
+    toggleDropdown('dropdown');
+    toggleDNoneInputAndButtonDropDown('dropdown', 'dropdown_search');
+    toggleDropDownListOverlay();
+}
+
+function toggleDropDownListOverlay() {
+    const overlayDropdownListAddTaskContacts = document.getElementById('overlay_dropdown_list_add_task_contacts');
+    overlayDropdownListAddTaskContacts.classList.toggle('d__none');
+}
+
+/**
+ * Toggles the visibility of the dropdown list.
+ */
+function toggleDropdown(type) {
+    const dropdownListWrapperRef = document.getElementById(type + '_list_wrapper');
+    dropdownListWrapperRef.classList.toggle('open');
+}
+
+/**
+ * Toggles the visibility of the search input and the dropdown button.
+ */
+function toggleDNoneInputAndButtonDropDown(button, input) {
+    const dropDownButtonRef = document.getElementById(button + '_toggle');
+    const dropDownSearchRef = document.getElementById(input + '_container');
+    dropDownButtonRef.classList.toggle('d__none');
+    dropDownSearchRef.classList.toggle('d__none');
+    dropDownSearchRef.classList.toggle('dropdown__blue__border');
+}
+
+/**
+ * Closes the dropdown list and renders the selected contacts list.
+ * @param {Event} event - The click event.
+ */
+function closeDropDownList(event) {
+    event.preventDefault();
+    toggleDropdown('dropdown');
+    toggleDNoneInputAndButtonDropDown('dropdown', 'dropdown_search');
+    toggleDropDownListOverlay();
+    renderChoosenContactList();
+}
+
+/**
+ * Toggles the selection state of the current user when assigning tasks.
+ * Updates the styling and checkbox state accordingly.
+ * @param {Event} event - The event object to prevent default behavior.
+ */
+function updateCurrentUserChoosen(event) {
+    if (event) event.preventDefault();
+    currentUserChoosen = currentUserChoosen ? false : true;
+    toggleCurrentUserChoosenStyling();
+    updateCheckboxStateCurrentUser();
+}
+
+/**
+ * Toggles the visual styling for the current user's selection.
+ * Updates the dropdown item and checkbox visibility.
+ */
+function toggleCurrentUserChoosenStyling() {
+    const contactRef = document.getElementById('contact_' + currentUser.name);
+    contactRef.classList.toggle('dropdown__item__checked');
+
+    const checkBoxBlueRef = document.getElementById('checkbox_blue_' + currentUser.name);
+    checkBoxBlueRef.classList.toggle('d__none');
+
+    const checkBoxWhiteRef = document.getElementById('checkbox_white_' + currentUser.name);
+    checkBoxWhiteRef.classList.toggle('d__none');
+}
+
+/**
+ * Updates the checkbox state for the current user.
+ * Ensures the checkbox reflects whether the user is selected or not.
+ */
+function updateCheckboxStateCurrentUser() {
+    const contactCheckBoxRef = document.getElementById('contact_checkbox_' + currentUser.name);
+    if (currentUserChoosen) {
+        contactCheckBoxRef.checked = true;
+    } else {
+        contactCheckBoxRef.checked = false;
+    }
+}
+
+/**
+ * Handles the selection of a contact.
+ * @param {string} contactID - The ID of the selected contact.
+ */
+function contactChoosen(contactID) {
+    const contact = contacts.find(contact => contact.id == contactID);
+    toggleChoosenContactStyling(contactID);
+    if(contact) toggleChoosenContactToArray(contact);
+}
+
+/**
+ * Toggles the styling of the selected contact in the dropdown list.
+ * @param {string} contactID - The ID of the selected contact.
+ */
+function toggleChoosenContactStyling(contactID) {
+    const contactRef = document.getElementById('contact_' + contactID);
+    contactRef.classList.toggle('dropdown__item__checked');
+    const checkBoxBlueRef = document.getElementById('checkbox_blue_' + contactID);
+    checkBoxBlueRef.classList.toggle('d__none');
+    const checkBoxWhiteRef = document.getElementById('checkbox_white_' + contactID);
+    checkBoxWhiteRef.classList.toggle('d__none');
+}
+
+/**
+ * Adds or removes a contact from the chosen contacts array.
+ * @param {Object} contact - The contact to add or remove.
+ */
+function toggleChoosenContactToArray(contact) {
+    const isContactAlreadySelected = choosenContacts.some(c => c.id === contact.id);
+    if (isContactAlreadySelected) {
+        removeContactFromArray(contact);
+    } else {
+        addContactToArray(contact);
+    }
+    updateCheckboxState(contact);
+}
+
+/**
+ * Adds a contact to the chosen contacts array.
+ * @param {Object} contact - The contact to add.
+ */
+function addContactToArray(contact) {
+    choosenContacts.push(contact);
+}
+
+/**
+ * Removes a contact from the chosen contacts array.
+ * @param {Object} contact - The contact to remove.
+ */
+function removeContactFromArray(contact) {
+    const index = choosenContacts.indexOf(contact);
+    if (index > -1) {
+        choosenContacts.splice(index, 1);
+    }
+}
+
+/**
+ * Updates the checkbox state to reflect the selection of a contact.
+ * @param {Object} contact - The contact to update the checkbox state for.
+ */
+function updateCheckboxState(contact) {
+    const contactCheckBoxRef = document.getElementById('contact_checkbox_' + contact.id);
+    if (choosenContacts.some(c => c.id === contact.id)) {
+        contactCheckBoxRef.checked = true;
+    } else {
+        contactCheckBoxRef.checked = false;
+    }
+}
+
+/**
+ * Renders the list of chosen contacts.
+ */
+function renderChoosenContactList() {
+    const contentRef = document.getElementById('choosen_contacts_container');
+    contentRef.innerHTML = "";
+    if(currentUserChoosen) {
+        contentRef.innerHTML += renderHTMLChoosenUser();
+    }
+    for (let i = 0; i &lt; choosenContacts.length; i++) {
+        contentRef.innerHTML += renderHTMLChoosenContact(choosenContacts[i]);
+    }
+}
+
+/**
+ * Filters the contacts based on the search input and updates the contact list accordingly.
+ */
+function filterContacts() {
+    const searchInput = document.getElementById('assignee_search_input').value.toLowerCase();
+    let filteredContacts = contacts.filter(contact => {
+        return contact.name.toLowerCase().includes(searchInput);
+    });
+    let includesCurrentUser;
+    if (currentUser.name.toLowerCase().includes(searchInput)) {
+        includesCurrentUser = true;
+    }
+    renderFilteredContactList(filteredContacts, includesCurrentUser); 
+    if (searchInput === "") {
+        renderContactList(contacts);
+    }
+}
+
+/**
+ * Renders the filtered contact list in the dropdown menu.
+ * Sorts the contacts, generates the HTML, and updates the dropdown.
+ * Optionally includes the current user in the list.
+ * 
+ * @param {Array} filteredContacts - The list of contacts to be displayed.
+ * @param {boolean} includesCurrentUser - Indicates whether the current user should be included in the list.
+ */
+function renderFilteredContactList(filteredContacts, includesCurrentUser) {
+    const sortedContacts = sortContactsByName(filteredContacts);
+    const contactHTML = generateContactHTML(sortedContacts);
+    const dropDownRef = document.getElementById("dropdown_list");
+    dropDownRef.innerHTML = "";
+    if (includesCurrentUser) {
+        dropDownRef.innerHTML += renderHTMLYouInContactList();
+    }
+    dropDownRef.innerHTML += contactHTML;
+}
+
+/**
+ * Resets the add task form by clearing all input fields.
+ */
+function resetAddTaskForm() {
+    const addTaskFormRef = document.getElementById('add_task_form');
+    addTaskFormRef.reset();
+    clearAddTaskForm();
+}
+
+/**
+ * Handles the "Enter" key press event while adding a subtask.
+ * @param {Event} event - The keydown event.
+ */
+function handleKeyDownAddSubTask(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        addSubtask(event);
+    }
+}
+
+/**
+ * Handles the "Enter" key press event while editing a subtask.
+ * @param {number} subTaskID - The ID of the subtask being edited.
+ * @param {Event} event - The keydown event.
+ */
+function handleKeyDownEditedSubTask(subTaskID, event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        saveEditedSubTask(subTaskID, event);
+    }
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateSuccSingedUpOverlay">activateSuccSingedUpOverlay</a></li><li><a href="global.html#addActiveOverviewStyling">addActiveOverviewStyling</a></li><li><a href="global.html#addActiveOverviewStylingMobile">addActiveOverviewStylingMobile</a></li><li><a href="global.html#addContactToArray">addContactToArray</a></li><li><a href="global.html#addCurrentUserToContacts">addCurrentUserToContacts</a></li><li><a href="global.html#addNewContact">addNewContact</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#backToContactTable">backToContactTable</a></li><li><a href="global.html#backToLastPage">backToLastPage</a></li><li><a href="global.html#backToLogin">backToLogin</a></li><li><a href="global.html#cancelForm">cancelForm</a></li><li><a href="global.html#clearAddTaskForm">clearAddTaskForm</a></li><li><a href="global.html#clearDateError">clearDateError</a></li><li><a href="global.html#closeAddSubTask">closeAddSubTask</a></li><li><a href="global.html#closeContactOverlay">closeContactOverlay</a></li><li><a href="global.html#closeDropDownList">closeDropDownList</a></li><li><a href="global.html#closeMenuContactOptions">closeMenuContactOptions</a></li><li><a href="global.html#closeTaskCategoryList">closeTaskCategoryList</a></li><li><a href="global.html#compareEarliestTaskDueDate">compareEarliestTaskDueDate</a></li><li><a href="global.html#contactChoosen">contactChoosen</a></li><li><a href="global.html#correctPassword">correctPassword</a></li><li><a href="global.html#currentContactID">currentContactID</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteSubTask">deleteSubTask</a></li><li><a href="global.html#displayAddSubtaskButtons">displayAddSubtaskButtons</a></li><li><a href="global.html#displayContactSuccNotification">displayContactSuccNotification</a></li><li><a href="global.html#displayCurrentUserSuccNotification">displayCurrentUserSuccNotification</a></li><li><a href="global.html#editContact">editContact</a></li><li><a href="global.html#emailExists">emailExists</a></li><li><a href="global.html#endLogoAnimation">endLogoAnimation</a></li><li><a href="global.html#endMobileAnimation">endMobileAnimation</a></li><li><a href="global.html#filterContacts">filterContacts</a></li><li><a href="global.html#fixateScrollingOnBody">fixateScrollingOnBody</a></li><li><a href="global.html#formatChoosenContactsToJSON">formatChoosenContactsToJSON</a></li><li><a href="global.html#formatContactName">formatContactName</a></li><li><a href="global.html#generateContactHTML">generateContactHTML</a></li><li><a href="global.html#generateContactSections">generateContactSections</a></li><li><a href="global.html#generateContactTemplate">generateContactTemplate</a></li><li><a href="global.html#generateHTMLContactBox">generateHTMLContactBox</a></li><li><a href="global.html#generateHTMLContactSection">generateHTMLContactSection</a></li><li><a href="global.html#generateTaskCategoryHTML">generateTaskCategoryHTML</a></li><li><a href="global.html#generateTaskCategoryTemplate">generateTaskCategoryTemplate</a></li><li><a href="global.html#getAllTasksDueDates">getAllTasksDueDates</a></li><li><a href="global.html#getBadgeColor">getBadgeColor</a></li><li><a href="global.html#getGreeting">getGreeting</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getLastName">getLastName</a></li><li><a href="global.html#getNextAvailableId">getNextAvailableId</a></li><li><a href="global.html#getQueryParam">getQueryParam</a></li><li><a href="global.html#getTasksInformationsforSummary">getTasksInformationsforSummary</a></li><li><a href="global.html#getTodayDate">getTodayDate</a></li><li><a href="global.html#groupContactsByLetter">groupContactsByLetter</a></li><li><a href="global.html#guestLogIn">guestLogIn</a></li><li><a href="global.html#handleEditedCurrentUser">handleEditedCurrentUser</a></li><li><a href="global.html#handleFormSubmit">handleFormSubmit</a></li><li><a href="global.html#handleKeyDown">handleKeyDown</a></li><li><a href="global.html#handleKeyDownAddSubTask">handleKeyDownAddSubTask</a></li><li><a href="global.html#handleKeyDownEditedSubTask">handleKeyDownEditedSubTask</a></li><li><a href="global.html#handleLoginForm">handleLoginForm</a></li><li><a href="global.html#handleRegisterForm">handleRegisterForm</a></li><li><a href="global.html#howManyTasksInPrioUrgend">howManyTasksInPrioUrgend</a></li><li><a href="global.html#howManyTasksInStatusAwaitingFeedback">howManyTasksInStatusAwaitingFeedback</a></li><li><a href="global.html#howManyTasksInStatusDone">howManyTasksInStatusDone</a></li><li><a href="global.html#howManyTasksInStatusProgress">howManyTasksInStatusProgress</a></li><li><a href="global.html#howManyTasksInStatusToDo">howManyTasksInStatusToDo</a></li><li><a href="global.html#initAddTasks">initAddTasks</a></li><li><a href="global.html#initContacts">initContacts</a></li><li><a href="global.html#initFlatpickr">initFlatpickr</a></li><li><a href="global.html#initLogin">initLogin</a></li><li><a href="global.html#initRegister">initRegister</a></li><li><a href="global.html#initSummary">initSummary</a></li><li><a href="global.html#isCurrentUser">isCurrentUser</a></li><li><a href="global.html#isMobile">isMobile</a></li><li><a href="global.html#isPastDate">isPastDate</a></li><li><a href="global.html#logOut">logOut</a></li><li><a href="global.html#logoAnimation">logoAnimation</a></li><li><a href="global.html#maskPassword">maskPassword</a></li><li><a href="global.html#mobileAnimation">mobileAnimation</a></li><li><a href="global.html#openAddNewContact">openAddNewContact</a></li><li><a href="global.html#openAddTaskWebsite">openAddTaskWebsite</a></li><li><a href="global.html#openBoardWebsite">openBoardWebsite</a></li><li><a href="global.html#openCalendar">openCalendar</a></li><li><a href="global.html#openContactDetails">openContactDetails</a></li><li><a href="global.html#openContactsWebsite">openContactsWebsite</a></li><li><a href="global.html#openDropdownList">openDropdownList</a></li><li><a href="global.html#openEditContact">openEditContact</a></li><li><a href="global.html#openEditCurrentUser">openEditCurrentUser</a></li><li><a href="global.html#openEditSubTask">openEditSubTask</a></li><li><a href="global.html#openHelpWebsite">openHelpWebsite</a></li><li><a href="global.html#openLegalNoticeWebsite">openLegalNoticeWebsite</a></li><li><a href="global.html#openLegalNoticeWebsiteNoLogin">openLegalNoticeWebsiteNoLogin</a></li><li><a href="global.html#openLoginWithAnimation">openLoginWithAnimation</a></li><li><a href="global.html#openLoginWithoutAnimation">openLoginWithoutAnimation</a></li><li><a href="global.html#openMenuContactOptions">openMenuContactOptions</a></li><li><a href="global.html#openNewlyAddedContact">openNewlyAddedContact</a></li><li><a href="global.html#openPrivacyPolicyWebsite">openPrivacyPolicyWebsite</a></li><li><a href="global.html#openPrivacyPolicyWebsiteNoLogin">openPrivacyPolicyWebsiteNoLogin</a></li><li><a href="global.html#openSignUpWebsite">openSignUpWebsite</a></li><li><a href="global.html#openSummaryWebsite">openSummaryWebsite</a></li><li><a href="global.html#openSummaryWebsiteWithoutMobileAnimation">openSummaryWebsiteWithoutMobileAnimation</a></li><li><a href="global.html#openTaskCategoryList">openTaskCategoryList</a></li><li><a href="global.html#openUpdatedContact">openUpdatedContact</a></li><li><a href="global.html#openUpdatedCurrentUser">openUpdatedCurrentUser</a></li><li><a href="global.html#parseDate">parseDate</a></li><li><a href="global.html#parseDateToDateBaseFormat">parseDateToDateBaseFormat</a></li><li><a href="global.html#passwordsMatch">passwordsMatch</a></li><li><a href="global.html#processForm">processForm</a></li><li><a href="global.html#processFormCurrentUser">processFormCurrentUser</a></li><li><a href="global.html#pushNewUserInArray">pushNewUserInArray</a></li><li><a href="global.html#releaseScrollOnBody">releaseScrollOnBody</a></li><li><a href="global.html#reloadWebsite">reloadWebsite</a></li><li><a href="global.html#removeActiveOverviewStyling">removeActiveOverviewStyling</a></li><li><a href="global.html#removeActiveOverviewStylingMobile">removeActiveOverviewStylingMobile</a></li><li><a href="global.html#removeAddSubTaskButtons">removeAddSubTaskButtons</a></li><li><a href="global.html#removeAllContactBoxActiveStyling">removeAllContactBoxActiveStyling</a></li><li><a href="global.html#removeAllErorrInputStyling">removeAllErorrInputStyling</a></li><li><a href="global.html#removeAllErrorMessages">removeAllErrorMessages</a></li><li><a href="global.html#removeContactFromArray">removeContactFromArray</a></li><li><a href="global.html#removeContactFromTasks">removeContactFromTasks</a></li><li><a href="global.html#renderChoosenContactList">renderChoosenContactList</a></li><li><a href="global.html#renderContactDetails">renderContactDetails</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderContactOverlayContent">renderContactOverlayContent</a></li><li><a href="global.html#renderContacts">renderContacts</a></li><li><a href="global.html#renderCurrentUserOverlayContent">renderCurrentUserOverlayContent</a></li><li><a href="global.html#renderFilteredContactList">renderFilteredContactList</a></li><li><a href="global.html#renderHTMLAddContactButton">renderHTMLAddContactButton</a></li><li><a href="global.html#renderHTMLAddContactOverlay">renderHTMLAddContactOverlay</a></li><li><a href="global.html#renderHTMLChoosenContact">renderHTMLChoosenContact</a></li><li><a href="global.html#renderHTMLChoosenUser">renderHTMLChoosenUser</a></li><li><a href="global.html#renderHTMLContactDetails">renderHTMLContactDetails</a></li><li><a href="global.html#renderHTMLContactDetailsMobileMenu">renderHTMLContactDetailsMobileMenu</a></li><li><a href="global.html#renderHTMLEditContactOverlay">renderHTMLEditContactOverlay</a></li><li><a href="global.html#renderHTMLEditCurrentUserOverlay">renderHTMLEditCurrentUserOverlay</a></li><li><a href="global.html#renderHTMLEditSubTask">renderHTMLEditSubTask</a></li><li><a href="global.html#renderHTMLMobileGreeting">renderHTMLMobileGreeting</a></li><li><a href="global.html#renderHTMLSubtask">renderHTMLSubtask</a></li><li><a href="global.html#renderHTMLSummary">renderHTMLSummary</a></li><li><a href="global.html#renderHTMLYouInContactList">renderHTMLYouInContactList</a></li><li><a href="global.html#renderMobileGreeting">renderMobileGreeting</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#renderSummary">renderSummary</a></li><li><a href="global.html#renderTaskCategoryList">renderTaskCategoryList</a></li><li><a href="global.html#resetAddTaskForm">resetAddTaskForm</a></li><li><a href="global.html#resetRegisterForm">resetRegisterForm</a></li><li><a href="global.html#resetSelectedCategory">resetSelectedCategory</a></li><li><a href="global.html#saveEditedSubTask">saveEditedSubTask</a></li><li><a href="global.html#saveTask">saveTask</a></li><li><a href="global.html#setTaskPrio">setTaskPrio</a></li><li><a href="global.html#setnewUser">setnewUser</a></li><li><a href="global.html#showDateError">showDateError</a></li><li><a href="global.html#skipLogoAnimation">skipLogoAnimation</a></li><li><a href="global.html#skipMobileAnimationSummary">skipMobileAnimationSummary</a></li><li><a href="global.html#sortAllTaskDueDates">sortAllTaskDueDates</a></li><li><a href="global.html#sortContactsByName">sortContactsByName</a></li><li><a href="global.html#startLogoAnimation">startLogoAnimation</a></li><li><a href="global.html#startMobileAnimation">startMobileAnimation</a></li><li><a href="global.html#taskCategorySelected">taskCategorySelected</a></li><li><a href="global.html#testPasswordLogin">testPasswordLogin</a></li><li><a href="global.html#toggleChoosenContactStyling">toggleChoosenContactStyling</a></li><li><a href="global.html#toggleChoosenContactToArray">toggleChoosenContactToArray</a></li><li><a href="global.html#toggleCurrentUserChoosenStyling">toggleCurrentUserChoosenStyling</a></li><li><a href="global.html#toggleDNoneInputAndButtonDropDown">toggleDNoneInputAndButtonDropDown</a></li><li><a href="global.html#toggleDnoneFromOverlay">toggleDnoneFromOverlay</a></li><li><a href="global.html#toggleDropdown">toggleDropdown</a></li><li><a href="global.html#toggleSubMenu">toggleSubMenu</a></li><li><a href="global.html#transFormDate">transFormDate</a></li><li><a href="global.html#updateCheckboxState">updateCheckboxState</a></li><li><a href="global.html#updateCheckboxStateCurrentUser">updateCheckboxStateCurrentUser</a></li><li><a href="global.html#updateCurrentUserChoosen">updateCurrentUserChoosen</a></li><li><a href="global.html#updateCurrentUserFireBase">updateCurrentUserFireBase</a></li><li><a href="global.html#updateCurrentUserLocalStorage">updateCurrentUserLocalStorage</a></li><li><a href="global.html#updateErrorBox">updateErrorBox</a></li><li><a href="global.html#validateCategory">validateCategory</a></li><li><a href="global.html#validateConfirmPasswordInput">validateConfirmPasswordInput</a></li><li><a href="global.html#validateDate">validateDate</a></li><li><a href="global.html#validateDateInput">validateDateInput</a></li><li><a href="global.html#validateEmail">validateEmail</a></li><li><a href="global.html#validateField">validateField</a></li><li><a href="global.html#validateInputs">validateInputs</a></li><li><a href="global.html#validateName">validateName</a></li><li><a href="global.html#validatePasswordInput">validatePasswordInput</a></li><li><a href="global.html#validatePhone">validatePhone</a></li><li><a href="global.html#validateRegisterCheckBox">validateRegisterCheckBox</a></li><li><a href="global.html#validateTitle">validateTitle</a></li><li><a href="global.html#wrongPassword">wrongPassword</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Feb 26 2025 12:29:33 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

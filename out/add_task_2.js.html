@@ -1,0 +1,458 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: add_task_2.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: add_task_2.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Opens the calendar input for selecting a date.
+ */
+function openCalendar() {
+    if (flatpickrInstance) flatpickrInstance.open();
+}
+
+/**
+ * Opens the task category dropdown list.
+ * @param {Event} event - The event object to prevent default behavior.
+ */
+function openTaskCategoryList(event) {
+    if (event) event.preventDefault();
+    toggleDropdown('category_dropdown');
+    toggleDNoneInputAndButtonDropDown('category_dropdown', 'category_dropdown');
+    toggleDropDownListOverlayCategory();
+}
+
+
+function toggleDropDownListOverlayCategory() {
+    const overlayDropdownListAddTaskContacts = document.getElementById('overlay_dropdown_list_add_task_category');
+    overlayDropdownListAddTaskContacts.classList.toggle('d__none');
+}
+
+/**
+ * Closes the task category dropdown list.
+ * @param {Event} event - The event object to prevent default behavior.
+ */
+function closeTaskCategoryList(event) {
+    if (event) event.preventDefault();
+    toggleDropdown('category_dropdown');
+    toggleDNoneInputAndButtonDropDown('category_dropdown', 'category_dropdown');
+    toggleDropDownListOverlayCategory();
+}
+
+/**
+ * Sets the selected task category and updates the UI.
+ * @param {string} category - The selected category.
+ * @param {Event} event - The event object to prevent default behavior.
+ */
+function taskCategorySelected(category, event) {
+    if (event) event.preventDefault();
+    if (category) selectedTaskCategory = category;
+    const selectedCategoryRef = document.getElementById('selected_category_ref');
+    selectedCategoryRef.innerHTML = `${selectedTaskCategory}`;
+    validateCategory("selected_category_ref", "Category is required.", "category_dropdown_toggle", "category_dropdown_error_box");
+    closeTaskCategoryList();
+}
+
+/**
+ * Resets the selected task category to its default state.
+ */
+function resetSelectedCategory() {
+    selectedTaskCategory = "";
+    const selectedCategoryRef = document.getElementById('selected_category_ref');
+    selectedCategoryRef.innerHTML = `Select task category`;
+}
+
+/**
+ * Adds a new subtask to the subtask list.
+ * @param {Event} event - The event object to prevent default behavior.
+ */
+function addSubtask(event) {
+    if (event) event.preventDefault();
+    const subTaskRef = document.getElementById('input_subtasks');
+    const subTaskName = subTaskRef.value.trim();
+    if (subTaskName) {
+        const newSubTask = {
+            id: subtaskIdCounter++,
+            name: subTaskName,
+            status: 0
+        };
+        addedSubtasks.push(newSubTask);
+        subTaskRef.value = "";
+        renderSubtasks();
+        removeAddSubTaskButtons();
+    }
+}
+
+/**
+ * Renders all subtasks in the UI.
+ */
+function renderSubtasks() {
+    const subTasksRef = document.getElementById('added_subtasks_container');
+    subTasksRef.innerHTML = "";
+    addedSubtasks.forEach(subTask => {
+        subTasksRef.innerHTML += renderHTMLSubtask(subTask);
+    });
+}
+
+/**
+ * Displays the input field and buttons for adding a subtask.
+ * @param {Event} event - The event object to prevent default behavior.
+ */
+function displayAddSubtaskButtons(event) {
+    if (event) event.preventDefault();
+    const addSubtaskBoxRef = document.getElementById('add_subtask_box');
+    const activeAddSubtaskBoxRef = document.getElementById('active_add_subtask_box');
+    const subTaskInputContainerRef = document.getElementById('subtask_input_container');
+    addSubtaskBoxRef.classList.add('d__none');
+    activeAddSubtaskBoxRef.classList.remove('d__none');
+    subTaskInputContainerRef.classList.add('blue__border');
+}
+
+/**
+ * Hides the input field and buttons for adding a subtask.
+ */
+function removeAddSubTaskButtons() {
+    const addSubtaskBoxRef = document.getElementById('add_subtask_box');
+    const activeAddSubtaskBoxRef = document.getElementById('active_add_subtask_box');
+    const subTaskInputContainerRef = document.getElementById('subtask_input_container');
+    addSubtaskBoxRef.classList.remove('d__none');
+    activeAddSubtaskBoxRef.classList.add('d__none');
+    subTaskInputContainerRef.classList.remove('blue__border');
+}
+
+/**
+ * Closes the subtask input field and clears its value.
+ * @param {Event} event - The event object to prevent default behavior.
+ */
+function closeAddSubTask(event) {
+    if (event) event.preventDefault();
+    const subTaskRef = document.getElementById('input_subtasks');
+    subTaskRef.value = "";
+    removeAddSubTaskButtons();
+}
+
+/**
+ * Deletes a subtask from the list and updates the UI.
+ * @param {number} subTaskId - The ID of the subtask to delete.
+ * @param {Event} event - The event object to prevent default behavior and propagation.
+ */
+function deleteSubTask(subTaskId, event) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    } 
+    const index = addedSubtasks.findIndex(subTask => subTask.id === subTaskId);
+    if (index > -1) {
+        addedSubtasks.splice(index, 1);
+        renderSubtasks();
+    }
+}
+
+/**
+ * Opens the subtask editing mode by replacing the subtask element with an input field.
+ * @param {number} subTaskId - The ID of the subtask to edit.
+ * @param {Event} event - The event object to prevent default behavior and propagation.
+ */
+function openEditSubTask(subTaskId, event) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    let subTask = addedSubtasks.find(task => task.id === subTaskId);
+    if (!subTask) return;
+    let subTaskElement = document.getElementById(`subtask_${subTaskId}`);
+    if (!subTaskElement) return;
+    subTaskElement.outerHTML = renderHTMLEditSubTask(subTask);
+}
+
+/**
+ * Saves the edited subtask name and updates the UI.
+ * @param {number} subTaskId - The ID of the subtask being edited.
+ * @param {Event} event - The event object to prevent default behavior and propagation.
+ */
+function saveEditedSubTask(subTaskId, event) {
+    if (event) {
+        event.preventDefault();
+        event.stopPropagation();
+    }
+    let inputRef = document.getElementById('subtask_edit_input');
+    let updatedName = inputRef.value.trim();
+    if (!updatedName) return;
+    let subTaskIndex = addedSubtasks.findIndex(task => task.id === subTaskId);
+    if (subTaskIndex > -1) {
+        addedSubtasks[subTaskIndex].name = updatedName;
+    }
+    renderSubtasks();
+}
+
+/**
+ * Handles form submission for adding or editing a task.
+ * @param {Event} event - The form submission event.
+ */
+async function handleFormSubmit(event) {
+    if (event) event.preventDefault();
+    document.getElementById('create_task_button').onclick = false;
+    removeAllErrorMessages();
+    const error = validateInputs();
+    if (!error) await processForm();
+}
+
+/**
+ * Cancels the form submission and resets the task creation form.
+ * @param {Event} event - The event object to prevent default behavior.
+ */
+function cancelForm(event) {
+    event.preventDefault();
+    document.getElementById("add_task_form").reset();
+    clearAddTaskForm();
+}
+
+/**
+ * Clears the task creation form and resets selected values.
+ */
+function clearAddTaskForm() {
+    choosenContacts = [];
+    addedSubtasks = [];
+    currentUserChoosen = false;
+    renderContactList(contacts);
+    renderTaskCategoryList();
+    renderSubtasks();
+    renderChoosenContactList();
+    resetSelectedCategory();
+}
+
+/**
+ * Validates all input fields in the task creation form.
+ * @returns {string|null} The first error message if validation fails, otherwise null.
+ */
+function validateInputs() {
+    return (
+        validateTitle("add_task_title_input", "Title is required.", "add_task_title_input_box_error_box") ||
+        validateDateInput("task_due_date", "Due date is required.", "date_container_input", "errormessage_box_date") ||
+        validateCategory("selected_category_ref", "Category is required.", "category_dropdown_toggle", "category_dropdown_error_box")
+    );
+}
+
+/**
+ * Validates the task title input field.
+ * @param {string} id - The ID of the input field to validate.
+ * @param {string} message - The error message to display if validation fails.
+ * @param {string} errorBoxID - The ID of the error box to display the error message.
+ * @returns {string|null} The error message if validation fails, otherwise null.
+ */
+function validateTitle(id, message, errorBoxID) {
+    const field = document.getElementById(id);
+    removeAllErorrInputStyling();
+    if (field.value.trim() === "") {
+        field.classList.add('error__inputs');
+        updateErrorBox(message, errorBoxID);
+        return message;
+    } else {
+        updateErrorBox();
+        return null;
+    }
+}
+
+/**
+ * Validates the date input field.
+ * @param {string} id - The ID of the date input field.
+ * @param {string} message - The error message to display if validation fails.
+ * @param {string} containerID - The ID of the container to highlight on error.
+ * @param {string} errorBoxID - The ID of the error box to display the error message.
+ * @returns {string|null} The error message if validation fails, otherwise null.
+ */
+function validateDateInput(id, message, containerID, errorBoxID) {
+    const field = document.getElementById(id);
+    const container = document.getElementById(containerID);
+    removeAllErorrInputStyling();
+    if (field.value.trim() === "") {
+        container.classList.add('error__inputs');
+        updateErrorBox(message, errorBoxID);
+        return message;
+    } else {
+        updateErrorBox();
+        return null;
+    }
+}
+
+/**
+ * Validates the selected task category.
+ * @param {string} id - The ID of the category element.
+ * @param {string} message - The error message to display if validation fails.
+ * @param {string} containerID - The ID of the container to highlight on error.
+ * @param {string} errorBoxID - The ID of the error box to display the error message.
+ * @returns {string|null} The error message if validation fails, otherwise null.
+ */
+function validateCategory(id, message, containerID, errorBoxID) {
+    const field = document.getElementById(id).innerText;
+    const container = document.getElementById(containerID);
+    removeAllErorrInputStyling();
+    if (field === "" || field === "Select task category") {
+        container.classList.add('error__inputs');
+        updateErrorBox(message, errorBoxID);
+        return message;
+    } else {
+        updateErrorBox("", errorBoxID);
+        return null;
+    }
+}
+
+/**
+ * Removes error styling from all input containers.
+ */
+function removeAllErorrInputStyling() {
+    const inputContainers = ["add_task_title_input", "date_container_input", "category_dropdown_toggle"];
+    for (let i = 0; i &lt; inputContainers.length; i++) {
+        if (inputContainers[i]) {
+            const inputContainerRef = document.getElementById(inputContainers[i]);
+            inputContainerRef.classList.remove('error__inputs');
+        }
+    }
+}
+
+/**
+ * Updates the error message box with a new message or hides it if no error exists.
+ * @param {string} error - The error message to display.
+ * @param {string} errorBoxID - The ID of the error box to update.
+ */
+function updateErrorBox(error, errorBoxID) {
+    if (errorBoxID &amp;&amp; error !== undefined) { 
+        const box = document.getElementById(errorBoxID);
+        if (box) {
+            box.innerText = error ? error : "";
+            box.style.display = error ? "block" : "none";
+        }
+    }
+}
+
+/**
+ * Removes all displayed error messages from the form.
+ */
+function removeAllErrorMessages() {
+    const errorContainers = ["add_task_title_input_box_error_box", "errormessage_box_date", "category_dropdown_error_box"];
+    for (let i = 0; i &lt; errorContainers.length; i++) {
+        if (errorContainers[i]) {
+            const errorContainerRef = document.getElementById(errorContainers[i]);
+            errorContainerRef.innerHTML = "";
+        }
+    }
+}
+
+/**
+ * Processes the form data and saves the task if all required fields are filled.
+ */
+async function processForm() {
+    const name = document.getElementById('add_task_title_input').value;
+    const description = document.getElementById("task_description").value;
+    const assignedTo = formatChoosenContactsToJSON();
+    const dueDate = parseDateToDateBaseFormat(document.getElementById("task_due_date").value);
+    const prio = taskPrio;
+    const category = selectedTaskCategory;
+    const subTasks = addedSubtasks;
+    if (name &amp;&amp; description &amp;&amp; assignedTo &amp;&amp; dueDate &amp;&amp; prio &amp;&amp; category &amp;&amp; subTasks) {
+        saveTask(name, description, assignedTo, dueDate, prio, category, subTasks);
+    }
+    resetAddTaskForm();
+}
+
+/**
+ * Saves a task to the task list and updates the database.
+ * @param {string} name - The task name.
+ * @param {string} description - The task description.
+ * @param {Object} assignedTo - The assigned contacts in JSON format.
+ * @param {string} dueDate - The due date in database format.
+ * @param {string} prio - The task priority.
+ * @param {string} category - The selected category.
+ * @param {Array} subTasks - The list of subtasks.
+ */
+async function saveTask(name, description, assignedTo, dueDate, prio, category, subTasks) {
+    const newTask = {
+        name: name,
+        description: description,
+        assignedTo: assignedTo,
+        dueDate: dueDate,
+        prio: prio,
+        category: category,
+        subTasks: subTasks,
+        status: "to-do"
+    };
+    tasks.push(newTask);
+    await putData("tasks", tasks);
+}
+
+/**
+ * Formats the selected contacts into a JSON object.
+ * @returns {Object} JSON object containing chosen contacts.
+ */
+function formatChoosenContactsToJSON() {
+    let contactsArray = [...choosenContacts];
+    if (currentUserChoosen &amp;&amp; currentUser) {
+        contactsArray.unshift(currentUser);
+    }
+    return Object.fromEntries(
+        contactsArray.map((contact, index) => [index.toString(), contact.name])
+    );
+}
+
+/**
+ * Parses a date string from "DD/MM/YYYY" format to "YYYY-MM-DD" database format.
+ * @param {string} dateStr - The date string in "DD/MM/YYYY" format.
+ * @returns {string} The parsed date in "YYYY-MM-DD" format.
+ */
+function parseDateToDateBaseFormat(dateStr) {
+    const [day, month, year] = dateStr.split('/').map(Number);
+    const parsedDate = new Date(year, month - 1, day);
+    return parsedDate.toISOString().split("T")[0];
+}
+
+/**
+ * Sets the priority level for the task.
+ * @param {string} value - The priority value to set.
+ */
+function setTaskPrio(value) {
+    if (value) taskPrio = value;
+}</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateSuccSingedUpOverlay">activateSuccSingedUpOverlay</a></li><li><a href="global.html#addActiveOverviewStyling">addActiveOverviewStyling</a></li><li><a href="global.html#addActiveOverviewStylingMobile">addActiveOverviewStylingMobile</a></li><li><a href="global.html#addContactToArray">addContactToArray</a></li><li><a href="global.html#addCurrentUserToContacts">addCurrentUserToContacts</a></li><li><a href="global.html#addNewContact">addNewContact</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#backToContactTable">backToContactTable</a></li><li><a href="global.html#backToLastPage">backToLastPage</a></li><li><a href="global.html#backToLogin">backToLogin</a></li><li><a href="global.html#cancelForm">cancelForm</a></li><li><a href="global.html#clearAddTaskForm">clearAddTaskForm</a></li><li><a href="global.html#clearDateError">clearDateError</a></li><li><a href="global.html#closeAddSubTask">closeAddSubTask</a></li><li><a href="global.html#closeContactOverlay">closeContactOverlay</a></li><li><a href="global.html#closeDropDownList">closeDropDownList</a></li><li><a href="global.html#closeMenuContactOptions">closeMenuContactOptions</a></li><li><a href="global.html#closeTaskCategoryList">closeTaskCategoryList</a></li><li><a href="global.html#compareEarliestTaskDueDate">compareEarliestTaskDueDate</a></li><li><a href="global.html#contactChoosen">contactChoosen</a></li><li><a href="global.html#correctPassword">correctPassword</a></li><li><a href="global.html#currentContactID">currentContactID</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteSubTask">deleteSubTask</a></li><li><a href="global.html#displayAddSubtaskButtons">displayAddSubtaskButtons</a></li><li><a href="global.html#displayContactSuccNotification">displayContactSuccNotification</a></li><li><a href="global.html#displayCurrentUserSuccNotification">displayCurrentUserSuccNotification</a></li><li><a href="global.html#editContact">editContact</a></li><li><a href="global.html#emailExists">emailExists</a></li><li><a href="global.html#endLogoAnimation">endLogoAnimation</a></li><li><a href="global.html#endMobileAnimation">endMobileAnimation</a></li><li><a href="global.html#filterContacts">filterContacts</a></li><li><a href="global.html#fixateScrollingOnBody">fixateScrollingOnBody</a></li><li><a href="global.html#formatChoosenContactsToJSON">formatChoosenContactsToJSON</a></li><li><a href="global.html#formatContactName">formatContactName</a></li><li><a href="global.html#generateContactHTML">generateContactHTML</a></li><li><a href="global.html#generateContactSections">generateContactSections</a></li><li><a href="global.html#generateContactTemplate">generateContactTemplate</a></li><li><a href="global.html#generateHTMLContactBox">generateHTMLContactBox</a></li><li><a href="global.html#generateHTMLContactSection">generateHTMLContactSection</a></li><li><a href="global.html#generateTaskCategoryHTML">generateTaskCategoryHTML</a></li><li><a href="global.html#generateTaskCategoryTemplate">generateTaskCategoryTemplate</a></li><li><a href="global.html#getAllTasksDueDates">getAllTasksDueDates</a></li><li><a href="global.html#getBadgeColor">getBadgeColor</a></li><li><a href="global.html#getGreeting">getGreeting</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getLastName">getLastName</a></li><li><a href="global.html#getNextAvailableId">getNextAvailableId</a></li><li><a href="global.html#getQueryParam">getQueryParam</a></li><li><a href="global.html#getTasksInformationsforSummary">getTasksInformationsforSummary</a></li><li><a href="global.html#getTodayDate">getTodayDate</a></li><li><a href="global.html#groupContactsByLetter">groupContactsByLetter</a></li><li><a href="global.html#guestLogIn">guestLogIn</a></li><li><a href="global.html#handleEditedCurrentUser">handleEditedCurrentUser</a></li><li><a href="global.html#handleFormSubmit">handleFormSubmit</a></li><li><a href="global.html#handleKeyDown">handleKeyDown</a></li><li><a href="global.html#handleKeyDownAddSubTask">handleKeyDownAddSubTask</a></li><li><a href="global.html#handleKeyDownEditedSubTask">handleKeyDownEditedSubTask</a></li><li><a href="global.html#handleLoginForm">handleLoginForm</a></li><li><a href="global.html#handleRegisterForm">handleRegisterForm</a></li><li><a href="global.html#howManyTasksInPrioUrgend">howManyTasksInPrioUrgend</a></li><li><a href="global.html#howManyTasksInStatusAwaitingFeedback">howManyTasksInStatusAwaitingFeedback</a></li><li><a href="global.html#howManyTasksInStatusDone">howManyTasksInStatusDone</a></li><li><a href="global.html#howManyTasksInStatusProgress">howManyTasksInStatusProgress</a></li><li><a href="global.html#howManyTasksInStatusToDo">howManyTasksInStatusToDo</a></li><li><a href="global.html#initAddTasks">initAddTasks</a></li><li><a href="global.html#initContacts">initContacts</a></li><li><a href="global.html#initFlatpickr">initFlatpickr</a></li><li><a href="global.html#initLogin">initLogin</a></li><li><a href="global.html#initRegister">initRegister</a></li><li><a href="global.html#initSummary">initSummary</a></li><li><a href="global.html#isCurrentUser">isCurrentUser</a></li><li><a href="global.html#isMobile">isMobile</a></li><li><a href="global.html#isPastDate">isPastDate</a></li><li><a href="global.html#logOut">logOut</a></li><li><a href="global.html#logoAnimation">logoAnimation</a></li><li><a href="global.html#maskPassword">maskPassword</a></li><li><a href="global.html#mobileAnimation">mobileAnimation</a></li><li><a href="global.html#openAddNewContact">openAddNewContact</a></li><li><a href="global.html#openAddTaskWebsite">openAddTaskWebsite</a></li><li><a href="global.html#openBoardWebsite">openBoardWebsite</a></li><li><a href="global.html#openCalendar">openCalendar</a></li><li><a href="global.html#openContactDetails">openContactDetails</a></li><li><a href="global.html#openContactsWebsite">openContactsWebsite</a></li><li><a href="global.html#openDropdownList">openDropdownList</a></li><li><a href="global.html#openEditContact">openEditContact</a></li><li><a href="global.html#openEditCurrentUser">openEditCurrentUser</a></li><li><a href="global.html#openEditSubTask">openEditSubTask</a></li><li><a href="global.html#openHelpWebsite">openHelpWebsite</a></li><li><a href="global.html#openLegalNoticeWebsite">openLegalNoticeWebsite</a></li><li><a href="global.html#openLegalNoticeWebsiteNoLogin">openLegalNoticeWebsiteNoLogin</a></li><li><a href="global.html#openLoginWithAnimation">openLoginWithAnimation</a></li><li><a href="global.html#openLoginWithoutAnimation">openLoginWithoutAnimation</a></li><li><a href="global.html#openMenuContactOptions">openMenuContactOptions</a></li><li><a href="global.html#openNewlyAddedContact">openNewlyAddedContact</a></li><li><a href="global.html#openPrivacyPolicyWebsite">openPrivacyPolicyWebsite</a></li><li><a href="global.html#openPrivacyPolicyWebsiteNoLogin">openPrivacyPolicyWebsiteNoLogin</a></li><li><a href="global.html#openSignUpWebsite">openSignUpWebsite</a></li><li><a href="global.html#openSummaryWebsite">openSummaryWebsite</a></li><li><a href="global.html#openSummaryWebsiteWithoutMobileAnimation">openSummaryWebsiteWithoutMobileAnimation</a></li><li><a href="global.html#openTaskCategoryList">openTaskCategoryList</a></li><li><a href="global.html#openUpdatedContact">openUpdatedContact</a></li><li><a href="global.html#openUpdatedCurrentUser">openUpdatedCurrentUser</a></li><li><a href="global.html#parseDate">parseDate</a></li><li><a href="global.html#parseDateToDateBaseFormat">parseDateToDateBaseFormat</a></li><li><a href="global.html#passwordsMatch">passwordsMatch</a></li><li><a href="global.html#processForm">processForm</a></li><li><a href="global.html#processFormCurrentUser">processFormCurrentUser</a></li><li><a href="global.html#pushNewUserInArray">pushNewUserInArray</a></li><li><a href="global.html#releaseScrollOnBody">releaseScrollOnBody</a></li><li><a href="global.html#reloadWebsite">reloadWebsite</a></li><li><a href="global.html#removeActiveOverviewStyling">removeActiveOverviewStyling</a></li><li><a href="global.html#removeActiveOverviewStylingMobile">removeActiveOverviewStylingMobile</a></li><li><a href="global.html#removeAddSubTaskButtons">removeAddSubTaskButtons</a></li><li><a href="global.html#removeAllContactBoxActiveStyling">removeAllContactBoxActiveStyling</a></li><li><a href="global.html#removeAllErorrInputStyling">removeAllErorrInputStyling</a></li><li><a href="global.html#removeAllErrorMessages">removeAllErrorMessages</a></li><li><a href="global.html#removeContactFromArray">removeContactFromArray</a></li><li><a href="global.html#removeContactFromTasks">removeContactFromTasks</a></li><li><a href="global.html#renderChoosenContactList">renderChoosenContactList</a></li><li><a href="global.html#renderContactDetails">renderContactDetails</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderContactOverlayContent">renderContactOverlayContent</a></li><li><a href="global.html#renderContacts">renderContacts</a></li><li><a href="global.html#renderCurrentUserOverlayContent">renderCurrentUserOverlayContent</a></li><li><a href="global.html#renderFilteredContactList">renderFilteredContactList</a></li><li><a href="global.html#renderHTMLAddContactButton">renderHTMLAddContactButton</a></li><li><a href="global.html#renderHTMLAddContactOverlay">renderHTMLAddContactOverlay</a></li><li><a href="global.html#renderHTMLChoosenContact">renderHTMLChoosenContact</a></li><li><a href="global.html#renderHTMLChoosenUser">renderHTMLChoosenUser</a></li><li><a href="global.html#renderHTMLContactDetails">renderHTMLContactDetails</a></li><li><a href="global.html#renderHTMLContactDetailsMobileMenu">renderHTMLContactDetailsMobileMenu</a></li><li><a href="global.html#renderHTMLEditContactOverlay">renderHTMLEditContactOverlay</a></li><li><a href="global.html#renderHTMLEditCurrentUserOverlay">renderHTMLEditCurrentUserOverlay</a></li><li><a href="global.html#renderHTMLEditSubTask">renderHTMLEditSubTask</a></li><li><a href="global.html#renderHTMLMobileGreeting">renderHTMLMobileGreeting</a></li><li><a href="global.html#renderHTMLSubtask">renderHTMLSubtask</a></li><li><a href="global.html#renderHTMLSummary">renderHTMLSummary</a></li><li><a href="global.html#renderHTMLYouInContactList">renderHTMLYouInContactList</a></li><li><a href="global.html#renderMobileGreeting">renderMobileGreeting</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#renderSummary">renderSummary</a></li><li><a href="global.html#renderTaskCategoryList">renderTaskCategoryList</a></li><li><a href="global.html#resetAddTaskForm">resetAddTaskForm</a></li><li><a href="global.html#resetRegisterForm">resetRegisterForm</a></li><li><a href="global.html#resetSelectedCategory">resetSelectedCategory</a></li><li><a href="global.html#saveEditedSubTask">saveEditedSubTask</a></li><li><a href="global.html#saveTask">saveTask</a></li><li><a href="global.html#setTaskPrio">setTaskPrio</a></li><li><a href="global.html#setnewUser">setnewUser</a></li><li><a href="global.html#showDateError">showDateError</a></li><li><a href="global.html#skipLogoAnimation">skipLogoAnimation</a></li><li><a href="global.html#skipMobileAnimationSummary">skipMobileAnimationSummary</a></li><li><a href="global.html#sortAllTaskDueDates">sortAllTaskDueDates</a></li><li><a href="global.html#sortContactsByName">sortContactsByName</a></li><li><a href="global.html#startLogoAnimation">startLogoAnimation</a></li><li><a href="global.html#startMobileAnimation">startMobileAnimation</a></li><li><a href="global.html#taskCategorySelected">taskCategorySelected</a></li><li><a href="global.html#testPasswordLogin">testPasswordLogin</a></li><li><a href="global.html#toggleChoosenContactStyling">toggleChoosenContactStyling</a></li><li><a href="global.html#toggleChoosenContactToArray">toggleChoosenContactToArray</a></li><li><a href="global.html#toggleCurrentUserChoosenStyling">toggleCurrentUserChoosenStyling</a></li><li><a href="global.html#toggleDNoneInputAndButtonDropDown">toggleDNoneInputAndButtonDropDown</a></li><li><a href="global.html#toggleDnoneFromOverlay">toggleDnoneFromOverlay</a></li><li><a href="global.html#toggleDropdown">toggleDropdown</a></li><li><a href="global.html#toggleSubMenu">toggleSubMenu</a></li><li><a href="global.html#transFormDate">transFormDate</a></li><li><a href="global.html#updateCheckboxState">updateCheckboxState</a></li><li><a href="global.html#updateCheckboxStateCurrentUser">updateCheckboxStateCurrentUser</a></li><li><a href="global.html#updateCurrentUserChoosen">updateCurrentUserChoosen</a></li><li><a href="global.html#updateCurrentUserFireBase">updateCurrentUserFireBase</a></li><li><a href="global.html#updateCurrentUserLocalStorage">updateCurrentUserLocalStorage</a></li><li><a href="global.html#updateErrorBox">updateErrorBox</a></li><li><a href="global.html#validateCategory">validateCategory</a></li><li><a href="global.html#validateConfirmPasswordInput">validateConfirmPasswordInput</a></li><li><a href="global.html#validateDate">validateDate</a></li><li><a href="global.html#validateDateInput">validateDateInput</a></li><li><a href="global.html#validateEmail">validateEmail</a></li><li><a href="global.html#validateField">validateField</a></li><li><a href="global.html#validateInputs">validateInputs</a></li><li><a href="global.html#validateName">validateName</a></li><li><a href="global.html#validatePasswordInput">validatePasswordInput</a></li><li><a href="global.html#validatePhone">validatePhone</a></li><li><a href="global.html#validateRegisterCheckBox">validateRegisterCheckBox</a></li><li><a href="global.html#validateTitle">validateTitle</a></li><li><a href="global.html#wrongPassword">wrongPassword</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Feb 26 2025 12:29:33 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

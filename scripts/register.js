@@ -1,240 +1,276 @@
 /**
- * Lädt das Array der gespeicherten Benutzer aus dem `localStorage` und gibt es in der Konsole aus.
- * 
- * Diese Funktion holt sich die Benutzerdaten aus dem `localStorage`, die unter dem Schlüssel `users` gespeichert sind. 
- * Die Daten werden als JSON-String abgerufen und dann mit `JSON.parse` in ein JavaScript-Array umgewandelt. 
- * Falls keine Benutzerdaten im `localStorage` gefunden werden, wird `storedUserArray` den Wert `null` haben. 
- * Das geparste Array der Benutzer wird anschließend in der Konsole ausgegeben.
- * 
- * @param {string} storedUserArray - Der JSON-String, der die Benutzerinformationen aus dem `localStorage` enthält.
- * @param {Array|null} users - Das JavaScript-Array, das die geparsten Benutzerdaten enthält. Falls keine Daten vorhanden sind, ist es `null`.
+ * Initializes the registration process by fetching user data.
+ * Handles any errors that occur during initialization.
  */
-function handleUsers(){
-    let storedUserArray = localStorage.getItem("users");
-    users = JSON.parse(storedUserArray)
-    console.log(users); 
-}
-
-/**
- * Überprüft, ob alle erforderlichen Eingabefelder (Name, Email, Passwort) korrekt ausgefüllt sind.
- * Wenn alle Felder gültig sind, wird die Funktion `doTheyMatch` aufgerufen. Andernfalls wird die Ausführung gestoppt.
- * 
- */
-function isEverythingFilledUp(){
-    if (testname() == 0 && testemail() == 0 && testpassword() == 0){
-        doTheyMatch();
-    }
-    else{
-        return;
+async function initRegister() {
+    try {
+        await fetchUsers();
+    } catch (error) {
+        console.error("Error initializing app:", error);
     }
 }
 
 /**
- * Überprüft, ob das Namens-Eingabefeld auf der Seite leer ist.
- * Wenn das Feld leer ist, wird der Rahmen des Containers rot gefärbt und eine Fehlermeldung angezeigt.
- * Gibt `1` zurück, wenn das Feld leer ist, und `0`, wenn es ausgefüllt ist.
+ * Handles the registration form submission.
+ * Prevents default form submission, disables the signup button, validates inputs,
+ * and processes the form if no errors are found.
  * 
- * @returns {number} 1, wenn das Namensfeld leer ist, ansonsten 0.
+ * @param {Event} event - The form submission event.
  */
-function testname(){
-    let nameInput = document.getElementById('person_input_register').value.trim();
-    if(nameInput.length == 0){
-        let border = document.querySelector('.person__container');
-        border.style.borderColor = '#fb3c53';
-        document.getElementById('errormessage_box').classList.remove('d__none');
-        return 1;
-    }
-    else{
-        return 0;
+async function handleRegisterForm(event) {
+    if (event) event.preventDefault();
+    document.getElementById('signup_button').onclick = false;
+    const error = validateInputs();
+    updateErrorBox(error);
+    if (!error) {
+        const checkBoxError = validateRegisterCheckBox();
+        if (!checkBoxError) await processForm();
     }
 }
 
 /**
- * Überprüft, ob das Email-Eingabefeld auf der Seite leer ist.
- * Wenn das Feld leer ist, wird der Rahmen des Containers rot gefärbt und eine Fehlermeldung angezeigt.
- * Gibt `1` zurück, wenn das Feld leer ist, und `0`, wenn es ausgefüllt ist.
+ * Redirects the user back to the login page.
+ * Skips the login animation by adding a query parameter.
  * 
- * @returns {number} 1, wenn das Email-Feld leer ist, ansonsten 0.
+ * @param {Event} event - The event object to prevent default behavior.
  */
-function testemail(){
-    let nameInput = document.getElementById('email_input_register').value.trim();
-    if(nameInput.length == 0){
-        let border = document.querySelector('.email__container');
-        border.style.borderColor = '#fb3c53';
-        document.getElementById('errormessage_box').classList.remove('d__none');
-        return 1;
-    }
-    else{
-        return 0;
-    }
+function backToLogin(event) {
+    if (event) event.preventDefault();
+    window.location.href = 'login.html?skipAnimation=true';
 }
 
 /**
- * Überprüft, ob das Passwort-Eingabefeld auf der Seite leer ist.
- * Wenn das Feld leer ist, wird der Rahmen des Containers rot gefärbt und eine Fehlermeldung angezeigt.
- * Gibt `1` zurück, wenn das Feld leer ist, und `0`, wenn es ausgefüllt ist.
+ * Validates all input fields and returns the first encountered error.
+ * @returns {string|null} Error message if validation fails, otherwise null.
+ */
+function validateInputs() {
+    return (
+        validateName("person_input_register", "person_container_register") ||
+        validateEmail("email_input_register", "email_container_register") ||
+        validatePasswordInput("password_input_register", "password_container_register") ||
+        validateConfirmPasswordInput("confirm_password_input_register", "cofirm_password_container_register")
+    );
+}
+
+/**
+ * Validates the name input field.
+ * Ensures that the field is not empty.
  * 
- * @returns {number} 1, wenn das Passwort-Feld leer ist, ansonsten 0.
+ * @param {string} id - The ID of the name input field.
+ * @param {string} containerID - The ID of the container to highlight on error.
+ * @returns {string|null} Error message if validation fails, otherwise null.
  */
-function testpassword(){
-    let nameInput = document.getElementById('password_input_register').value.trim();
-    if(nameInput.length == 0){
-        let border = document.querySelector('.password__container');
-        border.style.borderColor = '#fb3c53';
-        document.getElementById('errormessage_box').classList.remove('d__none');
-        return 1;
-    }
-    else{
-        return 0;
-    }
+function validateName(id, containerID) {
+    const field = document.getElementById(id);
+    const container = document.getElementById(containerID);
+    removeAllErorrInputStyling();
+    if (field.value.trim() === "") {
+        container.classList.add('error__inputs');
+        return "Check your name. Please try again.";
+    } else return null;
 }
 
 /**
- * Überprüft, ob die eingegebenen Passwörter übereinstimmen.
+ * Validates the email input field.
+ * Ensures that the email is in the correct format and not already in use.
  * 
- * Diese Funktion vergleicht die Werte der Passworteingabefelder. Wenn die Passwörter übereinstimmen,
- * wird die Funktion `submitUser()` aufgerufen, um den Benutzer zu registrieren. Falls die Passwörter
- * nicht übereinstimmen, werden beide Felder geleert, und eine Fehlermeldung wird dem Benutzer angezeigt.
+ * @param {string} id - The ID of the email input field.
+ * @param {string} containerID - The ID of the container to highlight on error.
+ * @returns {string|null} Error message if validation fails, otherwise null.
+ */
+function validateEmail(id, containerID) {
+    const email = document.getElementById(id).value;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const container = document.getElementById(containerID);
+    removeAllErorrInputStyling();
+    if (!emailRegex.test(email)) {
+        container.classList.add('error__inputs');
+        return "Check your email. Please try again.";
+    } else {
+        if (emailExists()) {
+            container.classList.add('error__inputs');
+            return "Email already exists. Please try again.";
+        } else return null;
+    }
+}
+
+/**
+ * Checks if the entered email is already registered.
+ * If the email exists, it clears the input field.
  * 
- * @param {HTMLInputElement} password - Das Eingabefeld für das Passwort des Benutzers.
- * @param {HTMLInputElement} confirmation - Das Eingabefeld für die Passwortbestätigung des Benutzers.
+ * @returns {boolean} True if the email already exists, otherwise false.
  */
-function doTheyMatch(){
-    let password = document.getElementById('password_input_register');
-    let confirmation = document.getElementById('confirm_password_input_register');
-    if(password.value == confirmation.value){
-        submitUser();
-    }
-    else{
-        password.value = '';
-        confirmation.value = '';
-        let border = document.querySelector('.password__container');
-        border.style.borderColor = '#fb3c53';
-        let borderC = document.querySelector('.confirmation__container');
-        borderC.style.borderColor = '#fb3c53';
-        document.getElementById('noMatchmessage_box').classList.remove('d__none');
-        return 1;
+function emailExists() {
+    const emailInputRef = document.getElementById('email_input_register');
+    const email = emailInputRef.value.trim();
+    const doesEmailAlreadyExist = users.some(user => user.email === email);
+    if (doesEmailAlreadyExist) emailInputRef.value = "";
+    return doesEmailAlreadyExist;
+}
+
+/**
+ * Validates the password input field.
+ * Ensures that the field is not empty.
+ * 
+ * @param {string} id - The ID of the password input field.
+ * @param {string} containerID - The ID of the container to highlight on error.
+ * @returns {string|null} Error message if validation fails, otherwise null.
+ */
+function validatePasswordInput(id, containerID) {
+    const field = document.getElementById(id);
+    const container = document.getElementById(containerID);
+    removeAllErorrInputStyling();
+    if (field.value.trim() === "") {
+        container.classList.add('error__inputs');
+        return "Check your password. Please try again.";
+    } else return null;
+}
+
+/**
+ * Validates the password confirmation input field.
+ * Ensures that the field is not empty and that both passwords match.
+ * 
+ * @param {string} id - The ID of the password confirmation input field.
+ * @param {string} containerID - The ID of the container to highlight on error.
+ * @returns {string|null} Error message if validation fails, otherwise null.
+ */
+function validateConfirmPasswordInput(id, containerID) {
+    const field = document.getElementById(id);
+    const container = document.getElementById(containerID);
+    removeAllErorrInputStyling();
+    if (field.value.trim() === "") {
+        container.classList.add('error__inputs');
+        return "Check your password. Please try again.";
+    } else {
+        if (passwordsMatch()) return null;
+        else {
+            container.classList.add('error__inputs');
+            return "Your passwords don't match. Please try again.";
+        }
     }
 }
 
 /**
- * Überprüft, ob das angegebene Kontrollkästchen (checkbox) für die Zustimmung zur Datenschutzrichtlinie aktiviert wurde.
- * Wenn das Kontrollkästchen aktiviert ist, wird die Funktion `checkPassword()` aufgerufen.
- * Andernfalls wird eine Nachricht in der Konsole ausgegeben, dass das Kontrollkästchen nicht angekreuzt wurde.
- *
- * @param {HTMLInputElement} checkbox - Das Kontrollkästchen-Element, das den Status der Zustimmung zur Datenschutzrichtlinie darstellt.
+ * Checks if the entered password and confirmation password match.
+ * If they do not match, the fields are cleared and masked.
+ * 
+ * @returns {boolean} True if passwords match, otherwise false.
  */
-function submitUser(){
-    let checkbox = document.getElementById('agree_privacy_policy');
-    if(checkbox.checked == true){
-        registerUser();
-        console.log("checked");        
-    }
-    else{
-        console.log("not checked");
-        
+function passwordsMatch() {
+    const passwordRef = document.getElementById('password_input_register');
+    const passwordConfirmationRef = document.getElementById('confirm_password_input_register');
+    const password = passwordRef.value.trim();
+    const passwordConfirmation = passwordConfirmationRef.value.trim();
+    if (password === passwordConfirmation) return true;
+    else {
+        passwordRef.value = "";
+        passwordConfirmationRef.value = "";
+        maskPassword('password_input_register', 'mask_input_password');
+        maskPassword('confirm_password_input_register', 'mask_input_confirmation');
+        const container = document.getElementById('password_container_register');
+        container.classList.add('error__inputs');
     }
 }
 
-
 /**
- * Registriert einen neuen Benutzer, indem die Formulardaten gesammelt und ein Benutzerobjekt mit einer eindeutigen ID erstellt wird.
- * Der Benutzer wird anschließend in das `users`-Array eingefügt.
- *
- * @param {Array} users - Das Array, das alle registrierten Benutzer speichert. Jeder Benutzer wird durch seine ID eindeutig identifiziert.
- * @param {HTMLFormElement} form - Das HTML-Formular, das die Benutzereingabefelder enthält.
- * @param {FormData} formData - Ein FormData-Objekt, das die Formulardaten als Schlüssel-Wert-Paare speichert.
- * @param {Object} userObject - Ein Objekt, das die Formulardaten des neuen Benutzers enthält (z. B. `username`, `email`, etc.).
- * @param {number} userID - Die eindeutige ID für den neuen Benutzer, basierend auf der aktuellen Anzahl der Benutzer im `users`-Array.
+ * Removes error styling from all input containers.
  */
-function registerUser(){
- let form = document.getElementById('sign_up_form');
- let formData = new FormData(form); //hab ich aus dem Buch von Rheinwerk: FormData stellt im endeffekt bereits ein Objekt her, dass dann abgefrühstückt werden kann                    
- let userObject ={};                //es kann dann über die for ...of schleife mit [key(name="") und value(input)] für jedes Element des Formulars ein Objekt erstellen weil es die
-                                    //sachen durchgeht
- for (let[key, value] of formData){
-    userObject[key] = value;
- }
- 
- pushPushItRealHard(userObject);
+function removeAllErorrInputStyling() {
+    const inputContainers = ["person_container_register", "email_container_register", "password_container_register", "cofirm_password_container_register"];
+    for (let i = 0; i < inputContainers.length; i++) {
+        if (inputContainers[i]) {
+            const inputContainerRef = document.getElementById(`${inputContainers[i]}`);
+            inputContainerRef.classList.remove('error__inputs');
+        }
+    }
 }
 
 /**
- * Setzt das Anmeldeformular und zugehörige Elemente zurück.
- * Diese Funktion leert alle Eingabefelder innerhalb des Formulars,
- * setzt insbesondere das Passwortbestätigungsfeld zurück und
- * deaktiviert das Kontrollkästchen für die Zustimmung zur Datenschutzerklärung.
- *
+ * Updates the error message box with the given error message.
+ * @param {string|null} error - The error message to display, or null to hide the box.
  */
-function resetForm(){
+function updateErrorBox(error) {
+    const box = document.getElementById("register_errormessage_box");
+    box.innerText = error || "";
+    box.style.display = error ? "block" : "none";
+}
+
+/**
+ * Validates the privacy policy checkbox in the registration form.
+ * Displays an error message if the checkbox is not checked.
+ * 
+ * @returns {boolean} True if the checkbox is unchecked (error), otherwise false.
+ */
+function validateRegisterCheckBox() {
+    const checkBoxRef = document.getElementById('agree_privacy_policy_register');
+    if (checkBoxRef.checked) return false;
+    else {
+        updateErrorBox('Please agree to our privacy policy.');
+        return true;
+    }
+}
+
+/**
+ * Processes the registration form by creating a new user, 
+ * storing it in the database, and redirecting to the login page.
+ */
+async function processForm() {
+    const newUser = setnewUser();
+    resetRegisterForm();
+    pushNewUserInArray(newUser);
+    await putData("users", users);
+    activateSuccSingedUpOverlay();
+    setTimeout(() => {
+        window.location.href = 'login.html?skipAnimation=true';
+    }, 700);
+}
+
+/**
+ * Creates a new user object with the provided registration details.
+ * 
+ * @returns {Object} The newly created user object.
+ */
+function setnewUser() {
+    const inputEmail = document.getElementById('email_input_register').value.trim();
+    const inputName = document.getElementById('person_input_register').value.trim();
+    const inputPw = document.getElementById('password_input_register').value.trim();
+    const newUser = {
+        email: inputEmail,
+        initials: getInitials(inputName),
+        name: inputName,
+        pw: inputPw
+    };
+    return newUser;
+}
+
+/**
+ * Resets the registration form by clearing all input fields 
+ * and resetting the password masking.
+ */
+function resetRegisterForm() {
     document.getElementById('sign_up_form').reset();
     document.getElementById('confirm_password_input_register').value = '';
-    document.getElementById('agree_privacy_policy').checked = false;
+    document.getElementById('agree_privacy_policy_register').checked = false;
+    maskPassword('password_input_register', 'mask_input_password');
+    maskPassword('confirm_password_input_register', 'mask_input_confirmation');
+}
+
+/**
+ * Adds the newly registered user to the users array.
+ * 
+ * @param {Object} newUser - The newly created user object.
+ */
+function pushNewUserInArray(newUser) {
+    if (users) users.push(newUser);
+}
+
+/**
+ * Activates the success notification overlay after a successful sign-up.
+ */
+function activateSuccSingedUpOverlay() {
     document.getElementById('signed_up_notification').classList.add('signed__up__notification__active');
     document.getElementById('overlay_signed_up').classList.remove('d__none');
 }
 
-/**
- * Fügt einen neuen Benutzer zum `users`-Array hinzu, registriert den Benutzer in Firebase, 
- * setzt das Formular zurück und aktualisiert den lokalen Speicher. Leitet weiter zum Login.
- *
- * @param {Object} userObject - Ein Objekt, das die Daten des Benutzers mit einer eindeutigen ID enthält. 
- *                              Das Objekt sollte mindestens folgende Eigenschaften enthalten:
- *                              - `id` (string|number): Die eindeutige Benutzer-ID.
- *                              - Weitere benutzerdefinierte Eigenschaften (z. B. `username`, `email`).
- * 
- * @returns {Promise<void>} Eine Promise, die aufgelöst wird, nachdem der Benutzer erfolgreich in Firebase registriert wurde
- *                          und das `users`-Array aktualisiert wurde.
- * 
- */
-async function pushPushItRealHard(userObject){
-    users.push(userObject);
-    await registerUserInFirebase()
-    resetForm();
-    console.log(users);
-    localStorage.setItem("users", JSON.stringify(users));
-    window.location.href = 'login.html';
-}
 
-/**
- * Sendet das `users`-Array als JSON-Daten an die angegebene `usersUrl`, um die Benutzer in Firebase zu registrieren.
- *
- * @param {string} usersUrl - Die URL, an die die Benutzerinformationen gesendet werden sollen.
- *                            Diese URL repräsentiert den Endpunkt der Firebase-Datenbank.
- * @param {Array} users - Ein Array von Benutzerobjekten, die registriert werden sollen.
- *                        Jedes Objekt enthält Benutzerdetails wie `id`, `username`, `email` usw.
- *
- * @returns {Promise<void>} Eine Promise, die aufgelöst wird, wenn der PUT-Request erfolgreich abgeschlossen wurde.
- */
-async function registerUserInFirebase() {
-    try {
-        let response =await fetch(usersUrl, {
-        method:"PUT",
-        headers:{"Content-Type": "application/json"},
-        body: JSON.stringify(users)     
-        })
-    }
 
-     catch (error) {
-        showErrorAlert();
-    }
-    
-}
-
-/**
- * Aktiviert den "Registrieren"-Button, wenn die Checkbox zur Zustimmung der Datenschutzrichtlinie angehakt ist.
- * 
- * Diese Funktion überprüft, ob die Checkbox mit der ID `agree_privacy_policy` angehakt ist. 
- * Ist dies der Fall, wird der "Registrieren"-Button mit der ID `register_button` aktiviert, indem das `disabled`-Attribut auf `false` gesetzt wird.
- * 
- * @param {HTMLInputElement} checkbox - Die Checkbox, die anzeigt, ob die Datenschutzrichtlinie akzeptiert wurde. Sie wird über die ID `agree_privacy_policy` ausgewählt.
- * @param {HTMLButtonElement} button - Der Button, der aktiviert wird, wenn die Checkbox angehakt ist. Er wird über die ID `register_button` ausgewählt.
- * @param {boolean} isChecked - Ein Boolean-Wert, der den aktuellen Zustand der Checkbox (angekreuzt oder nicht) angibt.
- */
-function enableRegisterButton(){
-    let isChecked = document.getElementById('agree_privacy_policy').checked;
-
-    if(isChecked == true){
-        document.getElementById('register_button').disabled = false;
-    }
-}

@@ -18,6 +18,7 @@
 
     <script src="./script.js"></script>
     <script src="./scripts/templates.js"></script>
+    <script src="./scripts/templates_2.js"></script>
     <script src="./scripts/assets.js"></script>
 </head>
 <body id="body" onload="">
@@ -30,25 +31,25 @@
                 <div class="sidebar__navbarcontainer">
                     <div class="sidebar__navbar">
                         <div class="behind__sidebarbuttons">
-                            <button class="sidebar__button">
+                            <button onclick="openSummaryWebsiteWithoutMobileAnimation()" class="sidebar__button">
                                 <img src="./assets/icons/summary_icon_white.png" alt="Summary">
                                 Summary
                             </button>
                         </div>
                         <div class="behind__sidebarbuttons">
-                            <button class="sidebar__button">
+                            <button onclick="openAddTaskWebsite()" class="sidebar__button">
                                 <img src="./assets/icons/add_task_icon_white.png" alt="Add Task">
                                 Add Task
                             </button>
                         </div>
                         <div class="behind__sidebarbuttons">
-                            <button class="sidebar__button">
+                            <button onclick="openBoardWebsite()" class="sidebar__button">
                                 <img src="./assets/icons/board_icon_white.png" alt="Board">
                                 Board
                             </button>
                         </div>
                         <div class="behind__sidebarbuttons">
-                            <button class="sidebar__button">
+                            <button onclick="openContactsWebsite()" class="sidebar__button">
                                 <img src="./assets/icons/contacts_icon_white.png" alt="Contacts">
                                 Contacts
                             </button>
@@ -56,10 +57,10 @@
                     </div>
                     <div class="sidebar__noticescontainer">
                         <div class="behind__noticesbuttons notices__buttonopen">
-                            <button class="notices__button notices__buttonopen">Privacy Policy</button>
+                            <button onclick="reloadWebsite()" class="notices__button notices__buttonopen">Privacy Policy</button>
                         </div>
                         <div class="behind__noticesbuttons">
-                            <button class="notices__button">Legal notice</button>
+                            <button onclick="openLegalNoticeWebsite()" class="notices__button">Legal notice</button>
                         </div>
                     </div>
                 </div>
@@ -71,106 +72,88 @@
                     <h3>Kanban Project Management Tool</h3>
                 </div>
             </header>
-            <main>
-                <h1 class="adsimple-312936617">Privacy policy</h1>
-<h2 id="einleitung-ueberblick" class="adsimple-312936617">Introduction and overview</h2>
-<p>We have prepared this privacy policy (version 21.01.2025-312936617) in order to inform you in accordance with the requirements of the <a class="adsimple-312936617" href="https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32016R0679&amp;from=DE&amp;tid=312936617#d1e2269-1-1" target="_blank" rel="noopener">General Data Protection Regulation (EU) 2016/679</a> and applicable national laws, which personal data (data for short) we as the controller &#8211; and the processors commissioned by us (e.g. providers) &#8211; process, will process in the future and what lawful options you have. The terms used are to be understood as gender-neutral.<br />
-<strong class="adsimple-312936617">In short:</strong> We provide you with comprehensive information about the data we process about you.</p>
-<p>Datenschutzerklärungen klingen für gewöhnlich sehr technisch und verwenden juristische Fachbegriffe. Diese Datenschutzerklärung soll Ihnen hingegen die wichtigsten Dinge so einfach und transparent wie möglich beschreiben. Soweit es der Transparenz förderlich ist, werden technische <strong class=“adsimple-312936617”>Begriffe leserfreundlich erklärt</strong>, Links zu weiterführenden Informationen geboten und <strong class=“adsimple-312936617”>Grafiken</strong> zum Einsatz gebracht. Wir informieren damit in klarer und einfacher Sprache, dass wir im Rahmen unserer Geschäftstätigkeiten nur dann personenbezogene Daten verarbeiten, wenn eine entsprechende gesetzliche Grundlage gegeben ist. Das ist sicher nicht möglich, wenn man möglichst knappe, unklare und juristisch-technische Erklärungen abgibt, so wie sie im Internet oft Standard sind, wenn es um Datenschutz geht. Ich hoffe, Sie finden die folgenden Erläuterungen interessant und informativ und vielleicht ist die eine oder andere Information dabei, die Sie noch nicht kannten.<br />
-    Wenn trotzdem Fragen bleiben, möchten wir Sie bitten, sich an die unten bzw. im Impressum genannte verantwortliche Stelle zu wenden, den vorhandenen Links zu folgen und sich weitere Informationen auf Drittseiten anzusehen. Unsere Kontaktdaten finden Sie selbstverständlich auch im Impressum.</p>
-    <h2 id=“area of application” class=“adsimple-312936617”>Area of application</h2>
-    <p>Diese Datenschutzerklärung gilt für alle von uns im Unternehmen verarbeiteten personenbezogenen Daten und für alle personenbezogenen Daten, die von uns beauftragte Firmen (Auftragsverarbeiter) verarbeiten. Mit personenbezogenen Daten meinen wir Informationen im Sinne des Art. 4 Nr. 1 DSGVO wie zum Beispiel Name, E-Mail-Adresse und postalische Anschrift einer Person. Die Verarbeitung personenbezogener Daten sorgt dafür, dass wir unsere Dienstleistungen und Produkte anbieten und abrechnen können, sei es online oder offline. Der Anwendungsbereich dieser Datenschutzerklärung umfasst:</p>
-    <ul class=“adsimple-312936617”>
-    <li class=“adsimple-312936617”>alle Onlineauftritte (Websites, Onlineshops), die wir betreiben</li>
-    <li class=“adsimple-312936617”>Social Media Auftritte und E-Mail-Kommunikation</li>
-    <li class=“adsimple-312936617”>mobile Apps für Smartphones und andere Geräte</li>
-    </ul>
-<p>
-    <strong class=“adsimple-312936617”>In short:</strong> The privacy policy applies to all areas in which personal data is processed in the company in a structured manner via the aforementioned channels. If we enter into legal relationships with you outside of these channels, we will inform you separately if necessary.</p>
-    <h2 id=“legal bases” class=“adsimple-312936617”>Legal bases</h2>
-    <p>In der folgenden Datenschutzerklärung geben wir Ihnen transparente Informationen zu den rechtlichen Grundsätzen und Vorschriften, also den Rechtsgrundlagen der Datenschutz-Grundverordnung, die uns ermöglichen, personenbezogene Daten zu verarbeiten.<br />
-    Was das EU-Recht betrifft, beziehen wir uns auf die VERORDNUNG (EU) 2016/679 DES EUROPÄISCHEN PARLAMENTS UND DES RATES vom 27. April 2016. Diese Datenschutz-Grundverordnung der EU können Sie selbstverständlich online auf EUR-Lex, dem Zugang zum EU-Recht, unter <a class=“adsimple-312936617” href=“https://eur-lex.europa.eu/legal-content/DE/ALL/?uri=celex%3A32016R0679”>https://eur-lex.europa.eu/legal-content/DE/ALL/?uri=celex%3A32016R0679</a> nachlesen.</p>
-    <p>Wir verarbeiten Ihre Daten nur, wenn mindestens eine der folgenden Bedingungen zutrifft:</p>
-    <ol>
-    <li class=“adsimple-312936617”>
-    <strong class=“adsimple-312936617”>Einwilligung</strong> (Artikel 6 Absatz 1 lit. a DSGVO): Sie haben uns Ihre Einwilligung gegeben, Daten zu einem bestimmten Zweck zu verarbeiten. Ein Beispiel wäre die Speicherung Ihrer eingegebenen Daten eines Kontaktformulars.</li>
-    <li class=“adsimple-312936617”>
-    <strong class=“adsimple-312936617”>Vertrag</strong> (Artikel 6 Absatz 1 lit. b DSGVO): Um einen Vertrag oder vorvertragliche Verpflichtungen mit Ihnen zu erfüllen, verarbeiten wir Ihre Daten. Wenn wir zum Beispiel einen Kaufvertrag mit Ihnen abschließen, benötigen wir vorab personenbezogene Informationen.</li>
-    <li class=“adsimple-312936617”>
-    <strong class=“adsimple-312936617”>Rechtliche Verpflichtung</strong> (Artikel 6 Absatz 1 lit. c DSGVO): Wenn wir einer rechtlichen Verpflichtung unterliegen, verarbeiten wir Ihre Daten. Zum Beispiel sind wir gesetzlich verpflichtet Rechnungen für die Buchhaltung aufzuheben. Diese enthalten in der Regel personenbezogene Daten.</li>
-    <li class=“adsimple-312936617”>
-    <strong class=“adsimple-312936617”>Berechtigte Interessen</strong> (Artikel 6 Absatz 1 lit. f DSGVO): Im Falle berechtigter Interessen, die Ihre Grundrechte nicht einschränken, behalten wir uns die Verarbeitung personenbezogener Daten vor. Wir müssen zum Beispiel gewisse Daten verarbeiten, um unsere Website sicher und wirtschaftlich effizient betreiben zu können. Diese Verarbeitung ist somit ein berechtigtes Interesse.</li>
-    </ol>
-    <p>Weitere Bedingungen wie die Wahrnehmung von Aufnahmen im öffentlichen Interesse und Ausübung öffentlicher Gewalt sowie dem Schutz lebenswichtiger Interessen treten bei uns in der Regel nicht auf. Soweit eine solche Rechtsgrundlage doch einschlägig sein sollte, wird diese an der entsprechenden Stelle ausgewiesen.</p>
-    <p>Zusätzlich zu der EU-Verordnung gelten auch noch nationale Gesetze:</p>
-    <ul class=“adsimple-312936617”>
-    <li class=“adsimple-312936617”>In <strong class=“adsimple-312936617”>Österreich</strong> ist dies das Bundesgesetz zum Schutz natürlicher Personen bei der Verarbeitung personenbezogener Daten (<strong class=“adsimple-312936617”>Datenschutzgesetz</strong>), kurz <strong class=“adsimple-312936617”>DSG</strong>.</li>
-    <li class=“adsimple-312936617”>In <strong class=“adsimple-312936617”>Deutschland</strong> gilt das <strong class=“adsimple-312936617”>Bundesdatenschutzgesetz</strong>, kurz<strong class=“adsimple-312936617”> BDSG</strong>.</li>
-    </ul>
-    <p>Sofern weitere regionale oder nationale Gesetze zur Anwendung kommen, informieren wir Sie in den folgenden Abschnitten darüber.</p>
-    <h2 id=“kontaktdaten-verantwortliche” class=“adsimple-312936617”>Kontaktdaten des Verantwortlichen</h2>
-    <p>Sollten Sie Fragen zum Datenschutz oder zur Verarbeitung personenbezogener Daten haben, finden Sie nachfolgend die Kontaktdaten des Verantwortlichen gemäß Artikel 4 Absatz 7 EU-Datenschutz-Grundverordnung (DSGVO):<br />
-    <span class=“adsimple-312936617” style="font-weight: 400">Carlos Becker<br />
-    Calle Luis Guardo 1<br />
-    24850 Boñar</span>
-</p>
-<p>E-Mail: <a href="mailto:leonesknebbel@gmail.com">leonesknebbel@gmail.com</a>
-<br />
-Telefon: <a href=„tel:+34987742199“>+34987742199</a>
-<br />
-Impressum: <a href=„http://f0171f5a@join-412.developerakademie.net/legal_notice-gl.html“>http://f0171f5a@join-412.developerakademie.net/legal_notice-gl.html</a>
-</p>
-<h2 id=„speicherdauer“ class=„adsimple-312936617“>Speicherdauer</h2>
-<p>Our general criterion is that we only store personal data for as long as is absolutely necessary to provide our services and products. This means that we delete personal data as soon as the reason for the data processing no longer exists. In some cases, we are legally obliged to store certain data even after the original purpose no longer applies, for example for accounting purposes.</p>
-    <p>If you wish your data to be deleted or revoke your consent to data processing, the data will be deleted as quickly as possible and insofar as there is no obligation to store it.</p>
-    <p>We will inform you below about the specific duration of the respective data processing if we have further information on this.</p>
-    <h2 id=“rights-dsgvo” class=“adsimple-312936617”>Rights under the General Data Protection Regulation</h2>
-    <p>In accordance with Articles 13, 14 GDPR, we inform you of the following rights to which you are entitled in order to ensure fair and transparent processing of data:</p>
-    <ul class=“adsimple-312936617”>
-    <li class=“adsimple-312936617”>According to Article 15 GDPR, you have a right to information as to whether we process your data. If this is the case, you have the right to receive a copy of the data and the following information:
-    <ul class=“adsimple-312936617”>
-    <li class=“adsimple-312936617”>the purpose for which we carry out the processing;</li>
-    <li class=“adsimple-312936617”>the categories, i.e. the types of data that are processed;</li>
-    <li class=“adsimple-312936617”>who receives this data and, if the data is transferred to third countries, how security can be guaranteed;</li>
-    <li class=“adsimple-312936617”>how long the data will be stored;</li>
-    <li class=“adsimple-312936617”>the existence of the right to rectification, erasure or restriction of processing and the right to object to processing;</li>
-    <li class=“adsimple-312936617”>that you can lodge a complaint with a supervisory authority (links to these authorities can be found below);</li>
-    <li class=“adsimple-312936617”>the origin of the data if we have not collected it from you;</li>
-    <li class=“adsimple-312936617”>whether profiling is carried out, i.e. whether data is automatically analyzed in order to create a personal profile of you.</li>
-    </ul>
-    </li>
-    <li class=“adsimple-312936617”>According to Article 16 GDPR, you have a right to rectification of data, which means that we must correct data if you find errors.</li>
-    <li class=“adsimple-312936617”>According to Article 17 GDPR, you have the right to erasure (“right to be forgotten”), which specifically means that you may request the erasure of your data.</li>
-    <li class=“adsimple-312936617”>According to Article 18 GDPR, you have the right to restriction of processing, which means that we may only store the data but not use it any further.</li>
-    <li class=“adsimple-312936617”>According to Article 20 GDPR, you have the right to data portability, which means that we will provide you with your data in a commonly used format upon request.</li>
-    <li class=“adsimple-312936617”>According to Article 21 GDPR, you have the right to object, which will result in a change to the processing after enforcement.
-    <ul class=“adsimple-312936617”>
-        <li class=“adsimple-312936617”>If the processing of your data is based on Article 6(1)(e) (public interest, exercise of official authority) or Article 6(1)(f) (legitimate interest), you can object to the processing. We will then check as quickly as possible whether we can legally comply with this objection.</li>
-        <li class=“adsimple-312936617”>If data is used for direct marketing purposes, you can object to this type of data processing at any time. We may then no longer use your data for direct marketing.</li>
-        <li class=“adsimple-312936617”>If data is used for profiling purposes, you can object to this type of data processing at any time. We may then no longer use your data for profiling.</li>
-        </ul>
-        </li>
-        <li class=“adsimple-312936617”>Under Article 22 GDPR, you may have the right not to be subject to a decision based solely on automated processing (e.g. profiling).</li>
-        <li class=“adsimple-312936617”>According to Article 77 GDPR, you have the right to lodge a complaint. This means that you can lodge a complaint with the data protection authority at any time if you believe that the processing of personal data violates the GDPR.</li>
-        </ul>
-        <p>
-<strong class="adsimple-312936617">In short:</strong> You have rights &#8211; do not hesitate to contact the responsible body listed above!</p>
-<p>Wenn Sie glauben, dass die Verarbeitung Ihrer Daten gegen das Datenschutzrecht verstößt oder Ihre datenschutzrechtlichen Ansprüche in sonst einer Weise verletzt worden sind, können Sie sich bei der Aufsichtsbehörde beschweren. Diese ist für Österreich die Datenschutzbehörde, deren Website Sie unter <a class="adsimple-312936617" href="https://www.dsb.gv.at/?tid=312936617" target="_blank" rel="noopener">https://www.dsb.gv.at/</a> finden. In Deutschland gibt es für jedes Bundesland einen Datenschutzbeauftragten. Für nähere Informationen können Sie sich an die <a class="adsimple-312936617" href="https://www.bfdi.bund.de/DE/Home/home_node.html" target="_blank" rel="noopener">Bundesbeauftragte für den Datenschutz und die Informationsfreiheit (BfDI)</a> wenden. Für unser Unternehmen ist die folgende lokale Datenschutzbehörde zuständig:</p>
-<h2 id="nordrhein-westfalen-datenschutzbehoerde" class="adsimple-312936617">Nordrhein-Westfalen Datenschutzbehörde</h2>
-<p>
-<strong class="adsimple-312936617">Landesbeauftragte für Datenschutz:</strong> Bettina Gayk<br />
-<strong class="adsimple-312936617">Adresse: </strong>Kavalleriestraße 2-4, 40213 Düsseldorf<br />
-<strong class="adsimple-312936617">Telefonnr.:</strong> 02 11/384 24-0<br />
-<strong class="adsimple-312936617">E-Mail-Adresse:</strong> <a class="adsimple-312936617" href="mailto:poststelle@ldi.nrw.de" target="_blank" rel="follow noopener">poststelle@ldi.nrw.de</a>
-<br />
-<strong class="adsimple-312936617">Website: </strong>
-<a class="adsimple-312936617" href="https://www.ldi.nrw.de/?tid=312936617" target="_blank" rel="noopener">https://www.ldi.nrw.de/</a>
-</p>
-<p>Alle Texte sind urheberrechtlich geschützt.</p>
-<p style="margin-top:15px">Quelle: <a href="https://www.adsimple.de/datenschutz-generator/" title="Datenschutzerklärung Generator Deutschland">Datenschutzerklärung</a> erstellt mit dem Datenschutz Generator für Deutschland von AdSimple</p>
-
+            <main class="privacy__policy">
+                <h1 class="privacy__policy__title">Privacy Policy</h1>
+                <section class="privacy__policy__section">
+                    <h2 class="privacy__policy__subtitle">Introduction and Overview</h2>
+                    <p>We have prepared this privacy policy (version 21.01.2025) to inform you in accordance with the requirements of the 
+                        <a href="https://eur-lex.europa.eu/legal-content/DE/TXT/HTML/?uri=CELEX:32016R0679" target="_blank" rel="noopener">
+                            General Data Protection Regulation (EU) 2016/679
+                        </a> 
+                        and applicable national laws.</p>
+                    <p>This document details which personal data (hereinafter referred to as "data") we, as the data controller, and the processors commissioned by us (e.g., service providers) process, how we will process it in the future, and what lawful options you have.</p>
+                </section>
+                <section class="privacy__policy__section">
+                    <h2 class="privacy__policy__subtitle">Area of Application</h2>
+                    <p>This privacy policy applies to all personal data processed in our company and by commissioned processors. This includes:</p>
+                    <ul class="privacy__policy__list">
+                        <li>All online presences (websites, online shops) operated by us</li>
+                        <li>Social media appearances and email communication</li>
+                        <li>Mobile apps for smartphones and other devices</li>
+                    </ul>
+                    <p>If we engage with you outside of these channels, we will inform you separately if necessary.</p>
+                </section>
+                <section class="privacy__policy__section">
+                    <h2 class="privacy__policy__subtitle">Legal Bases</h2>
+                    <p>We process your data only when at least one of the following conditions applies:</p>
+                    <ol class="privacy__policy__list">
+                        <li><strong>Consent</strong> (Article 6(1)(a) GDPR): You have given your consent for data processing for a specific purpose.</li>
+                        <li><strong>Contract</strong> (Article 6(1)(b) GDPR): We process your data to fulfill a contract or pre-contractual obligations.</li>
+                        <li><strong>Legal Obligation</strong> (Article 6(1)(c) GDPR): We process your data when required by law.</li>
+                        <li><strong>Legitimate Interests</strong> (Article 6(1)(f) GDPR): If our legitimate interests do not outweigh your fundamental rights, we may process your data.</li>
+                    </ol>
+                    <p>Additionally, national laws such as the Datenschutzgesetz (DSG) in Austria and the Bundesdatenschutzgesetz (BDSG) in Germany apply.</p>
+                </section>
+                <section class="privacy__policy__section">
+                    <h2 class="privacy__policy__subtitle">Contact Details of the Responsible Party</h2>
+                    <p><strong>Responsible Party:</strong> Carlos Becker<br>
+                    Calle Luis Guardo 1, 24850 Boñar<br>
+                    Email: <a href="mailto:leonesknebbel@gmail.com">leonesknebbel@gmail.com</a><br>
+                    Phone: <a href="tel:+34987742199">+34 987 742199</a></p>
+                </section>
+                <section class="privacy__policy__section">
+                    <h2 class="privacy__policy__subtitle">Storage Duration</h2>
+                    <p>Personal data is only stored as long as necessary to provide our services and products. If you request deletion or revoke consent, we delete data promptly, provided no legal obligation requires its retention.</p>
+                </section>
+                <section class="privacy__policy__section">
+                    <h2 class="privacy__policy__subtitle">Data Processing and Third Parties</h2>
+                    <p>We work with third-party service providers for hosting, analytics, and customer management. These providers process data on our behalf and comply with GDPR requirements.</p>
+                    <p>If data is transferred outside the EU, we ensure appropriate safeguards such as Standard Contractual Clauses (SCCs).</p>
+                </section>
+                <section class="privacy__policy__section">
+                    <h2 class="privacy__policy__subtitle">Cookies & Tracking</h2>
+                    <p>We use cookies and tracking technologies to improve our services. You can adjust your cookie preferences in your browser settings.</p>
+                </section>
+                <section class="privacy__policy__section">
+                    <h2 class="privacy__policy__subtitle">Rights under the GDPR</h2>
+                    <ul class="privacy__policy__list">
+                        <li>Right to information (Art. 15 GDPR)</li>
+                        <li>Right to rectification (Art. 16 GDPR)</li>
+                        <li>Right to erasure (Art. 17 GDPR)</li>
+                        <li>Right to restriction of processing (Art. 18 GDPR)</li>
+                        <li>Right to data portability (Art. 20 GDPR)</li>
+                        <li>Right to object (Art. 21 GDPR)</li>
+                        <li>Right to lodge a complaint (Art. 77 GDPR)</li>
+                    </ul>
+                    <p>If you believe your data processing violates GDPR, you can file a complaint with the Datenschutzbehörde in Austria (<a href="https://www.dsb.gv.at" target="_blank">dsb.gv.at</a>) or the relevant data protection authority in Germany.</p>
+                </section>
+                <section class="privacy__policy__section">
+                    <h2 class="privacy__policy__subtitle">Supervisory Authority</h2>
+                    <p><strong>Data Protection Authority:</strong><br>
+                    Nordrhein-Westfalen Datenschutzbehörde<br>
+                    Address: Kavalleriestraße 2-4, 40213 Düsseldorf<br>
+                    Email: <a href="mailto:poststelle@ldi.nrw.de">poststelle@ldi.nrw.de</a><br>
+                    Website: <a href="https://www.ldi.nrw.de/" target="_blank">www.ldi.nrw.de</a></p>
+                </section>
+                <section class="privacy__policy__section">
+                    <h2 class="privacy__policy__subtitle">Copyright & Source</h2>
+                    <p>All texts are copyright protected. Source: Privacy Policy Generator by AdSimple.</p>
+                </section>
             </main>
         </div>
+    </div>
+    <div id="rotate_message" class="rotate__overlay d__none">
+        <h1>Please rotate your device to portrait mode.</h1>
     </div>
 </body>
 </html>

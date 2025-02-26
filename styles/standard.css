@@ -35,6 +35,7 @@ h3 {
 
 header {
     position: fixed;
+    top: 0;
     z-index: 1000;
     margin-inline: auto;
     width: min(100%, calc(1920px - clamp(172px, 17vw, 232px)));
@@ -64,3 +65,11 @@ a {
     text-decoration: none;
     color: #b8bcc2;
 }
+
+@media(max-width: 768px) {
+    header {
+        width: min(100%, 768px);
+        height: 80px;
+    }
+}
+

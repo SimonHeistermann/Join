@@ -1,0 +1,297 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: login.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: login.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/**
+ * Initializes the login process.
+ * Checks if the login animation should be skipped based on a URL parameter
+ * and starts the logo animation accordingly. Then, it fetches the user data.
+ */
+async function initLogin() {
+    try {
+        let skipAnimation = getQueryParam("skipAnimation") === "true";
+        logoAnimation(skipAnimation);
+        await fetchUsers();
+    } catch (error) {
+        console.error("Error initializing app:", error);
+    }
+}
+
+/**
+ * Controls the logo animation flow based on whether it should be skipped or not.
+ * @param {boolean} skipAnimation - Indicates whether to skip the animation.
+ */
+function logoAnimation(skipAnimation) {
+    const overlay = document.getElementById('overlay');
+    const bigLogoDiv = document.getElementById('biglogo_div'); 
+    if (skipAnimation) {
+        skipLogoAnimation(overlay, bigLogoDiv); 
+    } else {
+        startLogoAnimation(overlay, bigLogoDiv);
+    }
+}
+
+/**
+ * Skips the logo animation by immediately hiding the overlay and the big logo.
+ * @param {HTMLElement} overlay - The overlay element.
+ * @param {HTMLElement} bigLogoDiv - The large logo container element.
+ */
+function skipLogoAnimation(overlay, bigLogoDiv) {
+    overlay.classList.add("d__none");
+    bigLogoDiv.classList.add("d__none");
+    const smallLogo = document.getElementById('small_logo');
+    smallLogo.classList.add("visible");
+}
+
+/**
+ * Starts the logo animation by transitioning the elements over time.
+ * @param {HTMLElement} overlay - The overlay element.
+ * @param {HTMLElement} bigLogoDiv - The large logo container element.
+ */
+function startLogoAnimation(overlay, bigLogoDiv) {
+    setTimeout(() => {
+        overlay.classList.add("hidden");
+    }, 500); 
+    setTimeout(() => {
+        bigLogoDiv.classList.add("move__to__corner"); 
+    }, 100);
+    endLogoAnimation(overlay, bigLogoDiv);
+}
+
+/**
+ * Completes the logo animation by hiding the overlay and big logo, and showing the small logo.
+ * @param {HTMLElement} overlay - The overlay element.
+ * @param {HTMLElement} bigLogoDiv - The large logo container element.
+ */
+function endLogoAnimation(overlay, bigLogoDiv) {
+    const smallLogo = document.getElementById('small_logo');
+    setTimeout(() => {
+        overlay.classList.add("d__none"); 
+        bigLogoDiv.classList.add("d__none"); 
+        smallLogo.classList.add("visible");
+    }, 1000);
+}
+
+/**
+ * Handles the login form submission.
+ * Prevents default form submission, validates inputs, updates the error box,
+ * and processes the form if no errors are found.
+ * 
+ * @param {Event} event - The form submission event.
+ */
+async function handleLoginForm(event) {
+    if (event) event.preventDefault();
+    const error = validateInputs();
+    updateErrorBox(error);
+    if (!error) await processForm();
+}
+
+/**
+ * Validates all input fields for the login form.
+ * Checks both email and password fields and returns the first encountered error.
+ * 
+ * @returns {string|null} Error message if validation fails, otherwise null.
+ */
+function validateInputs() {
+    return (
+        validateEmail("email_input_login", "email_container_login") ||
+        validatePasswordInput("password_input_login", "password_container_login")
+    );
+}
+
+/**
+ * Validates the email input field.
+ * Ensures the email follows a standard format.
+ * 
+ * @param {string} id - The ID of the email input field.
+ * @param {string} containerID - The ID of the container to highlight on error.
+ * @returns {string|null} Error message if validation fails, otherwise null.
+ */
+function validateEmail(id, containerID) {
+    const email = document.getElementById(id).value;
+    const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+    const container = document.getElementById(`${containerID}`);
+    removeAllErorrInputStyling();
+    if (!emailRegex.test(email)) {
+        container.classList.add('error__inputs');
+        return "Check your email. Please try again.";
+    } else return null;
+}
+
+/**
+ * Validates the password input field.
+ * Ensures the password is not empty.
+ * 
+ * @param {string} id - The ID of the password input field.
+ * @param {string} containerID - The ID of the container to highlight on error.
+ * @returns {string|null} Error message if validation fails, otherwise null.
+ */
+function validatePasswordInput(id, containerID) {
+    const field = document.getElementById(id);
+    const container = document.getElementById(`${containerID}`);
+    removeAllErorrInputStyling();
+    if (field.value.trim() === "") {
+        container.classList.add('error__inputs');
+        return "Check your password. Please try again.";
+    } else return null;
+}
+
+/**
+ * Removes error styling from all input containers.
+ */
+function removeAllErorrInputStyling() {
+    const inputContainers = ["email_container_login", "password_container_login"];
+    for (let i = 0; i &lt; inputContainers.length; i++) {
+        if (inputContainers[i]) {
+            const inputContainerRef = document.getElementById(`${inputContainers[i]}`);
+            inputContainerRef.classList.remove('error__inputs');
+        }
+    }
+}
+
+/**
+ * Updates the error message box with the given error message.
+ * @param {string|null} error - The error message to display, or null to hide the box.
+ */
+function updateErrorBox(error) {
+    const box = document.getElementById("error_message_box_login");
+    box.innerText = error || "";
+    box.style.display = error ? "block" : "none";
+}
+
+/**
+ * Processes the login form by validating the email and checking the password.
+ * If the email exists in the user database, it proceeds to verify the password.
+ * Otherwise, it triggers an error message.
+ */
+async function processForm() {
+    const emailRef = document.getElementById('email_input_login');
+    const email = emailRef.value;
+    const inputPw = document.getElementById('password_input_login').value;
+    let userIndex = users.findIndex(user => user.email === email);
+    if (userIndex !== -1) {
+        testPasswordLogin(inputPw, userIndex);
+    } else {
+        const error = validateEmail("email_input_login", "email_container_login");
+        updateErrorBox(error);
+    }
+}
+
+/**
+ * Compares the provided password with the stored password for the user at the given index.
+ * If the passwords match, the user is redirected to the summary page.
+ * If the passwords do not match, an error message is displayed, error styling is applied,
+ * and the password input field is cleared.
+ * 
+ * @param {string} inputPw - The password input provided by the user.
+ * @param {number} userIndex - The index of the user in the `users` array.
+ */
+function testPasswordLogin(inputPw, userIndex) {
+    let storedPW = users[userIndex].pw;
+    if(inputPw === storedPW) {
+        correctPassword(userIndex);
+    } else {
+       wrongPassword();
+    }
+}
+
+/**
+ * Handles a successful login by storing user data in local storage
+ * and redirecting to the summary page.
+ * 
+ * @param {number} userIndex - The index of the authenticated user in the users array.
+ */
+function correctPassword(userIndex) {
+    currentUser = users[userIndex];
+    const currentUserLocalStorage = {
+        email: currentUser.email,
+        initials: currentUser.initials,
+        name: currentUser.name
+    };
+    if (currentUser.tel) currentUserLocalStorage.tel = currentUser.tel;
+    localStorage.setItem('currentUser', JSON.stringify(currentUserLocalStorage));
+    document.getElementById("login_form").reset();
+    window.location.href = 'summary.html';
+}
+
+/**
+ * Handles an incorrect password entry by clearing the input field
+ * and displaying an error message.
+ */
+function wrongPassword() {
+    const inputPwRef = document.getElementById('password_input_login');
+    inputPwRef.value = "";
+    const error = validatePasswordInput("password_input_login", "password_container_login");
+    updateErrorBox(error);
+}
+
+/**
+ * Handles the guest login process by preventing the default form submission,
+ * using predefined guest credentials (email: 'guest', password: 'guest123'),
+ * and checking if the guest user exists in the `users` array.
+ * 
+ * If the guest user is found, the function checks the password using the `testpPasswordLogin` function.
+ * If the guest user is not found, an alert with the message 'Database error' is displayed.
+ * 
+ * @param {Event} event - The event object from the form submission.
+ */
+function guestLogIn(event){
+    if(event) event.preventDefault();
+    let email = 'guest';
+    let inputPw = 'guest123'; 
+    let userIndex = users.findIndex(user => user.email == email);
+    if(userIndex !==-1){
+        testPasswordLogin(inputPw, userIndex);        
+    }
+}
+
+
+
+
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateSuccSingedUpOverlay">activateSuccSingedUpOverlay</a></li><li><a href="global.html#addActiveOverviewStyling">addActiveOverviewStyling</a></li><li><a href="global.html#addActiveOverviewStylingMobile">addActiveOverviewStylingMobile</a></li><li><a href="global.html#addContactToArray">addContactToArray</a></li><li><a href="global.html#addCurrentUserToContacts">addCurrentUserToContacts</a></li><li><a href="global.html#addNewContact">addNewContact</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#backToContactTable">backToContactTable</a></li><li><a href="global.html#backToLastPage">backToLastPage</a></li><li><a href="global.html#backToLogin">backToLogin</a></li><li><a href="global.html#cancelForm">cancelForm</a></li><li><a href="global.html#clearAddTaskForm">clearAddTaskForm</a></li><li><a href="global.html#clearDateError">clearDateError</a></li><li><a href="global.html#closeAddSubTask">closeAddSubTask</a></li><li><a href="global.html#closeContactOverlay">closeContactOverlay</a></li><li><a href="global.html#closeDropDownList">closeDropDownList</a></li><li><a href="global.html#closeMenuContactOptions">closeMenuContactOptions</a></li><li><a href="global.html#closeTaskCategoryList">closeTaskCategoryList</a></li><li><a href="global.html#compareEarliestTaskDueDate">compareEarliestTaskDueDate</a></li><li><a href="global.html#contactChoosen">contactChoosen</a></li><li><a href="global.html#correctPassword">correctPassword</a></li><li><a href="global.html#currentContactID">currentContactID</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteSubTask">deleteSubTask</a></li><li><a href="global.html#displayAddSubtaskButtons">displayAddSubtaskButtons</a></li><li><a href="global.html#displayContactSuccNotification">displayContactSuccNotification</a></li><li><a href="global.html#displayCurrentUserSuccNotification">displayCurrentUserSuccNotification</a></li><li><a href="global.html#editContact">editContact</a></li><li><a href="global.html#emailExists">emailExists</a></li><li><a href="global.html#endLogoAnimation">endLogoAnimation</a></li><li><a href="global.html#endMobileAnimation">endMobileAnimation</a></li><li><a href="global.html#filterContacts">filterContacts</a></li><li><a href="global.html#fixateScrollingOnBody">fixateScrollingOnBody</a></li><li><a href="global.html#formatChoosenContactsToJSON">formatChoosenContactsToJSON</a></li><li><a href="global.html#formatContactName">formatContactName</a></li><li><a href="global.html#generateContactHTML">generateContactHTML</a></li><li><a href="global.html#generateContactSections">generateContactSections</a></li><li><a href="global.html#generateContactTemplate">generateContactTemplate</a></li><li><a href="global.html#generateHTMLContactBox">generateHTMLContactBox</a></li><li><a href="global.html#generateHTMLContactSection">generateHTMLContactSection</a></li><li><a href="global.html#generateTaskCategoryHTML">generateTaskCategoryHTML</a></li><li><a href="global.html#generateTaskCategoryTemplate">generateTaskCategoryTemplate</a></li><li><a href="global.html#getAllTasksDueDates">getAllTasksDueDates</a></li><li><a href="global.html#getBadgeColor">getBadgeColor</a></li><li><a href="global.html#getGreeting">getGreeting</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getLastName">getLastName</a></li><li><a href="global.html#getNextAvailableId">getNextAvailableId</a></li><li><a href="global.html#getQueryParam">getQueryParam</a></li><li><a href="global.html#getTasksInformationsforSummary">getTasksInformationsforSummary</a></li><li><a href="global.html#getTodayDate">getTodayDate</a></li><li><a href="global.html#groupContactsByLetter">groupContactsByLetter</a></li><li><a href="global.html#guestLogIn">guestLogIn</a></li><li><a href="global.html#handleEditedCurrentUser">handleEditedCurrentUser</a></li><li><a href="global.html#handleFormSubmit">handleFormSubmit</a></li><li><a href="global.html#handleKeyDown">handleKeyDown</a></li><li><a href="global.html#handleKeyDownAddSubTask">handleKeyDownAddSubTask</a></li><li><a href="global.html#handleKeyDownEditedSubTask">handleKeyDownEditedSubTask</a></li><li><a href="global.html#handleLoginForm">handleLoginForm</a></li><li><a href="global.html#handleRegisterForm">handleRegisterForm</a></li><li><a href="global.html#howManyTasksInPrioUrgend">howManyTasksInPrioUrgend</a></li><li><a href="global.html#howManyTasksInStatusAwaitingFeedback">howManyTasksInStatusAwaitingFeedback</a></li><li><a href="global.html#howManyTasksInStatusDone">howManyTasksInStatusDone</a></li><li><a href="global.html#howManyTasksInStatusProgress">howManyTasksInStatusProgress</a></li><li><a href="global.html#howManyTasksInStatusToDo">howManyTasksInStatusToDo</a></li><li><a href="global.html#initAddTasks">initAddTasks</a></li><li><a href="global.html#initContacts">initContacts</a></li><li><a href="global.html#initFlatpickr">initFlatpickr</a></li><li><a href="global.html#initLogin">initLogin</a></li><li><a href="global.html#initRegister">initRegister</a></li><li><a href="global.html#initSummary">initSummary</a></li><li><a href="global.html#isCurrentUser">isCurrentUser</a></li><li><a href="global.html#isMobile">isMobile</a></li><li><a href="global.html#isPastDate">isPastDate</a></li><li><a href="global.html#logOut">logOut</a></li><li><a href="global.html#logoAnimation">logoAnimation</a></li><li><a href="global.html#maskPassword">maskPassword</a></li><li><a href="global.html#mobileAnimation">mobileAnimation</a></li><li><a href="global.html#openAddNewContact">openAddNewContact</a></li><li><a href="global.html#openAddTaskWebsite">openAddTaskWebsite</a></li><li><a href="global.html#openBoardWebsite">openBoardWebsite</a></li><li><a href="global.html#openCalendar">openCalendar</a></li><li><a href="global.html#openContactDetails">openContactDetails</a></li><li><a href="global.html#openContactsWebsite">openContactsWebsite</a></li><li><a href="global.html#openDropdownList">openDropdownList</a></li><li><a href="global.html#openEditContact">openEditContact</a></li><li><a href="global.html#openEditCurrentUser">openEditCurrentUser</a></li><li><a href="global.html#openEditSubTask">openEditSubTask</a></li><li><a href="global.html#openHelpWebsite">openHelpWebsite</a></li><li><a href="global.html#openLegalNoticeWebsite">openLegalNoticeWebsite</a></li><li><a href="global.html#openLegalNoticeWebsiteNoLogin">openLegalNoticeWebsiteNoLogin</a></li><li><a href="global.html#openLoginWithAnimation">openLoginWithAnimation</a></li><li><a href="global.html#openLoginWithoutAnimation">openLoginWithoutAnimation</a></li><li><a href="global.html#openMenuContactOptions">openMenuContactOptions</a></li><li><a href="global.html#openNewlyAddedContact">openNewlyAddedContact</a></li><li><a href="global.html#openPrivacyPolicyWebsite">openPrivacyPolicyWebsite</a></li><li><a href="global.html#openPrivacyPolicyWebsiteNoLogin">openPrivacyPolicyWebsiteNoLogin</a></li><li><a href="global.html#openSignUpWebsite">openSignUpWebsite</a></li><li><a href="global.html#openSummaryWebsite">openSummaryWebsite</a></li><li><a href="global.html#openSummaryWebsiteWithoutMobileAnimation">openSummaryWebsiteWithoutMobileAnimation</a></li><li><a href="global.html#openTaskCategoryList">openTaskCategoryList</a></li><li><a href="global.html#openUpdatedContact">openUpdatedContact</a></li><li><a href="global.html#openUpdatedCurrentUser">openUpdatedCurrentUser</a></li><li><a href="global.html#parseDate">parseDate</a></li><li><a href="global.html#parseDateToDateBaseFormat">parseDateToDateBaseFormat</a></li><li><a href="global.html#passwordsMatch">passwordsMatch</a></li><li><a href="global.html#processForm">processForm</a></li><li><a href="global.html#processFormCurrentUser">processFormCurrentUser</a></li><li><a href="global.html#pushNewUserInArray">pushNewUserInArray</a></li><li><a href="global.html#releaseScrollOnBody">releaseScrollOnBody</a></li><li><a href="global.html#reloadWebsite">reloadWebsite</a></li><li><a href="global.html#removeActiveOverviewStyling">removeActiveOverviewStyling</a></li><li><a href="global.html#removeActiveOverviewStylingMobile">removeActiveOverviewStylingMobile</a></li><li><a href="global.html#removeAddSubTaskButtons">removeAddSubTaskButtons</a></li><li><a href="global.html#removeAllContactBoxActiveStyling">removeAllContactBoxActiveStyling</a></li><li><a href="global.html#removeAllErorrInputStyling">removeAllErorrInputStyling</a></li><li><a href="global.html#removeAllErrorMessages">removeAllErrorMessages</a></li><li><a href="global.html#removeContactFromArray">removeContactFromArray</a></li><li><a href="global.html#removeContactFromTasks">removeContactFromTasks</a></li><li><a href="global.html#renderChoosenContactList">renderChoosenContactList</a></li><li><a href="global.html#renderContactDetails">renderContactDetails</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderContactOverlayContent">renderContactOverlayContent</a></li><li><a href="global.html#renderContacts">renderContacts</a></li><li><a href="global.html#renderCurrentUserOverlayContent">renderCurrentUserOverlayContent</a></li><li><a href="global.html#renderFilteredContactList">renderFilteredContactList</a></li><li><a href="global.html#renderHTMLAddContactButton">renderHTMLAddContactButton</a></li><li><a href="global.html#renderHTMLAddContactOverlay">renderHTMLAddContactOverlay</a></li><li><a href="global.html#renderHTMLChoosenContact">renderHTMLChoosenContact</a></li><li><a href="global.html#renderHTMLChoosenUser">renderHTMLChoosenUser</a></li><li><a href="global.html#renderHTMLContactDetails">renderHTMLContactDetails</a></li><li><a href="global.html#renderHTMLContactDetailsMobileMenu">renderHTMLContactDetailsMobileMenu</a></li><li><a href="global.html#renderHTMLEditContactOverlay">renderHTMLEditContactOverlay</a></li><li><a href="global.html#renderHTMLEditCurrentUserOverlay">renderHTMLEditCurrentUserOverlay</a></li><li><a href="global.html#renderHTMLEditSubTask">renderHTMLEditSubTask</a></li><li><a href="global.html#renderHTMLMobileGreeting">renderHTMLMobileGreeting</a></li><li><a href="global.html#renderHTMLSubtask">renderHTMLSubtask</a></li><li><a href="global.html#renderHTMLSummary">renderHTMLSummary</a></li><li><a href="global.html#renderHTMLYouInContactList">renderHTMLYouInContactList</a></li><li><a href="global.html#renderMobileGreeting">renderMobileGreeting</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#renderSummary">renderSummary</a></li><li><a href="global.html#renderTaskCategoryList">renderTaskCategoryList</a></li><li><a href="global.html#resetAddTaskForm">resetAddTaskForm</a></li><li><a href="global.html#resetRegisterForm">resetRegisterForm</a></li><li><a href="global.html#resetSelectedCategory">resetSelectedCategory</a></li><li><a href="global.html#saveEditedSubTask">saveEditedSubTask</a></li><li><a href="global.html#saveTask">saveTask</a></li><li><a href="global.html#setTaskPrio">setTaskPrio</a></li><li><a href="global.html#setnewUser">setnewUser</a></li><li><a href="global.html#showDateError">showDateError</a></li><li><a href="global.html#skipLogoAnimation">skipLogoAnimation</a></li><li><a href="global.html#skipMobileAnimationSummary">skipMobileAnimationSummary</a></li><li><a href="global.html#sortAllTaskDueDates">sortAllTaskDueDates</a></li><li><a href="global.html#sortContactsByName">sortContactsByName</a></li><li><a href="global.html#startLogoAnimation">startLogoAnimation</a></li><li><a href="global.html#startMobileAnimation">startMobileAnimation</a></li><li><a href="global.html#taskCategorySelected">taskCategorySelected</a></li><li><a href="global.html#testPasswordLogin">testPasswordLogin</a></li><li><a href="global.html#toggleChoosenContactStyling">toggleChoosenContactStyling</a></li><li><a href="global.html#toggleChoosenContactToArray">toggleChoosenContactToArray</a></li><li><a href="global.html#toggleCurrentUserChoosenStyling">toggleCurrentUserChoosenStyling</a></li><li><a href="global.html#toggleDNoneInputAndButtonDropDown">toggleDNoneInputAndButtonDropDown</a></li><li><a href="global.html#toggleDnoneFromOverlay">toggleDnoneFromOverlay</a></li><li><a href="global.html#toggleDropdown">toggleDropdown</a></li><li><a href="global.html#toggleSubMenu">toggleSubMenu</a></li><li><a href="global.html#transFormDate">transFormDate</a></li><li><a href="global.html#updateCheckboxState">updateCheckboxState</a></li><li><a href="global.html#updateCheckboxStateCurrentUser">updateCheckboxStateCurrentUser</a></li><li><a href="global.html#updateCurrentUserChoosen">updateCurrentUserChoosen</a></li><li><a href="global.html#updateCurrentUserFireBase">updateCurrentUserFireBase</a></li><li><a href="global.html#updateCurrentUserLocalStorage">updateCurrentUserLocalStorage</a></li><li><a href="global.html#updateErrorBox">updateErrorBox</a></li><li><a href="global.html#validateCategory">validateCategory</a></li><li><a href="global.html#validateConfirmPasswordInput">validateConfirmPasswordInput</a></li><li><a href="global.html#validateDate">validateDate</a></li><li><a href="global.html#validateDateInput">validateDateInput</a></li><li><a href="global.html#validateEmail">validateEmail</a></li><li><a href="global.html#validateField">validateField</a></li><li><a href="global.html#validateInputs">validateInputs</a></li><li><a href="global.html#validateName">validateName</a></li><li><a href="global.html#validatePasswordInput">validatePasswordInput</a></li><li><a href="global.html#validatePhone">validatePhone</a></li><li><a href="global.html#validateRegisterCheckBox">validateRegisterCheckBox</a></li><li><a href="global.html#validateTitle">validateTitle</a></li><li><a href="global.html#wrongPassword">wrongPassword</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Feb 26 2025 12:29:33 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>

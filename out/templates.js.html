@@ -1,0 +1,486 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: templates.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: templates.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>// Contacts:
+
+/**
+ * Renders the "Add Contact" button HTML.
+ * @returns {string} HTML string for the "Add Contact" button.
+ */
+function renderHTMLAddContactButton() {
+    return `
+        &lt;div class="add__contact__button__container">
+            &lt;button onclick="openAddNewContact()" class="add__contact__button" id="add_contact_button">
+                Add new contact
+                &lt;img src="./assets/icons/person_add_icon_white.png" alt="Add Contact Icon">
+            &lt;/button>
+        &lt;/div>
+    `;
+}
+
+/**
+ * Generates a contact section grouped by the first letter of the contacts' names.
+ * @param {string} letter - The first letter of the contact group.
+ * @param {Object[]} contacts - Array of contact objects belonging to the group.
+ * @returns {string} HTML string for the contact section.
+ */
+function generateHTMLContactSection(letter, contacts) {
+    return `
+        &lt;div class="contacts__sections">
+            &lt;h3 class="contacts__lettertext">${letter}&lt;/h3>
+            &lt;div class="contacts__seperator">&lt;/div>
+            &lt;div class="contact__boxes">
+                ${contacts.map(generateHTMLContactBox).join("")}
+            &lt;/div>
+        &lt;/div>
+    `;
+}
+
+/**
+ * Generates an individual contact box.
+ * @param {Object} contact - Contact object containing details like name, email, and initials.
+ * @returns {string} HTML string for the contact box.
+ */
+function generateHTMLContactBox(contact) {
+    return `
+        &lt;div onclick="openContactDetails(this)" class="contact" data-contact='${JSON.stringify(contact)}'>
+            &lt;div class="contacts__profilebadge ${getBadgeColor(contact.name)}">${contact.initials}&lt;/div>
+            &lt;div class="contact__informationbox">
+                &lt;h3>${formatContactName(contact.name)}&lt;/h3>
+                &lt;span class="contact__mailtext">${contact.email}&lt;/span>
+            &lt;/div>
+        &lt;/div>
+    `;
+}
+
+
+/**
+ * Renders the contact details section.
+ * @param {Object} contact - Contact object containing name, email, phone, and initials.
+ * @returns {string} HTML string for the contact details.
+ */
+function renderHTMLContactDetails(contact) {
+    return  `
+            &lt;div class="contact__name__box">
+                &lt;div class="contacts__profilebadge__big ${getBadgeColor(contact.name)}">${contact.initials}&lt;/div>
+                &lt;div class="contacts__name__box__right">
+                    &lt;span class="contact__name__bigtext">${contact.name}&lt;/span>
+                    &lt;div class="contact__buttons__container">
+                        &lt;button onclick="${isCurrentUser(contact) ? 'openEditCurrentUser()' : `openEditContact(this)`}" class="edit__contact__button" data-contact='${JSON.stringify(contact)}'>
+                            &lt;img class="edit__icon__default" src="./assets/icons/edit_icon_blue.png" alt="Edit Icon">
+                            &lt;img class="edit__icon__hover" src="./assets/icons/edit_icon_lightblue.png" alt="Edit Icon">
+                            Edit
+                        &lt;/button>
+                        ${isCurrentUser(contact) ? "" : `
+                            &lt;button onclick="deleteContact(this)" class="delete__contact__button" data-contact='${JSON.stringify(contact)}'>
+                                &lt;img class="delete__icon__default" src="./assets/icons/delete_icon_blue.png" alt="Delete Icon">
+                                &lt;img class="delete__icon__hover" src="./assets/icons/delete_icon_lightblue.png" alt="Delete Icon">
+                                Delete
+                            &lt;/button>
+                        `}
+                    &lt;/div>
+                &lt;/div>
+            &lt;/div>
+            &lt;h3>Contact Information&lt;/h3>
+            &lt;div class="contact__information__boxes">
+                &lt;div class="contact__information__containers">
+                &lt;span class="contact__information__headlines">Email&lt;/span>
+                    &lt;a class="contact__mailtext" href="mailto:${contact.email}" title="Send an email to ${contact.email}" aria-label="Email ${contact.email}">${contact.email}&lt;/a>
+                &lt;/div>
+                ${contact.tel ? 
+                    `&lt;div class="contact__information__containers">
+                        &lt;span class="contact__information__headlines">Phone&lt;/span>
+                        &lt;a class="contact__phonenumber" href="tel:${contact.tel}" title="Call ${contact.tel}1" aria-label="Phone number ${contact.tel}">${contact.tel}&lt;/a>
+                    &lt;/div>` : 
+                ""}
+            &lt;/div>
+            `;
+}
+
+/**
+ * Renders the edit contact overlay with pre-filled data.
+ * @param {Object} contact - Contact object containing name, email, phone, and initials.
+ * @returns {string} HTML string for the edit contact overlay.
+ */
+function renderHTMLEditContactOverlay(contact) {
+    return  `
+            &lt;div onclick="event.stopPropagation();" class="add__contact__overlay" id="add_contact_container">
+                &lt;div class="add__contact__overlay__left">
+                    &lt;div class="add__contact__overlay__left__content">
+                        &lt;img src="./assets/icons/logo_add_contact_overlay.png" alt="Join Logo">
+                        &lt;h1>Edit contact&lt;/h1>
+                        &lt;div class="add__contact__overlay__seperator">&lt;/div>
+                    &lt;/div>
+                &lt;/div>
+                &lt;div class="add__contact__overlay__right">
+                    &lt;div class="contacts__profilebadge__big contacts__profilebadge__big__mobile ${getBadgeColor(contact.name)}">
+                        ${contact.initials}
+                    &lt;/div>
+                    &lt;div class="close__button__box">  
+                        &lt;button onclick="closeContactOverlay()" class="close__button">
+                            &lt;img class="close__button__img" src="./assets/icons/close_icon_blue.png" alt="Close Icon">
+                            &lt;img class="close__button__hover__img" src="./assets/icons/close_icon_blue_hover.png" alt="Close Icon Hover">
+                        &lt;/button>
+                    &lt;/div>
+                    &lt;form onsubmit="handleFormSubmit(event, 'edit')" class="add__contact__form">
+                        &lt;div class="add__contact__container">
+                            &lt;div class="contacts__profilebadge__big contacts__profilebadge__big__mobile__dnone ${getBadgeColor(contact.name)}">
+                                ${contact.initials}
+                            &lt;/div>
+                            &lt;div class="add__contact__inputbox">
+                                &lt;div class="person__container">
+                                    &lt;input class="person__input" id="person_input_add_contact" type="text" name="name" placeholder="Name" value="${contact.name}" autocomplete="name">
+                                    &lt;label for="person_input_add_contact">
+                                        &lt;img class="person__logo" src="./assets/icons/person_icon_gray.png" alt="Person Icon">
+                                    &lt;/label>
+                                &lt;/div>
+                                &lt;div class="email__container">
+                                    &lt;input class="email__input" id="email_input_add_contact" type="text" name ="email" placeholder="Email" autocomplete="email" value="${contact.email}"> 
+                                    &lt;label for="email_input_add_contact">
+                                        &lt;img class="email__logo" src="./assets/icons/mail_icon_gray.png" alt="Email Icon">
+                                    &lt;/label>
+                                &lt;/div>
+                                &lt;div class="phone__box">
+                                    &lt;div class="phone__container">
+                                        &lt;input class="phone__input" id="phone_input_add_contact" type="text" name ="phone" placeholder="Phone" autocomplete="tel" value="${contact.tel}">
+                                        &lt;label for="phone_input_add_contact">
+                                            &lt;img class="phone__logo" src="./assets/icons/phone_icon_gray.png" alt="Phone Icon">
+                                        &lt;/label>
+                                    &lt;/div>
+                                    &lt;div class="errormessage__box" id="errormessage_box">
+                                    &lt;/div>
+                                &lt;/div>
+                            &lt;/div>
+                        &lt;/div>
+                        &lt;div class="edit__contact__buttonbox">
+                            &lt;button type="button" onclick="deleteContact(this, event, 'edit_contact')" class="delete__button" data-contact='${JSON.stringify(contact)}'>Delete&lt;/button>
+                            &lt;button type="submit" class="save__button" id="create_edit_contact_button">
+                                Save
+                                &lt;img src="./assets/icons/hook_icon_white.png" alt="Hook Icon">
+                            &lt;/button>
+                        &lt;/div>
+                    &lt;/form>
+                &lt;/div>
+            &lt;/div>
+            `;
+}
+
+/**
+ * Renders the add contact overlay.
+ * @returns {string} HTML string for the add contact overlay.
+ */
+function renderHTMLAddContactOverlay() {
+    return  `
+            &lt;div onclick="event.stopPropagation();" class="add__contact__overlay" id="add_contact_container">
+                &lt;div class="add__contact__overlay__left">
+                    &lt;div class="add__contact__overlay__left__content">
+                        &lt;img src="./assets/icons/logo_add_contact_overlay.png" alt="Join Logo">
+                        &lt;h1>Add contact&lt;/h1>
+                        &lt;h2>Tasks are better with a team!&lt;/h2>
+                        &lt;div class="add__contact__overlay__seperator">&lt;/div>
+                    &lt;/div>
+                &lt;/div>
+                &lt;div class="add__contact__overlay__right">
+                    &lt;div class="default__profilebadge default__profilebadge__mobile">
+                                &lt;img src="./assets/icons/person_icon_white.png" alt="Person">
+                    &lt;/div>
+                    &lt;div class="close__button__box">  
+                        &lt;button onclick="closeContactOverlay()" class="close__button">
+                            &lt;img class="close__button__img" src="./assets/icons/close_icon_blue.png" alt="Close Icon">
+                            &lt;img class="close__button__hover__img" src="./assets/icons/close_icon_blue_hover.png" alt="Close Icon Hover">
+                        &lt;/button>
+                    &lt;/div>
+                    &lt;form onsubmit="handleFormSubmit(event, 'add')" class="add__contact__form">
+                        &lt;div class="add__contact__container">
+                            &lt;div class="default__profilebadge">
+                                &lt;img src="./assets/icons/person_icon_white.png" alt="Person">
+                            &lt;/div>
+                            &lt;div class="add__contact__inputbox">
+                                &lt;div class="person__container">
+                                    &lt;input class="person__input" id="person_input_add_contact" type="text" name="name" placeholder="Name" autocomplete="name">
+                                    &lt;label for="person_input_add_contact">
+                                        &lt;img class="person__logo" src="./assets/icons/person_icon_gray.png" alt="Person Icon">
+                                    &lt;/label>
+                                &lt;/div>
+                                &lt;div class="email__container">
+                                    &lt;input class="email__input" id="email_input_add_contact" type="text" name="email" placeholder="Email" autocomplete="email">
+                                    &lt;label for="email_input_add_contact">
+                                        &lt;img class="email__logo" src="./assets/icons/mail_icon_gray.png" alt="Email Icon">
+                                    &lt;/label>
+                                &lt;/div>
+                                &lt;div class="phone__box">
+                                    &lt;div class="phone__container">
+                                        &lt;input class="phone__input" id="phone_input_add_contact" type="text" name ="phone" placeholder="Phone" autocomplete="tel">
+                                        &lt;label for="phone_input_add_contact">
+                                            &lt;img class="phone__logo" src="./assets/icons/phone_icon_gray.png" alt="Phone Icon">
+                                        &lt;/label>
+                                    &lt;/div>
+                                    &lt;div class="errormessage__box" id="errormessage_box">
+                                    &lt;/div>
+                                &lt;/div>
+                            &lt;/div>
+                        &lt;/div>
+                        &lt;div class="add__contact__buttonbox">
+                            &lt;button onclick="cancelForm(event)" class="cancel__button">
+                                Cancel
+                                &lt;img class="cancel__button__img" src="./assets/icons/cancel_icon_blue.png" alt="Cancel Icon">
+                                &lt;img class="cancel__button__img__hover" src="./assets/icons/cancel_icon_lightblue.png" alt="Cancel Icon">
+                            &lt;/button>
+                            &lt;button type="submit" class="create__contact__button" id="create_edit_contact_button">
+                                Create contact
+                                &lt;img src="./assets/icons/hook_icon_white.png" alt="Hook Icon">
+                            &lt;/button>
+                        &lt;/div>
+                    &lt;/form>
+                &lt;/div>
+            &lt;/div>
+            `;
+}
+
+/**
+ * Renders the edit contact overlay with pre-filled data.
+ * @param {Object} contact - Contact object containing name, email, phone, and initials.
+ * @returns {string} HTML string for the edit contact overlay.
+ */
+function renderHTMLEditCurrentUserOverlay() {
+    return  `
+            &lt;div onclick="event.stopPropagation();" class="add__contact__overlay" id="add_contact_container">
+                &lt;div class="add__contact__overlay__left">
+                    &lt;div class="add__contact__overlay__left__content">
+                        &lt;img src="./assets/icons/logo_add_contact_overlay.png" alt="Join Logo">
+                        &lt;h1>Edit contact&lt;/h1>
+                        &lt;div class="add__contact__overlay__seperator">&lt;/div>
+                    &lt;/div>
+                &lt;/div>
+                &lt;div class="add__contact__overlay__right">
+                    &lt;div class="contacts__profilebadge__big contacts__profilebadge__big__mobile ${getBadgeColor(currentUser.name)}">
+                        ${currentUser.initials}
+                    &lt;/div>
+                    &lt;div class="close__button__box">  
+                        &lt;button onclick="closeContactOverlay()" class="close__button">
+                            &lt;img class="close__button__img" src="./assets/icons/close_icon_blue.png" alt="Close Icon">
+                            &lt;img class="close__button__hover__img" src="./assets/icons/close_icon_blue_hover.png" alt="Close Icon Hover">
+                        &lt;/button>
+                    &lt;/div>
+                    &lt;form onsubmit="handleEditedCurrentUser(event)" class="add__contact__form">
+                        &lt;div class="add__contact__container">
+                            &lt;div class="contacts__profilebadge__big contacts__profilebadge__big__mobile__dnone ${getBadgeColor(currentUser.name)}">
+                                ${currentUser.initials}
+                            &lt;/div>
+                            &lt;div class="add__contact__inputbox">
+                                &lt;div class="person__container">
+                                    &lt;input class="person__input" id="person_input_add_contact" type="text" name="name" placeholder="Name" value="${currentUser.name}" autocomplete="name">
+                                    &lt;label for="person_input_add_contact">
+                                        &lt;img class="person__logo" src="./assets/icons/person_icon_gray.png" alt="Person Icon">
+                                    &lt;/label>
+                                &lt;/div>
+                                &lt;div class="email__container">
+                                    &lt;input class="email__input" id="email_input_add_contact" type="text" name ="email" placeholder="Email" autocomplete="email" value="${currentUser.email}"> 
+                                    &lt;label for="email_input_add_contact">
+                                        &lt;img class="email__logo" src="./assets/icons/mail_icon_gray.png" alt="Email Icon">
+                                    &lt;/label>
+                                &lt;/div>
+                                &lt;div class="phone__box">
+                                    &lt;div class="phone__container">
+                                        &lt;input class="phone__input" id="phone_input_add_contact" type="text" name ="phone" placeholder="Phone" autocomplete="tel" value="${currentUser.tel ? currentUser.tel : ""}">
+                                        &lt;label for="phone_input_add_contact">
+                                            &lt;img class="phone__logo" src="./assets/icons/phone_icon_gray.png" alt="Phone Icon">
+                                        &lt;/label>
+                                    &lt;/div>
+                                    &lt;div class="errormessage__box" id="errormessage_box">
+                                    &lt;/div>
+                                &lt;/div>
+                            &lt;/div>
+                        &lt;/div>
+                        &lt;div class="edit__current__user__buttonbox">
+                            &lt;button type="submit" class="save__button__current__user" id="create_edit_contact_button">
+                                Save
+                                &lt;img src="./assets/icons/hook_icon_white.png" alt="Hook Icon">
+                            &lt;/button>
+                        &lt;/div>
+                    &lt;/form>
+                &lt;/div>
+            &lt;/div>
+            `;
+}
+
+/**
+ * Generates the HTML markup for the mobile contact details menu.
+ * This menu allows users to edit or delete a contact.
+ * 
+ * @param {Object} contact - The contact object containing contact details.
+ * @returns {string} The generated HTML string for the contact menu.
+ */
+function renderHTMLContactDetailsMobileMenu(contact) {
+    return  `
+            &lt;div onclick="closeMenuContactOptions()" id="overlay_add_and_edit_fly_in" class="overlay__add__and__edit__fly__in d__none">
+                &lt;div id="add_and_edit_fly_in" class="add__and__edit__fly__in">
+                    &lt;button onclick="${isCurrentUser(contact) ? 'openEditCurrentUser()' : `openEditContact(this)`}" class="edit__contact__button" data-contact='${JSON.stringify(contact)}'>
+                        &lt;img class="edit__icon__default" src="./assets/icons/edit_icon_blue.png" alt="Edit Icon">
+                        &lt;img class="edit__icon__hover" src="./assets/icons/edit_icon_lightblue.png" alt="Edit Icon">
+                        Edit
+                    &lt;/button>
+                    ${isCurrentUser(contact) ? "" : `
+                        &lt;button onclick="deleteContact(this)" class="delete__contact__button" data-contact='${JSON.stringify(contact)}'>
+                            &lt;img class="delete__icon__default" src="./assets/icons/delete_icon_blue.png" alt="Delete Icon">
+                            &lt;img class="delete__icon__hover" src="./assets/icons/delete_icon_lightblue.png" alt="Delete Icon">
+                            Delete
+                        &lt;/button>
+                    `}
+                &lt;/div>
+            &lt;/div>
+            `;
+}
+
+
+// Summary:
+
+/**
+ * Generates the HTML markup for the summary dashboard.
+ * Displays key metrics such as tasks in progress, completed tasks, urgent tasks, and upcoming deadlines.
+ * Also includes a greeting message based on the logged-in user.
+ * 
+ * @param {Object} currentUser - The currently logged-in user.
+ * @returns {string} The generated HTML string for the summary dashboard.
+ */
+function renderHTMLSummary(currentUser) {
+    if (currentUser.name === "Guest") guestIndicator = true;
+    return  `
+            &lt;div class="keymetrics__container">
+                &lt;div class="firstrow__keymetrics">
+                    &lt;div class="firstrow__behindbox">
+                        &lt;div class="keymetrics__box keymetrics__todo" onclick="openBoardWebsite()">
+                            &lt;div class="todo__icon">
+                                &lt;img class="white__todoicon" src="./assets/icons/edit_icon_todo_white.png" alt="Edit">
+                                &lt;img class="blue__todoicon" src="./assets/icons/edit_icon_todo_blue.png" alt="Edit">
+                            &lt;/div>
+                            &lt;div class="todo__textbox">
+                                &lt;span class="keymetrics__number">${tasksInStatusToDo}&lt;/span>
+                                &lt;h3 class="keymetrics__text">To-do&lt;/h3>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                    &lt;div class="firstrow__behindbox">
+                        &lt;div class="keymetrics__box keymetrics__done" onclick="openBoardWebsite()">
+                            &lt;div class="done__icon">
+                                &lt;img class="white__doneicon" src="./assets/icons/hook_icon_done_white.png" alt="Hook">
+                                &lt;img class="blue__doneicon" src="./assets/icons/hook_icon_done_blue.png" alt="Hook">
+                            &lt;/div>
+                            &lt;div class="done__textbox">
+                                &lt;span class="keymetrics__number">${tasksInStatusDone}&lt;/span>
+                                &lt;h3 class="keymetrics__text">Done&lt;/h3>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+                &lt;div class="secondrow__keymetrics">
+                    &lt;div class="secondrow__behindbox">
+                        &lt;div class="keymetrics__box keymetrics__urgent" onclick="openBoardWebsite()">
+                            &lt;div class="urgent__leftbox">
+                                &lt;div class="urgent__icon">
+                                    &lt;img src="./assets/icons/arrows_up_urgent_icon_white.png" alt="Arrows Up">
+                                &lt;/div>
+                                &lt;div class="urgent__textbox">
+                                    &lt;span class="keymetrics__number">${tasksInPrioUrgend}&lt;/span>
+                                    &lt;h3 class="keymetrics__text">Urgent&lt;/h3>
+                                &lt;/div>
+                            &lt;/div>
+                            &lt;div class="urgent__seperator">&lt;/div>
+                            &lt;div class="urgent__textboxright">
+                                &lt;span id="urgent_date_container" class="urgent__date">${earliestDueDate}&lt;/span>
+                                &lt;span class="keymetrics__text">Upcoming Deadline&lt;/span>
+                            &lt;/div>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+                &lt;div class="thirdrow__keymetrics">
+                    &lt;div class="thirdrow__behindbox">
+                        &lt;div class="keymetrics__box keymetrics__lastrow" onclick="openBoardWebsite()">
+                            &lt;span class="keymetrics__number">${tasks.length}&lt;/span>
+                            &lt;h3 class="keymetrics__textthirdrow">Tasks in Board&lt;/h3>
+                        &lt;/div>
+                    &lt;/div>
+                    &lt;div class="thirdrow__behindbox">
+                        &lt;div class="keymetrics__box keymetrics__lastrow" onclick="openBoardWebsite()">
+                            &lt;span class="keymetrics__number">${tasksInStatusProgress}&lt;/span>
+                            &lt;h3 class="keymetrics__textthirdrow">Tasks in Progress&lt;/h3>
+                        &lt;/div>
+                    &lt;/div>
+                    &lt;div class="thirdrow__behindbox">
+                        &lt;div class="keymetrics__box keymetrics__lastrow" onclick="openBoardWebsite()">
+                            &lt;span class="keymetrics__number">${tasksInStatusAwaitingFeedback}&lt;/span>
+                            &lt;h3 class="keymetrics__textthirdrow">Awaiting Feedback&lt;/h3>
+                        &lt;/div>
+                    &lt;/div>
+                &lt;/div>
+            &lt;/div>
+            &lt;div class="greet__box">
+                &lt;span class="greeting">${getGreeting()}${guestIndicator ? "!" : ","}&lt;/span>
+                &lt;span class="greeting__name">${guestIndicator ? "" : currentUser.name}&lt;/span>
+            &lt;/div>
+            `;
+}
+
+/**
+ * Generates the HTML markup for the mobile greeting box.
+ * Displays a personalized greeting based on the logged-in user.
+ * 
+ * @returns {string} The generated HTML string for the mobile greeting box.
+ */
+function renderHTMLMobileGreeting() {
+    if (currentUser.name === "Guest") guestIndicator = true;
+    return  `
+            &lt;div class="greet__box__mobile" id="greet_box_mobile">
+                &lt;span class="greeting">${getGreeting()}${guestIndicator ? "!" : ","}&lt;/span>
+                &lt;span class="greeting__name">${guestIndicator ? "" : currentUser.name}&lt;/span>
+            &lt;/div>
+            `;
+}
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index.html">Home</a></h2><h3>Global</h3><ul><li><a href="global.html#activateSuccSingedUpOverlay">activateSuccSingedUpOverlay</a></li><li><a href="global.html#addActiveOverviewStyling">addActiveOverviewStyling</a></li><li><a href="global.html#addActiveOverviewStylingMobile">addActiveOverviewStylingMobile</a></li><li><a href="global.html#addContactToArray">addContactToArray</a></li><li><a href="global.html#addCurrentUserToContacts">addCurrentUserToContacts</a></li><li><a href="global.html#addNewContact">addNewContact</a></li><li><a href="global.html#addSubtask">addSubtask</a></li><li><a href="global.html#backToContactTable">backToContactTable</a></li><li><a href="global.html#backToLastPage">backToLastPage</a></li><li><a href="global.html#backToLogin">backToLogin</a></li><li><a href="global.html#cancelForm">cancelForm</a></li><li><a href="global.html#clearAddTaskForm">clearAddTaskForm</a></li><li><a href="global.html#clearDateError">clearDateError</a></li><li><a href="global.html#closeAddSubTask">closeAddSubTask</a></li><li><a href="global.html#closeContactOverlay">closeContactOverlay</a></li><li><a href="global.html#closeDropDownList">closeDropDownList</a></li><li><a href="global.html#closeMenuContactOptions">closeMenuContactOptions</a></li><li><a href="global.html#closeTaskCategoryList">closeTaskCategoryList</a></li><li><a href="global.html#compareEarliestTaskDueDate">compareEarliestTaskDueDate</a></li><li><a href="global.html#contactChoosen">contactChoosen</a></li><li><a href="global.html#correctPassword">correctPassword</a></li><li><a href="global.html#currentContactID">currentContactID</a></li><li><a href="global.html#deleteContact">deleteContact</a></li><li><a href="global.html#deleteSubTask">deleteSubTask</a></li><li><a href="global.html#displayAddSubtaskButtons">displayAddSubtaskButtons</a></li><li><a href="global.html#displayContactSuccNotification">displayContactSuccNotification</a></li><li><a href="global.html#displayCurrentUserSuccNotification">displayCurrentUserSuccNotification</a></li><li><a href="global.html#editContact">editContact</a></li><li><a href="global.html#emailExists">emailExists</a></li><li><a href="global.html#endLogoAnimation">endLogoAnimation</a></li><li><a href="global.html#endMobileAnimation">endMobileAnimation</a></li><li><a href="global.html#filterContacts">filterContacts</a></li><li><a href="global.html#fixateScrollingOnBody">fixateScrollingOnBody</a></li><li><a href="global.html#formatChoosenContactsToJSON">formatChoosenContactsToJSON</a></li><li><a href="global.html#formatContactName">formatContactName</a></li><li><a href="global.html#generateContactHTML">generateContactHTML</a></li><li><a href="global.html#generateContactSections">generateContactSections</a></li><li><a href="global.html#generateContactTemplate">generateContactTemplate</a></li><li><a href="global.html#generateHTMLContactBox">generateHTMLContactBox</a></li><li><a href="global.html#generateHTMLContactSection">generateHTMLContactSection</a></li><li><a href="global.html#generateTaskCategoryHTML">generateTaskCategoryHTML</a></li><li><a href="global.html#generateTaskCategoryTemplate">generateTaskCategoryTemplate</a></li><li><a href="global.html#getAllTasksDueDates">getAllTasksDueDates</a></li><li><a href="global.html#getBadgeColor">getBadgeColor</a></li><li><a href="global.html#getGreeting">getGreeting</a></li><li><a href="global.html#getInitials">getInitials</a></li><li><a href="global.html#getLastName">getLastName</a></li><li><a href="global.html#getNextAvailableId">getNextAvailableId</a></li><li><a href="global.html#getQueryParam">getQueryParam</a></li><li><a href="global.html#getTasksInformationsforSummary">getTasksInformationsforSummary</a></li><li><a href="global.html#getTodayDate">getTodayDate</a></li><li><a href="global.html#groupContactsByLetter">groupContactsByLetter</a></li><li><a href="global.html#guestLogIn">guestLogIn</a></li><li><a href="global.html#handleEditedCurrentUser">handleEditedCurrentUser</a></li><li><a href="global.html#handleFormSubmit">handleFormSubmit</a></li><li><a href="global.html#handleKeyDown">handleKeyDown</a></li><li><a href="global.html#handleKeyDownAddSubTask">handleKeyDownAddSubTask</a></li><li><a href="global.html#handleKeyDownEditedSubTask">handleKeyDownEditedSubTask</a></li><li><a href="global.html#handleLoginForm">handleLoginForm</a></li><li><a href="global.html#handleRegisterForm">handleRegisterForm</a></li><li><a href="global.html#howManyTasksInPrioUrgend">howManyTasksInPrioUrgend</a></li><li><a href="global.html#howManyTasksInStatusAwaitingFeedback">howManyTasksInStatusAwaitingFeedback</a></li><li><a href="global.html#howManyTasksInStatusDone">howManyTasksInStatusDone</a></li><li><a href="global.html#howManyTasksInStatusProgress">howManyTasksInStatusProgress</a></li><li><a href="global.html#howManyTasksInStatusToDo">howManyTasksInStatusToDo</a></li><li><a href="global.html#initAddTasks">initAddTasks</a></li><li><a href="global.html#initContacts">initContacts</a></li><li><a href="global.html#initFlatpickr">initFlatpickr</a></li><li><a href="global.html#initLogin">initLogin</a></li><li><a href="global.html#initRegister">initRegister</a></li><li><a href="global.html#initSummary">initSummary</a></li><li><a href="global.html#isCurrentUser">isCurrentUser</a></li><li><a href="global.html#isMobile">isMobile</a></li><li><a href="global.html#isPastDate">isPastDate</a></li><li><a href="global.html#logOut">logOut</a></li><li><a href="global.html#logoAnimation">logoAnimation</a></li><li><a href="global.html#maskPassword">maskPassword</a></li><li><a href="global.html#mobileAnimation">mobileAnimation</a></li><li><a href="global.html#openAddNewContact">openAddNewContact</a></li><li><a href="global.html#openAddTaskWebsite">openAddTaskWebsite</a></li><li><a href="global.html#openBoardWebsite">openBoardWebsite</a></li><li><a href="global.html#openCalendar">openCalendar</a></li><li><a href="global.html#openContactDetails">openContactDetails</a></li><li><a href="global.html#openContactsWebsite">openContactsWebsite</a></li><li><a href="global.html#openDropdownList">openDropdownList</a></li><li><a href="global.html#openEditContact">openEditContact</a></li><li><a href="global.html#openEditCurrentUser">openEditCurrentUser</a></li><li><a href="global.html#openEditSubTask">openEditSubTask</a></li><li><a href="global.html#openHelpWebsite">openHelpWebsite</a></li><li><a href="global.html#openLegalNoticeWebsite">openLegalNoticeWebsite</a></li><li><a href="global.html#openLegalNoticeWebsiteNoLogin">openLegalNoticeWebsiteNoLogin</a></li><li><a href="global.html#openLoginWithAnimation">openLoginWithAnimation</a></li><li><a href="global.html#openLoginWithoutAnimation">openLoginWithoutAnimation</a></li><li><a href="global.html#openMenuContactOptions">openMenuContactOptions</a></li><li><a href="global.html#openNewlyAddedContact">openNewlyAddedContact</a></li><li><a href="global.html#openPrivacyPolicyWebsite">openPrivacyPolicyWebsite</a></li><li><a href="global.html#openPrivacyPolicyWebsiteNoLogin">openPrivacyPolicyWebsiteNoLogin</a></li><li><a href="global.html#openSignUpWebsite">openSignUpWebsite</a></li><li><a href="global.html#openSummaryWebsite">openSummaryWebsite</a></li><li><a href="global.html#openSummaryWebsiteWithoutMobileAnimation">openSummaryWebsiteWithoutMobileAnimation</a></li><li><a href="global.html#openTaskCategoryList">openTaskCategoryList</a></li><li><a href="global.html#openUpdatedContact">openUpdatedContact</a></li><li><a href="global.html#openUpdatedCurrentUser">openUpdatedCurrentUser</a></li><li><a href="global.html#parseDate">parseDate</a></li><li><a href="global.html#parseDateToDateBaseFormat">parseDateToDateBaseFormat</a></li><li><a href="global.html#passwordsMatch">passwordsMatch</a></li><li><a href="global.html#processForm">processForm</a></li><li><a href="global.html#processFormCurrentUser">processFormCurrentUser</a></li><li><a href="global.html#pushNewUserInArray">pushNewUserInArray</a></li><li><a href="global.html#releaseScrollOnBody">releaseScrollOnBody</a></li><li><a href="global.html#reloadWebsite">reloadWebsite</a></li><li><a href="global.html#removeActiveOverviewStyling">removeActiveOverviewStyling</a></li><li><a href="global.html#removeActiveOverviewStylingMobile">removeActiveOverviewStylingMobile</a></li><li><a href="global.html#removeAddSubTaskButtons">removeAddSubTaskButtons</a></li><li><a href="global.html#removeAllContactBoxActiveStyling">removeAllContactBoxActiveStyling</a></li><li><a href="global.html#removeAllErorrInputStyling">removeAllErorrInputStyling</a></li><li><a href="global.html#removeAllErrorMessages">removeAllErrorMessages</a></li><li><a href="global.html#removeContactFromArray">removeContactFromArray</a></li><li><a href="global.html#removeContactFromTasks">removeContactFromTasks</a></li><li><a href="global.html#renderChoosenContactList">renderChoosenContactList</a></li><li><a href="global.html#renderContactDetails">renderContactDetails</a></li><li><a href="global.html#renderContactList">renderContactList</a></li><li><a href="global.html#renderContactOverlayContent">renderContactOverlayContent</a></li><li><a href="global.html#renderContacts">renderContacts</a></li><li><a href="global.html#renderCurrentUserOverlayContent">renderCurrentUserOverlayContent</a></li><li><a href="global.html#renderFilteredContactList">renderFilteredContactList</a></li><li><a href="global.html#renderHTMLAddContactButton">renderHTMLAddContactButton</a></li><li><a href="global.html#renderHTMLAddContactOverlay">renderHTMLAddContactOverlay</a></li><li><a href="global.html#renderHTMLChoosenContact">renderHTMLChoosenContact</a></li><li><a href="global.html#renderHTMLChoosenUser">renderHTMLChoosenUser</a></li><li><a href="global.html#renderHTMLContactDetails">renderHTMLContactDetails</a></li><li><a href="global.html#renderHTMLContactDetailsMobileMenu">renderHTMLContactDetailsMobileMenu</a></li><li><a href="global.html#renderHTMLEditContactOverlay">renderHTMLEditContactOverlay</a></li><li><a href="global.html#renderHTMLEditCurrentUserOverlay">renderHTMLEditCurrentUserOverlay</a></li><li><a href="global.html#renderHTMLEditSubTask">renderHTMLEditSubTask</a></li><li><a href="global.html#renderHTMLMobileGreeting">renderHTMLMobileGreeting</a></li><li><a href="global.html#renderHTMLSubtask">renderHTMLSubtask</a></li><li><a href="global.html#renderHTMLSummary">renderHTMLSummary</a></li><li><a href="global.html#renderHTMLYouInContactList">renderHTMLYouInContactList</a></li><li><a href="global.html#renderMobileGreeting">renderMobileGreeting</a></li><li><a href="global.html#renderSubtasks">renderSubtasks</a></li><li><a href="global.html#renderSummary">renderSummary</a></li><li><a href="global.html#renderTaskCategoryList">renderTaskCategoryList</a></li><li><a href="global.html#resetAddTaskForm">resetAddTaskForm</a></li><li><a href="global.html#resetRegisterForm">resetRegisterForm</a></li><li><a href="global.html#resetSelectedCategory">resetSelectedCategory</a></li><li><a href="global.html#saveEditedSubTask">saveEditedSubTask</a></li><li><a href="global.html#saveTask">saveTask</a></li><li><a href="global.html#setTaskPrio">setTaskPrio</a></li><li><a href="global.html#setnewUser">setnewUser</a></li><li><a href="global.html#showDateError">showDateError</a></li><li><a href="global.html#skipLogoAnimation">skipLogoAnimation</a></li><li><a href="global.html#skipMobileAnimationSummary">skipMobileAnimationSummary</a></li><li><a href="global.html#sortAllTaskDueDates">sortAllTaskDueDates</a></li><li><a href="global.html#sortContactsByName">sortContactsByName</a></li><li><a href="global.html#startLogoAnimation">startLogoAnimation</a></li><li><a href="global.html#startMobileAnimation">startMobileAnimation</a></li><li><a href="global.html#taskCategorySelected">taskCategorySelected</a></li><li><a href="global.html#testPasswordLogin">testPasswordLogin</a></li><li><a href="global.html#toggleChoosenContactStyling">toggleChoosenContactStyling</a></li><li><a href="global.html#toggleChoosenContactToArray">toggleChoosenContactToArray</a></li><li><a href="global.html#toggleCurrentUserChoosenStyling">toggleCurrentUserChoosenStyling</a></li><li><a href="global.html#toggleDNoneInputAndButtonDropDown">toggleDNoneInputAndButtonDropDown</a></li><li><a href="global.html#toggleDnoneFromOverlay">toggleDnoneFromOverlay</a></li><li><a href="global.html#toggleDropdown">toggleDropdown</a></li><li><a href="global.html#toggleSubMenu">toggleSubMenu</a></li><li><a href="global.html#transFormDate">transFormDate</a></li><li><a href="global.html#updateCheckboxState">updateCheckboxState</a></li><li><a href="global.html#updateCheckboxStateCurrentUser">updateCheckboxStateCurrentUser</a></li><li><a href="global.html#updateCurrentUserChoosen">updateCurrentUserChoosen</a></li><li><a href="global.html#updateCurrentUserFireBase">updateCurrentUserFireBase</a></li><li><a href="global.html#updateCurrentUserLocalStorage">updateCurrentUserLocalStorage</a></li><li><a href="global.html#updateErrorBox">updateErrorBox</a></li><li><a href="global.html#validateCategory">validateCategory</a></li><li><a href="global.html#validateConfirmPasswordInput">validateConfirmPasswordInput</a></li><li><a href="global.html#validateDate">validateDate</a></li><li><a href="global.html#validateDateInput">validateDateInput</a></li><li><a href="global.html#validateEmail">validateEmail</a></li><li><a href="global.html#validateField">validateField</a></li><li><a href="global.html#validateInputs">validateInputs</a></li><li><a href="global.html#validateName">validateName</a></li><li><a href="global.html#validatePasswordInput">validatePasswordInput</a></li><li><a href="global.html#validatePhone">validatePhone</a></li><li><a href="global.html#validateRegisterCheckBox">validateRegisterCheckBox</a></li><li><a href="global.html#validateTitle">validateTitle</a></li><li><a href="global.html#wrongPassword">wrongPassword</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc/jsdoc">JSDoc 4.0.4</a> on Wed Feb 26 2025 12:29:33 GMT+0100 (Central European Standard Time)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+</html>
