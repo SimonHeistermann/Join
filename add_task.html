@@ -199,62 +199,21 @@
             <div class="right_side">
               <label class="label" for="date"
                 >Due date
-                <div class="star" id="star_date">*</div></label
-              >
-              <input
-                type="date"
-                class="date"
-                id="date__input"
-                name="date"
-                placeholder="dd/mm/yyyy"
-              />
-
+                <div class="star" id="star_date">*</div></label>
+              <input type="date" class="date" id="date__input" name="date" placeholder="dd/mm/yyyy"/>
               <label class="label" for="prio">Prio</label>
               <div class="radio_overall">
                 <label class="radio radio_urgend">
-                  <input
-                    type="radio"
-                    name="prio"
-                    value="1"
-                    onclick="changeUrgend()"
-                  />
-                  Urgent
-                  <img
-                    id="urgend_img"
-                    src="assets/icons/Property 1=Urgent.png"
-                    alt="↑"
-                  />
+                  <input type="radio" name="prio" value="1" onclick="changeUrgend()"/>Urgent<img id="urgend_img" src="assets/icons/Property 1=Urgent.png" alt="↑"/>
                 </label>
                 <label class="radio radio_medium">
-                  <input
-                    type="radio"
-                    name="prio"
-                    value="2"
-                    checked
-                    onclick="changeMedium()"
-                  />
-                  Medium
-                  <img
-                    id="medium_img"
-                    src="assets/icons/Prio media.png"
-                    alt="="
-                  />
+                  <input type="radio" name="prio" value="2"checked onclick="changeMedium()"/>Medium<img id="medium_img" src="assets/icons/Prio media.png" alt="="/>
                 </label>
                 <label class="radio radio_low">
-                  <input
-                    type="radio"
-                    name="prio"
-                    value="3"
-                    onclick="changeLow()"
-                  />
-                  Low
-                  <img
-                    id="low_img"
-                    src="assets/icons/Property 1=Low.png"
-                    alt="↓"
-                  />
+                  <input type="radio" name="prio" value="3" onclick="changeLow()"/>Low<img id="low_img" src="assets/icons/Property 1=Low.png" alt="↓"/> 
                 </label>
               </div>
+              
               <label class="label" for="category"
                 >Category
                 <div class="star" id="star_category">*</div></label

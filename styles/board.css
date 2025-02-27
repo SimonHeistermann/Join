@@ -263,7 +263,7 @@ span {
 .single__task__card{
   background: white;
   margin: auto;
-  width: 525px;
+  min-width: 525px;
   height: 931px;
   border-radius: 30px;
   padding-top: 32px;
@@ -360,6 +360,25 @@ height: 100px;
   z-index: 1000;
   display: flex;
 }
+
+.edit__form{
+  width: 445px;
+  height: 697px;
+  display: flex;
+  flex-direction: column;
+}
+
+.edig__title__lable{
+  font-size: 20px;
+}
+
+.edit__title{
+  width: 445px;
+  height: 48px;
+}
+
+
+
 
 
 @media (max-width: 800px) {
