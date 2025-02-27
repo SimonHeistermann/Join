@@ -281,12 +281,100 @@ function truncateText(text) {
     return text.length > 44 ? text.substring(0, 44) + "..." : text;
 }
 
-function getCategoryInFormat(category) {
-    if(category === "Technical Task") return "tt";
-    if(category === "User Story") return "us";
+/**
+ * Trims a text to a maximum of 44 characters and appends "..." if truncated.
+ * @param {string} text - The input text to be truncated.
+ * @returns {string} - The processed text with a maximum length of 44 characters.
+ */
+function truncateTextShorter(text) {
+    return text.length > 31 ? text.substring(0, 31) + "..." : text;
 }
 
+/**
+ * Returns the formatted category abbreviation.
+ * @param {string} category - The category name.
+ * @returns {string|null} The formatted category abbreviation or null if not found.
+ */
+function getCategoryInFormat(category) {
+    if (category === "Technical Task") return "tt";
+    if (category === "User Story") return "us";
+    return null;
+}
+
+/**
+ * Retrieves the task data from a given task element.
+ * @param {HTMLElement} taskElement - The task element containing the data-task attribute.
+ * @returns {Object|null} The parsed task data object or null if not found.
+ */
 function getTaskData(taskElement) {
     return JSON.parse(taskElement.getAttribute('data-task')) || null;
 }
+
+/**
+ * Handles the resize event and closes the overlay if on mobile.
+ */
+function handleResize() {
+    if (isMobile()) {
+        closeAddTaskOverlay();
+        openAddTaskWebsite();
+    }
+}
+
+/**
+ * Generates a unique task ID that does not already exist in the provided list of tasks.
+ * Ensures uniqueness by checking against existing task IDs.
+ * 
+ * @param {Array} existingTasks - The list of existing tasks to check for duplicate IDs.
+ * @returns {string} A unique task ID.
+ */
+function generateUniqueTaskId(existingTasks) {
+    let newId;
+    do {
+        newId = generateUniqueId();
+    } while (existingTasks.some(task => task.id === newId));
+    return newId;
+}
+
+/**
+ * Generates a unique identifier using the current timestamp and a random string.
+ * 
+ * @returns {string} A unique identifier string.
+ */
+function generateUniqueId() {
+    return `${Date.now().toString(36)}-${Math.random().toString(36).substr(2, 9)}`;
+}
+
+/**
+ * Sets the priority level for the task.
+ * @param {string} value - The priority value to set.
+ */
+function setTaskPrio(value) {
+    if (value) taskPrio = value;
+}
+
+/**
+ * Returns the provided information if it is not empty or null; otherwise, returns an empty string.
+ * 
+ * @param {*} information - The input value to check.
+ * @returns {*} The original information if valid, otherwise an empty string.
+ */
+function getInformationTheRight(information) {
+    if(information) return information;
+    else return "";
+}
+
+/**
+ * Returns the provided array if it contains elements; otherwise, returns an empty string.
+ * 
+ * @param {Array} array - The array to check.
+ * @returns {Array|string} The original array if it is not empty, otherwise an empty string.
+ */
+function getArraysTheRightWay(array) {
+    if(array.length > 0) return array;
+    else return "";
+}
+
+
+
+
 

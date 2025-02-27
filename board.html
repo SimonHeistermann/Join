@@ -27,6 +27,7 @@
     <script src="./script.js"></script>
     <script src="./scripts/templates.js"></script>
     <script src="./scripts/templates_2.js"></script>
+    <script src="./scripts/templates_3.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/de.js"></script>
     <script src="./scripts/add_task.js"></script>
@@ -34,13 +35,15 @@
     <script src="./scripts/search.js"></script>
     <script src="./scripts/board.js"></script>
     <script src="./scripts/board_2.js"></script>
+    <script src="./scripts/board_3.js"></script>
+    <script src="./scripts/board_4.js"></script>
     <script src="./scripts/assets.js"></script>
 </head>
 <body id="body" onload="initBoard()">
   <div class="overall">
     <div class="sidebar">
       <div class="sidebar__container">
-          <div class="sidebar__logocontainer">
+          <div onclick="reloadWebsite()" class="sidebar__logocontainer">
               <img src="./assets/icons/logo_sidebar.png" alt="Join Logo">
           </div>
           <div class="sidebar__navbarcontainer">
@@ -86,12 +89,12 @@
             <div class="header__container">
               <h3>Kanban Project Management Tool</h3>
               <div class="headerbox__right">
-                  <button onclick="openHelpWebsite('contacts')" class="help__button">
+                  <button onclick="openHelpWebsite('board')" class="help__button">
                       <img src="./assets/icons/help_icon.png" alt="Help">
                   </button>
                   <button onclick="toggleSubMenu()" id="currentuser_initials_ref" class="profile__button">SM</button>
                   <div id="submenu" class="profile__button__submenu d__none">
-                      <button onclick="openHelpWebsite('add_task')" class="submenu__button__help">Help</button>
+                      <button onclick="openHelpWebsite('board')" class="submenu__button__help">Help</button>
                       <button onclick="openLegalNoticeWebsite()" class="submenu__button">Legal Notice</button>
                       <button onclick="openPrivacyPolicyWebsite()" class="submenu__button">Privacy Policy</button>
                       <button onclick="logOut()" class="submenu__button">Log Out</button>
@@ -107,8 +110,8 @@
             <div class="board__header">
               <h1>Board</h1>
               <div class="board__header__right">
-                <form onsubmit="filterBoard(event)" class="searchbar__container">
-                  <input class="searchbar" oninput="filterBoard(event)" id="board_search_input" type="text" placeholder="Find Task">
+                <form onsubmit="filterBoard(event, 'board_search_input')" class="searchbar__container">
+                  <input class="searchbar" oninput="filterBoard(event, 'board_search_input')" id="board_search_input" type="text" placeholder="Find Task">
                   <div class="searchbar__right">
                     <div class="searchbar__seperator"></div>
                     <label for="board_search_input">
@@ -120,9 +123,21 @@
                   Add Task
                   <img src="./assets/icons/add_icon_white.png" alt="+">
                 </button>
+                <button onclick="openAddTask()" id="open_add_task_button_mobile" class="open__add__task__button__mobile">
+                  <img src="./assets/icons/add_icon_white.png" alt="+">
+                </button>
               </div>
             </div>
             <div class="board__content">
+              <form onsubmit="filterBoard(event, 'board_search_input_mobile')" class="searchbar__container__mobile">
+                <input class="searchbar" oninput="filterBoard(event, 'board_search_input_mobile')" id="board_search_input_mobile" type="text" placeholder="Find Task">
+                <div class="searchbar__right">
+                  <div class="searchbar__seperator"></div>
+                  <label for="board_search_input_mobile">
+                    <img src="./assets/icons/search_icon_blue.png" alt="Search">
+                  </label>
+                </div>
+              </form>
               <div class="board__content__container">
                 <div class="board__content__header">
                   <span class="column__title">To do</span>
@@ -346,6 +361,12 @@
   </div>
   <div id="rotate_message" class="rotate__overlay d__none">
       <h1>Please rotate your device to portrait mode.</h1>
+  </div>
+  <div class="overlay__task__added d__none" id="overlay_task_added">
+    <div class="task__added__notification" id="task_added_notification">
+      <h3>Task added to board</h3>
+      <img src="./assets/icons/board_icon_white.png" alt="Board"> 
+    </div>
   </div>
 </body>
 </html>

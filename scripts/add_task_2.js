@@ -337,17 +337,15 @@ function removeAllErrorMessages() {
  */
 async function processForm() {
     const name = document.getElementById('add_task_title_input').value;
-    const description = document.getElementById("task_description").value;
-    const assignedTo = formatChoosenContactsToJSON();
+    const description = getInformationTheRight(document.getElementById("task_description").value);
+    const assignedTo = getArraysTheRightWay(formatChoosenContactsToJSON());
     const dueDate = parseDateToDateBaseFormat(document.getElementById("task_due_date").value);
-    const prio = taskPrio;
+    const prio = getInformationTheRight(taskPrio);
     const category = getCategoryInFormat(selectedTaskCategory);
-    const subTasks = addedSubtasks;
-    if (name && description && assignedTo && dueDate && prio && category && subTasks) {
-        await saveTask(name, description, assignedTo, dueDate, prio, category, subTasks);
-    }
+    const subTasks = getArraysTheRightWay(addedSubtasks);
+    const id = generateUniqueTaskId(tasks);
+    await saveTask(name, description, assignedTo, dueDate, prio, category, subTasks, id);
     resetAddTaskForm();
-    openBoardWebsite();
 }
 
 /**
@@ -360,7 +358,7 @@ async function processForm() {
  * @param {string} category - The selected category.
  * @param {Array} subTasks - The list of subtasks.
  */
-async function saveTask(name, description, assignedTo, dueDate, prio, category, subTasks) {
+async function saveTask(name, description, assignedTo, dueDate, prio, category, subTasks, id) {
     const newTask = {
         name: name,
         description: description,
@@ -369,10 +367,13 @@ async function saveTask(name, description, assignedTo, dueDate, prio, category, 
         prio: prio,
         category: category,
         subtasks: subTasks,
-        status: "to-do"
+        status: "to-do",
+        id: id
     };
     tasks.push(newTask);
     await putData("tasks", tasks);
+    await displaySuccNotificationTaskAdded();
+    openBoardWebsite();
 }
 
 /**
@@ -401,9 +402,25 @@ function parseDateToDateBaseFormat(dateStr) {
 }
 
 /**
- * Sets the priority level for the task.
- * @param {string} value - The priority value to set.
+ * Displays a success notification after creating or editing a task.
  */
-function setTaskPrio(value) {
-    if (value) taskPrio = value;
+async function displaySuccNotificationTaskAdded() {
+    return new Promise((resolve) => {
+        setTimeout(() => {
+            const overlayRef = document.getElementById('overlay_task_added');
+            const notificationRef = document.getElementById('task_added_notification');
+            overlayRef.classList.remove('d__none');
+            notificationRef.classList.remove('task__added__notification__active', 'd__none');
+            notificationRef.classList.add('task__added__notification__active');
+        }, 400);
+        setTimeout(() => {
+            const notificationRef = document.getElementById('task_added_notification');
+            notificationRef.classList.add('d__none');
+            notificationRef.classList.remove('task__added__notification__active');
+            resolve(); 
+        }, 2400);
+    });
 }
+
+
+

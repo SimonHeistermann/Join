@@ -24,6 +24,7 @@
     <script src="./script.js"></script>
     <script src="./scripts/templates.js"></script>
     <script src="./scripts/templates_2.js"></script>
+    <script src="./scripts/templates_3.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
     <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/de.js"></script>
     <script src="./scripts/add_task.js"></script>
@@ -34,7 +35,7 @@
     <div class="overall">
       <div class="sidebar">
         <div class="sidebar__container">
-            <div class="sidebar__logocontainer">
+            <div onclick="reloadWebsite()" class="sidebar__logocontainer">
                 <img src="./assets/icons/logo_sidebar.png" alt="Join Logo">
             </div>
             <div class="sidebar__navbarcontainer">
@@ -95,7 +96,7 @@
           </div>
         </header>
         <main>
-          <h1>Add Task</h1>
+          <h1 class="add__task__header__mobile">Add Task</h1>
           <form class="add__task__form" id="add_task_form" onsubmit="handleFormSubmit(event)">
             <div class="input__boxes">
               <div class="add__task__left">
@@ -251,6 +252,12 @@
     </div>
     <div id="rotate_message" class="rotate__overlay d__none">
       <h1>Please rotate your device to portrait mode.</h1>
-  </div>
+    </div>
+    <div class="overlay__task__added d__none" id="overlay_task_added">
+      <div class="task__added__notification" id="task_added_notification">
+        <h3>Task added to board</h3>
+        <img src="./assets/icons/board_icon_white.png" alt="Board"> 
+      </div>
+    </div>
   </body>
 </html>

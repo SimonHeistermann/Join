@@ -8,9 +8,9 @@ let filteredTasksInStatusDone = [];
  * Filters tasks based on the search input and updates the board.
  * @param {Event} event - The event object (optional, used to prevent form submission).
  */
-function filterBoard(event) {
+function filterBoard(event, inputRef) {
     if (event?.type === "submit") event.preventDefault();
-    const input = document.getElementById('board_search_input').value.toLowerCase();
+    const input = document.getElementById(inputRef).value.toLowerCase();
     filteredTasks = [];
     if (input.length >= 3) {
         filteredTasks = tasks.filter(task =>

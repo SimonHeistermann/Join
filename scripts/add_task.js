@@ -1,6 +1,6 @@
 let flatpickrInstance;
 let choosenContacts = [];
-let taskPrio;
+let taskPrio = "";
 let taskCategories = ['Technical Task', 'User Story'];
 let selectedTaskCategory = "";
 let addedSubtasks = [];
@@ -37,7 +37,7 @@ function initFlatpickr() {
             calendar.querySelector('.flatpickr-monthDropdown-months')?.setAttribute('name', 'task_due_month');
             calendar.querySelector('.cur-year')?.setAttribute('name', 'task_due_year');
         },
-        onChange: function(selectedDates, dateStr, instance) { validateDate(dateStr);}
+        onChange: function(selectedDates, dateStr, instance) { validateDate(dateStr, 'date_container_input', 'errormessage_box_date');}
     });
 }
 
@@ -45,12 +45,15 @@ function initFlatpickr() {
  * Validates a given date input and checks if it is in the past.
  * Displays an error message if the date is invalid.
  * @param {string} dateStr - The date string in "DD/MM/YYYY" format.
+ * @param {string} inputContainerId - The ID of the input container.
+ * @param {string} errorBoxId - The ID of the error message box.
  */
-function validateDate(dateStr) {
-    const inputContainerRef = document.getElementById('date_container_input');
-    const errorBox = document.getElementById('errormessage_box_date');
+function validateDate(dateStr, inputContainerId, errorBoxId) {
+    const inputContainerRef = document.getElementById(inputContainerId);
+    const errorBox = document.getElementById(errorBoxId);
     const selectedDate = parseDate(dateStr);
     const today = getTodayDate();
+
     if (isPastDate(selectedDate, today)) {
         showDateError(inputContainerRef, errorBox);
     } else {
@@ -256,7 +259,10 @@ function updateCheckboxStateCurrentUser() {
 function contactChoosen(contactID) {
     const contact = contacts.find(contact => contact.id == contactID);
     toggleChoosenContactStyling(contactID);
-    if(contact) toggleChoosenContactToArray(contact);
+    if(contact) {
+        toggleChoosenContactToArray(contact);
+        renderChoosenContactList();
+    } 
 }
 
 /**

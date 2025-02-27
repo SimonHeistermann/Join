@@ -181,5 +181,10 @@ async function init() {
     }
 }
 
-
+function initIndex() {
+    getCurrentUser();
+    if(currentUser) {
+        openSummaryWebsiteWithoutMobileAnimation();
+    }
+}
 

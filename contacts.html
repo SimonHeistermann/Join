@@ -24,6 +24,7 @@
     <script src="./script.js"></script>
     <script src="./scripts/templates.js"></script>
     <script src="./scripts/templates_2.js"></script>
+    <script src="./scripts/templates_3.js"></script>
     <script src="./scripts/contacts.js"></script>
     <script src="./scripts/contacts_2.js"></script>
     <script src="./scripts/assets.js"></script>
@@ -32,7 +33,7 @@
     <div class="overall">
       <div class="sidebar">
         <div class="sidebar__container">
-            <div class="sidebar__logocontainer">
+            <div onclick="reloadWebsite()" class="sidebar__logocontainer">
                 <img src="./assets/icons/logo_sidebar.png" alt="Join Logo">
             </div>
             <div class="sidebar__navbarcontainer">
@@ -83,7 +84,7 @@
                         </button>
                         <button onclick="toggleSubMenu()" id="currentuser_initials_ref" class="profile__button">SM</button>
                         <div id="submenu" class="profile__button__submenu d__none">
-                            <button onclick="openHelpWebsite('add_task')" class="submenu__button__help">Help</button>
+                            <button onclick="openHelpWebsite('contacts')" class="submenu__button__help">Help</button>
                             <button onclick="openLegalNoticeWebsite()" class="submenu__button">Legal Notice</button>
                             <button onclick="openPrivacyPolicyWebsite()" class="submenu__button">Privacy Policy</button>
                             <button onclick="logOut()" class="submenu__button">Log Out</button>

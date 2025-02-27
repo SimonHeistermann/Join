@@ -146,9 +146,16 @@ function renderHTMLEditSubTask(subTask) {
 
 // Board:
 
+/**
+ * Generates the HTML structure for a task card on the board.
+ * 
+ * @param {Object} task - The task object containing task details.
+ * @param {number} i - The index of the task in its category.
+ * @returns {string} - The HTML string representing the task card.
+ */
 function renderHTMLBoardCard(task, i) {
     return  `
-            <div draggable="true" ondragstart="startDragging(this)" ondragend="stopDragging(this)" onclick="openTaskDetails(this)" class="board__card" id="card_${task.name}_${i}_${task.description}_${task.due_date}" data-task='${JSON.stringify(task)}'>
+            <div draggable="true" ondragstart="startDragging(this)" ondragend="stopDragging(this)" onclick="openTaskDetails(this)" class="board__card" id="card_${task.name}_${i}_${task.description}_${task.due_date}" data-task='${JSON.stringify(task)}' ontouchstart="enableMobileDrag(this)">
                 <div class="card__category ${getTaskCategoryCSSClass(task.category)}">${getTaskCategory(task.category)}</div>
                 <div class="card__center__container">
                     <span class="card__title">
@@ -166,28 +173,45 @@ function renderHTMLBoardCard(task, i) {
                 </div>
                 <div class="card__bottom__container">
                     <div class="badges__container" id="badges_container_${task.name}_${i}_${task.description}_${task.due_date}"></div>
-                    <div class="priority__symbols">
-                        <img src="./assets/icons/${getPrioIcon(task.prio)}.png" alt="=">
+                    <div class="priority__symbols ${task.prio === "" ? 'd__none' : ''}">
+                        <img src="./assets/icons/${task.prio === "" ? "white" : getPrioIcon(task.prio)}.png" alt="Priority Icon">
                     </div>
                 </div>
             </div>
             `;
 }
 
+/**
+ * Generates the HTML for an assigned user badge.
+ * 
+ * @param {Object} assignedTo - The assigned user data.
+ * @returns {string} - The HTML string representing the user badge.
+ */
 function renderHTMLBoardAssingedToBadges(assignedTo) {
     return  `
             <div class="badge ${getBadgeColor(assignedTo)}">${getInitials(assignedTo)}</div>
             `;
 }
 
-function renderHTMLNoCardInBoard() {
+/**
+ * Generates the HTML structure when no tasks are present in a board category.
+ * 
+ * @returns {string} - The HTML string indicating an empty task board.
+ */
+function renderHTMLNoCardInBoard(element) {
     return  `
             <div class="no__task__container">
-                 No tasks in To Do
+                 No tasks in ${getBoardCategoryInFormat(element)}
             </div>
             `;
 }
 
+/**
+ * Generates the HTML structure for the task details overlay.
+ * 
+ * @param {Object} task - The task object containing task details.
+ * @returns {string} - The HTML string representing the task details overlay.
+ */
 function renderHTMLTaskDetails(task) {
     return  `
     <div onclick="event.stopPropagation();" class="task__details__overlay" id="task_details_overlay">
@@ -206,18 +230,18 @@ function renderHTMLTaskDetails(task) {
           <span class="details__text__center__left">Due date:</span>
           <span class="details__text__center__right">${formatTaskDueDateBoard(task.due_date)}</span>
         </div>
-        <div class="details__center__containers">
+        <div class="details__center__containers ${task.prio === "" ? 'd__none' : ''}">
           <span class="details__text__center__left">Priority:</span>
           <div class="details__priority">
             ${getPrioText(task.prio)}
-            <img src="./assets/icons/${getPrioIcon(task.prio)}_small.png" alt="^">
+            <img src="./assets/icons/${task.prio === "" ? "white" : getPrioIcon(task.prio)}_small.png" alt="Priority Icon">
           </div>
         </div>
-        <div class="details__assigned__to__container">
+        <div class="details__assigned__to__container ${task.assigned_to === "" ? 'd__none' : ''}">
           <span class="details__assigned__to__header">Assigned To:</span>
           <div class="details__assigned__to__box" id="details_assigned_to"></div>
         </div>
-        <div class="details__assigned__to__container">
+        <div class="details__assigned__to__container ${task.subtasks === "" ? 'd__none' : ''}">
           <span class="details__assigned__to__header">Subtasks:</span>
           <div class="details__subtasks__box" id="details_subtasks"></div>
         </div>
@@ -229,7 +253,7 @@ function renderHTMLTaskDetails(task) {
               Delete
             </button>
             <div class="details__footer__buttonbox__seperator"></div>
-            <button class="edit__contact__button" data-task='${JSON.stringify(task)}'>
+            <button onclick="editTask(this)" class="edit__contact__button" data-task='${JSON.stringify(task)}'>
               <img class="edit__icon__default" src="./assets/icons/edit_icon_blue.png" alt="Edit Icon">
               <img class="edit__icon__hover" src="./assets/icons/edit_icon_lightblue.png" alt="Edit Icon">
               Edit
@@ -240,17 +264,30 @@ function renderHTMLTaskDetails(task) {
             `;
 }
 
+/**
+ * Generates the HTML for an assigned user in task details.
+ * 
+ * @param {string} assignedTo - The assigned user's name.
+ * @returns {string} - The HTML string representing an assigned user.
+ */
 function renderHTMLTaskDetailsAssignedTo(assignedTo) {
     return  `
             <div class="details__assigned__to__item">
               <div class="details__assigned__to__item__left">
                   <div class="details__assigned__to__avatar ${getBadgeColor(assignedTo)}">${getInitials(assignedTo)}</div>
-                  <h3>${assignedTo}</h3>
+                  <h3>${truncateTextShorter(assignedTo)}</h3>
               </div>
             </div>
             `;
 }
 
+/**
+ * Generates the HTML for a subtask in task details.
+ * 
+ * @param {Object} subTask - The subtask object containing subtask details.
+ * @param {Object} task - The parent task object.
+ * @returns {string} - The HTML string representing a subtask.
+ */
 function renderHTMLTaskDetailsSubTask(subTask, task) {
     return  `
             <div class="details__subtasks__item">
@@ -258,7 +295,7 @@ function renderHTMLTaskDetailsSubTask(subTask, task) {
                 <input onclick="updateSubTask(this, ${subTask.id})" class="details__subtasks" type="checkbox" id="subtask_${subTask.id}" name="subtask_${subTask.id}" data-task='${JSON.stringify(task)}' ${subTask.status === 1 ? 'checked' : ''}>
                 <span class="custom__checkbox__subtasks"></span>
               </label>
-              <span class="details__subtask__text">${subTask.name}</span>
+              <span class="details__subtask__text">${truncateTextShorter(subTask.name)}</span>
             </div>
             `;
 }
