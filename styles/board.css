@@ -263,7 +263,7 @@ span {
 .single__task__card{
   background: white;
   margin: auto;
-  min-width: 525px;
+  width: 525px;
   height: 931px;
   border-radius: 30px;
   padding-top: 32px;
