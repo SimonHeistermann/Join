@@ -1,286 +1,442 @@
+const boardCategories = ["to_do", "in_progress", "awaiting_feedback", "done"];
+let tasksInStatusToDo;
+let tasksInStatusProgress;
+let tasksInStatusAwaitingFeedback;
+let tasksInStatusDone;
+let flatpickrInstanceEdit;
 
-let baseUrl =
-  "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/";
+let currentDraggedTask;
+let draggedElement = null;
+let longPressTimer = null;
+let highlightElement = null;
+let draggedElementSize = { width: 0, height: 0 };
+let currentHighlightContainer = null;
+let currentUserChoosenEdit;
+let assignedToContacts = [];
+let currentEditedTask;
+let currentSubTasks = [];
+let subTasksIdCounterEdit = 0;
 
 /**
- * Initialisiert die Anwendung, lädt die Aufgaben und aktualisiert die Task-Anzahl-Anzeige.
+ * Initializes the board by loading tasks, rendering the UI, and setting up necessary components.
+ * Handles any errors during initialization.
  */
-async function init() {
- loadTasks();
-  fillTheTag();
-  quantityUpdate();
- fetchContacts(contacts);
-
+async function initBoard() {
+  try {
+      await init();
+      initFlatpickr();
+      getAllTasksIn();
+      renderBoardContent();
+      renderContactList(contacts);
+      renderTaskCategoryList();
+      renderSubtasks();
+  } catch (error) {
+      console.error("Error initializing app:", error);
+  }
 }
 
 /**
- * Fügt neue Aufgaben zur bestehenden Aufgabenliste hinzu und speichert die aktualisierte Liste in der API.
- *
- * @param {Array} newTasks - Die neuen Aufgaben, die hinzugefügt werden sollen.
+ * Initializes the Flatpickr date picker for task editing.
  */
-async function addNewTasks(newTasks) {
-  let response = await fetch(`${baseUrl}/tasks.json`);
-  let existingTasks = await response.json();
-  if (!existingTasks) {
-    existingTasks = [];
-  }
-  let updatedTasks = [...existingTasks, ...newTasks];
-  await fetch(`${baseUrl}/tasks.json`, {
-    method: "PUT", // `PUT` speichert die komplette Liste
-    headers: {
-      "Content-Type": "application/json",
+function initFlatpickrEdit() {
+  flatpickrInstanceEdit = flatpickr("#task_due_date_edit", {
+    dateFormat: "d/m/Y", altInput: true, altFormat: "d/m/Y", allowInput: true, disableMobile: true, locale: "de", placeholder: "dd/mm/yyyy",
+    onReady: function() {
+        this.input.setAttribute('name', 'task_due_date_edit');
+        this.input.setAttribute('id', 'task_due_date_edit_hidden');
+        if (this.altInput) { this.altInput.setAttribute('name', 'task_due_date_edit'); this.altInput.setAttribute('id', 'task_due_date_edit'); }
+        const calendar = this.calendarContainer;
+        calendar.querySelector('.flatpickr-monthDropdown-months')?.setAttribute('name', 'task_due_month');
+        calendar.querySelector('.cur-year')?.setAttribute('name', 'task_due_year');
     },
-    body: JSON.stringify(updatedTasks),
+    onChange: function(selectedDates, dateStr, instance) { validateDate(dateStr, 'date_container_input_edit', 'errormessage_box_date_edit');}
   });
 }
 
 /**
- * Lädt die Aufgaben von der API, wandelt die Antwort in JSON um
- * und übergibt die Daten an `renderTasks()`. Falls keine Aufgaben vorhanden sind,
- * wird ein leeres Array verwendet.
+ * Retrieves all tasks and categorizes them into their respective status lists.
  */
-async function loadTasks() {
-  let response = await fetch(`${baseUrl}/tasks.json`);
-  let tasks = await response.json();
-  console.log(tasks);
-  if (!tasks) {
-    tasks = [];
-  }
-  renderTasks(tasks);
+function getAllTasksIn() {
+  getTasksInStatusToDo();
+  getTasksInStatusProgress();
+  getTasksInStatusAwaitingFeedback();
+  getTasksInStatusDone();
 }
 
-
-  function renderTasks(tasks) {
-  let taskContainer = document.getElementById("content");
-  taskContainer.innerHTML = "";
-  let taskIds = Object.keys(tasks);
-
-  for (let i = 0; i < taskIds.length; i++) {
-    let taskId = taskIds[i];
-    let task = tasks[taskId];
-
-    if (!task) {
-      continue;
-    }
-let subTasks = task.subTasks || [];
-    let completedSubtasks = subTasks.filter((st) => st.completed).length;
-    let totalSubtasks = subTasks.length;
-    let subTaskList = subTasks.map((st) => `<li>${st.name}</li>`).join("");
-
-  
-  taskContainer.innerHTML += generateBoardTemplate(taskId, task, completedSubtasks, totalSubtasks);
-    ;
-
-  }
-}   
-
-
 /**
- * Verarbeitet das Ablegen eines Drag & Drop-Elements, verschiebt die Task in das neue Ziel
- * und aktualisiert die Task-Anzahl-Anzeige.
- *
- * /* @param {DragEvent} ev - Das Drop-Event.
+ * Filters and assigns tasks with "to-do" status to the corresponding list.
  */
-  function drop(ev) {
-  ev.preventDefault();
-  let taskId = ev.dataTransfer.getData("text");
-  let taskElement = document.getElementById(taskId);
-  let dropTarget = ev.target.closest(".tasks");
-  if (taskElement && dropTarget) {
-    dropTarget.appendChild(taskElement);
-  }
-  quantityUpdate();
-}  
-
-/**
- * Ermöglicht das Ablegen eines Elements, indem das Standardverhalten des Browsers verhindert wird.
- *
- * @param {DragEvent} ev - Das Drag-Event.
- */
- function allowDrop(ev) {
-  ev.preventDefault();
-  quantityUpdate()
-}
- 
-/**
- * Speichert die ID des gezogenen Elements in den `dataTransfer`-Daten,
- * um es für das Drag & Drop-Event verfügbar zu machen.
- *
- * @param {DragEvent} ev - Das Drag-Event.
- */
-function drag(ev) {
-  ev.dataTransfer.setData("text", ev.target.id);
-
-}  
-
-/**
- * Aktualisiert die Task-Anzahl-Anzeige in den verschiedenen Spalten
- * und blendet einen Hinweis ein, wenn keine Tasks mehr vorhanden sind.
- */
-
-  function quantityUpdate() {
-    const columns = [
-        { columnId: 'content', headerId: 'task_counter' },
-        { columnId: 'column_progress', headerId: 'no_tasks_inpro' },
-        { columnId: 'column_await', headerId: 'no_task_await' },
-        { columnId: 'column_done', headerId: 'no_task_done' }
-    ];
-
-    columns.forEach(({ columnId, headerId }) => {
-        const column = document.getElementById(columnId);
-        const header = document.getElementById(headerId);
-    const taskCount = [...column.children].filter(child => !child.classList.contains('no__tasks')).length;
-      updatedTodoColumns(header, taskCount);
-         if (taskCount === 0) {
-            header.style.display = "block";
-            header.innerHTML = "Keine Task Mehr";
-        } else {
-            header.style.display = "none"; 
-        }
-    });
+function getTasksInStatusToDo() {
+  tasksInStatusToDo = tasks.filter(task => task.status === "to-do");
 }
 
-function updatedTodoColumns(header, count) {
-      header.innerHTML = `${header.innerHTML.split('')[0]}(${count})`;
-  }
-   
-  
 /**
- * Hebt ein Element durch das Hinzufügen der Klasse `column__hightlight` hervor.
- *
- * @param {string} id - Die ID des Elements, das hervorgehoben werden soll.
+ * Filters and assigns tasks with "in-progress" status to the corresponding list.
  */
-  function hightlight(id) {
-  document.getElementById(id).classList.add("column__hightlight");
- }
- 
-/**
- * Entfernt die Hervorhebung eines Elements, indem die Klasse `column__hightlight` entfernt wird.
- *
- * @param {string} id - Die ID des Elements, dessen Hervorhebung entfernt werden soll.
- */
-  function removeHighlight(id) {
-  document.getElementById(id).classList.remove("column__hightlight");
-}  
-
-/**
- * Zeigt ein Popup mit den Details einer Aufgabe an.
- *
- * @param {Object} task - Das Task-Objekt, das im Popup angezeigt werden soll.
- */
-function showPopup(task) {
-  let popupContainer = document.getElementById("popup-container");
-  popupContainer.innerHTML = createPopup(task);
-  popupContainer.style.display = "block";
+function getTasksInStatusProgress() {
+  tasksInStatusProgress = tasks.filter(task => task.status === "in-progress");
 }
 
-function createPopup(task) {
-  let assignedTo = task.assigned_to ? task.assigned_to.join(", ") : "Niemand";
-  let priority = task.prio ? String(task.prio).toLowerCase() : "unknown";
-  return generateOverlayTemplate(task);
+/**
+ * Filters and assigns tasks with "await-feedback" status to the corresponding list.
+ */
+function getTasksInStatusAwaitingFeedback() {
+  tasksInStatusAwaitingFeedback = tasks.filter(task => task.status === "await-feedback");
 }
 
+/**
+ * Filters and assigns tasks with "done" status to the corresponding list.
+ */
+function getTasksInStatusDone() {
+  tasksInStatusDone = tasks.filter(task => task.status === "done");
+}
 
-  async function saveTask() {
-    const title = document.getElementById("text__input").value;
-    const description = document.getElementById("description").value;
-    const assignedToElement = document.getElementById("dropdown_toggle");
-    const assignedTo = assignedToElement ? [assignedToElement.innerText] : [];
-    const dueDate = document.getElementById("date__input").value;
-    const categoryElement = document.querySelector(".category");
-    const category = categoryElement ? categoryElement.value : "";
-    const subtask = document.getElementById("subtask").value;
-    if (categoryElement) {
-      categoryElement.classList.remove("task-type__overlay", "task__technical"); 
-      if (category.value === "User Story") {
-        category.classList.add("task-type__overlay");
-      } else {
-        categoryElement.classList.add("task__technical");
+/**
+ * Renders the board content by looping through all board categories.
+ * It clears and updates the corresponding task columns in the UI.
+ */
+function renderBoardContent() {
+  boardCategories.forEach(element => {
+    let currentTasks = getTasksIn(element);
+    const columnRef = document.getElementById(`${element}_content`);
+    columnRef.innerHTML = "";
+    if (currentTasks.length > 0) {
+      for (let i = 0; i < currentTasks.length; i++) {
+        columnRef.innerHTML += renderHTMLBoardCard(currentTasks[i], i);
+        renderBoardAssingedToBadges(currentTasks[i], i);
       }
-
+    } else {
+      columnRef.innerHTML = renderHTMLNoCardInBoard(element);
     }
-    
+  });
+}
 
-  
-    let prio = `Medium <img id="medium_img_add" src="assets/icons/Prio media.png" alt="="/>` // Standard: Medium
-    if (document.getElementById("prio_urgent").checked) {
-      prio = `Urgent <img id="urgend_img" src="assets/icons/Property 1=Urgent.png" alt="↑">`;
-    } else if (document.getElementById("prio_low").checked) {
-      prio = `Low <img id="low_img" src="assets/icons/Property 1=Low.png" alt="↓">  `;
+/**
+ * Converts a board category identifier into a user-friendly format.
+ * 
+ * @param {string} category - The category identifier (e.g., "to_do", "in_progress").
+ * @returns {string} - The formatted category name.
+ */
+function getBoardCategoryInFormat(category) {
+  if (category === "to_do") return "To do";
+  if (category === "in_progress") return "In progress";
+  if (category === "awaiting_feedback") return "Await Feedback";
+  if (category === "done") return "Done";
+  return "Board";
+}
+
+/**
+ * Retrieves the tasks for a given board category.
+ * 
+ * @param {string} element - The category name (e.g., "to_do", "in_progress", etc.).
+ * @returns {Array} The list of tasks corresponding to the category, or an empty array if not found.
+ */
+function getTasksIn(element) {
+  if (element === "to_do") return tasksInStatusToDo;
+  if (element === "in_progress") return tasksInStatusProgress;
+  if (element === "awaiting_feedback") return tasksInStatusAwaitingFeedback;
+  if (element === "done") return tasksInStatusDone;
+  return [];
+}
+
+/**
+ * Renders the assigned user badges for a given task in the board.
+ * 
+ * @param {Object} task - The task object containing assigned users.
+ * @param {number} i - The index of the task in the current list.
+ */
+function renderBoardAssingedToBadges(task, i) {
+  const bagdesContainerRef = document.getElementById(
+    `badges_container_${task.name}_${i}_${task.description}_${task.due_date}`
+  );
+  bagdesContainerRef.innerHTML = "";
+  if (task) {
+    for (let i = 0; i < task.assigned_to.length; i++) {
+      bagdesContainerRef.innerHTML += renderHTMLBoardAssingedToBadges(task.assigned_to[i]);
     }
-   if (!title || !dueDate || !category) {
-      alert("Bitte fülle alle Pflichtfelder aus!");
-      return;
-    }
-  
-    const newTask = {
-      name: title,
-      description: description || "",
-      assigned_to: assignedTo,
-      due_date: dueDate,
-      prio: prio,
-      category: category,
-      subtask: subtask ? [subtask] : [],
-      status: "to-do",
-    };
-  
-   await addNewTasks([newTask]); 
-      clearForm();
-      await loadTasks();
-      closeAddtask(); 
-    
-  
-} 
-  
-/**
- * Setzt alle Formularfelder zurück, indem die Werte von Texteingaben,
- * der Kategorieauswahl und des Subtask-Feldes geleert werden.
- * Die Priorität wird auf "Medium" zurückgesetzt.
- */
-function clearForm() {
-  document.getElementById("text__input").value = "";
-  document.getElementById("description").value = "";
-  document.getElementById("dropdown_toggle").value = "";
-  document.getElementById("date__input").value = "";
-  document.getElementById("prio_medium").checked = true;
-  document.querySelector(".category").value = "";
-  document.getElementById("subtask").value = "";
-}
-
-/*
- * Blendet die leeren Statusmeldungen für die verschiedenen Task-Kategorien ein.
- */
-
-
-/**
- * Schließt das Popup, indem es ausgeblendet wird.
- */
-function closePopup() {
-  document.getElementById("popup-container").style.display = "none";
+  }
 }
 
 /**
- * Schließt das "Add Task"-Fenster, indem es ausgeblendet wird.
+ * Counts the number of subtasks with a status of 1.
+ * @param {Array} subtasks - The list of subtasks.
+ * @returns {number} - The number of completed subtasks.
  */
-function closeAddtask() {
-  document.getElementById("cover__all_addTask").style.display = "none";
+function countCompletedSubtasks(subtasks) {
+  if (!Array.isArray(subtasks)) return 0;
+  return subtasks.filter(subtask => subtask.status === 1).length;
 }
 
 /**
- * Öffnet das "Add Task"-Fenster, indem es angezeigt wird.
+ * Calculates the percentage of completed subtasks.
+ * @param {Array} subtasks - The list of subtasks.
+ * @returns {number} - The completion percentage rounded to one decimal place.
  */
-function openAddtask() {
-  document.getElementById("cover__all_addTask").style.display = "block";
-  renderContactList(contacts);
+function calculateCompletionPercentage(subtasks) {
+  if (!Array.isArray(subtasks) || subtasks.length === 0) return 0;
+  const completed = countCompletedSubtasks(subtasks);
+  return Math.round((completed / subtasks.length) * 1000) / 10;
 }
 
 /**
- * Schließt das Popup-Fenster, indem es ausgeblendet wird.
+ * Returns the priority icon name based on the given priority level.
+ * 
+ * @param {number} prio - The priority level (1 = low, 2 = medium, 3 = urgent).
+ * @returns {string} The corresponding icon name for the priority.
  */
-function closepopup() {
-  document.getElementById("popup_card").style.display = "none";
+function getPrioIcon(prio) {
+  if (prio === 1) return 'low_icon_green';
+  if (prio === 2) return 'medium_icon_orange';
+  if (prio === 3) return 'urgent_icon_red';
 }
 
+/**
+ * Returns the full category name based on the short category code.
+ * 
+ * @param {string} category - The category code ("us" or "tt").
+ * @returns {string} The full category name.
+ */
+function getTaskCategory(category) {
+  if (category === "us") return 'User Story';
+  if (category === "tt") return 'Technical Task';
+}
 
+/**
+ * Returns the CSS class name for the given category.
+ * 
+ * @param {string} category - The category code ("us" or "tt").
+ * @returns {string} The corresponding CSS class name.
+ */
+function getTaskCategoryCSSClass(category) {
+  if (category === "us") return 'user__story';
+  if (category === "tt") return 'technical__task';
+}
+
+/**
+ * Opens the "Add Task" overlay and updates UI elements accordingly.
+ */
+function openAddTask() {
+  if (isMobile()) openAddTaskWebsite();
+  toggleDnoneFromBoardOverlay();
+  const buttonRef = document.getElementById('open_add_task_button');
+  buttonRef.classList.add('add__contact__button__active');
+  const containerRef = document.getElementById('add_task_overlay');
+  addActiveOverviewStyling(containerRef);
+  fixateScrollingOnBody();
+  window.addEventListener("resize", handleResize);
+}
+
+/**
+ * Toggles the "d__none" class on the board overlay element to show or hide it.
+ */
+function toggleDnoneFromBoardOverlay() {
+  const overlayRef = document.getElementById('add_task_overlay_board');
+  if (overlayRef) overlayRef.classList.toggle('d__none');
+}
+
+/**
+ * Adds active styling to a given content container.
+ * @param {HTMLElement} contentRef - The container element.
+ */
+function addActiveOverviewStyling(contentRef) {
+  setTimeout(() => {
+    contentRef.classList.add('add__task__overlay__content__active');
+}, 125); 
+}
+
+/**
+ * Closes the contact overlay and resets styles.
+ */
+function closeAddTaskOverlay() {
+  toggleDnoneFromBoardOverlay();
+  const containerRef = document.getElementById('add_task_overlay');
+  removeActiveOverviewStyling(containerRef);
+  releaseScrollOnBody();
+  window.removeEventListener("resize", handleResize);
+}
+
+/**
+ * Removes active styling from a given content container.
+ * @param {HTMLElement} contentRef - The container element.
+ */
+function removeActiveOverviewStyling(contentRef) {
+  contentRef.classList.remove('add__task__overlay__content__active');
+}
+
+/**
+ * Prevents the default behavior of the drag event.
+ * 
+ * @param {DragEvent} event - The drag event.
+ */
+function allowDrop(event) {
+  if (event) event.preventDefault();
+}
+
+/**
+ * Highlights the given drop area by adding a visual indication.
+ * 
+ * @param {string} id - The ID of the drop area element.
+ */
+function highlight(id) {
+  const areaRef = document.getElementById(id);
+  if (!areaRef) return;
+  createHighlightElement();
+  updateHighlightContainer(areaRef);
+  setHighlightSize();
+}
+
+/**
+ * Creates the highlight element if it does not exist.
+ */
+function createHighlightElement() {
+  if (!highlightElement) {
+    highlightElement = document.createElement("div");
+    highlightElement.classList.add("area__highlight");
+  }
+}
+
+/**
+ * Updates the current highlight container by adding or removing the highlight element.
+ * 
+ * @param {HTMLElement} areaRef - The reference to the drop area element.
+ */
+function updateHighlightContainer(areaRef) {
+  if (currentHighlightContainer !== areaRef) {
+    currentHighlightContainer?.contains(highlightElement) && 
+      currentHighlightContainer.removeChild(highlightElement);
+    areaRef.appendChild(highlightElement);
+    currentHighlightContainer = areaRef;
+  }
+}
+
+/**
+ * Sets the size of the highlight element based on the dragged task size.
+ */
+function setHighlightSize() {
+  Object.assign(highlightElement.style, {
+    width: `${draggedElementSize.width}px`,
+    height: `${draggedElementSize.height}px`,
+    display: "block"
+  });
+}
+
+/**
+ * Removes the highlight element from the current highlight container.
+ */
+function removeHighlight() {
+  if (highlightElement && currentHighlightContainer) {
+    currentHighlightContainer.removeChild(highlightElement);
+    highlightElement = null;
+    currentHighlightContainer = null;
+  }
+}
+
+/**
+ * Starts the dragging process for a task.
+ * 
+ * @param {HTMLElement} taskElement - The task element being dragged.
+ */
+function startDragging(taskElement) {
+  const taskData = JSON.parse(taskElement.getAttribute('data-task'));
+  currentDraggedTask = taskData;
+  setDraggedElementSize(taskElement);
+  taskElement.style.opacity = "0.8";
+  taskElement.classList.add("dragging");
+}
+
+/**
+ * Stores the size of the dragged element.
+ * 
+ * @param {HTMLElement} taskElement - The task element being dragged.
+ */
+function setDraggedElementSize(taskElement) {
+  const rect = taskElement.getBoundingClientRect();
+  draggedElementSize.width = rect.width;
+  draggedElementSize.height = rect.height;
+}
+
+/**
+ * Stops the dragging process and restores the original appearance of the task.
+ * 
+ * @param {HTMLElement} taskElement - The task element being dragged.
+ */
+function stopDragging(taskElement) {
+  if (taskElement) {
+    taskElement.style.opacity = "1";
+    taskElement.classList.remove("dragging");
+  }
+}
+
+/**
+ * Moves the currently dragged task to a new status.
+ * 
+ * @param {string} status - The new status for the task.
+ */
+async function moveTo(status) {
+  if (!currentDraggedTask || !status) return;
+  const task = tasks.find(task => 
+    task.name === currentDraggedTask.name &&
+    task.description === currentDraggedTask.description &&
+    task.due_date === currentDraggedTask.due_date
+  );
+  if (task) task.status = status;
+  await putData("tasks", tasks);
+  getAllTasksIn();
+  renderBoardContent();
+}
+
+/**
+ * Opens the task details overlay using either a task element or task data.
+ * 
+ * @param {HTMLElement} [taskElement] - The task element containing the data attribute.
+ * @param {boolean} [skip] - Determines whether certain UI elements should be skipped.
+ * @param {Object} [taskData] - The task data object if no task element is provided.
+ */
+function openTaskDetails(taskElement, skip, taskData) {
+  if (taskElement) {
+    openTaskDetailsWithElement(taskElement);
+  }
+  if (taskData) {
+    openTaskDetailsWithData(taskData);
+  }
+  const containerRef = document.getElementById('task_details_overlay');
+  addActiveOverviewStyling(containerRef, skip);
+  fixateScrollingOnBody();
+}
+
+/**
+ * Opens the task details using a task element.
+ * 
+ * @param {HTMLElement} taskElement - The task element containing the data attribute.
+ */
+function openTaskDetailsWithElement(taskElement) {
+  const taskData = JSON.parse(taskElement.getAttribute('data-task'));
+  const contentRef = document.getElementById('task_details_overlay_content_board');
+  toggleDnoneFromTaskDetailsOverlay();
+  renderTaskDetailsOverlayContent(contentRef, taskData);
+  renderTaskDetailsAssignedTo(taskData);
+  renderTaskDetailsSubTasks(taskData);
+}
+
+/**
+ * Opens the task details using a task data object.
+ * 
+ * @param {Object} taskData - The task data object containing task information.
+ */
+function openTaskDetailsWithData(taskData) {
+  const contentRef = document.getElementById('task_details_overlay_content_board');
+  toggleDnoneFromTaskDetailsOverlay();
+  renderTaskDetailsOverlayContent(contentRef, taskData);
+  renderTaskDetailsAssignedTo(taskData);
+  renderTaskDetailsSubTasks(taskData);
+}
+
+/**
+ * Toggles the "d__none" class on the task details overlay element to show or hide it.
+ */
+function toggleDnoneFromTaskDetailsOverlay() {
+  const overlayRef = document.getElementById('task_details_overlay_board');
+  if (overlayRef) overlayRef.classList.toggle('d__none');
+}
 
 

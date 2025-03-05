@@ -13,6 +13,14 @@ function openLoginWithAnimation() {
 }
 
 /**
+ * Redirects the user to the login page without playing the animation.
+ * Adds a query parameter to indicate that the animation should be skipped.
+ */
+function openLoginWithoutAnimation() {
+    window.location.href = 'login.html?skipAnimation=true';
+}
+
+/**
  * Redirects the user to the registration page.
  */
 function openSignUpWebsite() {
@@ -24,6 +32,14 @@ function openSignUpWebsite() {
  */
 function openSummaryWebsite() {
     window.location.href = 'summary.html';
+}
+
+/**
+ * Redirects the user to the summary page without playing the mobile animation.
+ * Adds a query parameter to indicate that the mobile animation should be skipped.
+ */
+function openSummaryWebsiteWithoutMobileAnimation() {
+    window.location.href = 'summary.html?skipMobileAnimation=true';
 }
 
 /**
@@ -78,7 +94,9 @@ function openLegalNoticeWebsiteNoLogin() {
 /**
  * Redirects the user to the help page.
  */
-function openHelpWebsite() {
+function openHelpWebsite(from) {
+    if(from) lastPage = from;
+    localStorage.setItem('lastPage', JSON.stringify(lastPage));
     window.location.href = 'help.html';
 }
 
@@ -88,6 +106,8 @@ function openHelpWebsite() {
 function toggleSubMenu() {
     const subMenuRef = document.getElementById('submenu');
     subMenuRef.classList.toggle('d__none');
+    const overlaySubMenuRef = document.getElementById('overlay_submenu');
+    overlaySubMenuRef.classList.toggle('d__none');
 }
 
 /**
@@ -97,12 +117,10 @@ function fixateScrollingOnBody() {
     document.body.style.overflow = "hidden";
     document.documentElement.style.overflow = "hidden";
     let scrollY = window.scrollY;
-    document.body.style.position = 'fixed';
     if (scrollY > 0) {
         document.documentElement.style.scrollBehavior = 'unset';
         document.body.style.top = `-${scrollY}px`;
     }
-    document.body.style.width = '100%';
 }
 
 /**
@@ -139,26 +157,6 @@ function getInitials(name) {
 }
 
 /**
- * Masks the password input by hiding the original input field and displaying masked asterisks.
- *
- * @param {string} id1 - The ID of the input element containing the password to be hidden.
- * @param {string} id2 - The ID of the element where the masked password (asterisks) will be displayed.
- */
-function maskPassword(id1, id2){
-    let hidePasswordInput = document.getElementById(id1);
-    let maskPassword = document.getElementById(id2);
-
-    hidePasswordInput.classList.add('zero__opacity');
-    maskPassword.classList.remove('zero__opacity');
-
-    maskPassword.innerHTML = '';
-
-    for(let i = 0; i < hidePasswordInput.value.length; i++){
-        maskPassword.innerHTML += '*';
-    }
-}
-
-/**
  * Determines the badge color based on the contact name.
  * @param {string} name - The contact's name.
  * @returns {string} - The badge color class.
@@ -170,46 +168,213 @@ function getBadgeColor(name) {
 }
 
 /**
- * Prüft, ob die aktuelle Bildschirmbreite der eines mobilen Geräts entspricht.
+ * Masks the password input by hiding the original input field and displaying masked asterisks.
  *
- * @returns {boolean} `true`, wenn die Bildschirmbreite maximal 768px beträgt, sonst `false`.
+ * @param {string} id1 - The ID of the input element containing the password to be hidden.
+ * @param {string} id2 - The ID of the element where the masked password (asterisks) will be displayed.
+ */
+function maskPassword(id1, id2){
+    let hidePasswordInput = document.getElementById(id1);
+    let maskPassword = document.getElementById(id2);
+    hidePasswordInput.classList.add('zero__opacity');
+    maskPassword.classList.remove('zero__opacity');
+    maskPassword.innerHTML = '';
+    for(let i = 0; i < hidePasswordInput.value.length; i++){
+        maskPassword.innerHTML += '*';
+    }
+    if(maskPassword.innerHTML == "") hidePasswordInput.classList.remove('zero__opacity');
+}
+
+/**
+ * Logs out the current user by clearing the local storage entry and resetting the currentUser variable.
+ * Redirects to the login page with a URL parameter to skip animation.
+ */
+function logOut() {
+    getCurrentUser();
+    currentUser = null;
+    localStorage.removeItem("currentUser");
+    localStorage.removeItem("lastPage");
+    window.location.href = "login.html?skipAnimation=true";
+}
+
+/**
+ * Checks if the current device is a mobile device based on screen width.
+ * @returns {boolean} True if the screen width is 768px or less, otherwise false.
  */
 function isMobile() {
     return window.matchMedia("(max-width: 768px)").matches;
 }
 
 /**
- * Aktualisiert die Prioritätsicons, um "Urgent" als ausgewählte Priorität hervorzuheben.
- *
- * Diese Funktion setzt das Bild für "Medium" und "Low" auf ihre Standardwerte
- * und aktualisiert das "Urgent"-Icon, um die Auswahl anzuzeigen.
+ * Generates the next available ID for a new contact.
+ * Finds the lowest unused numerical ID in the contacts list.
+ * @returns {string} The next available ID as a string.
  */
-function changeUrgend(){
-    document.getElementById('urgend_img').src = "assets/icons/Prio alta.png"
-    document.getElementById('medium_img').src = "assets/icons/Property 1=Medium.png";
-    document.getElementById('low_img').src = "assets/icons/Property 1=Low.png";
+function getNextAvailableId() {
+    const usedIds = new Set(contacts.map(contact => Number(contact.id)));
+    let id = 0;
+    while (usedIds.has(id)) {
+        id++;
+    }
+    return id.toString();
 }
 
 /**
- * Aktualisiert die Prioritätsicons, um "Medium" als ausgewählte Priorität hervorzuheben.
- *
- * Diese Funktion setzt das Bild für "Urgent" und "Low" auf ihre Standardwerte
- * und aktualisiert das "Medium"-Icon, um die Auswahl anzuzeigen.
+ * Retrieves a specific query parameter from the URL.
+ * @param {string} param - The name of the query parameter to retrieve.
+ * @returns {string|null} The value of the query parameter, or null if not found.
  */
-function changeMedium(){
-    document.getElementById('urgend_img').src = "assets/icons/Property 1=Urgent.png"
-    document.getElementById('medium_img').src = "assets/icons/Prio media.png";
-    document.getElementById('low_img').src = "assets/icons/Property 1=Low.png";
+function getQueryParam(param) {
+    const urlParams = new URLSearchParams(window.location.search);
+    return urlParams.get(param);
 }
 
 /**
- * Aktualisiert die Prioritätsicons, um "Low" als ausgewählte Priorität hervorzuheben.
- *
- * Diese Funktion setzt das Bild für "Urgent" und "Medium" auf ihre Standardwerte
- * und aktualisiert das "Low"-Icon, um die Auswahl anzuzeigen.
+ * Prevents the default behavior of the "Enter" key when pressed.
+ * @param {KeyboardEvent} event - The keydown event object.
  */
-function changeLow(){
-    document.getElementById('urgend_img').src = "assets/icons/Property 1=Urgent.png"
-    document.getElementById('medium_img').src = "assets/icons/Property 1=Medium.png";
-    document.getElementById('low_img').src = "assets/icons/Prio baja.png";
+function handleKeyDown(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+    }
+} 
+
+/**
+ * Navigates back to the last visited page.
+ * Retrieves the last page from storage and redirects to it.
+ */
+function backToLastPage() {
+    lastPage = getLastpage();
+    if (lastPage) window.location.href = `${lastPage}.html`;
 }
+
+/**
+ * Initializes an event listener to check the screen orientation and display a message if the device is in landscape mode with a small height.
+ * The message is shown only if the viewport height is less than 500 pixels.
+ */
+document.addEventListener("DOMContentLoaded", function () {
+    /**
+     * Checks the current screen orientation and toggles the visibility of the rotation message.
+     * If the screen is in landscape mode and the height is below 500px, the message is displayed.
+     */
+    function checkOrientation() {
+        const rotateMessage = document.getElementById("rotate_message");
+        if (!rotateMessage) return;
+
+        if (window.innerHeight < 500 && window.matchMedia("(orientation: landscape)").matches) {
+            rotateMessage.classList.remove("d__none");
+        } else {
+            rotateMessage.classList.add("d__none");
+        }
+    }
+    window.addEventListener("resize", checkOrientation);
+    window.addEventListener("orientationchange", checkOrientation);
+    checkOrientation();
+});
+
+/**
+ * Trims a text to a maximum of 44 characters and appends "..." if truncated.
+ * @param {string} text - The input text to be truncated.
+ * @returns {string} - The processed text with a maximum length of 44 characters.
+ */
+function truncateText(text) {
+    return text.length > 44 ? text.substring(0, 44) + "..." : text;
+}
+
+/**
+ * Trims a text to a maximum of 44 characters and appends "..." if truncated.
+ * @param {string} text - The input text to be truncated.
+ * @returns {string} - The processed text with a maximum length of 44 characters.
+ */
+function truncateTextShorter(text) {
+    return text.length > 31 ? text.substring(0, 31) + "..." : text;
+}
+
+/**
+ * Returns the formatted category abbreviation.
+ * @param {string} category - The category name.
+ * @returns {string|null} The formatted category abbreviation or null if not found.
+ */
+function getCategoryInFormat(category) {
+    if (category === "Technical Task") return "tt";
+    if (category === "User Story") return "us";
+    return null;
+}
+
+/**
+ * Retrieves the task data from a given task element.
+ * @param {HTMLElement} taskElement - The task element containing the data-task attribute.
+ * @returns {Object|null} The parsed task data object or null if not found.
+ */
+function getTaskData(taskElement) {
+    return JSON.parse(taskElement.getAttribute('data-task')) || null;
+}
+
+/**
+ * Handles the resize event and closes the overlay if on mobile.
+ */
+function handleResize() {
+    if (isMobile()) {
+        closeAddTaskOverlay();
+        openAddTaskWebsite();
+    }
+}
+
+/**
+ * Generates a unique task ID that does not already exist in the provided list of tasks.
+ * Ensures uniqueness by checking against existing task IDs.
+ * 
+ * @param {Array} existingTasks - The list of existing tasks to check for duplicate IDs.
+ * @returns {string} A unique task ID.
+ */
+function generateUniqueTaskId(existingTasks) {
+    let newId;
+    do {
+        newId = generateUniqueId();
+    } while (existingTasks.some(task => task.id === newId));
+    return newId;
+}
+
+/**
+ * Generates a unique identifier using the current timestamp and a random string.
+ * 
+ * @returns {string} A unique identifier string.
+ */
+function generateUniqueId() {
+    return `${Date.now().toString(36)}-${Math.random().toString(36).substr(2, 9)}`;
+}
+
+/**
+ * Sets the priority level for the task.
+ * @param {string} value - The priority value to set.
+ */
+function setTaskPrio(value) {
+    if (value) taskPrio = value;
+}
+
+/**
+ * Returns the provided information if it is not empty or null; otherwise, returns an empty string.
+ * 
+ * @param {*} information - The input value to check.
+ * @returns {*} The original information if valid, otherwise an empty string.
+ */
+function getInformationTheRight(information) {
+    if(information) return information;
+    else return "";
+}
+
+/**
+ * Returns the provided array if it contains elements; otherwise, returns an empty string.
+ * 
+ * @param {Array} array - The array to check.
+ * @returns {Array|string} The original array if it is not empty, otherwise an empty string.
+ */
+function getArraysTheRightWay(array) {
+    if(array.length > 0) return array;
+    else return "";
+}
+
+
+
+
+

@@ -1,20 +1,15 @@
-let users = [];
 let tasks = [];
 let contacts = [];
-let user =[];
-let currentUser = {};
-let contactUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/contacts.json"
-let tasksUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/tasks.json"
-let usersUrl = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/users.json"
+let users = [];
+let currentUser;
+let lastPage;
 const BASE_URL = "https://backenjoin-default-rtdb.europe-west1.firebasedatabase.app/";
 
 
 /**
- * Lädt Daten von einer bestimmten API-Route per HTTP GET und gibt die Server-Antwort zurück.
- * 
- * @async
- * @param {string} [path=""] - Der API-Pfad, von dem die Daten abgerufen werden.
- * @returns {Promise<Object|undefined>} Die Server-Antwort als JSON oder `undefined`, falls ein Fehler auftritt.
+ * Loads data from the specified endpoint.
+ * @param {string} [path=""] - The API endpoint path to load data from.
+ * @returns {Promise<Object|undefined>} A promise that resolves to the JSON response or undefined in case of an error.
  */
 async function loadData(path = "") {
     try {
@@ -27,14 +22,11 @@ async function loadData(path = "") {
 }
 
 /**
- * Sendet Daten per HTTP POST an eine bestimmte API-Route und gibt die Server-Antwort zurück.
- * 
- * @async
- * @param {string} [path=""] - Der API-Pfad, an den die Daten gesendet werden.
- * @param {Object} [data={}] - Die Daten, die als JSON an den Server gesendet werden.
- * @returns {Promise<Object|undefined>} Die Server-Antwort als JSON oder `undefined`, falls ein Fehler auftritt.
+ * Sends data to the specified endpoint using a POST request.
+ * @param {string} [path=""] - The API endpoint path to post data to.
+ * @param {Object} [data={}] - The data object to send.
+ * @returns {Promise<Object|undefined>} A promise that resolves to the JSON response or undefined in case of an error.
  */
-
 async function postData(path = "", data = {}) {
     try {
         let response = await fetch(BASE_URL + path + ".json", {
@@ -51,13 +43,10 @@ async function postData(path = "", data = {}) {
 }
 
 /**
- * Löscht Daten von einer bestimmten API-Route per HTTP DELETE und gibt die Server-Antwort zurück.
- * 
- * @async
- * @param {string} [path=""] - Der API-Pfad, von dem die Daten gelöscht werden.
- * @returns {Promise<Object|undefined>} Die Server-Antwort als JSON oder `undefined`, falls ein Fehler auftritt.
+ * Deletes data at the specified endpoint using a DELETE request.
+ * @param {string} [path=""] - The API endpoint path to delete data from.
+ * @returns {Promise<Object|undefined>} A promise that resolves to the JSON response or undefined in case of an error.
  */
-
 async function deleteData(path = "") {
     try {
         let response = await fetch(BASE_URL + path + ".json", {
@@ -70,12 +59,10 @@ async function deleteData(path = "") {
 }
 
 /**
- * Sendet Daten per HTTP PUT an eine bestimmte API-Route und gibt die Server-Antwort zurück.
- * 
- * @async
- * @param {string} [path=""] - Der API-Pfad, an den die Daten gesendet werden.
- * @param {Object} [data={}] - Die Daten, die als JSON an den Server gesendet werden.
- * @returns {Promise<Object|undefined>} Die Server-Antwort als JSON oder `undefined`, falls ein Fehler auftritt.
+ * Updates data at the specified endpoint using a PUT request.
+ * @param {string} [path=""] - The API endpoint path to update data.
+ * @param {Object} [data={}] - The updated data object.
+ * @returns {Promise<Object|undefined>} A promise that resolves to the JSON response or undefined in case of an error.
  */
 async function putData(path = "", data = {}) {
     try {
@@ -93,78 +80,10 @@ async function putData(path = "", data = {}) {
 }
 
 /**
- * Ruft die Benutzerdaten von einer externen URL ab und speichert sie im localStorage.
+ * Fetches all contacts from the database.
+ * Converts the fetched contacts into an array and filters out null or undefined values.
  * 
  * @async
- * @param {string} usersUrl - Die URL, von der die Benutzerdaten abgerufen werden.
- */
-async function fetchUsers(){
-    try {
-        let response = await fetch(usersUrl);
-        let allUser = await response.json();        
-        users = allUser;        
-        toLocalStorage();
-    } catch (error) {
-        console.error("Error getting users:", error);
-    }
-}
-
-/**
- * Ruft Aufgaben (Tasks) von einer externen URL ab und speichert sie im localStorage.
- * 
- * @async
- * @param {string} tasksUrl - Die URL, von der die Aufgaben abgerufen werden.
- */
-async function fetchTasks() {
-    try {
-        let response = await fetch(tasksUrl);
-        let fetchedTasks = await response.json();
-        tasks = fetchedTasks
-        localStorage.setItem("tasks", JSON.stringify(tasks));
-    } catch (error) {
-        console.error("Error getting tasks:", error);
-    }
-}
-
-/**
- * Speichert das globale `users`-Array im localStorage.
- * Die Daten werden als JSON-String gespeichert.
- */
-function toLocalStorage(){
-    localStorage.setItem("users", JSON.stringify(users));
-}
-
-/**
- * Zeigt eine Fehlermeldung an, wenn das Laden der Daten schiefgegangen ist.
- * 
- * Diese Funktion zeigt eine `alert`-Nachricht an, die den Benutzer darauf hinweist,
- * dass das Laden der Daten fehlgeschlagen ist, und bittet ihn, es später erneut zu versuchen.
- * Der Benutzer wird auch um Entschuldigung für die Unannehmlichkeiten gebeten.
- * 
- * @param {string} message - Die Nachricht, die dem Benutzer im Fehlerfall angezeigt wird. In diesem Fall eine standardisierte Fehlermeldung.
- */
-function showErrorAlert() {
-    alert("Das Laden der Daten ist schiefgegangen. Bitte versuchen Sie es zu einem späteren Zeitpunkt noch einmal. Danke. Entschuldigen Sie die Unannehmlichkeiten.");
-}
-
-/**
- * Füllt das HTML-Element mit der ID 'header_tag' mit den Initialen des aktuell angemeldeten Benutzers.
- *
- * @param {Object} currentUser - Das aktuell angemeldete Benutzerobjekt, das Benutzerdaten enthält.
- * @param {string} currentUser.initials - Die Initialen des aktuellen Benutzers, die im Header angezeigt werden sollen.
- *
- */
-function fillTheTag(){
-    let currentUser = JSON.parse(localStorage.getItem("currentUser"));
-    if(currentUser === null){
-        window.location.href="./login.html"
-    }
-    let tagLetters = currentUser.initials;
-    document.getElementById('currentuser_initials_ref').innerHTML = tagLetters;
-}
-
-/**
- * Fetches contacts from storage and filters out invalid entries.
  */
 async function fetchContacts() {
     try {
@@ -177,24 +96,95 @@ async function fetchContacts() {
 }
 
 /**
- * Loggt den Benutzer aus, indem der "currentUser" aus dem localStorage entfernt wird.
- * Anschließend wird der Benutzer zur Login-Seite weitergeleitet.
+ * Fetches all tasks from the database.
+ * Converts the fetched tasks into an array and filters out null or undefined values.
+ * 
+ * @async
  */
-function logOut(){
-    localStorage.removeItem("currentUser"); 
-    window.location.href = "./login.html";
-}
-
-function handleEnter(event) {
-    if (event.key === "Enter") {
-      event.preventDefault();  
-      addNewSubtask();         
+async function fetchTasks() {
+    try {
+        let fetchedTasks = await loadData("tasks");
+        if (!fetchedTasks) fetchedTasks = [];
+        tasks = Object.values(fetchedTasks).filter(task => task !== null && task !== undefined);
+    } catch (error) {
+        console.error("Error getting tasks:", error);
     }
 }
 
-function handleEnterEdit(event, name){
-    if (event.key === "Enter") {
-        event.preventDefault();  
-        turnIntoLi(name)        
-      }
+/**
+ * Fetches all users from the database.
+ * Converts the fetched users into an array and filters out null or undefined values.
+ * 
+ * @async
+ */
+async function fetchUsers() {
+    try {
+        let fetchedUsers = await loadData("users");
+        if (!fetchedUsers) fetchedUsers = [];
+        users = Object.values(fetchedUsers).filter(user => user !== null && user !== undefined);
+    } catch (error) {
+        console.error("Error getting users:", error);
+    }
 }
+
+/**
+ * Retrieves the currently logged-in user from local storage.
+ * 
+ * @returns {Object|null} The current user object if found, otherwise null.
+ */
+function getCurrentUser() {
+    let storedCurrentUser = localStorage.getItem("currentUser");
+    if (storedCurrentUser) currentUser = JSON.parse(storedCurrentUser);
+    return currentUser;
+}
+
+/**
+ * Retrieves the last visited page from local storage.
+ * 
+ * @returns {string|null} The last visited page URL if found, otherwise null.
+ */
+function getLastpage() {
+    let storedLastPage = localStorage.getItem("lastPage");
+    if (storedLastPage) lastPage = JSON.parse(storedLastPage);
+    return lastPage;
+}
+
+/**
+ * Checks if a user is logged in and updates the UI with the user's initials.
+ * Redirects to the login page if no user is found.
+ */
+function fillTheTag() {
+    currentUser = getCurrentUser();
+    if (currentUser === null || currentUser === undefined) {
+        window.location.href = "./login.html";
+    } else {
+        let currentUserInitials = currentUser.initials;
+        const currentUserInitialsRef = document.getElementById('currentuser_initials_ref');
+        currentUserInitialsRef.innerHTML = currentUserInitials;
+    }
+}
+
+/**
+ * Initializes the application by fetching contacts and tasks,
+ * retrieving the current user, and updating the UI.
+ * 
+ * @async
+ */
+async function init() {
+    try {
+        await fetchContacts();
+        await fetchTasks();
+        getCurrentUser();
+        fillTheTag();
+    } catch (error) {
+        console.error("Error initializing app:", error);
+    }
+}
+
+function initIndex() {
+    getCurrentUser();
+    if(currentUser) {
+        openSummaryWebsiteWithoutMobileAnimation();
+    }
+}
+

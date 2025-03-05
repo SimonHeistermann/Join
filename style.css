@@ -31,6 +31,20 @@
     display: none;
 }
 
+.rotate__overlay {
+    position: absolute;
+    top: 0;
+    left: 0;
+    min-width: 100vw;
+    min-height: 100vh;
+    background: rgba(0, 0, 0, 0.8);
+    color: white;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    z-index: 9999;
+}
 
 @media(max-width: 1279px) {
     .header__container {
@@ -41,7 +55,8 @@
 @media(max-width: 768px) {
     .overall {
         flex-direction: column-reverse;
-        min-height: 100vh;
+        max-height: 100vh;
+        overflow-x: hidden;
     }
 
     .content__right {
@@ -53,8 +68,7 @@
         margin: 0;
         padding-inline: clamp(16px, 6vw, 64px);
         position: unset;
-        /*flex-direction: row-reverse;*/
-        flex: 1;
+        flex-direction: row-reverse;
     }
 
     .header__container h3 {
@@ -68,3 +82,4 @@
         background: transparent;
     }
 }
+

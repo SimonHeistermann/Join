@@ -133,6 +133,7 @@
         height: 80px;
         width: min(100%, 768px);
         position: fixed;
+        bottom: 0;
     }
 
     .sidebar__container {
@@ -186,5 +187,6 @@
         height: 24px;
     }
 
-
 }
+
+

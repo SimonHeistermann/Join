@@ -1,17 +1,114 @@
+let flatpickrInstance;
 let choosenContacts = [];
-let newSubtasks = [];
+let taskPrio = "";
+let taskCategories = ['Technical Task', 'User Story'];
+let selectedTaskCategory = "";
+let addedSubtasks = [];
+let subtaskIdCounter = 0;
+let currentUserChoosen = false;
+
 
 /**
- * Initializes the task-related functionalities, including fetching contacts.
+ * Initializes the task-related functionalities, including the date picker and fetching contacts.
  */
 async function initAddTasks() {
-  try {
-    await fetchContacts();
-    renderContactList(contacts);
-  } catch (error) {
-    console.error("Error initializing app:", error);
-  }
-  fillTheTag();
+    try {
+        initFlatpickr();
+        await init();
+        renderContactList(contacts);
+        renderTaskCategoryList();
+        renderSubtasks();
+    } catch (error) {
+        console.error("Error initializing app:", error);
+    }
+}
+
+/**
+ * Initializes the Flatpickr date picker with specific configurations.
+ */
+function initFlatpickr() {
+    flatpickrInstance = flatpickr("#task_due_date", {
+        dateFormat: "d/m/Y", altInput: true, altFormat: "d/m/Y", allowInput: true, disableMobile: true, locale: "de", placeholder: "dd/mm/yyyy",
+        onReady: function() {
+            this.input.setAttribute('name', 'task_due_date');
+            this.input.setAttribute('id', 'task_due_date_hidden');
+            if (this.altInput) { this.altInput.setAttribute('name', 'task_due_date'); this.altInput.setAttribute('id', 'task_due_date'); }
+            const calendar = this.calendarContainer;
+            calendar.querySelector('.flatpickr-monthDropdown-months')?.setAttribute('name', 'task_due_month');
+            calendar.querySelector('.cur-year')?.setAttribute('name', 'task_due_year');
+        },
+        onChange: function(selectedDates, dateStr, instance) { validateDate(dateStr, 'date_container_input', 'errormessage_box_date');}
+    });
+}
+
+/**
+ * Validates a given date input and checks if it is in the past.
+ * Displays an error message if the date is invalid.
+ * @param {string} dateStr - The date string in "DD/MM/YYYY" format.
+ * @param {string} inputContainerId - The ID of the input container.
+ * @param {string} errorBoxId - The ID of the error message box.
+ */
+function validateDate(dateStr, inputContainerId, errorBoxId) {
+    const inputContainerRef = document.getElementById(inputContainerId);
+    const errorBox = document.getElementById(errorBoxId);
+    const selectedDate = parseDate(dateStr);
+    const today = getTodayDate();
+
+    if (isPastDate(selectedDate, today)) {
+        showDateError(inputContainerRef, errorBox);
+    } else {
+        clearDateError(inputContainerRef, errorBox);
+    }
+}
+
+/**
+ * Parses a date string in "DD/MM/YYYY" format and returns a Date object.
+ * @param {string} dateStr - The date string to parse.
+ * @returns {Date} The parsed Date object.
+ */
+function parseDate(dateStr) {
+    const [day, month, year] = dateStr.split('/').map(Number);
+    return new Date(year, month - 1, day);
+}
+
+/**
+ * Gets today's date with the time set to midnight.
+ * @returns {Date} The current date with hours, minutes, and seconds set to zero.
+ */
+function getTodayDate() {
+    const today = new Date();
+    today.setHours(0, 0, 0, 0);
+    return today;
+}
+
+/**
+ * Checks if a given date is in the past.
+ * @param {Date} selectedDate - The date to compare.
+ * @param {Date} today - The current date.
+ * @returns {boolean} True if the selected date is before today, otherwise false.
+ */
+function isPastDate(selectedDate, today) {
+    return selectedDate < today;
+}
+
+/**
+ * Displays an error message for an invalid date input.
+ * @param {HTMLElement} inputContainerRef - The container element of the date input.
+ * @param {HTMLElement} errorBox - The element where the error message will be displayed.
+ */
+function showDateError(inputContainerRef, errorBox) {
+    inputContainerRef.classList.add('error__inputs');
+    errorBox.innerHTML = "Please choose a current date!";
+}
+
+/**
+ * Clears the error message for the date input.
+ * @param {HTMLElement} inputContainerRef - The container element of the date input.
+ * @param {HTMLElement} errorBox - The element where the error message is displayed.
+ */
+function clearDateError(inputContainerRef, errorBox) {
+    inputContainerRef.classList.remove('error__inputs');
+    errorBox.innerHTML = "";
 }
 
 /**
@@ -19,11 +116,12 @@ async function initAddTasks() {
  * @param {Array} currentContacts - The list of contacts to display.
  */
 function renderContactList(currentContacts) {
-  const sortedContacts = sortContactsByName(currentContacts);
-  const contactHTML = generateContactHTML(sortedContacts);
-  const dropDownRef = document.getElementById("dropdown_list");
-  dropDownRef.innerHTML = "";
-  dropDownRef.innerHTML = contactHTML;
+    const sortedContacts = sortContactsByName(currentContacts);
+    const contactHTML = generateContactHTML(sortedContacts);
+    const dropDownRef = document.getElementById("dropdown_list");
+    dropDownRef.innerHTML = "";
+    dropDownRef.innerHTML += renderHTMLYouInContactList();
+    dropDownRef.innerHTML += contactHTML;
 }
 
 /**
@@ -32,7 +130,7 @@ function renderContactList(currentContacts) {
  * @returns {Array} The sorted list of contacts.
  */
 function sortContactsByName(currentContacts) {
-  return currentContacts.sort((a, b) => a.name.localeCompare(b.name));
+    return currentContacts.sort((a, b) => a.name.localeCompare(b.name));
 }
 
 /**
@@ -41,9 +139,30 @@ function sortContactsByName(currentContacts) {
  * @returns {string} The HTML string for the contact list.
  */
 function generateContactHTML(currentContacts) {
-  return currentContacts
-    .map((contact) => generateContactTemplate(contact))
-    .join("");
+    return currentContacts
+        .map(contact => generateContactTemplate(contact))
+        .join("");
+}
+
+/**
+ * Renders the task category list in the dropdown menu.
+ * Clears the existing content and inserts the updated category list.
+ */
+function renderTaskCategoryList() {
+    const taskCategoryHTML = generateTaskCategoryHTML();
+    const dropDownRef = document.getElementById("category_dropdown_list");
+    dropDownRef.innerHTML = "";
+    dropDownRef.innerHTML = taskCategoryHTML;
+}
+
+/**
+ * Generates the HTML markup for the task category list.
+ * @returns {string} The generated HTML string containing all task categories.
+ */
+function generateTaskCategoryHTML() {
+    return taskCategories
+        .map(category => generateTaskCategoryTemplate(category))
+        .join("");
 }
 
 /**
@@ -51,30 +170,34 @@ function generateContactHTML(currentContacts) {
  * @param {Event} event - The click event.
  */
 function openDropdownList(event) {
-  event.preventDefault();
-  toggleDropdown("dropdown");
-  toggleDNoneInputAndButtonDropDown("dropdown", "dropdown_search");
+    event.preventDefault();
+    toggleDropdown('dropdown');
+    toggleDNoneInputAndButtonDropDown('dropdown', 'dropdown_search');
+    toggleDropDownListOverlay();
+}
+
+function toggleDropDownListOverlay() {
+    const overlayDropdownListAddTaskContacts = document.getElementById('overlay_dropdown_list_add_task_contacts');
+    overlayDropdownListAddTaskContacts.classList.toggle('d__none');
 }
 
 /**
  * Toggles the visibility of the dropdown list.
  */
 function toggleDropdown(type) {
-  const dropdownListWrapperRef = document.getElementById(
-    type + "_list_wrapper"
-  );
-  dropdownListWrapperRef.classList.toggle("open");
+    const dropdownListWrapperRef = document.getElementById(type + '_list_wrapper');
+    dropdownListWrapperRef.classList.toggle('open');
 }
 
 /**
  * Toggles the visibility of the search input and the dropdown button.
  */
 function toggleDNoneInputAndButtonDropDown(button, input) {
-  const dropDownButtonRef = document.getElementById(button + "_toggle");
-  const dropDownSearchRef = document.getElementById(input + "_container");
-  dropDownButtonRef.classList.toggle("d__none");
-  dropDownSearchRef.classList.toggle("d__none");
-  dropDownSearchRef.classList.toggle("dropdown__blue__border");
+    const dropDownButtonRef = document.getElementById(button + '_toggle');
+    const dropDownSearchRef = document.getElementById(input + '_container');
+    dropDownButtonRef.classList.toggle('d__none');
+    dropDownSearchRef.classList.toggle('d__none');
+    dropDownSearchRef.classList.toggle('dropdown__blue__border');
 }
 
 /**
@@ -82,10 +205,51 @@ function toggleDNoneInputAndButtonDropDown(button, input) {
  * @param {Event} event - The click event.
  */
 function closeDropDownList(event) {
-  event.preventDefault();
-  toggleDropdown("dropdown");
-  toggleDNoneInputAndButtonDropDown("dropdown", "dropdown_search");
-  renderChoosenContactList();
+    event.preventDefault();
+    toggleDropdown('dropdown');
+    toggleDNoneInputAndButtonDropDown('dropdown', 'dropdown_search');
+    toggleDropDownListOverlay();
+    renderChoosenContactList();
+}
+
+/**
+ * Toggles the selection state of the current user when assigning tasks.
+ * Updates the styling and checkbox state accordingly.
+ * @param {Event} event - The event object to prevent default behavior.
+ */
+function updateCurrentUserChoosen(event) {
+    if (event) event.preventDefault();
+    currentUserChoosen = currentUserChoosen ? false : true;
+    toggleCurrentUserChoosenStyling();
+    updateCheckboxStateCurrentUser();
+}
+
+/**
+ * Toggles the visual styling for the current user's selection.
+ * Updates the dropdown item and checkbox visibility.
+ */
+function toggleCurrentUserChoosenStyling() {
+    const contactRef = document.getElementById('contact_' + currentUser.name);
+    contactRef.classList.toggle('dropdown__item__checked');
+
+    const checkBoxBlueRef = document.getElementById('checkbox_blue_' + currentUser.name);
+    checkBoxBlueRef.classList.toggle('d__none');
+
+    const checkBoxWhiteRef = document.getElementById('checkbox_white_' + currentUser.name);
+    checkBoxWhiteRef.classList.toggle('d__none');
+}
+
+/**
+ * Updates the checkbox state for the current user.
+ * Ensures the checkbox reflects whether the user is selected or not.
+ */
+function updateCheckboxStateCurrentUser() {
+    const contactCheckBoxRef = document.getElementById('contact_checkbox_' + currentUser.name);
+    if (currentUserChoosen) {
+        contactCheckBoxRef.checked = true;
+    } else {
+        contactCheckBoxRef.checked = false;
+    }
 }
 
 /**
@@ -93,9 +257,12 @@ function closeDropDownList(event) {
  * @param {string} contactID - The ID of the selected contact.
  */
 function contactChoosen(contactID) {
-  const contact = contacts.find((contact) => contact.id == contactID);
-  toggleChoosenContactStyling(contactID);
-  if (contact) toggleChoosenContactToArray(contact);
+    const contact = contacts.find(contact => contact.id == contactID);
+    toggleChoosenContactStyling(contactID);
+    if(contact) {
+        toggleChoosenContactToArray(contact);
+        renderChoosenContactList();
+    } 
 }
 
 /**
@@ -103,14 +270,12 @@ function contactChoosen(contactID) {
  * @param {string} contactID - The ID of the selected contact.
  */
 function toggleChoosenContactStyling(contactID) {
-  const contactRef = document.getElementById("contact_" + contactID);
-  contactRef.classList.toggle("dropdown__item__checked");
-  const checkBoxBlueRef = document.getElementById("checkbox_blue_" + contactID);
-  checkBoxBlueRef.classList.toggle("d__none");
-  const checkBoxWhiteRef = document.getElementById(
-    "checkbox_white_" + contactID
-  );
-  checkBoxWhiteRef.classList.toggle("d__none");
+    const contactRef = document.getElementById('contact_' + contactID);
+    contactRef.classList.toggle('dropdown__item__checked');
+    const checkBoxBlueRef = document.getElementById('checkbox_blue_' + contactID);
+    checkBoxBlueRef.classList.toggle('d__none');
+    const checkBoxWhiteRef = document.getElementById('checkbox_white_' + contactID);
+    checkBoxWhiteRef.classList.toggle('d__none');
 }
 
 /**
@@ -118,15 +283,13 @@ function toggleChoosenContactStyling(contactID) {
  * @param {Object} contact - The contact to add or remove.
  */
 function toggleChoosenContactToArray(contact) {
-  const isContactAlreadySelected = choosenContacts.some(
-    (c) => c.id === contact.id
-  );
-  if (isContactAlreadySelected) {
-    removeContactFromArray(contact);
-  } else {
-    addContactToArray(contact);
-  }
-  updateCheckboxState(contact);
+    const isContactAlreadySelected = choosenContacts.some(c => c.id === contact.id);
+    if (isContactAlreadySelected) {
+        removeContactFromArray(contact);
+    } else {
+        addContactToArray(contact);
+    }
+    updateCheckboxState(contact);
 }
 
 /**
@@ -134,7 +297,7 @@ function toggleChoosenContactToArray(contact) {
  * @param {Object} contact - The contact to add.
  */
 function addContactToArray(contact) {
-  choosenContacts.push(contact);
+    choosenContacts.push(contact);
 }
 
 /**
@@ -142,10 +305,10 @@ function addContactToArray(contact) {
  * @param {Object} contact - The contact to remove.
  */
 function removeContactFromArray(contact) {
-  const index = choosenContacts.indexOf(contact);
-  if (index > -1) {
-    choosenContacts.splice(index, 1);
-  }
+    const index = choosenContacts.indexOf(contact);
+    if (index > -1) {
+        choosenContacts.splice(index, 1);
+    }
 }
 
 /**
@@ -153,213 +316,93 @@ function removeContactFromArray(contact) {
  * @param {Object} contact - The contact to update the checkbox state for.
  */
 function updateCheckboxState(contact) {
-  const contactCheckBoxRef = document.getElementById(
-    "contact_checkbox_" + contact.id
-  );
-  if (choosenContacts.some((c) => c.id === contact.id)) {
-    contactCheckBoxRef.checked = true;
-  } else {
-    contactCheckBoxRef.checked = false;
-  }
+    const contactCheckBoxRef = document.getElementById('contact_checkbox_' + contact.id);
+    if (choosenContacts.some(c => c.id === contact.id)) {
+        contactCheckBoxRef.checked = true;
+    } else {
+        contactCheckBoxRef.checked = false;
+    }
 }
 
 /**
  * Renders the list of chosen contacts.
  */
 function renderChoosenContactList() {
-  const contentRef = document.getElementById("choosen_contacts_container");
-  contentRef.innerHTML = "";
-  for (let i = 0; i < choosenContacts.length; i++) {
-    contentRef.innerHTML += renderHTMLChoosenContact(choosenContacts[i]);
-  }
+    const contentRef = document.getElementById('choosen_contacts_container');
+    contentRef.innerHTML = "";
+    if(currentUserChoosen) {
+        contentRef.innerHTML += renderHTMLChoosenUser();
+    }
+    for (let i = 0; i < choosenContacts.length; i++) {
+        contentRef.innerHTML += renderHTMLChoosenContact(choosenContacts[i]);
+    }
 }
 
 /**
  * Filters the contacts based on the search input and updates the contact list accordingly.
  */
 function filterContacts() {
-  const searchInput = document
-    .getElementById("assignee_search_input")
-    .value.toLowerCase();
-  const filteredContacts = contacts.filter((contact) => {
-    return contact.name.toLowerCase().includes(searchInput);
-  });
-  renderContactList(filteredContacts);
-  if (searchInput === "") {
-    renderContactList(contacts);
-  }
-}
-
-async function saveTask() {
-  const name = document.getElementById("text__title").value;
-  const description = document.getElementById("description").value;
-  const assignedTo = document.getElementById("assigned__to").value;
-  const dueDate = document.getElementById("date__input").value;
-  const prio = document.querySelector('input[name="prio"]:checked')?.value;
-  const category = document.querySelector('select[name="category"]').value;
-  const subtask = document.getElementById("subtask").value;
-
-  if (!name || !description || !assignedTo || !dueDate || !prio || !category) {
-    document.getElementById("date__input").innerHTML =
-      "Bitte alle Felder ausfüllen!";
-    document.getElementById("star_textArea").innerHTML =
-      "Bitte alle Felder ausfüllen!";
-    document.getElementById("star_title").innerHTML =
-      "Bitte alle Felder ausfüllen!";
-    return;
-  }
-
-  const taskData = {
-    name: name,
-    description: description,
-    assignedTo: assignedTo,
-    dueDate: dueDate,
-    prio: prio,
-    category: category,
-    subtask: subtask,
-    position: 1,
-  };
-
-  try {
-    let response = await fetch(baseUrl + "tasks.json", {
-      method: "POST", // Neues Task-Objekt in Firebase hinzufügen
-      headers: {
-        "Content-Type": "application/json",
-      },
-      body: JSON.stringify(taskData),
+    const searchInput = document.getElementById('assignee_search_input').value.toLowerCase();
+    let filteredContacts = contacts.filter(contact => {
+        return contact.name.toLowerCase().includes(searchInput);
     });
-
-    if (response.ok) {
-      console.log("Task gespeichert!");
-      fetchData(); // Liste neu laden
-      clearForm();
-    } else {
-      console.error("Fehler beim Speichern!");
+    let includesCurrentUser;
+    if (currentUser.name.toLowerCase().includes(searchInput)) {
+        includesCurrentUser = true;
     }
-  } catch (error) {
-    console.error("Fehler:", error);
-  }
+    renderFilteredContactList(filteredContacts, includesCurrentUser); 
+    if (searchInput === "") {
+        renderContactList(contacts);
+    }
 }
 
 /**
- * Setzt alle Formularfelder zurück, indem es die Werte von Texteingaben, 
- * der Prioritätsauswahl, der Kategorieauswahl und des Subtask-Feldes leert.
+ * Renders the filtered contact list in the dropdown menu.
+ * Sorts the contacts, generates the HTML, and updates the dropdown.
+ * Optionally includes the current user in the list.
+ * 
+ * @param {Array} filteredContacts - The list of contacts to be displayed.
+ * @param {boolean} includesCurrentUser - Indicates whether the current user should be included in the list.
  */
-function clearForm() {
-  document.getElementById("text__input").value = "";
-  document.getElementById("description").value = "";
-  document.getElementById("assigned__to").value = "";
-  document.getElementById("date__input").value = "";
-  document.querySelector('input[name="prio"]:checked').checked = false;
-  document.querySelector('select[name="category"]').value = "";
-  document.getElementById("subtask").value = "";
+function renderFilteredContactList(filteredContacts, includesCurrentUser) {
+    const sortedContacts = sortContactsByName(filteredContacts);
+    const contactHTML = generateContactHTML(sortedContacts);
+    const dropDownRef = document.getElementById("dropdown_list");
+    dropDownRef.innerHTML = "";
+    if (includesCurrentUser) {
+        dropDownRef.innerHTML += renderHTMLYouInContactList();
+    }
+    dropDownRef.innerHTML += contactHTML;
 }
 
 /**
- * Wechselt die Sichtbarkeit der Buttons `sub_btn1`, `sub_btn2` und `sub_btn3`, 
- * falls `sub_btn3` aktuell ausgeblendet ist, und setzt den Fokus auf das Eingabefeld `subtask`.
+ * Resets the add task form by clearing all input fields.
  */
-function changeBtns() {
-  let button = document.getElementById('sub_btn3');
-  if (button.classList.contains('d__none')) {
-      document.getElementById('sub_btn1').classList.toggle('d__none');
-      document.getElementById('sub_btn2').classList.toggle('d__none');
-      document.getElementById('sub_btn3').classList.toggle('d__none');
-  }
-  let inputElement = document.getElementById('subtask');
-  inputElement.focus();
+function resetAddTaskForm() {
+    const addTaskFormRef = document.getElementById('add_task_form');
+    addTaskFormRef.reset();
+    clearAddTaskForm();
 }
 
 /**
- * Wechselt die Sichtbarkeit der Buttons mit den IDs `sub_btn1`, `sub_btn2` und `sub_btn3`, 
- * indem die Klasse `d__none` ein- oder ausgeblendet wird.
+ * Handles the "Enter" key press event while adding a subtask.
+ * @param {Event} event - The keydown event.
  */
-function changeBtnsAgain() {
-  document.getElementById('sub_btn1').classList.toggle('d__none');
-  document.getElementById('sub_btn2').classList.toggle('d__none');
-  document.getElementById('sub_btn3').classList.toggle('d__none');
+function handleKeyDownAddSubTask(event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        addSubtask(event);
+    }
 }
 
 /**
- * Fügt einen neuen Subtask zur Liste `newSubtasks` hinzu, aktualisiert die Anzeige 
- * und setzt das Eingabefeld zurück.
+ * Handles the "Enter" key press event while editing a subtask.
+ * @param {number} subTaskID - The ID of the subtask being edited.
+ * @param {Event} event - The keydown event.
  */
-function addNewSubtask() {
-  let newSubtask = document.getElementById('subtask');
-  newSubtasks.push(newSubtask.value);
-  makeTheListGreatAgain();
-  newSubtask.value = '';
-  changeBtnsAgain();
-}
-
-/**
- * Wandelt einen angezeigten Subtask in ein Eingabefeld um, um die Bearbeitung zu ermöglichen.
- *
- * @param {string} name - Der Name des Subtasks, der in ein Eingabefeld umgewandelt werden soll.
- */
-function turnIntoInput(name) {
-  let safeName = name.replace(/\s+/g, "_");
-  let subTask = document.getElementById("subtask_" + safeName + "_text");  
-  let listItem = document.getElementById(safeName+"_id");
-      listItem.classList.add("editing");
-      listItem.innerHTML = generateInput(name);
-  let inputElement = document.getElementById("subtask_" + safeName + "_input");
-        inputElement.focus();
-}
-
-/**
- * Löscht einen Subtask aus der Liste `newSubtasks` und aktualisiert die Anzeige.
- *
- * @param {string} name - Der Name des Subtasks, der gelöscht werden soll.
- */
-function deleteSubtask(name){
-  let safeName = name.replace(/\s+/g, "_");
-  let toDelete = document.getElementById('subtask_'+ safeName +'_input');  
-  let deleteIndex = newSubtasks.findIndex(subtask => subtask === toDelete.value);
-  newSubtasks.splice(deleteIndex,1);
-  makeTheListGreatAgain();
-}
-
-/**
- * Erstellt die Subtask-Liste neu, indem alle aktuellen Einträge entfernt 
- * und anschließend mit den Werten aus `newSubtasks` wieder hinzugefügt werden.
- */
-function makeTheListGreatAgain(){
-  let list = document.getElementById('subtask_table');
-  list.innerHTML = '';
-  newSubtasks.forEach(task => {list.innerHTML += generateSubtaskListelement(task)});
-}
-
-
-/**
- * Ersetzt einen vorhandenen Eintrag in der Liste `newSubtasks` durch einen neuen Wert 
- * und aktualisiert die Anzeige der Subtask-Liste.
- *
- * @param {string} name - Der Name des Subtasks, der ersetzt werden soll.
- */
-function turnIntoLi(name){
-  let safeName = name.replace(/\s+/g, "_");
-  let value = document.getElementById('subtask_'+ safeName + '_input').value;
-  let toBeExchanced = newSubtasks.findIndex(subtask => subtask === name);
-  newSubtasks.splice(toBeExchanced,1, value);
-  let editTable = document.getElementById('subtask_table');
-  editTable.innerHTML = '';
-  makeTheListGreatAgain();
-}
-
-function showBtns(task) {
-  let safeName = task.trim().replace(/\s+/g, "_"); 
-  let btnDiv = document.getElementById("li_btn_div_"+safeName);
-  if(btnDiv){
-      btnDiv.classList.remove('d__none');
-  }
-}
-
-function hideBtns(task) {
-  let safeName = task.trim().replace(/\s+/g, "_"); 
-  let btnDiv = document.getElementById("li_btn_div_" + safeName);
-  
-  if (btnDiv) {
-    btnDiv.classList.add('d__none');
-  }
+function handleKeyDownEditedSubTask(subTaskID, event) {
+    if (event.key === "Enter") {
+        event.preventDefault();
+        saveEditedSubTask(subTaskID, event);
+    }
 }

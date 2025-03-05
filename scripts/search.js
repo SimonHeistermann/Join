@@ -1,76 +1,80 @@
- function searchTasks() {
-      let searchInput = document.getElementById("searchInput").value.toLowerCase();
-       fetch(`${baseUrl}/tasks.json`)
-        .then((response) => response.json())
-        .then((tasks) => {
-          if (!tasks) {
-            tasks = {};
-          }
-          emtyHTML()
-       let taskIds = Object.keys(tasks);
-          let foundTasks = false;
-    
-          taskIds.forEach((taskId) => {
-            let task = tasks[taskId];
-          if (
-              task.name.toLowerCase().includes(searchInput) ||
-              (task.description && task.description.toLowerCase().includes(searchInput))
-            ) {
-              foundTasks = true;
-             let totalSubtasks = task.subtasks ? task.subtasks.length : 0;
-              let completedSubtasks = task.subtasks
-                ? task.subtasks.filter((sub) => sub.completed).length
-                : 0;
-              let subTaskList = task.subtasks
-                ? task.subtasks.map((sub) => `<li>${sub.name}</li>`).join("")
-                : "";
-    
-              let taskHTML = generateBoardTemplate(taskId, task, completedSubtasks, totalSubtasks, subTaskList);
-              
-              let columnMap = {
-                "to-do": "column-todo",
-                "in-progress": "column_progress",
-                "await-feedback": "column_await",
-                "done": "column_done"
-              };
-              
-              let columnId = columnMap[task.status] || "column-todo";
-              
-              document.getElementById(columnId).innerHTML += taskHTML;
-            }
-          });
-    
-        if (!foundTasks) {
-            htmlreturn();
-          }
-        })
-       
-    } 
-    
-        
+let filteredTasks = [];
+let filteredTasksInStatusToDo = [];
+let filteredTasksInStatusProgress = [];
+let filteredTasksInStatusAwaitingFeedback = [];
+let filteredTasksInStatusDone = [];
 
-     function standerTasks(){
-
+/**
+ * Filters tasks based on the search input and updates the board.
+ * @param {Event} event - The event object (optional, used to prevent form submission).
+ */
+function filterBoard(event, inputRef) {
+    if (event?.type === "submit") event.preventDefault();
+    const input = document.getElementById(inputRef).value.toLowerCase();
+    filteredTasks = [];
+    if (input.length >= 3) {
+        filteredTasks = tasks.filter(task =>
+            task.name.toLowerCase().includes(input) ||
+            task.description.toLowerCase().includes(input)
+        );
+        getAllFilteredTasksIn();
+        renderFilteredBoardContent();
     }
+    ifEmptySearch(input);
+}
 
+/**
+ * Categorizes filtered tasks into different statuses.
+ */
+function getAllFilteredTasksIn() {
+    filteredTasksInStatusToDo = filteredTasks.filter(task => task.status === "to-do");
+    filteredTasksInStatusProgress = filteredTasks.filter(task => task.status === "in-progress");
+    filteredTasksInStatusAwaitingFeedback = filteredTasks.filter(task => task.status === "await-feedback");
+    filteredTasksInStatusDone = filteredTasks.filter(task => task.status === "done");
+}
 
-      function htmlreturn(){
-        document.getElementById("column-todo").innerHTML = `<p class="no__tasks">No tasks</p>`;
-        document.getElementById("column_progress").innerHTML =`<p class="no__tasks">No tasks</p>`;
-        document.getElementById("column_await").innerHTML = `<p class="no__tasks">No tasks</p>`;
-        document.getElementById("column_done").innerHTML = `<p class="no__tasks">No tasks</p>`;
-
-      }
-
-        function emtyHTML(){
-          document.getElementById("column-todo").innerHTML = "";
-          document.getElementById("column_progress").innerHTML = "";
-          document.getElementById("column_await").innerHTML = "";
-          document.getElementById("column_done").innerHTML = "";
-
-
+/**
+ * Renders the filtered tasks on the board.
+ */
+function renderFilteredBoardContent() {
+    boardCategories.forEach(element => {
+        let currentTasks = getFilteredTasksIn(element);
+        const columnRef = document.getElementById(`${element}_content`);
+        columnRef.innerHTML = "";
+        if (currentTasks.length > 0) {
+            currentTasks.forEach((task, index) => {
+                columnRef.innerHTML += renderHTMLBoardCard(task, index);
+                renderBoardAssingedToBadges(task, index);
+            });
+        } else {
+            columnRef.innerHTML = renderHTMLNoCardInBoard();
         }
+    });
+}
 
-       
+/**
+ * Retrieves filtered tasks for a specific category.
+ * @param {string} element - The category name.
+ * @returns {Array} - Array of filtered tasks in the given category.
+ */
+function getFilteredTasksIn(element) {
+    if (element === "to_do") return filteredTasksInStatusToDo;
+    if (element === "in_progress") return filteredTasksInStatusProgress;
+    if (element === "awaiting_feedback") return filteredTasksInStatusAwaitingFeedback;
+    if (element === "done") return filteredTasksInStatusDone;
+    return [];
+}
 
-       
+/**
+ * Resets filtering if the search input is empty.
+ * @param {string} input - The search input value.
+ */
+function ifEmptySearch(input) {
+    if (input === "") {
+        filteredTasks = [];
+        getAllTasksIn();
+        renderBoardContent();
+    }
+}
+
+

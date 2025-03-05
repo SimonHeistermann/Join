@@ -4,24 +4,13 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
 
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="./assets/icons/join_logo_favicon_dark.svg"
-      media="(prefers-color-scheme: light)"
-    />
-    <link
-      rel="icon"
-      type="image/x-icon"
-      href="./assets/icons/join_logo_favicon_white.svg"
-      media="(prefers-color-scheme: dark)"
-    />
+    <link rel="icon" type="image/x-icon" href="./assets/icons/join_logo_favicon_dark.svg" media="(prefers-color-scheme: light)"/>
+    <link rel="icon" type="image/x-icon" href="./assets/icons/join_logo_favicon_white.svg" media="(prefers-color-scheme: dark)"/>
 
     <title>Add Task</title>
 
     <link rel="stylesheet" href="./assets/fonts/fonts.css" />
     <link rel="stylesheet" href="./style.css" />
-    <link rel="stylesheet" href="./styles/keyframes.css" />
     <link rel="stylesheet" href="./styles/sidebar.css" />
     <link rel="stylesheet" href="./styles/add_task.css" />
     <link rel="stylesheet" href="./styles/standard.css" />
@@ -30,65 +19,57 @@
 
     <script src="./script.js"></script>
     <script src="./scripts/templates.js"></script>
+    <script src="./scripts/templates_2.js"></script>
+    <script src="./scripts/templates_3.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr"></script>
+    <script src="https://cdn.jsdelivr.net/npm/flatpickr/dist/l10n/de.js"></script>
     <script src="./scripts/add_task.js"></script>
+    <script src="./scripts/add_task_2.js"></script>
     <script src="./scripts/assets.js"></script>
   </head>
   <body id="body" onload="initAddTasks()">
     <div class="overall">
       <div class="sidebar">
         <div class="sidebar__container">
-          <div class="sidebar__logocontainer">
-            <img src="./assets/icons/logo_sidebar.png" alt="Join Logo" />
-          </div>
-          <div class="sidebar__navbarcontainer">
-            <div class="sidebar__navbar">
-              <div class="behind__sidebarbuttons">
-                <a href="summary.html" class="sidebar__button">
-                  <img
-                    src="./assets/icons/summary_icon_white.png"
-                    alt="Summary"
-                  />
-                  Summary
-                </a>
-              </div>
-              <div class="behind__sidebarbuttons sidebarbutton__open">
-                <button class="sidebar__button sidebarbutton__open">
-                  <img
-                    src="./assets/icons/add_task_icon_white.png"
-                    alt="Add Task"
-                  />
-                  Add Task
-                </button>
-              </div>
-              <div class="behind__sidebarbuttons">
-                <a href="board.html" class="sidebar__button">
-                  <img src="./assets/icons/board_icon_white.png" alt="Board" />
-                  Board
-                </a>
-              </div>
-              <div class="behind__sidebarbuttons">
-                <a href="contacts.html" class="sidebar__button">
-                  <img
-                    src="./assets/icons/contacts_icon_white.png"
-                    alt="Contacts"
-                  />
-                  Contacts
-                </a>
-              </div>
+            <div onclick="reloadWebsite()" class="sidebar__logocontainer">
+                <img src="./assets/icons/logo_sidebar.png" alt="Join Logo">
             </div>
-            <div class="sidebar__noticescontainer">
-              <div class="behind__noticesbuttons">
-                <a href="privacy_policy.html" class="notices__button"
-                  >Privacy Policy</a
-                >
-              </div>
-              <div class="behind__noticesbuttons">
-                <a href="legal_notice.html" class="notices__button"
-                  >Legal notice</a
-                >
-              </div>
+            <div class="sidebar__navbarcontainer">
+                <div class="sidebar__navbar">
+                    <div class="behind__sidebarbuttons">
+                        <button onclick="openSummaryWebsiteWithoutMobileAnimation()" class="sidebar__button">
+                            <img src="./assets/icons/summary_icon_white.png" alt="Summary">
+                            Summary
+                        </button>
+                    </div>
+                    <div class="behind__sidebarbuttons sidebarbutton__open">
+                        <button onclick="reloadWebsite()" class="sidebar__button sidebarbutton__open">
+                            <img src="./assets/icons/add_task_icon_white.png" alt="Add Task">
+                            Add Task
+                        </button>
+                    </div>
+                    <div class="behind__sidebarbuttons">
+                        <button onclick="openBoardWebsite()" class="sidebar__button">
+                            <img src="./assets/icons/board_icon_white.png" alt="Board">
+                            Board
+                        </button>
+                    </div>
+                    <div class="behind__sidebarbuttons">
+                        <button onclick="openContactsWebsite()" class="sidebar__button">
+                            <img src="./assets/icons/contacts_icon_white.png" alt="Contacts">
+                            Contacts
+                        </button>
+                    </div>
+                </div>
+                <div class="sidebar__noticescontainer">
+                    <div class="behind__noticesbuttons">
+                        <button onclick="openPrivacyPolicyWebsite()" class="notices__button">Privacy Policy</button>
+                    </div>
+                    <div class="behind__noticesbuttons">
+                        <button onclick="openLegalNoticeWebsite()" class="notices__button">Legal notice</button>
+                    </div>
+                </div>
             </div>
-          </div>
         </div>
       </div>
       <div class="content__right">
@@ -96,15 +77,12 @@
           <div class="header__container">
             <h3>Kanban Project Management Tool</h3>
             <div class="headerbox__right">
-              <button onclick="openHelpWebsite()" class="help__button">
-                  <img src="./assets/icons/help_icon.png" alt="Help">
+              <button class="help__button">
+                <img src="./assets/icons/help_icon.png" alt="Help" />
               </button>
-              <button onclick="toggleSubMenu()" id="currentuser_initials_ref" class="profile__button"></button>
+              <button class="profile__button">SM</button>
+            </div>
           </div>
-          <button onclick="reloadWebsite()" class="header__logo__mobile">
-              <img src="./assets/icons/header_logo_icon_mobile.png" alt="Join Logo">
-          </button>
-      </div>
         </header>
 
         <main class="add__task__main">
@@ -113,7 +91,7 @@
             <div class="left_side">
               <lable class="label" for="title"
                 >Title
-                <div class="star" id="star_title">*</div></lable
+                <div class="star">*</div></lable
               >
               <input
                 type="text"
@@ -121,6 +99,7 @@
                 id="text__input"
                 name="title"
                 placeholder="Enter a title"
+                required
               />
               <label class="label" for="description">Description</label>
               <textarea
@@ -129,77 +108,18 @@
                 id="description"
                 placeholder="Enter a Description"
               ></textarea>
-              <div class="dropdown__container">
-                <label for="assignee_search"><h3>Assigned to</h3></label>
-                <div class="dropdown__content">
-                  <button
-                    class="dropdown__toggle"
-                    id="dropdown_toggle"
-                    onclick="openDropdownList(event)"
-                  >
-                    <h3>Select contacts to assign</h3>
-                    <span class="dropdown__arrow__icon__container">
-                      <img
-                        id="dropdown_arrow_icon"
-                        class="dropdown__arrow__icon__default"
-                        src="./assets/icons/arrow_drop_down_icon.png"
-                        alt="Drop Down Icon"
-                      />
-                      <img
-                        id="dropdown_arrow_icon_hover"
-                        class="dropdown__arrow__icon__hover"
-                        src="./assets/icons/arrow_drop_down_icon_hover.png"
-                        alt="Drop Down Icon"
-                      />
-                    </span>
-                  </button>
-                  <div
-                    class="dropdown__search__container d__none"
-                    id="dropdown_search_container"
-                  >
-                    <input
-                      type="text"
-                      class="dropdown__search__input"
-                      id="assignee_search_input"
-                      placeholder=""
-                      oninput="filterContacts()"
-                    />
-                    <button
-                      onclick="closeDropDownList(event)"
-                      class="close__dropdown__button"
-                    >
-                      <img
-                        id="dropdown_arrow_up_icon"
-                        class="dropdown__arrow__up__icon__default"
-                        src="./assets/icons/arrow_drop_down_up_icon.png"
-                        alt="Drop Down Up Icon"
-                      />
-                      <img
-                        id="dropdown_arrow_up_icon_hover"
-                        class="dropdown__arrow__up__icon__hover"
-                        src="./assets/icons/arrow_drop_down_up_icon_hover.png"
-                        alt="Drop Down Up Icon"
-                      />
-                    </button>
-                  </div>
-                  <div
-                    class="dropdown__list__wrapper"
-                    id="dropdown_list_wrapper"
-                  >
-                    <ul class="dropdown__list" id="dropdown_list"></ul>
-                  </div>
-                </div>
-                <div
-                  class="choosen__contacts__container"
-                  id="choosen_contacts_container"
-                ></div>
-              </div>
+              <label class="label" for="assigned_to">Assigned to</label>
+              <select
+                class="assigned_to"
+                name="assigned_to"
+                id="assigned__to"
+              ></select>
             </div>
             <div class="the_divider"></div>
             <div class="right_side">
               <label class="label" for="date"
                 >Due date
-                <div class="star" id="star_date">*</div></label
+                <div class="star">*</div></label
               >
               <input
                 type="date"
@@ -207,23 +127,14 @@
                 id="date__input"
                 name="date"
                 placeholder="dd/mm/yyyy"
+                required
               />
-
               <label class="label" for="prio">Prio</label>
               <div class="radio_overall">
                 <label class="radio radio_urgend">
-                  <input
-                    type="radio"
-                    name="prio"
-                    value="1"
-                    onclick="changeUrgend()"
-                  />
+                  <input type="radio" name="prio" value="1" onclick="" />
                   Urgent
-                  <img
-                    id="urgend_img"
-                    src="assets/icons/Property 1=Urgent.png"
-                    alt="↑"
-                  />
+                  <img src="assets/icons/Property 1=Urgent.png" alt="↑" />
                 </label>
                 <label class="radio radio_medium">
                   <input
@@ -231,47 +142,34 @@
                     name="prio"
                     value="2"
                     checked
-                    onclick="changeMedium()"
+                    onclick=""
                   />
                   Medium
-                  <img
-                    id="medium_img"
-                    src="assets/icons/Prio media.png"
-                    alt="="
-                  />
+                  <img src="assets/icons/Property 1=Medium.png" alt="=" />
                 </label>
                 <label class="radio radio_low">
-                  <input
-                    type="radio"
-                    name="prio"
-                    value="3"
-                    onclick="changeLow()"
-                  />
-                  Low
-                  <img
-                    id="low_img"
-                    src="assets/icons/Property 1=Low.png"
-                    alt="↓"
-                  />
+                  <input type="radio" name="prio" value="3" onclick="" />
+                  Low <img src="assets/icons/Property 1=Low.png" alt="↓" />
                 </label>
               </div>
               <label class="label" for="category"
                 >Category
-                <div class="star" id="star_category">*</div></label
+                <div class="star">*</div></label
               >
-              <select type="select" name="category" class="category">
+              <select type="select" name="category" class="category" required>
                 <option value="">Select task category</option>
                 <option value="tt">Technikal Task</option>
                 <option value="us">User Story</option>
               </select>
               <label for="subtask">Subtask</label>
-              <div class="input__container">
-                <input type="text" class="sub__input" name="subtask" id="subtask" class="subtask" placeholder="Add new subtask" onclick="changeBtns(); return false;" onkeydown="handleEnter(event)"/>
-                <button class="subtask__input__btn" id="sub_btn1" onclick="changeBtns(); return false;"><img id="sub_btn1_img" src="./assets/icons/add_sub.png" alt="+" ></button>
-                <button class="subtask__input__btn d__none" id="sub_btn3" onclick="changeBtnsAgain(); return false;"><img id="sub_btn3_img" src="./assets/icons/close_sub.png" alt="+" ></button>
-                <button class="subtask__input__btn d__none" id="sub_btn2" onclick="addNewSubtask(); return false;"><img src="./assets/icons/check_sub.png" alt="check" ></button>
-              </div>
-              <ul class="table_subtask" id="subtask_table"></ul>
+              <input
+                type="text"
+                name="subtask"
+                id="subtask"
+                class="subtask"
+                placeholder="Add new subtask"
+              />
+              <div class="table_subtask" id="subtask_table"></div>
             </div>
           </form>
           <div class="text_and_buttons">
@@ -280,11 +178,11 @@
               This field is required
             </div>
             <div class="task_butons">
-              <button class="secondary_button clear" onclick="clearForm()">
+              <button class="secondary_button clear" onclick="">
                 Clear<img />
               </button>
-              <button class="button1 create_task" onclick="saveTask()">
-                Create Task
+              <button class="button1 create_task" disabled onclick="">
+                Create Task<img />
               </button>
             </div>
           </div>
@@ -297,6 +195,15 @@
       </div>
   </div>
 </div>
+      </div>
+    </div>
+    <div id="rotate_message" class="rotate__overlay d__none">
+      <h1>Please rotate your device to portrait mode.</h1>
+    </div>
+    <div class="overlay__task__added d__none" id="overlay_task_added">
+      <div class="task__added__notification" id="task_added_notification">
+        <h3>Task added to board</h3>
+        <img src="./assets/icons/board_icon_white.png" alt="Board"> 
       </div>
     </div>
   </body>
